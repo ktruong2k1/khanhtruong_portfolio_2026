@@ -933,10 +933,6 @@ export default function Home() {
 
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="flex items-center justify-center gap-2 text-brand-accent font-serif font-bold text-sm tracking-tight mt-16 animate-bounce">
-          <span>↓ Scroll for more projects</span>
-        </div>
       </section>
 
       {/* 
