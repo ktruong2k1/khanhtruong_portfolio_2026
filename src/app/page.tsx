@@ -545,9 +545,6 @@ export default function Home() {
               </h2>
               <p 
                 style={{ 
-                  display: 'flex',
-                  alignSelf: 'stretch',
-                  width: '100%',
                   color: 'var(--Colors-Neutral-500, #989898)',
                   fontFamily: '"Be Vietnam Pro", sans-serif',
                   fontSize: '14px',
@@ -691,10 +688,6 @@ export default function Home() {
                   </h3>
                   <p 
                     style={{ 
-                      display: 'flex', 
-                      alignSelf: 'stretch', 
-                      width: '100%', 
-                      padding: '0',
                       color: 'var(--Colors-Neutral-500, #989898)',
                       fontFamily: '"Be Vietnam Pro", sans-serif',
                       fontSize: '14px',
@@ -806,10 +799,6 @@ export default function Home() {
                     </h4>
                     <p 
                       style={{ 
-                        display: 'flex', 
-                        alignSelf: 'stretch', 
-                        width: '100%',
-                        padding: '0',
                         color: 'var(--Colors-Neutral-500, #989898)',
                         fontFamily: '"Be Vietnam Pro", sans-serif',
                         fontSize: '14px',
@@ -908,10 +897,6 @@ export default function Home() {
                       <h4 className="text-[14px] font-bold text-white group-hover:text-brand-accent transition-colors leading-snug">{proj.title}</h4>
                       <p 
                         style={{ 
-                          display: 'flex', 
-                          alignSelf: 'stretch', 
-                          width: '100%',
-                          padding: '0',
                           color: 'var(--Colors-Neutral-500, #989898)',
                           fontFamily: '"Be Vietnam Pro", sans-serif',
                           fontSize: '14px',
@@ -931,15 +916,12 @@ export default function Home() {
             <div className="p-6 border border-neutral-900 rounded-3xl bg-neutral-1000/20 text-center flex items-center justify-center">
               <p 
                 style={{ 
-                  display: 'flex', 
-                  alignSelf: 'stretch', 
-                  width: '100%', 
-                  justifyContent: 'center',
                   color: 'var(--Colors-Neutral-500, #989898)',
                   fontFamily: '"Be Vietnam Pro", sans-serif',
                   fontSize: '14px',
                   fontWeight: 400,
-                  lineHeight: '18px'
+                  lineHeight: '18px',
+                  textAlign: 'center'
                 }}
                 className="italic max-w-xs"
               >
@@ -1162,10 +1144,7 @@ export default function Home() {
             </button>
 
             <h3 className="text-xl font-bold font-serif text-white mb-2">Send me a message</h3>
-             <p 
-               style={{ display: 'flex' }}
-               className="text-xs text-slate-400 mb-4 leading-relaxed"
-             >
+             <p className="text-xs text-slate-400 mb-4 leading-relaxed">
                Viết tin nhắn ngắn gọn. Click gửi sẽ tự động tạo thư nháp gửi tới địa chỉ email quản trị <strong>ktruong2k1@gmail.com</strong>.
              </p>
 
