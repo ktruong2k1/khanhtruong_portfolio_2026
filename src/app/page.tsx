@@ -816,11 +816,29 @@ export default function Home() {
               </div>
 
               {/* Sidebar list items */}
-              <div className="flex flex-col gap-5">
+              <div 
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  gap: 'var(--Spacing-m, 16px)',
+                  flex: '1 0 0',
+                  width: '100%'
+                }}
+              >
                 {moreProjects.map((proj) => (
                   <div
                     key={proj.id}
-                    className="p-4 rounded-2xl border border-neutral-900/60 bg-[var(--Colors-Neutral-1000,#181818)]/60 hover:border-brand-accent transition-all duration-150 flex items-start gap-4 relative group overflow-hidden"
+                    style={{
+                      display: 'flex',
+                      padding: '8px',
+                      alignItems: 'center',
+                      gap: 'var(--Spacing-s, 12px)',
+                      alignSelf: 'stretch',
+                      borderRadius: '8px',
+                      background: 'var(--Colors-Neutral-900, #323232)'
+                    }}
+                    className="transition-all duration-150 relative group"
                   >
                     {/* Small Colored box icon */}
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden">
