@@ -683,6 +683,7 @@ export default function Home() {
                   <p 
                     style={{ 
                       display: 'flex', 
+                      flexDirection: 'column',
                       alignSelf: 'stretch', 
                       width: '100%', 
                       padding: '0',
@@ -694,7 +695,8 @@ export default function Home() {
                     }}
                     className="max-w-xl"
                   >
-                    Enterprise-grade IoT Dashboard designed for multibrand device<br />management and fleet scaling.
+                    <span>Enterprise-grade IoT Dashboard designed for multibrand device</span>
+                    <span>management and fleet scaling.</span>
                   </p>
                 </div>
 
