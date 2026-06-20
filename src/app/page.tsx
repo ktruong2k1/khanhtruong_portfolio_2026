@@ -430,80 +430,90 @@ export default function Home() {
       )}
 
       {/* STICKY HEADER */}
-      <header className={`w-full sticky top-0 z-40 backdrop-blur-md border-b transition-all duration-300 px-[100px] ${
-        scrolledPastHero 
-          ? "bg-[var(--Colors-Neutral-1000,#181818)]/95 border-neutral-900" 
-          : "bg-transparent border-transparent"
-      }`}>
-        <div className="w-full h-16 flex items-center justify-between max-w-[1200px] mx-auto">
-          {/* Logo with Green Concentric Arcs */}
-          <a href="#hero" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight hover:scale-105 transition-transform duration-150">
-            <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-brand-accent">
-              <path d="M8 6C6.5 8.5 6 11.5 6 14 C 6 16.5, 6.5 19.5, 8 22" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-              <path d="M12 9.5C11 11 10.5 12.5 10.5 14 C 10.5 15.5, 11 17, 12 18.5" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-              <path d="M16 13C15.8 13.5 15.7 13.8 15.7 14 C 15.7 14.2, 15.8 14.5, 16 15" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-            </svg>
-            <span>khanhtruong_nguyen</span>
+      <header 
+        style={{
+          display: 'flex',
+          height: '76px',
+          padding: 'var(--Spacing-Padding-L, 16px) var(--Spacing-Padding-5XL, 48px)',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          alignSelf: 'stretch',
+          borderBottom: '1px solid var(--Colors-Neutral-800, #4B4B4B)',
+          background: 'var(--Colors-Neutral-1000, #181818)'
+        }}
+        className="w-full sticky top-0 z-40 transition-all duration-300"
+      >
+        {/* Logo with Green Concentric Arcs */}
+        <a href="#hero" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight hover:scale-105 transition-transform duration-150">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-brand-accent">
+            <path d="M8 6C6.5 8.5 6 11.5 6 14 C 6 16.5, 6.5 19.5, 8 22" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
+            <path d="M12 9.5C11 11 10.5 12.5 10.5 14 C 10.5 15.5, 11 17, 12 18.5" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
+            <path d="M16 13C15.8 13.5 15.7 13.8 15.7 14 C 15.7 14.2, 15.8 14.5, 16 15" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
+          </svg>
+          <span>khanhtruong_nguyen</span>
+        </a>
+
+        {/* Navigation Links (Desktop) */}
+        <nav 
+          style={{ gap: 'var(--spacing-m, 16px)' }}
+          className="hidden md:flex items-center text-[14px] font-medium"
+        >
+          <a 
+            href="#hero" 
+            className={`relative py-1.5 transition-colors duration-150 ${activeSection === "hero" ? "text-brand-accent font-semibold" : "hover:text-brand-accent"}`}
+          >
+            Work
+            {activeSection === "hero" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent animate-growWidth"></span>}
+          </a>
+          <a 
+            href="#about" 
+            className={`relative py-1.5 transition-colors duration-150 ${activeSection === "about" ? "text-brand-accent font-semibold" : "hover:text-brand-accent"}`}
+          >
+            About
+            {activeSection === "about" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent animate-growWidth"></span>}
+          </a>
+          <a 
+            href="#contact" 
+            className={`relative py-1.5 transition-colors duration-150 ${activeSection === "contact" ? "text-brand-accent font-semibold" : "hover:text-brand-accent"}`}
+          >
+            Contact
+            {activeSection === "contact" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent animate-growWidth"></span>}
+          </a>
+        </nav>
+
+        {/* Right Area Badge and Theme Toggle */}
+        <div className="flex items-center gap-4">
+          <a 
+            href="#contact" 
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-xs text-[#E5E5E5] font-semibold transition-colors duration-150"
+          >
+            <span className="w-2 h-2 bg-status-200 rounded-full animate-pulse"></span>
+            Available for Remote
           </a>
 
-          {/* Navigation Links (Desktop) */}
-          <nav className="hidden md:flex items-center gap-8 text-[14px] font-medium">
-            <a 
-              href="#hero" 
-              className={`relative py-1.5 transition-colors duration-150 ${activeSection === "hero" ? "text-brand-accent font-semibold" : "hover:text-brand-accent"}`}
-            >
-              Work
-              {activeSection === "hero" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent animate-growWidth"></span>}
-            </a>
-            {/* About and Contact links hidden since sections are hidden */}
-          </nav>
-
-          {/* Right Area Badge and Theme Toggle */}
-          <div className="flex items-center gap-4">
-            <a 
-              href="#contact" 
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-xs text-[#E5E5E5] font-semibold transition-colors duration-150"
-            >
-              <span className="w-2 h-2 bg-status-200 rounded-full animate-pulse"></span>
-              Available for Remote
-            </a>
-
-            <button
-              onClick={() => setSpecMode(!specMode)}
-              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] text-[10px] font-sans font-normal border transition-all duration-200 ${
-                specMode 
-                  ? "bg-red-500/10 border-red-500 text-red-400" 
-                  : "bg-neutral-900 hover:bg-neutral-800 border-transparent text-neutral-400"
-              }`}
-              title="Phím tắt: Alt+S"
-            >
-              <span className="hidden sm:inline">Spec Mode</span>
-              <kbd className="hidden lg:inline-block px-1 bg-neutral-800 rounded text-[9px]">Alt+S</kbd>
-            </button>
-
-            {/* Mobile Hamburger */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-neutral-900 text-neutral-400 md:hidden transition-colors"
-            >
-              {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
-            </button>
-          </div>
+          {/* Mobile Hamburger */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-lg bg-neutral-900 text-neutral-400 md:hidden transition-colors"
+          >
+            {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
+          </button>
         </div>
 
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-neutral-900 bg-[var(--Colors-Neutral-1000,#181818)] px-6 py-4 flex flex-col gap-4 text-sm font-semibold">
+          <div className="md:hidden absolute top-[76px] left-0 right-0 border-b border-neutral-900 bg-[var(--Colors-Neutral-1000,#181818)] px-6 py-4 flex flex-col gap-4 text-sm font-semibold z-50">
             <a href="#hero" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "hero" ? "text-brand-accent" : ""}`}>Work</a>
-            {/* About and Contact links hidden since sections are hidden */}
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "about" ? "text-brand-accent" : ""}`}>About</a>
+            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "contact" ? "text-brand-accent" : ""}`}>Contact</a>
           </div>
         )}
 
         {/* Spec Label for Header */}
         {specMode && (
-          <div className="bg-red-950/20 text-red-400 border-t border-red-200/50 px-6 py-1 text-[10px] font-sans font-normal flex items-center justify-between">
-            <span>Class: sticky top-0 backdrop-blur-md | Height: 64px (h-16)</span>
-            <span>Padding: px-6 | Border-B: 1px</span>
+          <div className="absolute bottom-0 left-0 right-0 bg-red-950/20 text-red-400 border-t border-red-200/50 px-6 py-1 text-[10px] font-sans font-normal flex items-center justify-between z-40">
+            <span>Class: sticky top-0 | Height: 76px</span>
+            <span>Padding: py-4 px-12 | Border-B: 1px</span>
           </div>
         )}
       </header>
