@@ -681,8 +681,18 @@ export default function Home() {
                     {featuredProjects[0].title}
                   </h3>
                   <p 
-                    style={{ display: 'flex', alignSelf: 'stretch', width: '100%', padding: '0' }}
-                    className="text-[13px] leading-[18px] text-neutral-400 max-w-xl"
+                    style={{ 
+                      display: 'flex', 
+                      alignSelf: 'stretch', 
+                      width: '100%', 
+                      padding: '0',
+                      color: 'var(--Colors-Neutral-500, #989898)',
+                      fontFamily: '"Be Vietnam Pro", sans-serif',
+                      fontSize: '14px',
+                      fontWeight: 400,
+                      lineHeight: '18px'
+                    }}
+                    className="max-w-xl"
                   >
                     Enterprise-grade IoT Dashboard designed for multibrand device<br />management and fleet scaling.
                   </p>
