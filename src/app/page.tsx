@@ -544,8 +544,17 @@ export default function Home() {
                 I design the product. Then I ship it.
               </h2>
               <p 
-                style={{ display: 'flex' }}
-                className="text-[14px] leading-[18px] text-neutral-400 max-w-sm"
+                style={{ 
+                  display: 'flex',
+                  alignSelf: 'stretch',
+                  width: '100%',
+                  color: 'var(--Colors-Neutral-500, #989898)',
+                  fontFamily: '"Be Vietnam Pro", sans-serif',
+                  fontSize: '14px',
+                  fontWeight: 400,
+                  lineHeight: '18px'
+                }}
+                className="max-w-sm"
               >
                 Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution for enterprise and IoT platforms.
               </p>
@@ -796,8 +805,17 @@ export default function Home() {
                       {proj.id === "raio-smart" ? "RaIO Smart" : "Austfly Redesign"}
                     </h4>
                     <p 
-                      style={{ display: 'flex', alignSelf: 'stretch', width: '100%' }}
-                      className="text-[12px] leading-[16px] text-neutral-400"
+                      style={{ 
+                        display: 'flex', 
+                        alignSelf: 'stretch', 
+                        width: '100%',
+                        padding: '0',
+                        color: 'var(--Colors-Neutral-500, #989898)',
+                        fontFamily: '"Be Vietnam Pro", sans-serif',
+                        fontSize: '14px',
+                        fontWeight: 400,
+                        lineHeight: '18px'
+                      }}
                     >
                       {proj.id === "raio-smart" 
                         ? "Whitelabel smart home app — partner-adaptive UI, complex device onboarding."
@@ -814,7 +832,7 @@ export default function Home() {
           <div className="flex flex-col gap-8 w-[372px] flex-shrink-0">
             
             {/* More Projects block */}
-            <div className="border border-neutral-900 rounded-3xl p-6 bg-[#12141c]/50 flex flex-col gap-6">
+            <div className="flex flex-col gap-6 w-full">
               <div className="flex items-center justify-between border-b border-neutral-900 pb-4">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500">
                   MORE PROJECTS
@@ -889,8 +907,17 @@ export default function Home() {
                       <span className="text-[9px] font-mono uppercase tracking-wide text-neutral-500">{proj.tags.join(" • ")}</span>
                       <h4 className="text-[14px] font-bold text-white group-hover:text-brand-accent transition-colors leading-snug">{proj.title}</h4>
                       <p 
-                        style={{ display: 'flex', alignSelf: 'stretch', width: '100%' }}
-                        className="text-[11px] text-neutral-400 leading-normal"
+                        style={{ 
+                          display: 'flex', 
+                          alignSelf: 'stretch', 
+                          width: '100%',
+                          padding: '0',
+                          color: 'var(--Colors-Neutral-500, #989898)',
+                          fontFamily: '"Be Vietnam Pro", sans-serif',
+                          fontSize: '14px',
+                          fontWeight: 400,
+                          lineHeight: '18px'
+                        }}
                       >
                         {proj.summary}
                       </p>
@@ -903,8 +930,18 @@ export default function Home() {
             {/* Sidebar Quote Box Card */}
             <div className="p-6 border border-neutral-900 rounded-3xl bg-neutral-1000/20 text-center flex items-center justify-center">
               <p 
-                style={{ display: 'flex', alignSelf: 'stretch', width: '100%', justifyContent: 'center' }}
-                className="text-[12px] leading-[18px] text-neutral-400 italic font-sans max-w-xs"
+                style={{ 
+                  display: 'flex', 
+                  alignSelf: 'stretch', 
+                  width: '100%', 
+                  justifyContent: 'center',
+                  color: 'var(--Colors-Neutral-500, #989898)',
+                  fontFamily: '"Be Vietnam Pro", sans-serif',
+                  fontSize: '14px',
+                  fontWeight: 400,
+                  lineHeight: '18px'
+                }}
+                className="italic max-w-xs"
               >
                 &ldquo;Focused on creating seamless bridges between human intent and machine execution through thoughtful interface architecture.&rdquo;
               </p>
