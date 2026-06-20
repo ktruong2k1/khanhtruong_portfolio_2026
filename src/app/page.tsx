@@ -509,7 +509,7 @@ export default function Home() {
       </header>
 
       {/* HERO SECTION */}
-      <section id="hero" className="w-full px-[100px] py-12 md:py-20 relative flex justify-center">
+      <section id="hero" className="w-full px-[100px] py-[40px] relative flex justify-center">
         <div className="flex max-w-[1200px] w-full items-center gap-[32px]">
           
           {/* Left Column: Portrait & Text content */}
@@ -543,7 +543,10 @@ export default function Home() {
               <h2 className="text-[20px] font-bold leading-[30px] text-brand-accent">
                 I design the product. Then I ship it.
               </h2>
-              <p className="text-[14px] leading-[18px] text-neutral-400 max-w-sm">
+              <p 
+                style={{ display: 'flex' }}
+                className="text-[14px] leading-[18px] text-neutral-400 max-w-sm"
+              >
                 Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution for enterprise and IoT platforms.
               </p>
               
@@ -597,7 +600,7 @@ export default function Home() {
       </section>
 
       {/* CORE WORK PORTFOLIO (Featured and More Projects Grid) */}
-      <section id="work" className="w-full px-[100px] py-12 border-t border-neutral-900 relative flex flex-col items-center">
+      <section id="work" className="w-full px-[100px] py-[40px] relative flex flex-col items-center">
         <div 
           style={{
             display: 'flex',
@@ -678,7 +681,7 @@ export default function Home() {
                     {featuredProjects[0].title}
                   </h3>
                   <p 
-                    style={{ alignSelf: 'stretch', width: '100%' }}
+                    style={{ display: 'flex', alignSelf: 'stretch', width: '100%' }}
                     className="text-[13px] leading-[18px] text-neutral-400 max-w-xl"
                   >
                     Enterprise-grade IoT Dashboard designed for multibrand device management and fleet scaling.
@@ -784,7 +787,7 @@ export default function Home() {
                       {proj.id === "raio-smart" ? "RaIO Smart" : "Austfly Redesign"}
                     </h4>
                     <p 
-                      style={{ alignSelf: 'stretch', width: '100%' }}
+                      style={{ display: 'flex', alignSelf: 'stretch', width: '100%' }}
                       className="text-[12px] leading-[16px] text-neutral-400"
                     >
                       {proj.id === "raio-smart" 
@@ -855,10 +858,15 @@ export default function Home() {
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 w-full">
                       <span className="text-[9px] font-mono uppercase tracking-wide text-neutral-500">{proj.tags.join(" • ")}</span>
                       <h4 className="text-[14px] font-bold text-white group-hover:text-brand-accent transition-colors leading-snug">{proj.title}</h4>
-                      <p className="text-[11px] text-neutral-400 leading-normal">{proj.summary}</p>
+                      <p 
+                        style={{ display: 'flex', alignSelf: 'stretch', width: '100%' }}
+                        className="text-[11px] text-neutral-400 leading-normal"
+                      >
+                        {proj.summary}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -867,7 +875,10 @@ export default function Home() {
 
             {/* Sidebar Quote Box Card */}
             <div className="p-6 border border-neutral-900 rounded-3xl bg-neutral-1000/20 text-center flex items-center justify-center">
-              <p className="text-[12px] leading-[18px] text-neutral-400 italic font-sans max-w-xs">
+              <p 
+                style={{ display: 'flex', alignSelf: 'stretch', width: '100%', justifyContent: 'center' }}
+                className="text-[12px] leading-[18px] text-neutral-400 italic font-sans max-w-xs"
+              >
                 &ldquo;Focused on creating seamless bridges between human intent and machine execution through thoughtful interface architecture.&rdquo;
               </p>
             </div>
@@ -1087,9 +1098,12 @@ export default function Home() {
             </button>
 
             <h3 className="text-xl font-bold font-serif text-white mb-2">Send me a message</h3>
-            <p className="text-xs text-slate-400 mb-4 leading-relaxed">
-              Viết tin nhắn ngắn gọn. Click gửi sẽ tự động tạo thư nháp gửi tới địa chỉ email quản trị <strong>ktruong2k1@gmail.com</strong>.
-            </p>
+             <p 
+               style={{ display: 'flex' }}
+               className="text-xs text-slate-400 mb-4 leading-relaxed"
+             >
+               Viết tin nhắn ngắn gọn. Click gửi sẽ tự động tạo thư nháp gửi tới địa chỉ email quản trị <strong>ktruong2k1@gmail.com</strong>.
+             </p>
 
             <form onSubmit={handleSendEmail} className="flex flex-col gap-4">
               <div>
