@@ -421,7 +421,7 @@ export default function Home() {
       {/* Dev Spec Mode Grid Overlay */}
       {specMode && (
         <div className="fixed inset-0 pointer-events-none z-50 border-4 border-red-500/20">
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[10px] font-sans font-normal px-3 py-1 rounded-full shadow-lg flex items-center gap-2">
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[10px] font-sans font-normal px-3 py-1 rounded-full flex items-center gap-2">
             <span className="w-2 h-2 bg-white rounded-full animate-ping"></span>
             DEV HANDOFF SPEC MODE: ON
           </div>
@@ -432,7 +432,7 @@ export default function Home() {
       {/* STICKY HEADER */}
       <header className={`w-full sticky top-0 z-40 backdrop-blur-md border-b transition-all duration-300 px-[100px] ${
         scrolledPastHero 
-          ? "bg-[var(--Colors-Neutral-1000,#181818)]/95 border-neutral-900 shadow-sm" 
+          ? "bg-[var(--Colors-Neutral-1000,#181818)]/95 border-neutral-900" 
           : "bg-transparent border-transparent"
       }`}>
         <div className="w-full h-16 flex items-center justify-between max-w-[1200px] mx-auto">
@@ -493,7 +493,7 @@ export default function Home() {
 
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-neutral-900 bg-[var(--Colors-Neutral-1000,#181818)] px-6 py-4 flex flex-col gap-4 text-sm font-semibold shadow-xl">
+          <div className="md:hidden border-t border-neutral-900 bg-[var(--Colors-Neutral-1000,#181818)] px-6 py-4 flex flex-col gap-4 text-sm font-semibold">
             <a href="#hero" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "hero" ? "text-brand-accent" : ""}`}>Work</a>
             {/* About and Contact links hidden since sections are hidden */}
           </div>
@@ -560,7 +560,7 @@ export default function Home() {
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3.5 pt-3">
                 <button
                   onClick={() => setContactModalOpen(true)}
-                  className="bg-brand-accent hover:bg-[#27b378] text-[#17211B] font-bold text-[14px] px-6 py-2.5 rounded-full transition-all duration-150 active:scale-[0.97] shadow-lg shadow-brand-accent/15"
+                  className="bg-brand-accent hover:bg-[#27b378] text-[#17211B] font-bold text-[14px] px-6 py-2.5 rounded-full transition-all duration-150 active:scale-[0.97]"
                 >
                   Email me
                 </button>
@@ -633,7 +633,7 @@ export default function Home() {
             {/* Project 1: Hero Project (Rogo IoT Platform Box - exactly 796px x 236px) */}
             {featuredProjects[0] && (
               <div 
-                className="relative group border border-neutral-900 hover:border-brand-accent rounded-3xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1 shadow-lg shadow-brand-accent/5"
+                className="relative group border border-neutral-900 hover:border-brand-accent rounded-3xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1"
                 style={{
                   display: 'flex',
                   width: '796px',
@@ -728,7 +728,7 @@ export default function Home() {
               {featuredProjects.slice(1, 3).map((proj) => (
                 <div
                   key={proj.id}
-                  className="relative group border border-neutral-900 hover:border-brand-accent rounded-3xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1 shadow-lg shadow-brand-accent/5"
+                  className="relative group border border-neutral-900 hover:border-brand-accent rounded-3xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1"
                   style={{
                     display: 'flex',
                     width: '390px',
@@ -928,7 +928,7 @@ export default function Home() {
       {false && (
         <>
           {/* ABOUT SECTION */}
-          <section id="about" className="w-full bg-slate-50 dark:bg-[var(--Colors-Neutral-1000,#181818)] px-[100px] py-20 relative">
+          <section id="about" className="w-full bg-slate-50 dark:bg-[var(--Colors-Neutral-1000,#181818)] px-[100px] py-[40px] relative">
             {specMode && (
               <div className="absolute top-2 left-6 bg-red-600/10 border border-red-500/30 text-red-500 text-[9px] font-mono px-2 py-0.5 rounded">
                 Section #about | Proportions: 2 columns Bio (Left) vs How I Work (Right)
@@ -996,7 +996,7 @@ export default function Home() {
           </section>
 
           {/* CORE EXPERIENCE WORK TIMELINE */}
-          <section className="w-full px-[100px] py-20 relative border-b border-slate-200/60 dark:border-slate-800/50">
+          <section className="w-full px-[100px] py-[40px] relative border-b border-slate-200/60 dark:border-slate-800/50">
             <div className="flex flex-col items-center text-center gap-3 mb-16">
               <span className="text-xs font-mono uppercase tracking-widest text-brand-500 font-bold">Timeline</span>
               <h3 className="text-3xl font-extrabold font-serif tracking-tight dark:text-white">Quá Trình Làm Việc</h3>
@@ -1038,14 +1038,14 @@ export default function Home() {
           </section>
 
           {/* CORE SKILLS SECTION */}
-          <section id="skills" className="w-full bg-slate-50 dark:bg-[var(--Colors-Neutral-1000,#181818)] px-[100px] py-20 relative border-b border-slate-200/60 dark:border-slate-800/50">
+          <section id="skills" className="w-full bg-slate-50 dark:bg-[var(--Colors-Neutral-1000,#181818)] px-[100px] py-[40px] relative border-b border-slate-200/60 dark:border-slate-800/50">
             <div className="w-full">
               <div className="flex flex-col items-center text-center gap-3 mb-16">
                 <span className="text-xs font-mono uppercase tracking-widest text-brand-500 font-bold">Skills</span>
                 <h3 className="text-3xl font-extrabold font-serif tracking-tight dark:text-white">Core Skills</h3>
               </div>
 
-              <div className="flex flex-col gap-6 bg-white dark:bg-[#0d1425] p-8 border border-slate-200/50 dark:border-slate-800/80 rounded-2xl shadow-sm dark:shadow-none">
+              <div className="flex flex-col gap-6 bg-white dark:bg-[#0d1425] p-8 border border-slate-200/50 dark:border-slate-800/80 rounded-2xl">
                 {[
                   { cat: "UX Process", items: ["Wireframe", "Usability testing", "Stakeholder interview", "Business analysis", "User flow", "UX audit & redesign"] },
                   { cat: "UI Craft", items: ["Design system", "Whitelabel UI", "Hi-fi prototype", "Style guide & token", "Component library", "Dev handoff"] },
@@ -1071,7 +1071,7 @@ export default function Home() {
           </section>
 
           {/* CONTACT SECTION */}
-          <section id="contact" className="w-full px-[100px] py-24 text-center relative">
+          <section id="contact" className="w-full px-[100px] py-[40px] text-center relative">
             <div className="flex flex-col items-center gap-6 max-w-xl mx-auto">
               <span className="text-xs font-mono uppercase tracking-widest text-brand-500 font-bold">Contact</span>
               <h2 className="text-4xl md:text-5xl font-extrabold font-serif dark:text-white">
@@ -1090,7 +1090,7 @@ export default function Home() {
               <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
                 <button
                   onClick={() => setContactModalOpen(true)}
-                  className="inline-flex items-center gap-2 bg-brand-accent hover:bg-[#27b378] text-[#17211B] font-semibold px-6 py-3 rounded-xl shadow-lg shadow-brand-500/10 hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-150"
+                  className="inline-flex items-center gap-2 bg-brand-accent hover:bg-[#27b378] text-[#17211B] font-semibold px-6 py-3 rounded-xl hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-150"
                 >
                   Send me a message →
                 </button>
@@ -1101,7 +1101,7 @@ export default function Home() {
           </section>
 
           {/* FOOTER */}
-          <footer className="w-full px-[100px] py-12 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-400">
+          <footer className="w-full px-[100px] py-[40px] border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-400">
             <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4">
               <span>© 2026 Nguyễn Khánh Trường. All rights reserved.</span>
               <div className="flex items-center gap-4 font-mono text-[10px]">
@@ -1118,7 +1118,7 @@ export default function Home() {
       {/* CONTACT POPUP MODAL */}
       {contactModalOpen && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-[#0d1425] border border-slate-800 rounded-2xl max-w-md w-full shadow-2xl relative p-6">
+          <div className="bg-[#0d1425] border border-slate-800 rounded-2xl max-w-md w-full relative p-6">
             <button
               onClick={() => setContactModalOpen(false)}
               className="absolute top-4 right-4 p-1.5 rounded-lg bg-slate-800 text-slate-300"
