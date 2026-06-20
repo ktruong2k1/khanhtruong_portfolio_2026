@@ -681,10 +681,10 @@ export default function Home() {
                     {featuredProjects[0].title}
                   </h3>
                   <p 
-                    style={{ display: 'flex', alignSelf: 'stretch', width: '100%' }}
+                    style={{ display: 'flex', alignSelf: 'stretch', width: '100%', padding: '0' }}
                     className="text-[13px] leading-[18px] text-neutral-400 max-w-xl"
                   >
-                    Enterprise-grade IoT Dashboard designed for multibrand device management and fleet scaling.
+                    Enterprise-grade IoT Dashboard designed for multibrand device<br />management and fleet scaling.
                   </p>
                 </div>
 
