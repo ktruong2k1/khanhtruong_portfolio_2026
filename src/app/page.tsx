@@ -421,7 +421,7 @@ export default function Home() {
       {/* Dev Spec Mode Grid Overlay */}
       {specMode && (
         <div className="fixed inset-0 pointer-events-none z-50 border-4 border-red-500/20">
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[10px] font-mono px-3 py-1 rounded-full shadow-lg flex items-center gap-2">
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[10px] font-sans font-normal px-3 py-1 rounded-full shadow-lg flex items-center gap-2">
             <span className="w-2 h-2 bg-white rounded-full animate-ping"></span>
             DEV HANDOFF SPEC MODE: ON
           </div>
@@ -470,7 +470,7 @@ export default function Home() {
 
             <button
               onClick={() => setSpecMode(!specMode)}
-              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] text-[10px] font-mono border transition-all duration-200 ${
+              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] text-[10px] font-sans font-normal border transition-all duration-200 ${
                 specMode 
                   ? "bg-red-500/10 border-red-500 text-red-400" 
                   : "bg-neutral-900 hover:bg-neutral-800 border-transparent text-neutral-400"
@@ -501,7 +501,7 @@ export default function Home() {
 
         {/* Spec Label for Header */}
         {specMode && (
-          <div className="bg-red-950/20 text-red-400 border-t border-red-200/50 px-6 py-1 text-[10px] font-mono flex items-center justify-between">
+          <div className="bg-red-950/20 text-red-400 border-t border-red-200/50 px-6 py-1 text-[10px] font-sans font-normal flex items-center justify-between">
             <span>Class: sticky top-0 backdrop-blur-md | Height: 64px (h-16)</span>
             <span>Padding: px-6 | Border-B: 1px</span>
           </div>
@@ -578,7 +578,7 @@ export default function Home() {
           {/* Right Column: Client Logos (Aligned with heading, padding adjusted, initials badge removed) */}
           <div className="w-[368px] flex-shrink-0 relative flex flex-col gap-6 py-6 pl-0 pr-2 lg:pr-8">
             <div className="flex items-center">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500 block">
+              <span className="text-[10px] font-sans font-normal uppercase tracking-wider text-neutral-500 block">
                 TRUSTED BY
               </span>
             </div>
@@ -656,7 +656,7 @@ export default function Home() {
                     <span className="app-chip text-[10px] font-bold bg-brand-accent/15 text-brand-accent border border-brand-accent/10">
                       FEATURED
                     </span>
-                    <span className="app-chip text-[10px] font-mono bg-neutral-900 text-neutral-400 border border-neutral-800/50 uppercase tracking-wider">
+                    <span className="app-chip text-[10px] font-sans font-normal bg-neutral-900 text-neutral-400 border border-neutral-800/50 uppercase tracking-wider">
                       PAAS • B2B
                     </span>
                   </div>
@@ -704,7 +704,7 @@ export default function Home() {
                   {featuredProjects[0].techTokens?.map((t, idx) => (
                     <span 
                       key={idx} 
-                      className="app-chip text-[10px] font-mono bg-[#17211B] text-[#2ECC8A] border border-[#2ECC8A]/20 font-medium"
+                      className="app-chip text-[10px] font-sans bg-[#17211B] text-[#2ECC8A] border border-[#2ECC8A]/20 font-normal"
                     >
                       {t}
                     </span>
@@ -751,7 +751,7 @@ export default function Home() {
                       <span className="app-chip text-[9px] font-bold bg-brand-accent/15 text-brand-accent border border-brand-accent/10">
                         FEATURED
                       </span>
-                      <span className="app-chip text-[9px] font-mono bg-neutral-900 text-neutral-500 border border-neutral-800/50 uppercase tracking-wide">
+                      <span className="app-chip text-[10px] font-sans font-normal bg-neutral-900 text-neutral-500 border border-neutral-800/50 uppercase tracking-wide">
                         IoT • Mobile
                       </span>
                     </div>
@@ -788,7 +788,7 @@ export default function Home() {
                     }}
                     className="z-10"
                   >
-                    <span className="text-[10px] uppercase font-mono font-bold tracking-wider text-brand-accent block">
+                    <span className="text-[10px] uppercase font-sans font-normal tracking-wider text-brand-accent block">
                       {proj.id === "raio-smart" ? "SMART HOME" : "REDESIGN"}
                     </span>
                     <h4 
@@ -823,7 +823,7 @@ export default function Home() {
             {/* More Projects block */}
             <div className="flex flex-col gap-6 w-full">
               <div className="flex items-center justify-between border-b border-neutral-900 pb-4">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500">
+                <span className="text-[10px] font-sans font-normal uppercase tracking-wider text-neutral-500">
                   MORE PROJECTS
                 </span>
                 <a href="#work" className="text-brand-accent text-xs font-bold inline-flex items-center gap-1 hover:underline">
@@ -893,7 +893,7 @@ export default function Home() {
                     </div>
 
                     <div className="flex flex-col gap-1 w-full">
-                      <span className="text-[9px] font-mono uppercase tracking-wide text-neutral-500">{proj.tags.join(" • ")}</span>
+                      <span className="text-[10px] font-sans font-normal uppercase tracking-wide text-neutral-500">{proj.tags.join(" • ")}</span>
                       <h4 className="text-[14px] font-bold text-white group-hover:text-brand-accent transition-colors leading-snug">{proj.title}</h4>
                       <p 
                         style={{ 
@@ -912,27 +912,14 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Sidebar Quote Box Card */}
-            <div className="p-6 border border-neutral-900 rounded-3xl bg-neutral-1000/20 text-center flex items-center justify-center">
-              <p 
-                style={{ 
-                  color: 'var(--Colors-Neutral-500, #989898)',
-                  fontFamily: '"Be Vietnam Pro", sans-serif',
-                  fontSize: '14px',
-                  fontWeight: 400,
-                  lineHeight: '18px',
-                  textAlign: 'center'
-                }}
-                className="italic max-w-xs"
-              >
-                &ldquo;Focused on creating seamless bridges between human intent and machine execution through thoughtful interface architecture.&rdquo;
-              </p>
-            </div>
-
           </div>
 
         </div>
 
+        {/* Scroll Indicator */}
+        <div className="flex items-center justify-center gap-2 text-brand-accent font-serif font-bold text-sm tracking-tight mt-16 animate-bounce">
+          <span>↓ Scroll for more projects</span>
+        </div>
       </section>
 
       {/* 
