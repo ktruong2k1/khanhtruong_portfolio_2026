@@ -1,0 +1,171 @@
+[
+  {
+    "id": "rogo-dashboard",
+    "title": "Rogo IoT Platform",
+    "tags": ["SaaS", "B2B", "Dashboard", "AI-assisted"],
+    "summary": "Built the control center for an entire IoT ecosystem — partners, devices, projects, and multi-tier access in one platform. 4 user roles · 3 partner brands · designed and shipped end-to-end.",
+    "skills": ["Role-based UX", "Whitelabel system", "AI-assisted dev"],
+    "coverImage": "dashboard",
+    "period": "2025",
+    "tier": 1,
+    "layout": "full",
+    "links": {
+      "caseStudy": "#",
+      "liveUrl": "https://dashboard.rogo.vn",
+      "figmaUrl": ""
+    },
+    "visible": true,
+    "techTokens": ["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"],
+    "specInfo": {
+      "components": "OrganizationSelector, PartnerQuotaMatrix, KeyConfigurator, AccessControlTable",
+      "whitelabelConfig": "SubdomainBranding, CSS_Variable_Theming, FaviconManager",
+      "states": "Streaming_Active, Connection_Retry, Access_Denied_Overlay, API_Timeout"
+    },
+    "caseStudyContent": {
+      "overview": "Rogo IoT Platform Dashboard là trung tâm điều khiển cho toàn bộ hệ sinh thái của Rogo Solutions, quản lý hàng triệu thiết bị thông minh từ các thương hiệu đối tác lớn. Dashboard giải quyết bài toán whitelabel thương hiệu và phân quyền phức tạp.",
+      "problem": "Hệ thống quản lý cũ rời rạc, không hỗ trợ đổi giao diện nhanh cho các đối tác mới (như Rạng Đông, Kangaroo). Dev team mất nhiều thời gian để code thủ công mỗi khi có brand mới, và phân quyền người dùng bị chồng chéo.",
+      "solution": "Xây dựng hệ thống Whitelabel UI động dựa trên CSS variables giúp đổi logo, màu sắc chủ đạo tức thì. Thiết lập phân quyền 4 nhóm vai trò (Admin, Operator, Partner, User) và tích hợp các logic xử lý ngoại lệ BLE/Wi-Fi onboarding.",
+      "result": "Rút ngắn thời gian bàn giao dự án (handoff) từ 2 tuần xuống còn vài phút nhờ cơ chế cấu hình động. Lập trình nhanh gấp 3 lần nhờ quy trình AI-accelerated workflow."
+    }
+  },
+  {
+    "id": "raio-smart",
+    "title": "RaIO Smart — Smart Home App (Whitelabel)",
+    "tags": ["IoT", "Mobile", "Whitelabel"],
+    "summary": "Smart home app that adapts to any partner's brand — same codebase, different identity. Designed complex device onboarding and real-time monitoring flows from zero to production.",
+    "skills": ["Complex-state UX", "Design system", "Dev handoff"],
+    "coverImage": "smarthome",
+    "period": "2025 – nay",
+    "tier": 1,
+    "layout": "half",
+    "links": {
+      "caseStudy": "#",
+      "figmaUrl": "https://figma.com/file/raio-smart",
+      "liveUrl": ""
+    },
+    "visible": true,
+    "techTokens": ["IoT", "Mobile SDK", "Whitelabel System", "Tailwind Variables"],
+    "specInfo": {
+      "components": "DeviceGrid, DeviceStatusCard, SceneTriggerSlider, ColorPickerHex",
+      "whitelabelConfig": "PrimaryBrandColor, AppLogoAsset, FontScheme, IconPackOverride",
+      "states": "BLE_Searching, BLE_Connected, Cloud_Synced, Offline_Fallback"
+    },
+    "caseStudyContent": {
+      "overview": "App Smart Home Whitelabel là cổng kết nối di động chính thức để khách hàng đối tác gia nhập hệ sinh thái IoT của Rogo. Dự án đòi hỏi tư duy thiết kế hệ thống có khả năng tái cấu trúc cao.",
+      "problem": "Các đối tác yêu cầu giao diện app mang đúng bản sắc thương hiệu của họ, nhưng dev team không thể duy trì hàng chục codebase khác nhau cho cùng một chức năng lõi.",
+      "solution": "Thiết kế một master design system trên Figma hỗ trợ tokenization toàn diện. Các thành phần điều khiển (bulb, switch, sensor) được đóng gói độc lập và cấu hình thông qua style guides.",
+      "result": "Phát hành thành công ứng dụng cho các đối tác lớn như Rạng Đông. 100% linh kiện hiển thị đúng màu thương hiệu mà không cần đổi logic code."
+    }
+  },
+  {
+    "id": "austfly",
+    "title": "Austfly — Roller Shutter App Redesign",
+    "tags": ["IoT", "UX Audit", "Case study"],
+    "summary": "Audited a legacy IoT app end-to-end — found friction, cut steps, rebuilt the flow. Result: fewer taps, one-hand use, cleaner visual hierarchy.",
+    "skills": ["UX audit", "Wireframe → hi-fi", "Design system"],
+    "coverImage": "austfly",
+    "period": "2025",
+    "tier": 1,
+    "layout": "half",
+    "links": {
+      "caseStudy": "#",
+      "behanceUrl": "https://behance.net/austfly",
+      "figmaUrl": ""
+    },
+    "visible": true,
+    "techTokens": ["IoT", "UX Audit", "Redesign", "Before/After Visuals"],
+    "specInfo": {
+      "components": "RollerShutterControlSlider, FavoritePresetsGrid, MaintenanceLogList",
+      "whitelabelConfig": "AustflyThemePreset, DefaultIconSet",
+      "states": "Opening_Percentage, Safety_Sensor_Blocked, Remote_Lockout"
+    },
+    "caseStudyContent": {
+      "overview": "Austfly là ứng dụng điều khiển cửa cuốn thông minh. Phiên bản cũ gặp nhiều phản hồi tiêu cực về việc khó thao tác bằng một tay khi đang di chuyển và giao diện lỗi thời.",
+      "problem": "Màn hình chính chứa quá nhiều nút bấm nhỏ, luồng mở cửa phụ phức tạp cần tới 4 lượt chạm, không có phản hồi trạng thái rõ ràng khi cửa đang chạy.",
+      "solution": "Thực hiện UX Audit, đơn giản hóa cấu trúc thông tin. Thay thế các nút nhỏ bằng cử chỉ vuốt (swipe-up to open) giúp dễ thao tác bằng một tay. Thiết kế đồ họa before/after trực quan.",
+      "result": "Giảm số bước thao tác chính từ 4 chạm xuống còn 1 chạm duy nhất. Điểm hài lòng của người dùng tăng từ 2.4 lên 4.6 trên App Store."
+    }
+  },
+  {
+    "id": "partner-app",
+    "title": "Partner Production App",
+    "tags": ["IoT", "Desktop"],
+    "summary": "Designed for the factory floor — researched on-site, then built UX for 6 device lifecycle stages end-to-end.",
+    "skills": ["Industrial UX", "Device Lifecycle", "Factory Testing Flow"],
+    "coverImage": "factory",
+    "period": "2025",
+    "tier": 2,
+    "layout": "third",
+    "links": {
+      "caseStudy": "#",
+      "figmaUrl": ""
+    },
+    "visible": true,
+    "techTokens": ["Desktop App", "Industrial UX", "Factory Testing Flow", "Device Lifecycle"],
+    "specInfo": {
+      "components": "FirmwareFlasherProgressBar, FactoryLineStatusGrid, LogConsoleViewer",
+      "whitelabelConfig": "FactoryProfilePreset, SerialNumberFormatter",
+      "states": "Firmware_Flashing, Quality_Test_Passed, Quality_Test_Failed, Device_Dead"
+    },
+    "caseStudyContent": {
+      "overview": "Ứng dụng Desktop dành cho các nhà máy đối tác chuyên sản xuất và nạp firmware thiết bị IoT. Đảm bảo năng suất làm việc cao cho công nhân trong môi trường sản xuất thực tế.",
+      "problem": "Phần mềm cũ chạy trên tablet có màn hình quá nhỏ, nút bấm bé dễ ấn nhầm và giao diện tương phản kém trong môi trường nhà máy nhiều cát bụi.",
+      "solution": "Khảo sát thực tế tại nhà máy (Field Research), chuyển đổi ứng dụng sang Desktop. Tăng kích cỡ chữ, tối ưu hóa giao diện tương phản cao và thiết kế cảnh báo lỗi bằng âm thanh kết hợp hình ảnh lớn.",
+      "result": "Tỷ lệ lỗi do ấn nhầm của công nhân giảm xuống gần 0%. Tốc độ nạp firmware và kiểm thử thiết bị tăng 25%."
+    }
+  },
+  {
+    "id": "thing-ai",
+    "title": "Thing AI VN — Brand Identity",
+    "tags": ["AI", "Branding"],
+    "summary": "Visual identity system for an AI startup — logo, color, type, built to scale across touchpoints.",
+    "skills": ["Brand Strategy", "Visual Identity", "Typography"],
+    "coverImage": "branding",
+    "period": "2025",
+    "tier": 2,
+    "layout": "third",
+    "links": {
+      "behanceUrl": "https://behance.net/thing-ai"
+    },
+    "visible": true,
+    "techTokens": ["AI Startup", "Logo Mark", "Style Guide", "Vector Craft"],
+    "specInfo": {
+      "components": "BrandMonogram, ColorPaletteHex, TypefaceScaleSystem",
+      "whitelabelConfig": "ThingAIPresetGuidelines",
+      "states": "Light_Background_Use, Dark_Background_Use, Micro_Logo_Use"
+    },
+    "caseStudyContent": {
+      "overview": "Xây dựng bộ nhận diện thương hiệu hoàn chỉnh cho Thing AI VN, một startup trong lĩnh vực ứng dụng trí tuệ nhân tạo vào sản phẩm thông minh.",
+      "problem": "Startup cần một hình ảnh thương hiệu hiện đại, mang tính công nghệ cao nhưng phải thân thiện và dễ nhớ đối với người dùng phổ thông.",
+      "solution": "Thiết kế logo dạng monogram tối giản kết hợp các khối hình học đối xứng đại diện cho kết nối nơ-ron. Thiết lập bộ màu neon kết hợp màu xám tối làm nổi bật tinh thần công nghệ.",
+      "result": "Bộ nhận diện được áp dụng đồng bộ trên website, slide thuyết trình và các ấn phẩm in ấn của startup, hỗ trợ định vị thương hiệu thành công."
+    }
+  },
+  {
+    "id": "labo-viet-my",
+    "title": "Labo Viet My — Website",
+    "tags": ["B2B", "Web design"],
+    "summary": "B2B website design — information hierarchy, layout system, and visual language for a professional audience.",
+    "skills": ["Information Architecture", "B2B Layout", "Medical Visuals"],
+    "coverImage": "medical",
+    "period": "2025",
+    "tier": 2,
+    "layout": "third",
+    "links": {
+      "caseStudy": "#"
+    },
+    "visible": true,
+    "techTokens": ["B2B Website", "UX Layout", "Medical Portal", "Responsive Web"],
+    "specInfo": {
+      "components": "DentalCatalogGrid, DoctorOrderPortalForm, PriceCalculatorWidget",
+      "whitelabelConfig": "ClinicSubDomainTheming",
+      "states": "Order_Submitting, Catalog_Filtering, Responsive_Mobile_View"
+    },
+    "caseStudyContent": {
+      "overview": "Website giới thiệu và đặt hàng cho Labo Việt Mỹ, trung tâm phục hình răng sứ chuyên nghiệp cung cấp sản phẩm cho các phòng khám nha khoa B2B.",
+      "problem": "Giao diện cũ khó tìm danh mục sản phẩm, biểu mẫu đặt hàng răng sứ phức tạp khiến nhân viên nha khoa mất nhiều thời gian nhập liệu.",
+      "solution": "Tái cấu trúc thông tin (Information Architecture), đưa danh mục răng sứ lên trang chính. Thiết kế biểu mẫu đặt hàng nhanh B2B thông minh có gợi ý kích thước.",
+      "result": "Tỷ lệ chuyển đổi đơn đặt hàng trực tuyến tăng 40%, giảm 50% thời gian xử lý yêu cầu đặt hàng so với gọi điện truyền thống."
+    }
+  }
+]

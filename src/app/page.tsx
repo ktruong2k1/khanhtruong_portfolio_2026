@@ -74,7 +74,65 @@ const experiencesData = [
   }
 ];
 
+const translations = {
+  vi: {
+    navWork: "Dự án",
+    navAbout: "Giới thiệu",
+    navContact: "Liên hệ",
+    availableRemote: "Làm việc từ xa",
+    heroSubheading: "Tôi thiết kế sản phẩm. Và tôi triển khai nó.",
+    heroParagraph: "Kết nối khoảng cách giữa tầm nhìn thẩm mỹ độ phân giải cao và khả năng kỹ thuật mạnh mẽ cho các nền tảng doanh nghiệp & IoT.",
+    emailMe: "Gửi email",
+    viewResume: "Xem Resume",
+    trustedBy: "ĐỐI TÁC TIN CẬY",
+    featuredBadge: "NỔI BẬT",
+    moreProjects: "DỰ ÁN KHÁC",
+    viewAll: "Xem tất cả",
+    scrollMore: "↓ Cuộn để xem thêm dự án",
+    copied: "Đã sao chép!",
+    contactModalTitle: "Gửi tin nhắn cho tôi",
+    contactModalDesc: "Viết tin nhắn ngắn gọn. Click gửi sẽ tự động tạo thư nháp gửi tới địa chỉ email quản trị ktruong2k1@gmail.com.",
+    contactModalLabel: "Nội dung tin nhắn",
+    contactModalPlaceholder: "Chào Trường, tôi muốn liên hệ công việc về...",
+    contactModalSubmit: "Gửi mail liên hệ (Draft)",
+    "rogo-dashboard-summary": "Bảng điều khiển IoT cấp doanh nghiệp được thiết kế cho quản lý thiết bị đa thương hiệu và mở rộng quy mô đội thiết bị. 4 vai trò người dùng · 3 thương hiệu đối tác · thiết kế và bàn giao end-to-end.",
+    "raio-smart-summary": "Ứng dụng nhà thông minh thích ứng với bất kỳ thương hiệu đối tác nào — cùng codebase, nhận diện khác nhau. Thiết kế luồng kết nối thiết bị và giám sát thời gian thực từ con số 0 đến sản phẩm hoàn chỉnh.",
+    "austfly-summary": "Đánh giá UX toàn diện ứng dụng di động điều khiển cửa cuốn IoT — tìm kiếm điểm nghẽn, tinh giản thao tác, tái cấu trúc luồng. Kết quả: thao tác chạm ít hơn, sử dụng một tay, phân cấp hình ảnh rõ ràng hơn.",
+    "partner-app-summary": "Thiết kế cho nhà xưởng sản xuất — nghiên cứu thực địa tại chỗ, sau đó xây dựng trải nghiệm UX cho 6 giai đoạn vòng đời thiết bị từ đầu đến cuối.",
+    "thing-ai-summary": "Hệ thống nhận diện thương hiệu cho startup AI — logo, màu sắc, kiểu chữ, xây dựng để mở rộng đồng bộ trên mọi điểm chạm.",
+    "labo-viet-my-summary": "Thiết kế trang web B2B — cấu trúc thông tin hợp lý, hệ thống bố cục và ngôn ngữ hình ảnh chuyên nghiệp dành cho đối tác y khoa."
+  },
+  en: {
+    navWork: "Work",
+    navAbout: "About",
+    navContact: "Contact",
+    availableRemote: "Available for Remote",
+    heroSubheading: "I design the product. Then I ship it.",
+    heroParagraph: "Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution for enterprise and IoT platforms.",
+    emailMe: "Email me",
+    viewResume: "View Resume",
+    trustedBy: "TRUSTED BY",
+    featuredBadge: "FEATURED",
+    moreProjects: "MORE PROJECTS",
+    viewAll: "View all",
+    scrollMore: "↓ Scroll for more projects",
+    copied: "Copied!",
+    contactModalTitle: "Send me a message",
+    contactModalDesc: "Write a short message. Clicking send will automatically create an email draft to the administrator address ktruong2k1@gmail.com.",
+    contactModalLabel: "Message content",
+    contactModalPlaceholder: "Hello Truong, I would like to contact you regarding...",
+    contactModalSubmit: "Send message (Draft)",
+    "rogo-dashboard-summary": "Enterprise-grade IoT Dashboard designed for multibrand device management and fleet scaling.",
+    "raio-smart-summary": "Whitelabel smart home app — partner-adaptive UI, complex device onboarding.",
+    "austfly-summary": "Full UX audit to hi-fi redesign — fewer steps, one-hand usability.",
+    "partner-app-summary": "Designed for the factory floor — researched on-site, then built UX for 6 device lifecycle stages end-to-end.",
+    "thing-ai-summary": "Visual identity system for an AI startup — logo, color, type, built to scale across touchpoints.",
+    "labo-viet-my-summary": "B2B website design — information hierarchy, layout system, and visual language for a professional audience."
+  }
+};
+
 export default function Home() {
+  const [lang, setLang] = useState<"vi" | "en">("vi");
   const [darkMode, setDarkMode] = useState(true);
   const [specMode, setSpecMode] = useState(false);
   const [projects, setProjects] = useState<Project[]>(localProjects as Project[]);
@@ -462,33 +520,51 @@ export default function Home() {
             href="#hero" 
             className={`relative py-1.5 transition-colors duration-150 ${activeSection === "hero" ? "text-brand-accent font-semibold" : "hover:text-brand-accent"}`}
           >
-            Work
+            {translations[lang].navWork}
             {activeSection === "hero" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent animate-growWidth"></span>}
           </a>
           <a 
             href="#about" 
             className={`relative py-1.5 transition-colors duration-150 ${activeSection === "about" ? "text-brand-accent font-semibold" : "hover:text-brand-accent"}`}
           >
-            About
+            {translations[lang].navAbout}
             {activeSection === "about" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent animate-growWidth"></span>}
           </a>
           <a 
             href="#contact" 
             className={`relative py-1.5 transition-colors duration-150 ${activeSection === "contact" ? "text-brand-accent font-semibold" : "hover:text-brand-accent"}`}
           >
-            Contact
+            {translations[lang].navContact}
             {activeSection === "contact" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent animate-growWidth"></span>}
           </a>
         </nav>
 
         {/* Right Area Badge and Theme Toggle */}
         <div className="flex items-center gap-4">
+          
+          {/* Language Switch */}
+          <div className="flex items-center border border-neutral-800 rounded-lg p-0.5 bg-neutral-950/80 text-[10px] font-medium select-none">
+            <button
+              onClick={() => setLang("vi")}
+              className={`px-2 py-0.5 rounded-md transition-all cursor-pointer ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+            >
+              VIE
+            </button>
+            <span className="text-neutral-800 px-0.5">|</span>
+            <button
+              onClick={() => setLang("en")}
+              className={`px-2 py-0.5 rounded-md transition-all cursor-pointer ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+            >
+              ENG
+            </button>
+          </div>
+
           <a 
             href="#contact" 
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-xs text-[#E5E5E5] font-semibold transition-colors duration-150"
           >
             <span className="w-2 h-2 bg-status-200 rounded-full animate-pulse"></span>
-            Available for Remote
+            {translations[lang].availableRemote}
           </a>
 
           {/* Mobile Hamburger */}
@@ -503,9 +579,9 @@ export default function Home() {
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-[76px] left-0 right-0 border-b border-neutral-900 bg-[var(--Colors-Neutral-1000,#181818)] px-6 py-4 flex flex-col gap-4 text-sm font-semibold z-50">
-            <a href="#hero" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "hero" ? "text-brand-accent" : ""}`}>Work</a>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "about" ? "text-brand-accent" : ""}`}>About</a>
-            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "contact" ? "text-brand-accent" : ""}`}>Contact</a>
+            <a href="#hero" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "hero" ? "text-brand-accent" : ""}`}>{translations[lang].navWork}</a>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "about" ? "text-brand-accent" : ""}`}>{translations[lang].navAbout}</a>
+            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "contact" ? "text-brand-accent" : ""}`}>{translations[lang].navContact}</a>
           </div>
         )}
 
@@ -551,7 +627,7 @@ export default function Home() {
                 Nguyễn Khánh Trường
               </h1>
               <h2 className="text-[20px] font-bold leading-[30px] text-brand-accent">
-                I design the product. Then I ship it.
+                {translations[lang].heroSubheading}
               </h2>
               <p 
                 style={{ 
@@ -563,7 +639,7 @@ export default function Home() {
                 }}
                 className="max-w-sm"
               >
-                Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution for enterprise and IoT platforms.
+                {translations[lang].heroParagraph}
               </p>
               
               {/* Action Buttons */}
@@ -572,14 +648,14 @@ export default function Home() {
                   onClick={() => setContactModalOpen(true)}
                   className="bg-brand-accent hover:bg-[#27b378] text-[#17211B] font-bold text-[14px] px-6 py-2.5 rounded-full transition-all duration-150 active:scale-[0.97]"
                 >
-                  Email me
+                  {translations[lang].emailMe}
                 </button>
                 <a
                   href="file:///Users/khanhtruongvu/Desktop/Portfolio/2026%20Portfolio/CV_NguyenKhanhTruong_2026.pdf"
                   target="_blank"
                   className="inline-flex items-center gap-2 border border-white/60 hover:bg-white/10 text-white font-bold text-[14px] px-6 py-2.5 rounded-full transition-all duration-150 active:scale-[0.97]"
                 >
-                  View Resume
+                  {translations[lang].viewResume}
                 </a>
               </div>
             </div>
@@ -589,7 +665,7 @@ export default function Home() {
           <div className="w-[368px] flex-shrink-0 relative flex flex-col gap-6 py-6 pl-0 pr-2 lg:pr-8">
             <div className="flex items-center">
               <span className="text-[10px] font-sans font-normal uppercase tracking-wider text-neutral-500 block">
-                TRUSTED BY
+                {translations[lang].trustedBy}
               </span>
             </div>
  
@@ -664,7 +740,7 @@ export default function Home() {
                 <div className="w-full flex items-center justify-between z-10">
                   <div className="flex items-center gap-3">
                     <span className="app-chip text-[10px] font-bold bg-brand-accent/15 text-brand-accent border border-brand-accent/10">
-                      FEATURED
+                      {translations[lang].featuredBadge}
                     </span>
                     <span className="app-chip text-[10px] font-sans font-normal bg-neutral-900 text-neutral-400 border border-neutral-800/50 uppercase tracking-wider">
                       PAAS • B2B
@@ -705,7 +781,7 @@ export default function Home() {
                       lineHeight: '18px'
                     }}
                   >
-                    Enterprise-grade IoT Dashboard designed for multibrand device management and fleet scaling.
+                    {translations[lang]['rogo-dashboard-summary']}
                   </p>
                 </div>
 
@@ -759,7 +835,7 @@ export default function Home() {
                   <div className="w-full flex items-center justify-between z-10">
                     <div className="flex items-center gap-2">
                       <span className="app-chip text-[9px] font-bold bg-brand-accent/15 text-brand-accent border border-brand-accent/10">
-                        FEATURED
+                        {translations[lang].featuredBadge}
                       </span>
                       <span className="app-chip text-[10px] font-sans font-normal bg-neutral-900 text-neutral-500 border border-neutral-800/50 uppercase tracking-wide">
                         IoT • Mobile
@@ -817,8 +893,8 @@ export default function Home() {
                       }}
                     >
                       {proj.id === "raio-smart" 
-                        ? "Whitelabel smart home app — partner-adaptive UI, complex device onboarding."
-                        : "Full UX audit to hi-fi redesign — fewer steps, one-hand usability."}
+                        ? translations[lang]['raio-smart-summary']
+                        : translations[lang]['austfly-summary']}
                     </p>
                   </div>
                 </div>
@@ -834,10 +910,10 @@ export default function Home() {
             <div className="flex flex-col gap-6 w-full">
               <div className="flex items-center justify-between border-b border-neutral-900 pb-4">
                 <span className="text-[10px] font-sans font-normal uppercase tracking-wider text-neutral-500">
-                  MORE PROJECTS
+                  {translations[lang].moreProjects}
                 </span>
                 <a href="#work" className="text-brand-accent text-xs font-bold inline-flex items-center gap-1 hover:underline">
-                  View all <ArrowRight size={12} />
+                  {translations[lang].viewAll} <ArrowRight size={12} />
                 </a>
               </div>
 
@@ -914,7 +990,7 @@ export default function Home() {
                           lineHeight: '18px'
                         }}
                       >
-                        {proj.summary}
+                        {translations[lang][`${proj.id}-summary` as keyof typeof translations.vi] || proj.summary}
                       </p>
                     </div>
                   </div>
@@ -928,7 +1004,7 @@ export default function Home() {
 
         {/* Scroll Indicator */}
         <div className="flex items-center justify-center gap-2 text-brand-accent font-serif font-bold text-sm tracking-tight mt-16 animate-bounce">
-          <span>↓ Scroll for more projects</span>
+          <span>{translations[lang].scrollMore}</span>
         </div>
       </section>
 
@@ -1136,20 +1212,20 @@ export default function Home() {
               <X size={15} />
             </button>
 
-            <h3 className="text-xl font-bold font-serif text-white mb-2">Send me a message</h3>
+            <h3 className="text-xl font-bold font-serif text-white mb-2">{translations[lang].contactModalTitle}</h3>
              <p className="text-xs text-slate-400 mb-4 leading-relaxed">
-               Viết tin nhắn ngắn gọn. Click gửi sẽ tự động tạo thư nháp gửi tới địa chỉ email quản trị <strong>ktruong2k1@gmail.com</strong>.
+               {translations[lang].contactModalDesc}
              </p>
 
             <form onSubmit={handleSendEmail} className="flex flex-col gap-4">
               <div>
-                <label className="text-[9px] uppercase font-mono font-bold text-slate-400 block mb-1">Nội dung tin nhắn</label>
+                <label className="text-[9px] uppercase font-mono font-bold text-slate-400 block mb-1">{translations[lang].contactModalLabel}</label>
                 <textarea
                   required
                   rows={4}
                   value={contactMessage}
                   onChange={e => setContactMessage(e.target.value)}
-                  placeholder="Chào Trường, tôi muốn liên hệ công việc về..."
+                  placeholder={translations[lang].contactModalPlaceholder}
                   className="w-full bg-[#111c30] border border-slate-800 rounded-xl p-3 text-xs focus:outline-none focus:border-brand-500 text-white leading-relaxed"
                 />
               </div>
@@ -1158,7 +1234,7 @@ export default function Home() {
                 type="submit"
                 className="bg-[#22C55E] hover:bg-[#16813D] text-[#17211B] font-semibold py-2.5 rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5"
               >
-                Gửi mail liên hệ (Draft)
+                {translations[lang].contactModalSubmit}
               </button>
             </form>
           </div>
