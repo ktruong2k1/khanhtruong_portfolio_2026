@@ -91,7 +91,7 @@ body {
   display: flex !important;
   width: 100% !important;
   justify-content: center !important;
-  align-items: flex-start !important;
+  align-items: stretch !important;
   background: var(--Colors-Neutral-1000, #181818) !important;
   color: var(--foreground);
   font-family: var(--font-sans);
@@ -101,10 +101,10 @@ body {
 
 .page-wrapper {
   display: flex !important;
-  width: 1440px !important;
+  width: 100% !important;
   flex-direction: column !important;
   justify-content: center !important;
-  align-items: flex-start !important;
+  align-items: stretch !important;
   background: var(--Colors-Neutral-1000, #181818) !important;
   position: relative;
   min-height: 100vh;

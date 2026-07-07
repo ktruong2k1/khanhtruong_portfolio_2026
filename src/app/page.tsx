@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { 
   Sun, 
@@ -88,7 +89,7 @@ const translations = {
     featuredBadge: "NỔI BẬT",
     moreProjects: "DỰ ÁN KHÁC",
     viewAll: "Xem tất cả",
-    scrollMore: "↓ Cuộn để xem thêm dự án",
+    scrollMore: "Cuộn để xem thêm dự án",
     copied: "Đã sao chép!",
     contactModalTitle: "Gửi tin nhắn cho tôi",
     contactModalDesc: "Viết tin nhắn ngắn gọn. Click gửi sẽ tự động tạo thư nháp gửi tới địa chỉ email quản trị ktruong2k1@gmail.com.",
@@ -98,9 +99,9 @@ const translations = {
     "rogo-dashboard-summary": "Bảng điều khiển IoT cấp doanh nghiệp được thiết kế cho quản lý thiết bị đa thương hiệu và mở rộng quy mô đội thiết bị. 4 vai trò người dùng · 3 thương hiệu đối tác · thiết kế và bàn giao end-to-end.",
     "raio-smart-summary": "Ứng dụng nhà thông minh thích ứng với bất kỳ thương hiệu đối tác nào — cùng codebase, nhận diện khác nhau. Thiết kế luồng kết nối thiết bị và giám sát thời gian thực từ con số 0 đến sản phẩm hoàn chỉnh.",
     "austfly-summary": "Đánh giá UX toàn diện ứng dụng di động điều khiển cửa cuốn IoT — tìm kiếm điểm nghẽn, tinh giản thao tác, tái cấu trúc luồng. Kết quả: thao tác chạm ít hơn, sử dụng một tay, phân cấp hình ảnh rõ ràng hơn.",
-    "partner-app-summary": "Thiết kế cho nhà xưởng sản xuất — nghiên cứu thực địa tại chỗ, sau đó xây dựng trải nghiệm UX cho 6 giai đoạn vòng đời thiết bị từ đầu đến cuối.",
-    "thing-ai-summary": "Hệ thống nhận diện thương hiệu cho startup AI — logo, màu sắc, kiểu chữ, xây dựng để mở rộng đồng bộ trên mọi điểm chạm.",
-    "labo-viet-my-summary": "Thiết kế trang web B2B — cấu trúc thông tin hợp lý, hệ thống bố cục và ngôn ngữ hình ảnh chuyên nghiệp dành cho đối tác y khoa."
+    "partner-app-summary": "Nghiên cứu thực tế tại nhà xưởng — bao quát toàn bộ vòng đời thiết bị từ firmware đến bảo hành.",
+    "thing-ai-summary": "Hệ thống nhận diện thương hiệu cho startup AI — logo, màu sắc và kiểu chữ xây dựng để mở rộng.",
+    "labo-viet-my-summary": "Thiết kế website B2B — cấu trúc thông tin và ngôn ngữ hình ảnh chuyên nghiệp cho đối tác y khoa."
   },
   en: {
     navWork: "Work",
@@ -115,7 +116,7 @@ const translations = {
     featuredBadge: "FEATURED",
     moreProjects: "MORE PROJECTS",
     viewAll: "View all",
-    scrollMore: "↓ Scroll for more projects",
+    scrollMore: "Scroll for more projects",
     copied: "Copied!",
     contactModalTitle: "Send me a message",
     contactModalDesc: "Write a short message. Clicking send will automatically create an email draft to the administrator address ktruong2k1@gmail.com.",
@@ -125,20 +126,103 @@ const translations = {
     "rogo-dashboard-summary": "Enterprise-grade IoT Dashboard designed for multibrand device management and fleet scaling.",
     "raio-smart-summary": "Whitelabel smart home app — partner-adaptive UI, complex device onboarding.",
     "austfly-summary": "Full UX audit to hi-fi redesign — fewer steps, one-hand usability.",
-    "partner-app-summary": "Designed for the factory floor — researched on-site, then built UX for 6 device lifecycle stages end-to-end.",
-    "thing-ai-summary": "Visual identity system for an AI startup — logo, color, type, built to scale across touchpoints.",
-    "labo-viet-my-summary": "B2B website design — information hierarchy, layout system, and visual language for a professional audience."
+    "partner-app-summary": "Field-researched at the factory floor — covers the full device lifecycle from firmware to warranty.",
+    "thing-ai-summary": "Visual identity system for an AI startup — logo, color, and type built to scale.",
+    "labo-viet-my-summary": "B2B website design — information hierarchy and visual language for a professional audience."
   }
 };
 
 export default function Home() {
+  const router = useRouter();
   const [lang, setLang] = useState<"vi" | "en">("vi");
+
+  useEffect(() => {
+    const savedLang = typeof window !== 'undefined' ? localStorage.getItem("portfolio_lang") as "vi" | "en" : null;
+    if (savedLang && (savedLang === "vi" || savedLang === "en")) {
+      setLang(savedLang);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("portfolio_lang", lang);
+    }
+  }, [lang]);
+
   const [darkMode, setDarkMode] = useState(true);
   const [specMode, setSpecMode] = useState(false);
   const [projects, setProjects] = useState<Project[]>(localProjects as Project[]);
   const [activeSection, setActiveSection] = useState("hero");
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const [isStuck, setIsStuck] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [bannerHeight, setBannerHeight] = useState("64px");
+
+  // Scroll to works transition
+  useEffect(() => {
+    // Disable transition redirect for the first 800ms to allow scroll position restoration
+    let canRedirect = false;
+    const enableTimer = setTimeout(() => {
+      canRedirect = true;
+    }, 800);
+
+    const handleScrollTransition = () => {
+      setScrolledPastHero(window.scrollY > 150);
+
+      // Check if user has scrolled close to the bottom scroll placeholder
+      const placeholder = document.getElementById("scroll-placeholder");
+      if (placeholder) {
+        const rect = placeholder.getBoundingClientRect();
+        // Sticky triggers later (reduce sticky height) when the placeholder is scrolled higher up
+        if (rect.top <= window.innerHeight - 120) {
+          setIsStuck(true);
+
+          // Calculate how much we have scrolled past the sticky start point
+          const overflowScroll = (window.innerHeight - 120) - rect.top;
+          const threshold = window.innerHeight * 0.20; // 20% of viewport height
+
+          if (!isTransitioning) {
+            const calculatedHeight = Math.max(64, 64 + overflowScroll);
+
+            if (calculatedHeight >= threshold) {
+              // Reached 20% height: trigger full-screen transition expansion!
+              setIsTransitioning(true);
+              setBannerHeight("100vh");
+              setTimeout(() => {
+                router.push("/works");
+              }, 600);
+            } else {
+              // Grow height dynamically with scroll
+              setBannerHeight(`${calculatedHeight}px`);
+            }
+          }
+        } else {
+          setIsStuck(false);
+          if (!isTransitioning) {
+            setBannerHeight("64px");
+          }
+        }
+      }
+
+      // Check if user has scrolled past the placeholder to trigger smart animate and redirect
+      if (canRedirect && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
+        if (!isTransitioning) {
+          setIsTransitioning(true);
+          setBannerHeight("100vh");
+          setTimeout(() => {
+            router.push("/works");
+          }, 600);
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScrollTransition);
+    return () => {
+      clearTimeout(enableTimer);
+      window.removeEventListener("scroll", handleScrollTransition);
+    };
+  }, [router, isTransitioning]);
   
   // Modals state
   const [contactModalOpen, setContactModalOpen] = useState(false);
@@ -314,8 +398,8 @@ export default function Home() {
           <svg className="w-full h-full bg-[#0d1016]" viewBox="0 0 380 240" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Before (Left Screen) */}
             <rect x="35" y="25" width="125" height="185" rx="6" fill="#0b0e14" stroke={strokeColor} />
-            <text x="97" y="42" fill="#475569" fontSize="6.5" fontWeight="bold" fontFamily="monospace" textAnchor="middle">BEFORE</text>
-            <text x="97" y="55" fill="#475569" fontSize="9" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">AUSTFLY</text>
+            <text x="97" y="42" fill="#475569" fontSize="6.5" fontWeight="bold" fontFamily="var(--font-sans), sans-serif" textAnchor="middle">BEFORE</text>
+            <text x="97" y="55" fill="#475569" fontSize="9" fontWeight="bold" fontFamily="var(--font-sans), sans-serif" textAnchor="middle">AUSTFLY</text>
             <circle cx="97.5" cy="100" r="22" fill="#1e293b" opacity="0.4" stroke={strokeColor} strokeWidth="1" />
             {/* Cluttered small buttons */}
             <rect x="50" y="135" width="24" height="12" rx="2" fill="#1e293b" opacity="0.4" />
@@ -328,11 +412,11 @@ export default function Home() {
             {/* Splitter Line with Redesign Indicator */}
             <line x1="190" y1="15" x2="190" y2="225" stroke={strokeColor} strokeWidth="1.5" strokeDasharray="3 3" />
             <rect x="165" y="110" width="50" height="15" rx="4" fill="#22C55E" stroke="#16813D" strokeWidth="1" />
-            <text x="190" y="120" fill="#17211B" fontSize="6.5" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">Redesign</text>
+            <text x="190" y="120" fill="#17211B" fontSize="6.5" fontWeight="bold" fontFamily="var(--font-sans), sans-serif" textAnchor="middle">Redesign</text>
 
             {/* After (Right Screen) */}
             <rect x="220" y="25" width="125" height="185" rx="6" fill="#111c30" stroke={accentColor} strokeWidth="1.5" />
-            <text x="282.5" y="42" fill={accentColor} fontSize="6.5" fontWeight="bold" fontFamily="monospace" textAnchor="middle">AFTER</text>
+            <text x="282.5" y="42" fill={accentColor} fontSize="6.5" fontWeight="bold" fontFamily="var(--font-sans), sans-serif" textAnchor="middle">AFTER</text>
             <text x="282.5" y="55" fill="#f8fafc" fontSize="9" fontWeight="950" fontFamily="sans-serif" textAnchor="middle">austfly</text>
             {/* Shutter graphic */}
             <rect x="235" y="70" width="95" height="75" rx="8" fill="#13233c" stroke={strokeColor} />
@@ -363,8 +447,8 @@ export default function Home() {
             {/* Main Content Area */}
             <rect x="130" y="70" width="200" height="30" rx="4" fill="#13233c" stroke={strokeColor} />
             <rect x="140" y="82" width="140" height="6" rx="3" fill={accentColor} />
-            <text x="315" y="88" fill={accentColor} fontSize="8" fontFamily="monospace" fontWeight="bold">82%</text>
-            <text x="140" y="62" fill="#94a3b8" fontSize="6.5" fontFamily="monospace">Firmware Flashing Status</text>
+            <text x="315" y="88" fill={accentColor} fontSize="8" fontFamily="var(--font-sans), sans-serif" fontWeight="bold">82%</text>
+            <text x="140" y="62" fill="#94a3b8" fontSize="6.5" fontFamily="var(--font-sans), sans-serif">Firmware Flashing Status</text>
 
             <rect x="130" y="115" width="95" height="70" rx="4" fill="#13233c" stroke={strokeColor} />
             <rect x="235" y="115" width="95" height="70" rx="4" fill="#13233c" stroke={strokeColor} />
@@ -492,16 +576,18 @@ export default function Home() {
         style={{
           display: 'flex',
           height: '76px',
-          padding: 'var(--Spacing-Padding-L, 16px) var(--Spacing-Padding-5XL, 48px)',
+          padding: 'var(--Spacing-Padding-L, 16px) 100px',
           justifyContent: 'space-between',
           alignItems: 'center',
           alignSelf: 'stretch',
           borderBottom: '1px solid var(--Colors-Neutral-800, #4B4B4B)',
-          background: 'var(--Colors-Neutral-1000, #181818)'
+          background: 'var(--Colors-Neutral-1000, #181818)',
+          width: '100%',
+          position: 'relative'
         }}
         className="w-full sticky top-0 z-40 transition-all duration-300"
       >
-        {/* Logo with Green Concentric Arcs */}
+        {/* Left: Logo */}
         <a href="#hero" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight hover:scale-105 transition-transform duration-150">
           <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-brand-accent">
             <path d="M8 6C6.5 8.5 6 11.5 6 14 C 6 16.5, 6.5 19.5, 8 22" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
@@ -511,56 +597,84 @@ export default function Home() {
           <span>khanhtruong_nguyen</span>
         </a>
 
-        {/* Navigation Links (Desktop) */}
+        {/* Center: Navigation Links (Desktop) - Unselected state on Home Page */}
         <nav 
-          style={{ gap: 'var(--spacing-m, 16px)' }}
-          className="hidden md:flex items-center text-[14px] font-medium"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '32px',
+            height: '100%',
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)'
+          }}
+          className="hidden md:flex text-sm font-semibold"
         >
           <a 
-            href="#hero" 
-            className={`relative py-1.5 transition-colors duration-150 ${activeSection === "hero" ? "text-brand-accent font-semibold" : "hover:text-brand-accent"}`}
+            href="/works" 
+            style={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              position: 'relative',
+              color: '#989898'
+            }}
+            className="hover:text-white transition-colors"
           >
             {translations[lang].navWork}
-            {activeSection === "hero" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent animate-growWidth"></span>}
           </a>
           <a 
-            href="#about" 
-            className={`relative py-1.5 transition-colors duration-150 ${activeSection === "about" ? "text-brand-accent font-semibold" : "hover:text-brand-accent"}`}
+            href="/about" 
+            style={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              position: 'relative',
+              color: '#989898'
+            }}
+            className="hover:text-white transition-colors"
           >
             {translations[lang].navAbout}
-            {activeSection === "about" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent animate-growWidth"></span>}
           </a>
           <a 
-            href="#contact" 
-            className={`relative py-1.5 transition-colors duration-150 ${activeSection === "contact" ? "text-brand-accent font-semibold" : "hover:text-brand-accent"}`}
+            href="/contact" 
+            style={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              position: 'relative',
+              color: '#989898'
+            }}
+            className="hover:text-white transition-colors"
           >
             {translations[lang].navContact}
-            {activeSection === "contact" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent animate-growWidth"></span>}
           </a>
         </nav>
 
-        {/* Right Area Badge and Theme Toggle */}
+        {/* Right Area Badge and Language Switch */}
         <div className="flex items-center gap-4">
-          
           {/* Language Switch */}
-          <div className="flex items-center border border-neutral-800 rounded-lg p-0.5 bg-neutral-950/80 text-[10px] font-medium select-none">
+          <div 
+            style={{ height: '30px' }}
+            className="flex items-center rounded-full p-0.5 bg-neutral-950/80 text-[10px] font-medium select-none"
+          >
             <button
               onClick={() => setLang("vi")}
-              className={`px-2 py-0.5 rounded-md transition-all cursor-pointer ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
             >
               VIE
             </button>
             <span className="text-neutral-800 px-0.5">|</span>
             <button
               onClick={() => setLang("en")}
-              className={`px-2 py-0.5 rounded-md transition-all cursor-pointer ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
             >
               ENG
             </button>
           </div>
 
           <a 
-            href="#contact" 
+            href="/contact" 
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-xs text-[#E5E5E5] font-semibold transition-colors duration-150"
           >
             <span className="w-2 h-2 bg-status-200 rounded-full animate-pulse"></span>
@@ -579,34 +693,41 @@ export default function Home() {
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-[76px] left-0 right-0 border-b border-neutral-900 bg-[var(--Colors-Neutral-1000,#181818)] px-6 py-4 flex flex-col gap-4 text-sm font-semibold z-50">
-            <a href="#hero" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "hero" ? "text-brand-accent" : ""}`}>{translations[lang].navWork}</a>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "about" ? "text-brand-accent" : ""}`}>{translations[lang].navAbout}</a>
-            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className={`py-2 transition-colors ${activeSection === "contact" ? "text-brand-accent" : ""}`}>{translations[lang].navContact}</a>
+            <a href="/works" onClick={() => setMobileMenuOpen(false)} className="py-2 text-neutral-400 hover:text-white transition-colors">{translations[lang].navWork}</a>
+            <a href="/about" onClick={() => setMobileMenuOpen(false)} className="py-2 text-neutral-400 hover:text-white transition-colors">{translations[lang].navAbout}</a>
+            <a href="/contact" onClick={() => setMobileMenuOpen(false)} className="py-2 text-neutral-400 hover:text-white transition-colors">{translations[lang].navContact}</a>
           </div>
         )}
 
         {/* Spec Label for Header */}
         {specMode && (
-          <div className="absolute bottom-0 left-0 right-0 bg-red-950/20 text-red-400 border-t border-red-200/50 px-6 py-1 text-[10px] font-sans font-normal flex items-center justify-between z-40">
+          <div className="absolute bottom-0 left-0 right-0 bg-red-950/20 text-red-400 border-t border-red-200/50 px-[100px] py-1 text-[10px] font-sans font-normal flex items-center justify-between z-40">
             <span>Class: sticky top-0 | Height: 76px</span>
-            <span>Padding: py-4 px-12 | Border-B: 1px</span>
+            <span>Padding: py-4 px-100 | Border-B: 1px</span>
           </div>
         )}
       </header>
 
       {/* HERO SECTION */}
       <section id="hero" className="w-full px-[100px] py-[40px] relative flex justify-center">
-        <div className="flex max-w-[1200px] w-full items-center gap-[32px]">
+        <div 
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '2fr 1fr',
+            gap: '32px',
+            width: '100%'
+          }}
+          className="items-center"
+        >
           
           {/* Left Column: Portrait & Text content */}
           <div 
-            className="flex flex-row items-center"
+            className="flex flex-row items-center w-full"
             style={{
               display: 'flex',
-              width: '800px',
               alignItems: 'center',
               gap: 'var(--Spacing-xl, 24px)',
-              flexShrink: 0
+              flexShrink: 1
             }}
           >
             {/* Portrait Image */}
@@ -662,7 +783,7 @@ export default function Home() {
           </div>
 
           {/* Right Column: Client Logos (Aligned with heading, padding adjusted, initials badge removed) */}
-          <div className="w-[368px] flex-shrink-0 relative flex flex-col gap-6 py-6 pl-0 pr-2 lg:pr-8">
+          <div className="w-full relative flex flex-col gap-6 py-6 pl-0 pr-2">
             <div className="flex items-center">
               <span className="text-[10px] font-sans font-normal uppercase tracking-wider text-neutral-500 block">
                 {translations[lang].trustedBy}
@@ -695,11 +816,11 @@ export default function Home() {
       <section id="work" className="w-full px-[100px] py-[40px] relative flex flex-col items-center">
         <div 
           style={{
-            display: 'flex',
-            maxWidth: '1200px',
+            display: 'grid',
+            gridTemplateColumns: '2fr 1fr',
+            gap: '32px',
             width: '100%',
-            alignItems: 'flex-start',
-            gap: '32px'
+            alignItems: 'flex-start'
           }}
         >
           
@@ -711,18 +832,18 @@ export default function Home() {
               gap: 'var(--Spacing-2xl, 32px)',
               alignSelf: 'stretch',
               flexDirection: 'column',
-              width: '796px',
-              flexShrink: 0
+              width: '100%',
+              flexShrink: 1
             }}
           >
             
-            {/* Project 1: Hero Project (Rogo IoT Platform Box - exactly 796px x 236px) */}
+            {/* Project 1: Hero Project (Rogo IoT Platform Box - 2:1 ratio, filling left column) */}
             {featuredProjects[0] && (
               <div 
                 className="relative group border border-neutral-900 hover:border-brand-accent rounded-3xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1"
                 style={{
                   display: 'flex',
-                  width: '796px',
+                  width: '100%',
                   height: '236px',
                   padding: '24px',
                   flexDirection: 'column',
@@ -817,13 +938,13 @@ export default function Home() {
                   className="relative group border border-neutral-900 hover:border-brand-accent rounded-3xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1"
                   style={{
                     display: 'flex',
-                    width: '390px',
+                    flex: '1 1 0%',
                     height: '238px',
                     padding: '16px',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     alignItems: 'flex-start',
-                    flexShrink: 0
+                    flexShrink: 1
                   }}
                 >
                   {/* Background mockup graphic */}
@@ -904,7 +1025,7 @@ export default function Home() {
           </div>
 
           {/* RIGHT COLUMN: MORE PROJECTS & SIDEBAR QUOTE */}
-          <div className="flex flex-col gap-8 w-[372px] flex-shrink-0">
+          <div className="flex flex-col gap-8 w-full flex-shrink">
             
             {/* More Projects block */}
             <div className="flex flex-col gap-6 w-full">
@@ -912,7 +1033,7 @@ export default function Home() {
                 <span className="text-[10px] font-sans font-normal uppercase tracking-wider text-neutral-500">
                   {translations[lang].moreProjects}
                 </span>
-                <a href="#work" className="text-brand-accent text-xs font-bold inline-flex items-center gap-1 hover:underline">
+                <a href="/works" className="text-brand-accent text-xs font-bold inline-flex items-center gap-1 hover:underline">
                   {translations[lang].viewAll} <ArrowRight size={12} />
                 </a>
               </div>
@@ -933,20 +1054,21 @@ export default function Home() {
                     key={proj.id}
                     style={{
                       display: 'flex',
-                      padding: '8px',
+                      padding: '16px',
                       alignItems: 'center',
-                      gap: 'var(--Spacing-s, 12px)',
+                      gap: '16px',
                       alignSelf: 'stretch',
-                      borderRadius: '8px',
-                      background: 'var(--Colors-Neutral-900, #323232)'
+                      borderRadius: '16px',
+                      background: '#1E1E1E',
+                      border: '1px solid rgba(255, 255, 255, 0.05)'
                     }}
-                    className="transition-all duration-150 relative group"
+                    className="transition-all duration-150 relative group hover:bg-[#252525] hover:border-brand-accent/30"
                   >
-                    {/* Small Colored box icon */}
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    {/* Small Box Icon */}
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden bg-[#2C2C2E]">
                       {proj.id === "partner-app" ? (
-                        <div className="w-full h-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <div className="w-full h-full flex items-center justify-center text-neutral-300">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <rect x="3" y="3" width="7" height="7" rx="1" />
                             <rect x="14" y="3" width="7" height="7" rx="1" />
                             <rect x="14" y="14" width="7" height="7" rx="1" />
@@ -955,8 +1077,8 @@ export default function Home() {
                         </div>
                       ) : proj.id === "thing-ai" ? (
                         <div className="w-full h-full flex items-center justify-center">
-                          {/* Stylized Owl Face with exact colors matching screenshot */}
-                          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          {/* Stylized Owl Face filling the container */}
+                          <svg width="100%" height="100%" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="40" height="40" rx="8" fill="#00D2FF" />
                             <circle cx="14" cy="20" r="7" fill="white" />
                             <circle cx="14" cy="20" r="3.5" fill="#1E293B" />
@@ -969,8 +1091,8 @@ export default function Home() {
                           </svg>
                         </div>
                       ) : (
-                        <div className="w-full h-full bg-slate-500/10 text-slate-400 flex items-center justify-center">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <div className="w-full h-full flex items-center justify-center text-neutral-300">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M3 3v18h18" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M18.7 8l-5.1 5.2-2.8-2.7-4.7 4.7" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
@@ -979,34 +1101,102 @@ export default function Home() {
                     </div>
 
                     <div className="flex flex-col gap-1 w-full">
-                      <span className="text-[10px] font-sans font-normal uppercase tracking-wide text-neutral-500">{proj.tags.join(" • ")}</span>
-                      <h4 className="text-[14px] font-bold text-white group-hover:text-brand-accent transition-colors leading-snug">{proj.title}</h4>
-                      <p 
-                        style={{ 
-                          color: 'var(--Colors-Neutral-500, #989898)',
-                          fontFamily: '"Be Vietnam Pro", sans-serif',
-                          fontSize: '14px',
-                          fontWeight: 400,
-                          lineHeight: '18px'
-                        }}
-                      >
+                      <span className="text-[10px] font-sans font-medium uppercase tracking-wider text-neutral-400">
+                        {proj.tags.join(" · ")}
+                      </span>
+                      <h4 className="text-[18px] font-serif font-bold text-white group-hover:text-brand-accent transition-colors duration-150 leading-snug">
+                        {proj.title}
+                      </h4>
+                      <p className="text-[13px] font-sans text-neutral-400 font-normal leading-normal mt-0.5">
                         {translations[lang][`${proj.id}-summary` as keyof typeof translations.vi] || proj.summary}
                       </p>
                     </div>
                   </div>
                 ))}
+
               </div>
             </div>
 
           </div>
 
         </div>
-
-        {/* Scroll Indicator */}
-        <div className="flex items-center justify-center gap-2 text-brand-accent font-serif font-bold text-sm tracking-tight mt-16 animate-bounce">
-          <span>{translations[lang].scrollMore}</span>
-        </div>
       </section>
+
+      {/* Static scroll placeholder at the bottom of the home content */}
+      <div 
+        id="scroll-placeholder"
+        className="w-full flex justify-center py-10"
+        style={{ background: '#0B0B0C' }}
+      >
+        {!isStuck && (
+          <div 
+            style={{
+              color: '#E8C468',
+              fontFamily: 'var(--font-serif), serif',
+              fontWeight: 'bold',
+              fontSize: '15px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            <span className="animate-bounce inline-block">↓</span>
+            <span>{translations[lang].scrollMore}</span>
+          </div>
+        )}
+      </div>
+
+      {/* STICKY BOTTOM BANNER */}
+      {isStuck && (
+        <div 
+          onClick={() => {
+            if (!isTransitioning) {
+              setIsTransitioning(true);
+              setTimeout(() => {
+                router.push("/works");
+              }, 600);
+            }
+          }}
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            backgroundColor: isTransitioning ? 'rgba(13, 43, 34, 1)' : 'rgba(13, 43, 34, 0.8)',
+            backdropFilter: 'blur(12px)',
+            borderTop: isTransitioning ? 'none' : '1px solid rgba(34, 197, 94, 0.3)',
+            padding: '20px 100px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '8px',
+            cursor: 'pointer',
+            zIndex: 9999,
+            color: '#E8C468',
+            fontFamily: 'var(--font-serif), serif',
+            fontWeight: 'bold',
+            fontSize: '16px',
+            height: bannerHeight,
+            transition: isTransitioning 
+              ? 'height 600ms cubic-bezier(0.25, 1, 0.5, 1), background-color 600ms ease, border-top-color 600ms ease'
+              : 'background-color 300ms ease, border-top-color 300ms ease'
+          }}
+          className="hover:bg-opacity-95"
+        >
+          <div 
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              opacity: isTransitioning ? 0 : 1,
+              transition: 'opacity 300ms ease'
+            }}
+          >
+            <span className="animate-bounce inline-block">↓</span>
+            <span>{translations[lang].scrollMore}</span>
+          </div>
+        </div>
+      )}
 
       {/* 
       All sections below (About, Timeline, Skills, Contact, Footer) are hidden per design request
@@ -1016,7 +1206,7 @@ export default function Home() {
           {/* ABOUT SECTION */}
           <section id="about" className="w-full bg-slate-50 dark:bg-[var(--Colors-Neutral-1000,#181818)] px-[100px] py-[40px] relative">
             {specMode && (
-              <div className="absolute top-2 left-6 bg-red-600/10 border border-red-500/30 text-red-500 text-[9px] font-mono px-2 py-0.5 rounded">
+              <div className="absolute top-2 left-[100px] bg-red-600/10 border border-red-500/30 text-red-500 text-[9px] font-mono px-2 py-0.5 rounded">
                 Section #about | Proportions: 2 columns Bio (Left) vs How I Work (Right)
               </div>
             )}
