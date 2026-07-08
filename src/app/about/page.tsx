@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Mail, Check, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const translations = {
   vi: {
@@ -29,6 +30,14 @@ const translations = {
 
 export default function AboutPage() {
   const [lang, setLang] = useState<"vi" | "en">("vi");
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("ktruong2k1@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   useEffect(() => {
     const savedLang = typeof window !== 'undefined' ? localStorage.getItem("portfolio_lang") as "vi" | "en" : null;
@@ -65,10 +74,13 @@ export default function AboutPage() {
         className="w-full sticky top-0 z-40"
       >
         <Link href="/" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight">
-          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-brand-accent">
-            <path d="M8 6C6.5 8.5 6 11.5 6 14 C 6 16.5, 6.5 19.5, 8 22" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-            <path d="M12 9.5C11 11 10.5 12.5 10.5 14 C 10.5 15.5, 11 17, 12 18.5" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-            <path d="M16 13C15.8 13.5 15.7 13.8 15.7 14 C 15.7 14.2, 15.8 14.5, 16 15" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <mask id="header-logo-mask-about">
+              <rect width="28" height="28" fill="white" />
+              <path d="M12 0C6 8 6 20 12 28" stroke="black" strokeWidth="2.5" fill="none" />
+              <path d="M20 0C14 8 14 20 20 28" stroke="black" strokeWidth="2.5" fill="none" />
+            </mask>
+            <circle cx="14" cy="14" r="14" fill="#22C55E" mask="url(#header-logo-mask-about)" />
           </svg>
           khanhtruong_nguyen
         </Link>
@@ -100,7 +112,35 @@ export default function AboutPage() {
             {t.navAbout}
             <span style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '2px', backgroundColor: '#22C55E' }}></span>
           </Link>
-          <Link href="/contact" className="text-neutral-400 hover:text-white transition-colors">{t.navContact}</Link>
+          <button 
+            onClick={() => setContactModalOpen(true)}
+            style={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              position: 'relative',
+              color: contactModalOpen ? '#22C55E' : '#989898',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0
+            }}
+            className={`hover:text-white transition-colors font-sans ${contactModalOpen ? 'font-bold' : ''}`}
+          >
+            {t.navContact}
+            {contactModalOpen && (
+              <span 
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '2px',
+                  backgroundColor: '#22C55E'
+                }}
+              />
+            )}
+          </button>
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
@@ -112,14 +152,13 @@ export default function AboutPage() {
               onClick={() => setLang("vi")} 
               className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
             >
-              VIE
+              Vie
             </button>
-            <span className="text-neutral-800 px-0.5">|</span>
             <button 
               onClick={() => setLang("en")} 
               className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
             >
-              ENG
+              Eng
             </button>
           </div>
 
@@ -169,6 +208,190 @@ export default function AboutPage() {
           {t.backHome}
         </Link>
       </main>
+
+      {/* CONTACT DIALOG */}
+      <div 
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 99999,
+          pointerEvents: contactModalOpen ? 'auto' : 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '24px',
+          transition: 'all 300ms ease-out'
+        }}
+      >
+        {/* Backdrop overlay */}
+        <div 
+          onClick={() => setContactModalOpen(false)}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            backdropFilter: 'blur(8px)',
+            opacity: contactModalOpen ? 1 : 0,
+            transition: 'opacity 300ms ease-out'
+          }}
+        />
+
+        {/* Dialog Panel */}
+        <div 
+          style={{
+            position: 'relative',
+            width: '100%',
+            maxWidth: '800px',
+            background: '#181818',
+            borderRadius: '16px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            transform: contactModalOpen ? 'scale(1)' : 'scale(0.95)',
+            opacity: contactModalOpen ? 1 : 0,
+            transition: 'transform 300ms cubic-bezier(0.25, 1, 0.5, 1), opacity 300ms ease-out',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            padding: '32px 24px 40px 24px',
+            overflowY: 'auto'
+          }}
+        >
+          {/* Close button */}
+          <button 
+            onClick={() => setContactModalOpen(false)}
+            className="text-neutral-400 hover:text-white transition-colors cursor-pointer mb-6 p-1 rounded-lg hover:bg-neutral-800 self-start"
+            style={{ background: 'none', border: 'none', marginLeft: '16px' }}
+          >
+            <X size={20} />
+          </button>
+
+          {/* Two-Column split layout */}
+          <div className="flex flex-col md:flex-row w-full items-start gap-0">
+            
+            {/* Left Column: Profile Card */}
+            <div 
+              style={{
+                display: 'flex',
+                padding: '8px 24px',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                alignSelf: 'stretch'
+              }}
+              className="border-b md:border-b-0 md:border-r border-neutral-800 pb-8 md:pb-0"
+            >
+              {/* Profile Card contents (avatar left, name right) */}
+              <div className="flex items-center gap-4">
+                <div 
+                  style={{
+                    position: 'relative',
+                    width: '64px',
+                    height: '64px',
+                    borderRadius: '9999px',
+                    overflow: 'hidden',
+                    border: '1px solid #262626',
+                    backgroundColor: '#171717',
+                    flexShrink: 0
+                  }}
+                >
+                  <Image 
+                    src="/images/mini_avatar.png" 
+                    alt="Nguyen Khanh Truong" 
+                    fill 
+                    sizes="64px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span 
+                    style={{
+                      color: 'var(--Colors-Neutral-100, #FFF)',
+                      fontFamily: 'Fraunces, Georgia, serif',
+                      fontSize: '20px',
+                      fontStyle: 'normal',
+                      fontWeight: 700,
+                      lineHeight: '30px'
+                    }}
+                  >
+                    {lang === "vi" ? "Nguyễn Khánh Trường" : "Nguyen Khanh Truong"}
+                  </span>
+                  <span className="text-xs text-brand-accent font-medium mt-0.5">Product Designer</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Actions */}
+            <div 
+              style={{
+                display: 'flex',
+                padding: '8px 24px',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                flex: '1 0 0px'
+              }}
+              className="pt-8 md:pt-0"
+            >
+              {/* Title */}
+              <h2 className="text-3xl font-serif font-extrabold text-white mb-6 leading-tight">
+                {lang === "vi" ? "Hãy cùng làm việc." : "Let's work together."}
+              </h2>
+
+              {/* Copy Email CTA */}
+              <div className="w-full flex flex-col gap-2 mb-6">
+                <button
+                  onClick={handleCopyEmail}
+                  className="bg-[#22C55E] hover:bg-[#1f9e4e] text-[#17211B] font-bold rounded-full shadow-lg transition-all duration-150 active:scale-95 text-sm cursor-pointer cta-btn w-full p-3 flex items-center justify-center gap-2"
+                >
+                  <Mail size={16} />
+                  ktruong2k1@gmail.com
+                  {copied && <Check size={14} className="text-green-950 ml-1" />}
+                </button>
+                {copied && (
+                  <span className="text-brand-accent text-center text-[10px] font-mono mt-1 w-full block">
+                    {lang === "vi" ? "Đã sao chép email!" : "Email copied!"}
+                  </span>
+                )}
+              </div>
+
+              {/* Social Links (Row layout) */}
+              <div className="flex flex-col sm:flex-row gap-4 w-full">
+                {/* LinkedIn */}
+                <a 
+                  href="https://www.linkedin.com/in/nguyen-khanh-truong-designer/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-between p-3.5 rounded-xl border border-neutral-800 bg-neutral-950/40 hover:bg-neutral-900 hover:border-brand-accent/30 transition-all duration-150 group"
+                >
+                  <div className="flex items-center gap-3 text-neutral-300 group-hover:text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-neutral-400 group-hover:text-white">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    <span className="text-sm font-semibold">LinkedIn</span>
+                  </div>
+                  <ArrowUpRight size={16} className="text-brand-accent" />
+                </a>
+
+                {/* Behance */}
+                <a 
+                  href="https://www.behance.net/nguyenkhanhtr" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-between p-3.5 rounded-xl border border-neutral-800 bg-neutral-950/40 hover:bg-neutral-900 hover:border-brand-accent/30 transition-all duration-150 group"
+                >
+                  <div className="flex items-center gap-3 text-neutral-300 group-hover:text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-neutral-400 group-hover:text-white">
+                      <path d="M22 2H2C0.9 2 0 2.9 0 4V20C0 21.1 0.9 22 2 22H22C23.1 22 24 21.1 24 20V4C24 2.9 23.1 2 22 2ZM10.95 12.35H5.82V14.82H10.95V12.35ZM10.95 8.18H5.82V10.65H10.95V8.18ZM17.65 14.82C15.42 14.82 13.9 13.3 13.9 11.08C13.9 8.85 15.42 7.33 17.65 7.33C19.88 7.33 21.4 8.85 21.4 11.08C21.4 11.3 21.38 11.53 21.34 11.75H16.02C16.15 13.12 16.8 13.88 17.78 13.88C18.4 13.88 18.86 13.56 19.12 12.95H20.68C20.22 14.28 19.16 14.82 17.65 14.82ZM16.02 10.75H19.4C19.28 9.55 18.66 8.82 17.71 8.82C16.76 8.82 16.15 9.55 16.02 10.75ZM19.52 5.88H15.9V4.95H19.52V5.88Z" />
+                    </svg>
+                    <span className="text-sm font-semibold">Behance</span>
+                  </div>
+                  <ArrowUpRight size={16} className="text-brand-accent" />
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   );
 }

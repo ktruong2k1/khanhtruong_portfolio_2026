@@ -65,10 +65,13 @@ export default function ContactPage() {
         className="w-full sticky top-0 z-40"
       >
         <Link href="/" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight">
-          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-brand-accent">
-            <path d="M8 6C6.5 8.5 6 11.5 6 14 C 6 16.5, 6.5 19.5, 8 22" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-            <path d="M12 9.5C11 11 10.5 12.5 10.5 14 C 10.5 15.5, 11 17, 12 18.5" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-            <path d="M16 13C15.8 13.5 15.7 13.8 15.7 14 C 15.7 14.2, 15.8 14.5, 16 15" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <mask id="header-logo-mask-contact">
+              <rect width="28" height="28" fill="white" />
+              <path d="M12 0C6 8 6 20 12 28" stroke="black" strokeWidth="2.5" fill="none" />
+              <path d="M20 0C14 8 14 20 20 28" stroke="black" strokeWidth="2.5" fill="none" />
+            </mask>
+            <circle cx="14" cy="14" r="14" fill="#22C55E" mask="url(#header-logo-mask-contact)" />
           </svg>
           khanhtruong_nguyen
         </Link>
@@ -112,14 +115,13 @@ export default function ContactPage() {
               onClick={() => setLang("vi")} 
               className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
             >
-              VIE
+              Vie
             </button>
-            <span className="text-neutral-800 px-0.5">|</span>
             <button 
               onClick={() => setLang("en")} 
               className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
             >
-              ENG
+              Eng
             </button>
           </div>
 
@@ -157,13 +159,15 @@ export default function ContactPage() {
         <p className="text-neutral-400 text-sm md:text-base leading-relaxed mb-10">
           {t.desc}
         </p>
-        <Link 
-          href="/"
-          className="inline-flex items-center gap-2 bg-[#22C55E] hover:bg-[#1f9e4e] text-[#17211B] font-bold px-8 py-3.5 rounded-full shadow-lg transition-all duration-150 active:scale-95 text-sm cursor-pointer"
-        >
-          <ArrowLeft size={16} />
-          {t.backHome}
-        </Link>
+        <div style={{ maxWidth: '388px', width: '100%' }} className="flex justify-center mx-auto">
+          <Link 
+            href="/"
+            className="bg-[#22C55E] hover:bg-[#1f9e4e] text-[#17211B] font-bold rounded-full shadow-lg transition-all duration-150 active:scale-95 text-sm cursor-pointer cta-btn w-full"
+          >
+            <ArrowLeft size={16} />
+            {t.backHome}
+          </Link>
+        </div>
       </main>
     </div>
   );

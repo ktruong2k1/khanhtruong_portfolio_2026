@@ -112,6 +112,7 @@ export default function WorksPage() {
 
   const [copied, setCopied] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("ktruong2k1@gmail.com");
@@ -129,68 +130,38 @@ export default function WorksPage() {
     switch (type) {
       case "raio-smart":
         return (
-          <div className="w-full h-full bg-[#0d1016] rounded-xl flex items-center justify-center p-4 relative overflow-hidden border border-neutral-900">
-            <svg className="w-full h-full opacity-40" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="10" y="10" width="360" height="180" rx="8" fill="#111c30" stroke={strokeColor} strokeWidth="1" />
-              <rect x="25" y="25" width="80" height="20" rx="3" fill="#13233c" stroke={strokeColor} />
-              <rect x="35" y="32" width="60" height="6" rx="2.5" fill={accentColor} />
-              {/* Chart lines */}
-              <path d="M 30 150 C 70 120, 110 180, 150 130 C 190 80, 230 160, 270 100 C 310 40, 330 90, 350 70" fill="none" stroke={accentColor} strokeWidth="2.5" strokeLinecap="round" />
-              <circle cx="270" cy="100" r="5" fill="#fff" />
-              <circle cx="270" cy="100" r="2" fill={accentColor} />
-            </svg>
-            <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/80 to-transparent">
-              <span className="text-[10px] font-mono text-neutral-400">{lang === "vi" ? "TỔNG QUAN CHỈ SỐ" : "METRICS OVERVIEW"}</span>
-              <span className="text-xs font-bold text-white">RaIO Smart Framework UI Dashboard</span>
-            </div>
+          <div className="w-full h-full bg-[#0c0d12] flex items-center justify-center relative overflow-hidden">
+            <img 
+              src="/images/raio.png" 
+              alt="RaIO Smart Thumbnail" 
+              className="w-full h-full object-cover" 
+            />
           </div>
         );
       case "austfly":
         return (
-          <div className="w-full h-[220px] bg-[#0c0d12] rounded-xl flex items-center justify-center p-4 relative overflow-hidden border border-neutral-900">
-            <svg className="w-full h-full opacity-50" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="125" y="10" width="130" height="220" rx="12" fill="#0d1424" stroke={accentColor} strokeWidth="1.5" />
-              {/* Austfly roller shutter UI */}
-              <text x="190" y="35" fill="#fff" fontSize="8" fontWeight="bold" textAnchor="middle">AUSTFLY</text>
-              <rect x="145" y="55" width="90" height="65" rx="4" fill="#13233c" stroke="#223047" />
-              <line x1="150" y1="70" x2="230" y2="70" stroke="#223047" strokeWidth="2" />
-              <line x1="150" y1="80" x2="230" y2="80" stroke="#223047" strokeWidth="2" />
-              <line x1="150" y1="90" x2="230" y2="90" stroke="#223047" strokeWidth="2" />
-              {/* Shutter Swipe Button */}
-              <circle cx="190" cy="85" r="14" fill={accentColor} fillOpacity="0.2" stroke={accentColor} />
-              <path d="M 190 92 L 190 78 M 185 83 L 190 78 L 195 83" stroke={accentColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              {/* Quick action button */}
-              <rect x="155" y="135" width="70" height="15" rx="3.5" fill={accentColor} />
-              <text x="190" y="145" fill="#17211B" fontSize="6.5" fontWeight="bold" textAnchor="middle">{lang === "vi" ? "Mở một chạm" : "One-tap Open"}</text>
-            </svg>
-            <div className="absolute inset-x-0 bottom-0 p-3 bg-neutral-950/80 border-t border-neutral-900">
-              <span className="text-[10px] font-mono text-brand-accent font-bold">{lang === "vi" ? "Tái thiết kế UI Ứng dụng" : "App UI Redesign"}</span>
-            </div>
+          <div className="w-full h-full bg-[#0c0d12] flex items-center justify-center relative overflow-hidden">
+            <img 
+              src="/images/austfly.png" 
+              alt="Austfly Redesign Thumbnail" 
+              className="w-full h-full object-cover" 
+            />
           </div>
         );
       case "kangaroo":
         return (
-          <div className="w-full h-[220px] bg-[#0c0d12] rounded-xl flex items-center justify-center p-4 relative overflow-hidden border border-neutral-900">
-            <svg className="w-full h-full opacity-50" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="125" y="10" width="130" height="220" rx="12" fill="#0d1424" stroke={accentColor} strokeWidth="1.5" />
-              {/* Appliance controls */}
-              <text x="190" y="35" fill="#fff" fontSize="8" fontWeight="bold" textAnchor="middle">KANGAROO IoT</text>
-              <circle cx="190" cy="80" r="24" fill="#13233c" stroke="#223047" strokeWidth="1" />
-              <circle cx="190" cy="80" r="20" fill="none" stroke={accentColor} strokeWidth="2" strokeDasharray="60 30" />
-              <text x="190" y="83" fill="#fff" fontSize="9" fontWeight="bold" textAnchor="middle">75°C</text>
-              {/* Controls */}
-              <rect x="145" y="120" width="40" height="15" rx="2" fill="#13233c" stroke="#223047" />
-              <rect x="195" y="120" width="40" height="15" rx="2" fill="#13233c" stroke="#223047" />
-            </svg>
-            <div className="absolute inset-x-0 bottom-0 p-3 bg-neutral-950/80 border-t border-neutral-900">
-              <span className="text-[10px] font-mono text-brand-accent font-bold">{lang === "vi" ? "Tích hợp thiết bị gia dụng" : "Smart Appliance Integration"}</span>
-            </div>
+          <div className="w-full h-full bg-[#0c0d12] flex items-center justify-center relative overflow-hidden">
+            <img 
+              src="/images/kangaroo_raio.png" 
+              alt="Kangaroo IoT App Thumbnail" 
+              className="w-full h-full object-cover" 
+            />
           </div>
         );
       case "thing-flow":
         return (
-          <div className="w-full h-[200px] bg-[#0c0d12] rounded-xl flex items-center justify-center p-4 relative overflow-hidden border border-neutral-900">
-            <svg className="w-full h-full opacity-50" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div className="w-full h-full bg-[#0c0d12] flex items-center justify-center relative overflow-hidden">
+            <svg className="w-full h-full opacity-60" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="135" y="10" width="110" height="220" rx="10" fill="#0c121e" stroke={strokeColor} />
               <rect x="145" y="30" width="90" height="30" rx="3" fill="#13233c" stroke={strokeColor} />
               <text x="190" y="47" fill={accentColor} fontSize="7" fontWeight="bold" textAnchor="middle">{lang === "vi" ? "NẾU Sự kiện Kích hoạt" : "IF Trigger Event"}</text>
@@ -198,15 +169,12 @@ export default function WorksPage() {
               <rect x="145" y="85" width="90" height="30" rx="3" fill="#13233c" stroke={strokeColor} />
               <text x="190" y="102" fill="#fff" fontSize="7" fontWeight="bold" textAnchor="middle">{lang === "vi" ? "THÌ Chạy Hành động" : "THEN Run Action"}</text>
             </svg>
-            <div className="absolute inset-x-0 bottom-0 p-3 bg-neutral-950/80 border-t border-neutral-900">
-              <span className="text-[10px] font-mono text-brand-accent font-bold">{lang === "vi" ? "Trình dựng kịch bản tự động" : "Visual Workflow Engine"}</span>
-            </div>
           </div>
         );
       case "thing-partner":
         return (
-          <div className="w-full h-[200px] bg-[#0c0d12] rounded-xl flex items-center justify-center p-4 relative overflow-hidden border border-neutral-900">
-            <svg className="w-full h-full opacity-50" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div className="w-full h-full bg-[#0c0d12] flex items-center justify-center relative overflow-hidden">
+            <svg className="w-full h-full opacity-60" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="25" y="25" width="330" height="150" rx="6" fill="#111c30" stroke={strokeColor} />
               <rect x="40" y="40" width="80" height="120" rx="2" fill="#0d1424" stroke={strokeColor} />
               <rect x="45" y="50" width="70" height="6" rx="1.5" fill={accentColor} />
@@ -215,15 +183,12 @@ export default function WorksPage() {
               <path d="M 152 60 L 154 62 L 158 58" stroke={accentColor} strokeWidth="1.5" strokeLinecap="round" />
               <rect x="175" y="57" width="140" height="6" rx="3" fill={accentColor} />
             </svg>
-            <div className="absolute inset-x-0 bottom-0 p-3 bg-neutral-950/80 border-t border-neutral-900">
-              <span className="text-[10px] font-mono text-brand-accent font-bold">{lang === "vi" ? "Công cụ QA Kiểm thử Nhà máy" : "Factory QA Testing Companion"}</span>
-            </div>
           </div>
         );
       case "antaxi":
         return (
-          <div className="w-full h-[200px] bg-[#0c0d12] rounded-xl flex items-center justify-center p-4 relative overflow-hidden border border-neutral-900">
-            <svg className="w-full h-full opacity-40" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div className="w-full h-full bg-[#0c0d12] flex items-center justify-center relative overflow-hidden">
+            <svg className="w-full h-full opacity-50" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="120" y="10" width="140" height="230" rx="12" fill="#0c121e" stroke={strokeColor} />
               {/* Map grid mockup */}
               <line x1="120" y1="80" x2="260" y2="110" stroke={strokeColor} strokeWidth="1" />
@@ -231,33 +196,16 @@ export default function WorksPage() {
               <circle cx="185" cy="100" r="6" fill={accentColor} />
               <path d="M 185 85 L 188 92 L 195 92 L 190 96 L 192 103 L 185 99 L 178 103 L 180 96 L 175 92 L 182 92 Z" fill="#E8C468" transform="scale(0.8) translate(40, 20)" />
             </svg>
-            <div className="absolute inset-x-0 bottom-0 p-3 bg-neutral-950/80 border-t border-neutral-900">
-              <span className="text-[10px] font-mono text-brand-accent font-bold">{lang === "vi" ? "Giao diện concept Gọi xe" : "Taxi Hailing UI Concept"}</span>
-            </div>
           </div>
         );
       case "labo":
         return (
-          <div className="w-full h-[200px] bg-[#0c0d12] rounded-xl flex items-center justify-center p-4 relative overflow-hidden border border-neutral-900">
-            <svg className="w-full h-full opacity-40" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="20" y="20" width="340" height="160" rx="4" fill="#111c30" stroke={strokeColor} />
-              {/* Header navbar inside medical site mockup */}
-              <circle cx="40" cy="35" r="5" fill={accentColor} />
-              <rect x="55" y="32" width="40" height="6" rx="2" fill="#223047" />
-              <rect x="105" y="32" width="30" height="6" rx="2" fill="#223047" />
-              <rect x="300" y="30" width="45" height="10" rx="5" fill={accentColor} />
-              {/* Medical card */}
-              <rect x="40" y="60" width="100" height="100" rx="3" fill="#13233c" stroke={strokeColor} />
-              <rect x="160" y="60" width="180" height="100" rx="3" fill="#13233c" stroke={strokeColor} />
-              <circle cx="90" cy="100" r="20" fill={accentColor} fillOpacity="0.1" />
-              <path d="M 82 100 C 82 90, 98 90, 98 100 C 98 110, 82 110, 82 100 Z" stroke={accentColor} strokeWidth="1.5" fill="none" />
-              <rect x="152.5" y="70" width="100" height="8" rx="2" fill="#223047" />
-              <rect x="152.5" y="85" width="150" height="4" rx="1" fill="#223047" />
-              <rect x="152.5" y="95" width="130" height="4" rx="1" fill="#223047" />
-            </svg>
-            <div className="absolute inset-x-0 bottom-0 p-3 bg-neutral-950/80 border-t border-neutral-900">
-              <span className="text-[10px] font-mono text-brand-accent font-bold">{lang === "vi" ? "Giao diện Cổng thông tin B2B" : "B2B Portal Interface"}</span>
-            </div>
+          <div className="w-full h-full bg-[#0c0d12] flex items-center justify-center relative overflow-hidden">
+            <img 
+              src="/images/labo_viet_my.png" 
+              alt="Labo Viet My Thumbnail" 
+              className="w-full h-full object-cover" 
+            />
           </div>
         );
       default:
@@ -286,10 +234,13 @@ export default function WorksPage() {
       >
         {/* Left: Logo */}
         <a href="/" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight hover:scale-105 transition-transform duration-150">
-          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-brand-accent">
-            <path d="M8 6C6.5 8.5 6 11.5 6 14 C 6 16.5, 6.5 19.5, 8 22" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-            <path d="M12 9.5C11 11 10.5 12.5 10.5 14 C 10.5 15.5, 11 17, 12 18.5" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-            <path d="M16 13C15.8 13.5 15.7 13.8 15.7 14 C 15.7 14.2, 15.8 14.5, 16 15" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <mask id="header-logo-mask-works">
+              <rect width="28" height="28" fill="white" />
+              <path d="M12 0C6 8 6 20 12 28" stroke="black" strokeWidth="2.5" fill="none" />
+              <path d="M20 0C14 8 14 20 20 28" stroke="black" strokeWidth="2.5" fill="none" />
+            </mask>
+            <circle cx="14" cy="14" r="14" fill="#22C55E" mask="url(#header-logo-mask-works)" />
           </svg>
           khanhtruong_nguyen
         </a>
@@ -343,19 +294,35 @@ export default function WorksPage() {
           >
             {t.navAbout}
           </a>
-          <a 
-            href="/contact" 
+          <button 
+            onClick={() => setContactModalOpen(true)}
             style={{
               height: '100%',
               display: 'flex',
               alignItems: 'center',
               position: 'relative',
-              color: '#989898'
+              color: contactModalOpen ? '#22C55E' : '#989898',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0
             }}
-            className="hover:text-white transition-colors"
+            className={`hover:text-white transition-colors font-sans ${contactModalOpen ? 'font-bold' : ''}`}
           >
             {t.navContact}
-          </a>
+            {contactModalOpen && (
+              <span 
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '2px',
+                  backgroundColor: '#22C55E'
+                }}
+              />
+            )}
+          </button>
         </nav>
 
         {/* Right: Language switch & Available remote badge */}
@@ -369,14 +336,13 @@ export default function WorksPage() {
               onClick={() => setLang("vi")}
               className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
             >
-              VIE
+              Vie
             </button>
-            <span className="text-neutral-800 px-0.5">|</span>
             <button
               onClick={() => setLang("en")}
               className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
             >
-              ENG
+              Eng
             </button>
           </div>
 
@@ -402,7 +368,16 @@ export default function WorksPage() {
           <div className="md:hidden absolute top-[76px] left-0 right-0 border-b border-neutral-900 bg-[var(--Colors-Neutral-1000,#181818)] px-6 py-4 flex flex-col gap-4 text-sm font-semibold z-50">
             <a href="/works" onClick={() => setMobileMenuOpen(false)} className="py-2 text-brand-accent transition-colors">{t.navWork}</a>
             <a href="/about" onClick={() => setMobileMenuOpen(false)} className="py-2 text-neutral-400 hover:text-white transition-colors">{t.navAbout}</a>
-            <a href="/contact" onClick={() => setMobileMenuOpen(false)} className="py-2 text-neutral-400 hover:text-white transition-colors">{t.navContact}</a>
+            <button 
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setContactModalOpen(true);
+              }} 
+              style={{ background: 'none', border: 'none', textAlign: 'left', padding: '8px 0' }}
+              className="py-2 text-neutral-400 hover:text-white transition-colors font-sans text-sm font-semibold cursor-pointer"
+            >
+              {t.navContact}
+            </button>
           </div>
         )}
       </header>
@@ -414,7 +389,7 @@ export default function WorksPage() {
           flexDirection: 'column',
           alignItems: 'flex-start',
           width: '100%',
-          padding: '48px 100px 24px 100px',
+          padding: '48px 120px 24px 120px',
           background: '#0B0B0C'
         }}
         className="relative"
@@ -445,7 +420,7 @@ export default function WorksPage() {
           display: 'flex',
           flexDirection: 'column',
           width: '100%',
-          padding: '48px 100px 40px 100px',
+          padding: '48px 120px 40px 120px',
           background: '#0B0B0C'
         }}
         className="relative"
@@ -460,7 +435,18 @@ export default function WorksPage() {
             marginBottom: '64px'
           }}
         >
-          <span className="text-xs font-mono uppercase tracking-widest text-[#E8C468] font-bold">
+          <span 
+            style={{
+              color: 'var(--Colors-Secondary-300, #E8C468)',
+              fontFamily: '"Be Vietnam Pro", sans-serif',
+              fontSize: '16px',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: '21px',
+              letterSpacing: '0.1em'
+            }}
+            className="uppercase"
+          >
             {t.systemsThinkingSub}
           </span>
           <h2 className="text-3xl font-extrabold font-serif tracking-tight text-white">
@@ -476,34 +462,39 @@ export default function WorksPage() {
           
           {/* Tier 1: Platform layer */}
           <div 
-            className="flex flex-col md:flex-row w-full hover:shadow-lg transition-all duration-200"
+            className="flex flex-col md:flex-row hover:shadow-lg transition-all duration-300 cursor-pointer group"
             style={{
-              padding: '48px 100px',
+              padding: '20px 24px',
               justifyContent: 'center',
               alignItems: 'flex-start',
-              gap: '24px',
-              alignSelf: 'stretch',
+              gap: '20px',
               borderRadius: '16px',
-              backgroundColor: '#17211B'
+              backgroundColor: '#17211B',
+              width: 'fit-content',
+              maxWidth: '100%',
+              margin: '0 auto'
             }}
           >
-            {/* Title (Left) */}
-            <h4 
-              style={{
-                color: '#E8C468',
-                fontFamily: 'var(--font-serif), serif',
-                fontSize: '34px',
-                fontWeight: 400,
-                lineHeight: '51px',
-                flexShrink: 0
-              }}
-              className="w-full md:w-[220px] text-left"
-            >
-              {t.platformLayer}
-            </h4>
+            {/* Title & Icon (Left) */}
+            <div className="flex flex-col items-start gap-4 w-full md:w-[220px] flex-shrink-0">
+              <h4 
+                style={{
+                  color: '#E8C468',
+                  fontFamily: 'var(--font-serif), serif',
+                  fontSize: '34px',
+                  fontWeight: 400,
+                  lineHeight: '51px'
+                }}
+                className="text-left leading-tight"
+              >
+                {t.platformLayer}
+              </h4>
+            </div>
 
             {/* Details area (Right) */}
-            <div className="flex flex-col md:flex-row gap-6 w-full items-start flex-1">
+            <div 
+              className="flex flex-col md:flex-row gap-6 w-full items-start flex-1 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-xl cursor-pointer group"
+            >
               {/* Content Block */}
               <div 
                 style={{
@@ -515,12 +506,12 @@ export default function WorksPage() {
                 }}
                 className="w-full"
               >
-                <h3 className="text-2xl font-serif font-bold text-white leading-tight">
+                <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] leading-tight transition-colors duration-300">
                   {t.rogoPlatformTitle}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {["PaaS", "B2B", "Dashboard", "Whitelabel"].map((tag, idx) => (
-                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 uppercase tracking-wider">
+                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
                       {tag}
                     </span>
                   ))}
@@ -537,7 +528,7 @@ export default function WorksPage() {
                   borderRadius: '12px',
                   overflow: 'hidden'
                 }}
-                className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80"
+                className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 group-hover:border-transparent rounded-xl transition-all duration-300"
               >
                 <Image
                   src="/images/Rogo_IoT_Platform_Dashboard_Interface.png"
@@ -560,13 +551,12 @@ export default function WorksPage() {
 
           {/* Tier 2: Framework layer */}
           <div 
-            className="flex flex-col md:flex-row hover:shadow-lg transition-all duration-200"
+            className="flex flex-col md:flex-row hover:shadow-lg transition-all duration-300 cursor-pointer group"
             style={{
-              padding: '48px 100px',
+              padding: '20px 24px',
               justifyContent: 'center',
               alignItems: 'flex-start',
-              gap: '24px',
-              alignSelf: 'stretch',
+              gap: '20px',
               borderRadius: '16px',
               backgroundColor: '#17211B',
               width: 'fit-content',
@@ -574,23 +564,26 @@ export default function WorksPage() {
               margin: '0 auto'
             }}
           >
-            {/* Title (Left) */}
-            <h4 
-              style={{
-                color: '#E8C468',
-                fontFamily: 'var(--font-serif), serif',
-                fontSize: '34px',
-                fontWeight: 400,
-                lineHeight: '51px',
-                flexShrink: 0
-              }}
-              className="w-full md:w-[220px] text-left"
-            >
-              {t.frameworkLayer}
-            </h4>
+            {/* Title & Icon (Left) */}
+            <div className="flex flex-col items-start gap-4 w-full md:w-[220px] flex-shrink-0">
+              <h4 
+                style={{
+                  color: '#E8C468',
+                  fontFamily: 'var(--font-serif), serif',
+                  fontSize: '34px',
+                  fontWeight: 400,
+                  lineHeight: '51px'
+                }}
+                className="text-left leading-tight"
+              >
+                {t.frameworkLayer}
+              </h4>
+            </div>
 
             {/* Details area (Right) */}
-            <div className="flex flex-col md:flex-row gap-6 items-start">
+            <div 
+              className="flex flex-col md:flex-row gap-6 w-full items-start flex-1 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-xl cursor-pointer group"
+            >
               {/* Content Block */}
               <div 
                 style={{
@@ -603,12 +596,12 @@ export default function WorksPage() {
                 }}
                 className="w-full md:w-[388px]"
               >
-                <h3 className="text-2xl font-serif font-bold text-white leading-tight">
+                <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] leading-tight transition-colors duration-300">
                   {t.raioSmartTitle}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {["Mobile", "IoT", "Smart Home", "Whitelabel"].map((tag, idx) => (
-                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 uppercase tracking-wider">
+                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
                       {tag}
                     </span>
                   ))}
@@ -625,7 +618,7 @@ export default function WorksPage() {
                   borderRadius: '12px',
                   overflow: 'hidden'
                 }}
-                className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80"
+                className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 group-hover:border-transparent rounded-xl transition-all duration-300"
               >
                 {renderMockup("raio-smart")}
               </div>
@@ -641,13 +634,12 @@ export default function WorksPage() {
 
           {/* Tier 3: Instance layer */}
           <div 
-            className="flex flex-col md:flex-row hover:shadow-lg transition-all duration-200"
+            className="flex flex-col md:flex-row hover:shadow-lg transition-all duration-300 cursor-pointer"
             style={{
-              padding: '48px 100px',
+              padding: '20px 24px',
               justifyContent: 'center',
               alignItems: 'flex-start',
               gap: '24px',
-              alignSelf: 'stretch',
               borderRadius: '16px',
               backgroundColor: '#17211B',
               width: 'fit-content',
@@ -655,28 +647,41 @@ export default function WorksPage() {
               margin: '0 auto'
             }}
           >
-            {/* Title (Left) */}
-            <h4 
-              style={{
-                color: '#E8C468',
-                fontFamily: 'var(--font-serif), serif',
-                fontSize: '34px',
-                fontWeight: 400,
-                lineHeight: '51px',
-                flexShrink: 0
-              }}
-              className="w-full md:w-[220px] text-left"
-            >
-              {t.instanceLayer}
-            </h4>
+            {/* Title & Icon (Left) */}
+            <div className="flex flex-col items-start gap-4 w-full md:w-[220px] flex-shrink-0">
+              <h4 
+                style={{
+                  color: '#E8C468',
+                  fontFamily: 'var(--font-serif), serif',
+                  fontSize: '34px',
+                  fontWeight: 400,
+                  lineHeight: '51px'
+                }}
+                className="text-left leading-tight"
+              >
+                {t.instanceLayer}
+              </h4>
+            </div>
 
             {/* Details area (Right) - Horizontal row side-by-side */}
             <div className="flex flex-col md:flex-row gap-6 items-stretch justify-start">
               
               {/* Instance 1: Austfly */}
               <div 
-                style={{ maxWidth: '388px', width: '100%', flexShrink: 0 }}
-                className="flex flex-col gap-4"
+                style={{
+                  maxWidth: '412px',
+                  width: '100%',
+                  flexShrink: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '12px',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  gap: '20px',
+                  borderRadius: '16px',
+                  backgroundColor: 'transparent'
+                }}
+                className="border border-transparent hover:border-[#2ECC8A] transition-all duration-300 cursor-pointer group"
               >
                 {/* Thumbnail Block */}
                 <div 
@@ -685,17 +690,17 @@ export default function WorksPage() {
                     borderRadius: '12px',
                     overflow: 'hidden'
                   }}
-                  className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] border border-neutral-900/80 flex-shrink-0 mx-auto"
+                  className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] border border-neutral-900/80 flex-shrink-0 mx-auto rounded-xl overflow-hidden"
                 >
                   {renderMockup("austfly")}
                 </div>
                 {/* Text Content */}
-                <h3 className="text-2xl font-serif font-bold text-white leading-tight">
+                <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] leading-tight transition-colors duration-300">
                   {t.austflyTitle}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {["Mobile", "IoT", "Smart Home", "Redesign"].map((tag, idx) => (
-                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 uppercase tracking-wider">
+                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
                       {tag}
                     </span>
                   ))}
@@ -707,8 +712,20 @@ export default function WorksPage() {
 
               {/* Instance 2: Kangaroo */}
               <div 
-                style={{ maxWidth: '388px', width: '100%', flexShrink: 0 }}
-                className="flex flex-col gap-4"
+                style={{
+                  maxWidth: '412px',
+                  width: '100%',
+                  flexShrink: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '12px',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  gap: '20px',
+                  borderRadius: '16px',
+                  backgroundColor: 'transparent'
+                }}
+                className="border border-transparent hover:border-[#2ECC8A] transition-all duration-300 cursor-pointer group"
               >
                 {/* Thumbnail Block */}
                 <div 
@@ -717,17 +734,17 @@ export default function WorksPage() {
                     borderRadius: '12px',
                     overflow: 'hidden'
                   }}
-                  className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] border border-neutral-900/80 flex-shrink-0 mx-auto"
+                  className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] border border-neutral-900/80 flex-shrink-0 mx-auto rounded-xl overflow-hidden"
                 >
                   {renderMockup("kangaroo")}
                 </div>
                 {/* Text Content */}
-                <h3 className="text-2xl font-serif font-bold text-white leading-tight">
+                <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] leading-tight transition-colors duration-300">
                   {t.kangarooTitle}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {["Mobile", "IoT", "Smart Home", "Redesign"].map((tag, idx) => (
-                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 uppercase tracking-wider">
+                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
                       {tag}
                     </span>
                   ))}
@@ -749,7 +766,7 @@ export default function WorksPage() {
           display: 'flex',
           flexDirection: 'column',
           width: '100%',
-          padding: '40px 100px',
+          padding: '40px 120px',
           background: '#0B0B0C'
         }}
         className="relative"
@@ -764,7 +781,18 @@ export default function WorksPage() {
             marginBottom: '64px'
           }}
         >
-          <span className="text-xs font-mono uppercase tracking-widest text-[#E8C468] font-bold">
+          <span 
+            style={{
+              color: 'var(--Colors-Secondary-300, #E8C468)',
+              fontFamily: '"Be Vietnam Pro", sans-serif',
+              fontSize: '16px',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: '21px',
+              letterSpacing: '0.1em'
+            }}
+            className="uppercase"
+          >
             {t.iotToolsSub}
           </span>
           <h2 className="text-3xl font-extrabold font-serif tracking-tight text-white">
@@ -778,8 +806,8 @@ export default function WorksPage() {
         <div className="flex flex-col md:flex-row gap-8 w-full justify-center items-stretch">
           {/* Thing Flow */}
           <div 
-            style={{ maxWidth: '388px', width: '100%', flexShrink: 0 }}
-            className="transition-all duration-200 flex flex-col gap-4"
+            style={{ maxWidth: '412px', width: '100%', flexShrink: 0 }}
+            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group"
           >
             <div 
               style={{
@@ -787,19 +815,19 @@ export default function WorksPage() {
                 borderRadius: '12px',
                 overflow: 'hidden'
               }}
-              className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 mx-auto"
+              className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 mx-auto rounded-xl overflow-hidden"
             >
               {renderMockup("thing-flow")}
             </div>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-serif font-bold text-white">
+              <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                 {t.thingFlowTitle}
               </h3>
               <ArrowUpRight size={18} className="text-brand-accent" />
             </div>
             <div className="flex flex-wrap gap-2">
               {["Mobile", "IoT", "Smart Home", "Redesign"].map((tag, idx) => (
-                <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 uppercase tracking-wider">
+                <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
                   {tag}
                 </span>
               ))}
@@ -811,8 +839,8 @@ export default function WorksPage() {
 
           {/* Thing Partner */}
           <div 
-            style={{ maxWidth: '388px', width: '100%', flexShrink: 0 }}
-            className="transition-all duration-200 flex flex-col gap-4"
+            style={{ maxWidth: '412px', width: '100%', flexShrink: 0 }}
+            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group"
           >
             <div 
               style={{
@@ -820,19 +848,19 @@ export default function WorksPage() {
                 borderRadius: '12px',
                 overflow: 'hidden'
               }}
-              className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 mx-auto"
+              className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 mx-auto rounded-xl overflow-hidden"
             >
               {renderMockup("thing-partner")}
             </div>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-serif font-bold text-white">
+              <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                 {t.thingPartnerTitle}
               </h3>
               <ArrowUpRight size={18} className="text-brand-accent" />
             </div>
             <div className="flex flex-wrap gap-2">
               {["Mobile", "IoT", "Smart Home", "Redesign"].map((tag, idx) => (
-                <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 uppercase tracking-wider">
+                <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
                   {tag}
                 </span>
               ))}
@@ -850,7 +878,7 @@ export default function WorksPage() {
           display: 'flex',
           flexDirection: 'column',
           width: '100%',
-          padding: '40px 100px',
+          padding: '40px 120px',
           background: '#0B0B0C'
         }}
         className="relative"
@@ -865,7 +893,18 @@ export default function WorksPage() {
             marginBottom: '64px'
           }}
         >
-          <span className="text-xs font-mono uppercase tracking-widest text-[#E8C468] font-bold">
+          <span 
+            style={{
+              color: 'var(--Colors-Secondary-300, #E8C468)',
+              fontFamily: '"Be Vietnam Pro", sans-serif',
+              fontSize: '16px',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: '21px',
+              letterSpacing: '0.1em'
+            }}
+            className="uppercase"
+          >
             {t.otherWorkSub}
           </span>
           <h2 className="text-3xl font-extrabold font-serif tracking-tight text-white">
@@ -879,8 +918,8 @@ export default function WorksPage() {
         <div className="flex flex-col md:flex-row gap-8 w-full justify-center items-stretch flex-wrap">
           {/* Thing AI VN */}
           <div 
-            style={{ maxWidth: '388px', width: '100%', flexShrink: 0 }}
-            className="transition-all duration-200 flex flex-col gap-4"
+            style={{ maxWidth: '412px', width: '100%', flexShrink: 0 }}
+            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group"
           >
             <div 
               style={{
@@ -888,7 +927,7 @@ export default function WorksPage() {
                 borderRadius: '12px',
                 overflow: 'hidden'
               }}
-              className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 mx-auto"
+              className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 mx-auto rounded-xl overflow-hidden"
             >
               <Image
                 src="/images/Thing_AI_VN.png"
@@ -899,14 +938,14 @@ export default function WorksPage() {
               />
             </div>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-serif font-bold text-white">
+              <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                 {t.thingAiTitle}
               </h3>
               <ArrowUpRight size={18} className="text-brand-accent" />
             </div>
             <div className="flex flex-wrap gap-2">
               {["Website", "B2B", "Brand Identity"].map((tag, idx) => (
-                <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 uppercase tracking-wider">
+                <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
                   {tag}
                 </span>
               ))}
@@ -918,8 +957,8 @@ export default function WorksPage() {
 
           {/* Antaxi */}
           <div 
-            style={{ maxWidth: '388px', width: '100%', flexShrink: 0 }}
-            className="transition-all duration-200 flex flex-col gap-4"
+            style={{ maxWidth: '412px', width: '100%', flexShrink: 0 }}
+            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group"
           >
             <div 
               style={{
@@ -927,19 +966,19 @@ export default function WorksPage() {
                 borderRadius: '12px',
                 overflow: 'hidden'
               }}
-              className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 mx-auto"
+              className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 mx-auto rounded-xl overflow-hidden"
             >
               {renderMockup("antaxi")}
             </div>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-serif font-bold text-white">
+              <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                 {t.antaxiTitle}
               </h3>
               <ArrowUpRight size={18} className="text-brand-accent" />
             </div>
             <div className="flex flex-wrap gap-2">
               {["Website", "B2B", "Brand Identity"].map((tag, idx) => (
-                <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 uppercase tracking-wider">
+                <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
                   {tag}
                 </span>
               ))}
@@ -951,8 +990,8 @@ export default function WorksPage() {
 
           {/* Labo Viet My */}
           <div 
-            style={{ maxWidth: '388px', width: '100%', flexShrink: 0 }}
-            className="transition-all duration-200 flex flex-col gap-4"
+            style={{ maxWidth: '412px', width: '100%', flexShrink: 0 }}
+            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group"
           >
             <div 
               style={{
@@ -960,19 +999,19 @@ export default function WorksPage() {
                 borderRadius: '12px',
                 overflow: 'hidden'
               }}
-              className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 mx-auto"
+              className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 mx-auto rounded-xl overflow-hidden"
             >
               {renderMockup("labo")}
             </div>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-serif font-bold text-white">
+              <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                 {t.laboTitle}
               </h3>
               <ArrowUpRight size={18} className="text-brand-accent" />
             </div>
             <div className="flex flex-wrap gap-2">
               {["Website", "B2B", "Brand Identity", "Redesign"].map((tag, idx) => (
-                <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 uppercase tracking-wider">
+                <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
                   {tag}
                 </span>
               ))}
@@ -993,7 +1032,7 @@ export default function WorksPage() {
           justifyContent: 'center',
           textAlign: 'center',
           width: '100%',
-          padding: '96px 100px',
+          padding: '96px 120px',
           background: '#0d0f14'
         }}
         className="relative"
@@ -1002,14 +1041,16 @@ export default function WorksPage() {
           {t.ctaTitle}
         </h2>
         
-        <button
-          onClick={handleCopyEmail}
-          className="inline-flex items-center gap-2 bg-[#22C55E] hover:bg-[#1f9e4e] text-[#17211B] font-bold px-8 py-4 rounded-full shadow-lg transition-all duration-150 active:scale-95 text-base cursor-pointer"
-        >
-          <Mail size={18} />
-          ktruong2k1@gmail.com
-          {copied && <Check size={16} className="text-green-950 ml-1" />}
-        </button>
+        <div style={{ maxWidth: '388px', width: '100%' }} className="flex justify-center mx-auto">
+          <button
+            onClick={handleCopyEmail}
+            className="bg-[#22C55E] hover:bg-[#1f9e4e] text-[#17211B] font-bold rounded-full shadow-lg transition-all duration-150 active:scale-95 text-base cursor-pointer cta-btn w-full"
+          >
+            <Mail size={18} />
+            ktruong2k1@gmail.com
+            {copied && <Check size={16} className="text-green-950 ml-1" />}
+          </button>
+        </div>
 
         {copied && (
           <span className="text-brand-accent text-xs font-mono mt-3 animate-fadeIn">
@@ -1028,7 +1069,7 @@ export default function WorksPage() {
           display: 'flex',
           flexDirection: 'column',
           width: '100%',
-          padding: '40px 100px',
+          padding: '40px 120px',
           background: '#0B0B0C'
         }}
         className="text-xs text-neutral-500"
@@ -1036,8 +1077,8 @@ export default function WorksPage() {
         <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4" style={{ width: '100%' }}>
           <span>© 2026 KT Studio. All rights reserved.</span>
           <div className="flex items-center gap-6 font-semibold">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
-            <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Dribbble</a>
+            <a href="https://www.linkedin.com/in/nguyen-khanh-truong-designer/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
+            <a href="https://www.behance.net/nguyenkhanhtr" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Behance</a>
             <a href="/" className="hover:text-white transition-colors">Archive</a>
           </div>
         </div>
@@ -1055,6 +1096,189 @@ export default function WorksPage() {
           transition: 'opacity 600ms cubic-bezier(0.25, 1, 0.5, 1)'
         }}
       />
+
+      {/* CONTACT DIALOG */}
+      <div 
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 99999,
+          pointerEvents: contactModalOpen ? 'auto' : 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '24px',
+          transition: 'all 300ms ease-out'
+        }}
+      >
+        {/* Backdrop overlay */}
+        <div 
+          onClick={() => setContactModalOpen(false)}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            backdropFilter: 'blur(8px)',
+            opacity: contactModalOpen ? 1 : 0,
+            transition: 'opacity 300ms ease-out'
+          }}
+        />
+
+        {/* Dialog Panel */}
+        <div 
+          style={{
+            position: 'relative',
+            width: '100%',
+            maxWidth: '800px',
+            background: '#181818',
+            borderRadius: '16px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            transform: contactModalOpen ? 'scale(1)' : 'scale(0.95)',
+            opacity: contactModalOpen ? 1 : 0,
+            transition: 'transform 300ms cubic-bezier(0.25, 1, 0.5, 1), opacity 300ms ease-out',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            padding: '32px 24px 40px 24px',
+            overflowY: 'auto'
+          }}
+        >
+          {/* Close button */}
+          <button 
+            onClick={() => setContactModalOpen(false)}
+            className="text-neutral-400 hover:text-white transition-colors cursor-pointer mb-6 p-1 rounded-lg hover:bg-neutral-800 self-start"
+            style={{ background: 'none', border: 'none', marginLeft: '16px' }}
+          >
+            <X size={20} />
+          </button>
+
+          {/* Two-Column split layout */}
+          <div className="flex flex-col md:flex-row w-full items-start gap-0">
+            
+            {/* Left Column: Profile Card */}
+            <div 
+              style={{
+                display: 'flex',
+                padding: '8px 24px',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                alignSelf: 'stretch'
+              }}
+              className="border-b md:border-b-0 md:border-r border-neutral-800 pb-8 md:pb-0"
+            >
+              {/* Profile Card contents (avatar left, name right) */}
+              <div className="flex items-center gap-4">
+                <div 
+                  style={{
+                    position: 'relative',
+                    width: '64px',
+                    height: '64px',
+                    borderRadius: '9999px',
+                    overflow: 'hidden',
+                    border: '1px solid #262626',
+                    backgroundColor: '#171717',
+                    flexShrink: 0
+                  }}
+                >
+                  <Image 
+                    src="/images/mini_avatar.png" 
+                    alt="Nguyen Khanh Truong" 
+                    fill 
+                    sizes="64px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span 
+                    style={{
+                      color: 'var(--Colors-Neutral-100, #FFF)',
+                      fontFamily: 'Fraunces, Georgia, serif',
+                      fontSize: '20px',
+                      fontStyle: 'normal',
+                      fontWeight: 700,
+                      lineHeight: '30px'
+                    }}
+                  >
+                    {lang === "vi" ? "Nguyễn Khánh Trường" : "Nguyen Khanh Truong"}
+                  </span>
+                  <span className="text-xs text-brand-accent font-medium mt-0.5">Product Designer</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Actions */}
+            <div 
+              style={{
+                display: 'flex',
+                padding: '8px 24px',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                flex: '1 0 0px'
+              }}
+              className="pt-8 md:pt-0"
+            >
+              {/* Title */}
+              <h2 className="text-3xl font-serif font-extrabold text-white mb-6 leading-tight">
+                {lang === "vi" ? "Hãy cùng làm việc." : "Let's work together."}
+              </h2>
+
+              {/* Copy Email CTA */}
+              <div className="w-full flex flex-col gap-2 mb-6">
+                <button
+                  onClick={handleCopyEmail}
+                  className="bg-[#22C55E] hover:bg-[#1f9e4e] text-[#17211B] font-bold rounded-full shadow-lg transition-all duration-150 active:scale-95 text-sm cursor-pointer cta-btn w-full p-3 flex items-center justify-center gap-2"
+                >
+                  <Mail size={16} />
+                  ktruong2k1@gmail.com
+                  {copied && <Check size={14} className="text-green-950 ml-1" />}
+                </button>
+                {copied && (
+                  <span className="text-brand-accent text-center text-[10px] font-mono mt-1 w-full block">
+                    {lang === "vi" ? "Đã sao chép email!" : "Email copied!"}
+                  </span>
+                )}
+              </div>
+
+              {/* Social Links (Row layout) */}
+              <div className="flex flex-col sm:flex-row gap-4 w-full">
+                {/* LinkedIn */}
+                <a 
+                  href="https://www.linkedin.com/in/nguyen-khanh-truong-designer/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-between p-3.5 rounded-xl border border-neutral-800 bg-neutral-950/40 hover:bg-neutral-900 hover:border-brand-accent/30 transition-all duration-150 group"
+                >
+                  <div className="flex items-center gap-3 text-neutral-300 group-hover:text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-neutral-400 group-hover:text-white">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    <span className="text-sm font-semibold">LinkedIn</span>
+                  </div>
+                  <ArrowUpRight size={16} className="text-brand-accent" />
+                </a>
+
+                {/* Behance */}
+                <a 
+                  href="https://www.behance.net/nguyenkhanhtr" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-between p-3.5 rounded-xl border border-neutral-800 bg-neutral-950/40 hover:bg-neutral-900 hover:border-brand-accent/30 transition-all duration-150 group"
+                >
+                  <div className="flex items-center gap-3 text-neutral-300 group-hover:text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-neutral-400 group-hover:text-white">
+                      <path d="M22 2H2C0.9 2 0 2.9 0 4V20C0 21.1 0.9 22 2 22H22C23.1 22 24 21.1 24 20V4C24 2.9 23.1 2 22 2ZM10.95 12.35H5.82V14.82H10.95V12.35ZM10.95 8.18H5.82V10.65H10.95V8.18ZM17.65 14.82C15.42 14.82 13.9 13.3 13.9 11.08C13.9 8.85 15.42 7.33 17.65 7.33C19.88 7.33 21.4 8.85 21.4 11.08C21.4 11.3 21.38 11.53 21.34 11.75H16.02C16.15 13.12 16.8 13.88 17.78 13.88C18.4 13.88 18.86 13.56 19.12 12.95H20.68C20.22 14.28 19.16 14.82 17.65 14.82ZM16.02 10.75H19.4C19.28 9.55 18.66 8.82 17.71 8.82C16.76 8.82 16.15 9.55 16.02 10.75ZM19.52 5.88H15.9V4.95H19.52V5.88Z" />
+                    </svg>
+                    <span className="text-sm font-semibold">Behance</span>
+                  </div>
+                  <ArrowUpRight size={16} className="text-brand-accent" />
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
 
     </div>
   );

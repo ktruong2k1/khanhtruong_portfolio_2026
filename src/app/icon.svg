@@ -1,0 +1,8 @@
+<svg width="32" height="32" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <mask id="icon-mask">
+    <rect width="28" height="28" fill="white" />
+    <path d="M12 0C6 8 6 20 12 28" stroke="black" strokeWidth="2.5" fill="none" />
+    <path d="M20 0C14 8 14 20 20 28" stroke="black" strokeWidth="2.5" fill="none" />
+  </mask>
+  <circle cx="14" cy="14" r="14" fill="#22C55E" mask="url(#icon-mask)" />
+</svg>

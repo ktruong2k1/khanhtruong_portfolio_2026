@@ -17,7 +17,8 @@ import {
   Check, 
   X, 
   Send,
-  Menu
+  Menu,
+  ArrowUpRight
 } from "lucide-react";
 import localProjects from "../../data/projects.json";
 
@@ -116,7 +117,7 @@ const translations = {
     featuredBadge: "FEATURED",
     moreProjects: "MORE PROJECTS",
     viewAll: "View all",
-    scrollMore: "Scroll for more projects",
+    scrollMore: "Scroll to see more projects",
     copied: "Copied!",
     contactModalTitle: "Send me a message",
     contactModalDesc: "Write a short message. Clicking send will automatically create an email draft to the administrator address ktruong2k1@gmail.com.",
@@ -159,6 +160,21 @@ export default function Home() {
   const [isStuck, setIsStuck] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [bannerHeight, setBannerHeight] = useState("64px");
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isAtBottom, setIsAtBottom] = useState(false);
+  const [canTriggerWorksTransition, setCanTriggerWorksTransition] = useState(false);
+
+  // Cooldown timer to prevent scroll momentum from triggering transition instantly
+  useEffect(() => {
+    if (isAtBottom) {
+      const timer = setTimeout(() => {
+        setCanTriggerWorksTransition(true);
+      }, 600);
+      return () => clearTimeout(timer);
+    } else {
+      setCanTriggerWorksTransition(false);
+    }
+  }, [isAtBottom]);
 
   // Scroll to works transition
   useEffect(() => {
@@ -175,45 +191,37 @@ export default function Home() {
       const placeholder = document.getElementById("scroll-placeholder");
       if (placeholder) {
         const rect = placeholder.getBoundingClientRect();
-        // Sticky triggers later (reduce sticky height) when the placeholder is scrolled higher up
-        if (rect.top <= window.innerHeight - 120) {
+        const startTrigger = window.innerHeight - 64; // height of closed banner
+        
+        if (rect.top <= startTrigger) {
           setIsStuck(true);
 
-          // Calculate how much we have scrolled past the sticky start point
-          const overflowScroll = (window.innerHeight - 120) - rect.top;
-          const threshold = window.innerHeight * 0.20; // 20% of viewport height
-
+          const scrolledDistance = startTrigger - rect.top;
+          const threshold = window.innerHeight * 0.35; // 35% height
+          const maxScrollDistance = threshold - 64;
+          
           if (!isTransitioning) {
-            const calculatedHeight = Math.max(64, 64 + overflowScroll);
+            const progress = Math.min(1, Math.max(0, scrolledDistance / maxScrollDistance));
+            setScrollProgress(progress);
 
-            if (calculatedHeight >= threshold) {
-              // Reached 20% height: trigger full-screen transition expansion!
-              setIsTransitioning(true);
-              setBannerHeight("100vh");
-              setTimeout(() => {
-                router.push("/works");
-              }, 600);
+            // Dynamically grow height from 64px up to 35% height
+            const targetHeight = 64 + progress * maxScrollDistance;
+            
+            if (progress >= 0.95) {
+              setBannerHeight("35vh");
+              setIsAtBottom(true);
             } else {
-              // Grow height dynamically with scroll
-              setBannerHeight(`${calculatedHeight}px`);
+              setBannerHeight(`${targetHeight}px`);
+              setIsAtBottom(false);
             }
           }
         } else {
           setIsStuck(false);
+          setIsAtBottom(false);
+          setScrollProgress(0);
           if (!isTransitioning) {
             setBannerHeight("64px");
           }
-        }
-      }
-
-      // Check if user has scrolled past the placeholder to trigger smart animate and redirect
-      if (canRedirect && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
-        if (!isTransitioning) {
-          setIsTransitioning(true);
-          setBannerHeight("100vh");
-          setTimeout(() => {
-            router.push("/works");
-          }, 600);
         }
       }
     };
@@ -223,10 +231,75 @@ export default function Home() {
       window.removeEventListener("scroll", handleScrollTransition);
     };
   }, [router, isTransitioning]);
+
+  // Listen for extra scrolling gesture at the bottom to trigger works page transition
+  useEffect(() => {
+    if (!isAtBottom || !canTriggerWorksTransition || isTransitioning) return;
+
+    let touchStartY = 0;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY > 5) {
+        triggerTransition();
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        touchStartY = e.touches[0].clientY;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touchEndY = e.touches[0].clientY;
+        const diffY = touchStartY - touchEndY; // Positive means swipe up (scrolling down)
+        if (diffY > 10) {
+          triggerTransition();
+        }
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (["ArrowDown", "PageDown", " "].includes(e.key)) {
+        triggerTransition();
+      }
+    };
+
+    const triggerTransition = () => {
+      setIsTransitioning(true);
+      setBannerHeight("100vh");
+      setScrollProgress(1);
+      setTimeout(() => {
+        router.push("/works");
+      }, 600);
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("keydown", handleKeyDown, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isAtBottom, canTriggerWorksTransition, isTransitioning, router]);
   
   // Modals state
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [contactMessage, setContactMessage] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("ktruong2k1@gmail.com");
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  };
   
   // Copy to clipboard notification
   const [copiedText, setCopiedText] = useState<string | null>(null);
@@ -395,43 +468,11 @@ export default function Home() {
         );
       case "austfly":
         return (
-          <svg className="w-full h-full bg-[#0d1016]" viewBox="0 0 380 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Before (Left Screen) */}
-            <rect x="35" y="25" width="125" height="185" rx="6" fill="#0b0e14" stroke={strokeColor} />
-            <text x="97" y="42" fill="#475569" fontSize="6.5" fontWeight="bold" fontFamily="var(--font-sans), sans-serif" textAnchor="middle">BEFORE</text>
-            <text x="97" y="55" fill="#475569" fontSize="9" fontWeight="bold" fontFamily="var(--font-sans), sans-serif" textAnchor="middle">AUSTFLY</text>
-            <circle cx="97.5" cy="100" r="22" fill="#1e293b" opacity="0.4" stroke={strokeColor} strokeWidth="1" />
-            {/* Cluttered small buttons */}
-            <rect x="50" y="135" width="24" height="12" rx="2" fill="#1e293b" opacity="0.4" />
-            <rect x="85" y="135" width="24" height="12" rx="2" fill="#1e293b" opacity="0.4" />
-            <rect x="120" y="135" width="24" height="12" rx="2" fill="#1e293b" opacity="0.4" />
-            <rect x="50" y="155" width="24" height="12" rx="2" fill="#1e293b" opacity="0.4" />
-            <rect x="85" y="155" width="24" height="12" rx="2" fill="#1e293b" opacity="0.4" />
-            <rect x="120" y="155" width="24" height="12" rx="2" fill="#1e293b" opacity="0.4" />
-            
-            {/* Splitter Line with Redesign Indicator */}
-            <line x1="190" y1="15" x2="190" y2="225" stroke={strokeColor} strokeWidth="1.5" strokeDasharray="3 3" />
-            <rect x="165" y="110" width="50" height="15" rx="4" fill="#22C55E" stroke="#16813D" strokeWidth="1" />
-            <text x="190" y="120" fill="#17211B" fontSize="6.5" fontWeight="bold" fontFamily="var(--font-sans), sans-serif" textAnchor="middle">Redesign</text>
-
-            {/* After (Right Screen) */}
-            <rect x="220" y="25" width="125" height="185" rx="6" fill="#111c30" stroke={accentColor} strokeWidth="1.5" />
-            <text x="282.5" y="42" fill={accentColor} fontSize="6.5" fontWeight="bold" fontFamily="var(--font-sans), sans-serif" textAnchor="middle">AFTER</text>
-            <text x="282.5" y="55" fill="#f8fafc" fontSize="9" fontWeight="950" fontFamily="sans-serif" textAnchor="middle">austfly</text>
-            {/* Shutter graphic */}
-            <rect x="235" y="70" width="95" height="75" rx="8" fill="#13233c" stroke={strokeColor} />
-            <line x1="240" y1="85" x2="325" y2="85" stroke="#223047" strokeWidth="2" />
-            <line x1="240" y1="95" x2="325" y2="95" stroke="#223047" strokeWidth="2" />
-            <line x1="240" y1="105" x2="325" y2="105" stroke="#223047" strokeWidth="2" />
-            <line x1="240" y1="115" x2="325" y2="115" stroke="#223047" strokeWidth="2" />
-            {/* Easy Swipe Gestures */}
-            <circle cx="282.5" cy="110" r="16" fill={accentColor} fillOpacity="0.1" stroke={accentColor} strokeWidth="1" />
-            <path d="M 282.5 118 L 282.5 102 M 277 107 L 282.5 102 L 288 107" stroke={accentColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            
-            {/* Quick action button */}
-            <rect x="245" y="160" width="75" height="18" rx="4" fill={accentColor} />
-            <text x="282.5" y="171" fill="#17211B" fontSize="7" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">One-tap Open</text>
-          </svg>
+          <img 
+            src="/images/austfly.png" 
+            alt="Austfly Redesign Thumbnail" 
+            className="w-full h-full object-cover" 
+          />
         );
       case "factory":
         return (
@@ -477,30 +518,11 @@ export default function Home() {
       case "medical":
       default:
         return (
-          <svg className="w-full h-full bg-[#0d1016]" viewBox="0 0 380 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="25" y="25" width="330" height="190" rx="4" fill="#111c30" stroke={strokeColor} strokeWidth="1.5" />
-            <rect x="35" y="35" width="55" height="8" rx="2" fill={accentColor} />
-            <rect x="100" y="35" width="35" height="8" rx="2" fill="#223047" />
-            <rect x="145" y="35" width="35" height="8" rx="2" fill="#223047" />
-            
-            {/* Dental catalog grid elements */}
-            <rect x="35" y="60" width="95" height="115" rx="4" fill="#13233c" stroke={strokeColor} />
-            <circle cx="82.5" cy="95" r="18" fill="#1e293b" />
-            <path d="M 75 95 C 75 88, 90 88, 90 95 C 90 102, 75 102, 75 95 Z" stroke={accentColor} strokeWidth="1.5" fill="none" />
-            <rect x="45" y="130" width="75" height="6" rx="1.5" fill="#223047" />
-            <rect x="45" y="142" width="50" height="6" rx="1.5" fill={accentColor} />
-
-            <rect x="142" y="60" width="96" height="115" rx="4" fill="#13233c" stroke={strokeColor} />
-            <circle cx="190" cy="95" r="18" fill="#1e293b" />
-            <path d="M 182.5 95 C 182.5 88, 197.5 88, 197.5 95 C 197.5 102, 182.5 102, 182.5 95 Z" stroke={accentColor} strokeWidth="1.5" fill="none" />
-            <rect x="152.5" y="130" width="75" height="6" rx="1.5" fill="#223047" />
-            <rect x="152.5" y="142" width="50" height="6" rx="1.5" fill={accentColor} />
-
-            <rect x="250" y="60" width="95" height="115" rx="4" fill="#13233c" stroke={strokeColor} />
-            <circle cx="297.5" cy="95" r="18" fill="#1e293b" />
-            <rect x="260" y="130" width="75" height="6" rx="1.5" fill="#223047" />
-            <rect x="260" y="142" width="50" height="6" rx="1.5" fill={accentColor} />
-          </svg>
+          <img 
+            src="/images/labo_viet_my.png" 
+            alt="Labo Viet My Thumbnail" 
+            className="w-full h-full object-cover" 
+          />
         );
     }
   };
@@ -589,10 +611,13 @@ export default function Home() {
       >
         {/* Left: Logo */}
         <a href="#hero" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight hover:scale-105 transition-transform duration-150">
-          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-brand-accent">
-            <path d="M8 6C6.5 8.5 6 11.5 6 14 C 6 16.5, 6.5 19.5, 8 22" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-            <path d="M12 9.5C11 11 10.5 12.5 10.5 14 C 10.5 15.5, 11 17, 12 18.5" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
-            <path d="M16 13C15.8 13.5 15.7 13.8 15.7 14 C 15.7 14.2, 15.8 14.5, 16 15" stroke="#22C55E" strokeWidth="3.5" strokeLinecap="round" />
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <mask id="header-logo-mask">
+              <rect width="28" height="28" fill="white" />
+              <path d="M12 0C6 8 6 20 12 28" stroke="black" strokeWidth="2.5" fill="none" />
+              <path d="M20 0C14 8 14 20 20 28" stroke="black" strokeWidth="2.5" fill="none" />
+            </mask>
+            <circle cx="14" cy="14" r="14" fill="#22C55E" mask="url(#header-logo-mask)" />
           </svg>
           <span>khanhtruong_nguyen</span>
         </a>
@@ -636,19 +661,35 @@ export default function Home() {
           >
             {translations[lang].navAbout}
           </a>
-          <a 
-            href="/contact" 
+          <button 
+            onClick={() => setContactModalOpen(true)}
             style={{
               height: '100%',
               display: 'flex',
               alignItems: 'center',
               position: 'relative',
-              color: '#989898'
+              color: contactModalOpen ? '#22C55E' : '#989898',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0
             }}
-            className="hover:text-white transition-colors"
+            className={`hover:text-white transition-colors font-sans ${contactModalOpen ? 'font-bold' : ''}`}
           >
             {translations[lang].navContact}
-          </a>
+            {contactModalOpen && (
+              <span 
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '2px',
+                  backgroundColor: '#22C55E'
+                }}
+              />
+            )}
+          </button>
         </nav>
 
         {/* Right Area Badge and Language Switch */}
@@ -662,14 +703,13 @@ export default function Home() {
               onClick={() => setLang("vi")}
               className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
             >
-              VIE
+              Vie
             </button>
-            <span className="text-neutral-800 px-0.5">|</span>
             <button
               onClick={() => setLang("en")}
               className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
             >
-              ENG
+              Eng
             </button>
           </div>
 
@@ -695,21 +735,41 @@ export default function Home() {
           <div className="md:hidden absolute top-[76px] left-0 right-0 border-b border-neutral-900 bg-[var(--Colors-Neutral-1000,#181818)] px-6 py-4 flex flex-col gap-4 text-sm font-semibold z-50">
             <a href="/works" onClick={() => setMobileMenuOpen(false)} className="py-2 text-neutral-400 hover:text-white transition-colors">{translations[lang].navWork}</a>
             <a href="/about" onClick={() => setMobileMenuOpen(false)} className="py-2 text-neutral-400 hover:text-white transition-colors">{translations[lang].navAbout}</a>
-            <a href="/contact" onClick={() => setMobileMenuOpen(false)} className="py-2 text-neutral-400 hover:text-white transition-colors">{translations[lang].navContact}</a>
+            <button 
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setContactModalOpen(true);
+              }} 
+              style={{ background: 'none', border: 'none', textAlign: 'left', padding: '8px 0' }}
+              className="py-2 text-neutral-400 hover:text-white transition-colors font-sans text-sm font-semibold cursor-pointer"
+            >
+              {translations[lang].navContact}
+            </button>
           </div>
         )}
 
         {/* Spec Label for Header */}
         {specMode && (
-          <div className="absolute bottom-0 left-0 right-0 bg-red-950/20 text-red-400 border-t border-red-200/50 px-[100px] py-1 text-[10px] font-sans font-normal flex items-center justify-between z-40">
+          <div className="absolute bottom-0 left-0 right-0 bg-red-950/20 text-red-400 border-t border-red-200/50 px-[120px] py-1 text-[10px] font-sans font-normal flex items-center justify-between z-40">
             <span>Class: sticky top-0 | Height: 76px</span>
-            <span>Padding: py-4 px-100 | Border-B: 1px</span>
+            <span>Padding: py-4 px-120 | Border-B: 1px</span>
           </div>
         )}
       </header>
 
-      {/* HERO SECTION */}
-      <section id="hero" className="w-full px-[100px] py-[40px] relative flex justify-center">
+      {/* MAIN BLURRABLE CONTENT WRAPPER */}
+      <div 
+        style={{
+          filter: isTransitioning ? 'blur(12px)' : (isStuck ? `blur(${scrollProgress * 8}px)` : 'none'),
+          transform: isTransitioning ? 'translateY(-120px)' : (isStuck ? `translateY(-${scrollProgress * 60}px)` : 'none'),
+          opacity: isTransitioning ? 0 : (isStuck ? 1 - scrollProgress * 0.5 : 1),
+          transition: isTransitioning 
+            ? 'filter 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 600ms cubic-bezier(0.16, 1, 0.3, 1)' 
+            : 'none'
+        }}
+      >
+        {/* HERO SECTION */}
+        <section id="hero" className="w-full px-[120px] py-[40px] relative flex justify-center">
         <div 
           style={{
             display: 'grid',
@@ -767,14 +827,14 @@ export default function Home() {
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3.5 pt-3">
                 <button
                   onClick={() => setContactModalOpen(true)}
-                  className="bg-brand-accent hover:bg-[#27b378] text-[#17211B] font-bold text-[14px] px-6 py-2.5 rounded-full transition-all duration-150 active:scale-[0.97]"
+                  className="bg-brand-accent hover:bg-[#27b378] text-[#17211B] font-bold text-[14px] rounded-full transition-all duration-150 active:scale-[0.97] cta-btn"
                 >
                   {translations[lang].emailMe}
                 </button>
                 <a
                   href="file:///Users/khanhtruongvu/Desktop/Portfolio/2026%20Portfolio/CV_NguyenKhanhTruong_2026.pdf"
                   target="_blank"
-                  className="inline-flex items-center gap-2 border border-white/60 hover:bg-white/10 text-white font-bold text-[14px] px-6 py-2.5 rounded-full transition-all duration-150 active:scale-[0.97]"
+                  className="inline-flex items-center border border-white/60 hover:bg-white/10 text-white font-bold text-[14px] rounded-full transition-all duration-150 active:scale-[0.97] cta-btn"
                 >
                   {translations[lang].viewResume}
                 </a>
@@ -813,7 +873,7 @@ export default function Home() {
       </section>
 
       {/* CORE WORK PORTFOLIO (Featured and More Projects Grid) */}
-      <section id="work" className="w-full px-[100px] py-[40px] relative flex flex-col items-center">
+      <section id="work" className="w-full px-[120px] py-[40px] relative flex flex-col items-center">
         <div 
           style={{
             display: 'grid',
@@ -1125,8 +1185,15 @@ export default function Home() {
       {/* Static scroll placeholder at the bottom of the home content */}
       <div 
         id="scroll-placeholder"
-        className="w-full flex justify-center py-10"
-        style={{ background: '#0B0B0C' }}
+        style={{ 
+          background: '#0B0B0C',
+          height: '35vh',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          paddingTop: '20px'
+        }}
       >
         {!isStuck && (
           <div 
@@ -1134,10 +1201,10 @@ export default function Home() {
               color: '#E8C468',
               fontFamily: 'var(--font-serif), serif',
               fontWeight: 'bold',
-              fontSize: '15px',
+              fontSize: '24px',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px'
+              gap: '12px'
             }}
           >
             <span className="animate-bounce inline-block">↓</span>
@@ -1145,49 +1212,40 @@ export default function Home() {
           </div>
         )}
       </div>
+      </div>
 
       {/* STICKY BOTTOM BANNER */}
       {isStuck && (
         <div 
-          onClick={() => {
-            if (!isTransitioning) {
-              setIsTransitioning(true);
-              setTimeout(() => {
-                router.push("/works");
-              }, 600);
-            }
-          }}
           style={{
             position: 'fixed',
             bottom: 0,
             left: 0,
             width: '100%',
-            backgroundColor: isTransitioning ? 'rgba(13, 43, 34, 1)' : 'rgba(13, 43, 34, 0.8)',
-            backdropFilter: 'blur(12px)',
-            borderTop: isTransitioning ? 'none' : '1px solid rgba(34, 197, 94, 0.3)',
-            padding: '20px 100px',
+            background: isTransitioning 
+              ? '#0D2B22' 
+              : 'url(/images/scroll_background.png) no-repeat center bottom / 100% 100%',
+            padding: '20px 120px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            gap: '8px',
-            cursor: 'pointer',
+            gap: '12px',
             zIndex: 9999,
             color: '#E8C468',
             fontFamily: 'var(--font-serif), serif',
             fontWeight: 'bold',
-            fontSize: '16px',
+            fontSize: '24px',
             height: bannerHeight,
             transition: isTransitioning 
-              ? 'height 600ms cubic-bezier(0.25, 1, 0.5, 1), background-color 600ms ease, border-top-color 600ms ease'
-              : 'background-color 300ms ease, border-top-color 300ms ease'
+              ? 'height 600ms cubic-bezier(0.16, 1, 0.3, 1), background-color 600ms ease'
+              : 'none'
           }}
-          className="hover:bg-opacity-95"
         >
           <div 
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
+              gap: '12px',
               opacity: isTransitioning ? 0 : 1,
               transition: 'opacity 300ms ease'
             }}
@@ -1204,9 +1262,9 @@ export default function Home() {
       {false && (
         <>
           {/* ABOUT SECTION */}
-          <section id="about" className="w-full bg-slate-50 dark:bg-[var(--Colors-Neutral-1000,#181818)] px-[100px] py-[40px] relative">
+          <section id="about" className="w-full bg-slate-50 dark:bg-[var(--Colors-Neutral-1000,#181818)] px-[120px] py-[40px] relative">
             {specMode && (
-              <div className="absolute top-2 left-[100px] bg-red-600/10 border border-red-500/30 text-red-500 text-[9px] font-mono px-2 py-0.5 rounded">
+              <div className="absolute top-2 left-[120px] bg-red-600/10 border border-red-500/30 text-red-500 text-[9px] font-mono px-2 py-0.5 rounded">
                 Section #about | Proportions: 2 columns Bio (Left) vs How I Work (Right)
               </div>
             )}
@@ -1272,7 +1330,7 @@ export default function Home() {
           </section>
 
           {/* CORE EXPERIENCE WORK TIMELINE */}
-          <section className="w-full px-[100px] py-[40px] relative border-b border-slate-200/60 dark:border-slate-800/50">
+          <section className="w-full px-[120px] py-[40px] relative border-b border-slate-200/60 dark:border-slate-800/50">
             <div className="flex flex-col items-center text-center gap-3 mb-16">
               <span className="text-xs font-mono uppercase tracking-widest text-brand-500 font-bold">Timeline</span>
               <h3 className="text-3xl font-extrabold font-serif tracking-tight dark:text-white">Quá Trình Làm Việc</h3>
@@ -1314,7 +1372,7 @@ export default function Home() {
           </section>
 
           {/* CORE SKILLS SECTION */}
-          <section id="skills" className="w-full bg-slate-50 dark:bg-[var(--Colors-Neutral-1000,#181818)] px-[100px] py-[40px] relative border-b border-slate-200/60 dark:border-slate-800/50">
+          <section id="skills" className="w-full bg-slate-50 dark:bg-[var(--Colors-Neutral-1000,#181818)] px-[120px] py-[40px] relative border-b border-slate-200/60 dark:border-slate-800/50">
             <div className="w-full">
               <div className="flex flex-col items-center text-center gap-3 mb-16">
                 <span className="text-xs font-mono uppercase tracking-widest text-brand-500 font-bold">Skills</span>
@@ -1347,7 +1405,7 @@ export default function Home() {
           </section>
 
           {/* CONTACT SECTION */}
-          <section id="contact" className="w-full px-[100px] py-[40px] text-center relative">
+          <section id="contact" className="w-full px-[120px] py-[40px] text-center relative">
             <div className="flex flex-col items-center gap-6 max-w-xl mx-auto">
               <span className="text-xs font-mono uppercase tracking-widest text-brand-500 font-bold">Contact</span>
               <h2 className="text-4xl md:text-5xl font-extrabold font-serif dark:text-white">
@@ -1370,14 +1428,28 @@ export default function Home() {
                 >
                   Send me a message →
                 </button>
-                <a href="#" className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-200 font-semibold px-6 py-3">LinkedIn</a>
-                <a href="#" className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-200 font-semibold px-6 py-3">Behance</a>
+                <a 
+                  href="https://www.linkedin.com/in/nguyen-khanh-truong-designer/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-200 font-semibold px-6 py-3"
+                >
+                  LinkedIn
+                </a>
+                <a 
+                  href="https://www.behance.net/nguyenkhanhtr" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-200 font-semibold px-6 py-3"
+                >
+                  Behance
+                </a>
               </div>
             </div>
           </section>
 
           {/* FOOTER */}
-          <footer className="w-full px-[100px] py-[40px] border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-400">
+          <footer className="w-full px-[120px] py-[40px] border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-400">
             <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4">
               <span>© 2026 Nguyễn Khánh Trường. All rights reserved.</span>
               <div className="flex items-center gap-4 font-mono text-[10px]">
@@ -1391,45 +1463,188 @@ export default function Home() {
     </div>
 
 
-      {/* CONTACT POPUP MODAL */}
-      {contactModalOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-[#0d1425] border border-slate-800 rounded-2xl max-w-md w-full relative p-6">
-            <button
-              onClick={() => setContactModalOpen(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-lg bg-slate-800 text-slate-300"
+      {/* CONTACT DIALOG */}
+      <div 
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 99999,
+          pointerEvents: contactModalOpen ? 'auto' : 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '24px',
+          transition: 'all 300ms ease-out'
+        }}
+      >
+        {/* Backdrop overlay */}
+        <div 
+          onClick={() => setContactModalOpen(false)}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            backdropFilter: 'blur(8px)',
+            opacity: contactModalOpen ? 1 : 0,
+            transition: 'opacity 300ms ease-out'
+          }}
+        />
+
+        {/* Dialog Panel */}
+        <div 
+          style={{
+            position: 'relative',
+            width: '100%',
+            maxWidth: '800px',
+            background: '#181818',
+            borderRadius: '16px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            transform: contactModalOpen ? 'scale(1)' : 'scale(0.95)',
+            opacity: contactModalOpen ? 1 : 0,
+            transition: 'transform 300ms cubic-bezier(0.25, 1, 0.5, 1), opacity 300ms ease-out',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            padding: '32px 24px 40px 24px',
+            overflowY: 'auto'
+          }}
+        >
+          {/* Close button */}
+          <button 
+            onClick={() => setContactModalOpen(false)}
+            className="text-neutral-400 hover:text-white transition-colors cursor-pointer mb-6 p-1 rounded-lg hover:bg-neutral-800 self-start"
+            style={{ background: 'none', border: 'none', marginLeft: '16px' }}
+          >
+            <X size={20} />
+          </button>
+
+          {/* Two-Column split layout */}
+          <div className="flex flex-col md:flex-row w-full items-start gap-0">
+            
+            {/* Left Column: Profile Card */}
+            <div 
+              style={{
+                display: 'flex',
+                padding: '8px 24px',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                alignSelf: 'stretch'
+              }}
+              className="border-b md:border-b-0 md:border-r border-neutral-800 pb-8 md:pb-0"
             >
-              <X size={15} />
-            </button>
+              {/* Profile Card contents (avatar left, name right) */}
+              <div className="flex items-center gap-4">
+                <div 
+                  style={{
+                    position: 'relative',
+                    width: '64px',
+                    height: '64px',
+                    borderRadius: '9999px',
+                    overflow: 'hidden',
+                    border: '1px solid #262626',
+                    backgroundColor: '#171717',
+                    flexShrink: 0
+                  }}
+                >
+                  <Image 
+                    src="/images/mini_avatar.png" 
+                    alt="Nguyen Khanh Truong" 
+                    fill 
+                    sizes="64px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span 
+                    style={{
+                      color: 'var(--Colors-Neutral-100, #FFF)',
+                      fontFamily: 'Fraunces, Georgia, serif',
+                      fontSize: '20px',
+                      fontStyle: 'normal',
+                      fontWeight: 700,
+                      lineHeight: '30px'
+                    }}
+                  >
+                    {lang === "vi" ? "Nguyễn Khánh Trường" : "Nguyen Khanh Truong"}
+                  </span>
+                  <span className="text-xs text-brand-accent font-medium mt-0.5">Product Designer</span>
+                </div>
+              </div>
+            </div>
 
-            <h3 className="text-xl font-bold font-serif text-white mb-2">{translations[lang].contactModalTitle}</h3>
-             <p className="text-xs text-slate-400 mb-4 leading-relaxed">
-               {translations[lang].contactModalDesc}
-             </p>
+            {/* Right Column: Actions */}
+            <div 
+              style={{
+                display: 'flex',
+                padding: '8px 24px',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                flex: '1 0 0px'
+              }}
+              className="pt-8 md:pt-0"
+            >
+              {/* Title */}
+              <h2 className="text-3xl font-serif font-extrabold text-white mb-6 leading-tight">
+                {lang === "vi" ? "Hãy cùng làm việc." : "Let's work together."}
+              </h2>
 
-            <form onSubmit={handleSendEmail} className="flex flex-col gap-4">
-              <div>
-                <label className="text-[9px] uppercase font-mono font-bold text-slate-400 block mb-1">{translations[lang].contactModalLabel}</label>
-                <textarea
-                  required
-                  rows={4}
-                  value={contactMessage}
-                  onChange={e => setContactMessage(e.target.value)}
-                  placeholder={translations[lang].contactModalPlaceholder}
-                  className="w-full bg-[#111c30] border border-slate-800 rounded-xl p-3 text-xs focus:outline-none focus:border-brand-500 text-white leading-relaxed"
-                />
+              {/* Copy Email CTA */}
+              <div className="w-full flex flex-col gap-2 mb-6">
+                <button
+                  onClick={handleCopyEmail}
+                  className="bg-[#22C55E] hover:bg-[#1f9e4e] text-[#17211B] font-bold rounded-full shadow-lg transition-all duration-150 active:scale-95 text-sm cursor-pointer cta-btn w-full p-3 flex items-center justify-center gap-2"
+                >
+                  <Mail size={16} />
+                  ktruong2k1@gmail.com
+                  {copied && <Check size={14} className="text-green-950 ml-1" />}
+                </button>
+                {copied && (
+                  <span className="text-brand-accent text-center text-[10px] font-mono mt-1 w-full block">
+                    {lang === "vi" ? "Đã sao chép email!" : "Email copied!"}
+                  </span>
+                )}
               </div>
 
-              <button
-                type="submit"
-                className="bg-[#22C55E] hover:bg-[#16813D] text-[#17211B] font-semibold py-2.5 rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5"
-              >
-                {translations[lang].contactModalSubmit}
-              </button>
-            </form>
+              {/* Social Links (Row layout) */}
+              <div className="flex flex-col sm:flex-row gap-4 w-full">
+                {/* LinkedIn */}
+                <a 
+                  href="https://www.linkedin.com/in/nguyen-khanh-truong-designer/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-between p-3.5 rounded-xl border border-neutral-800 bg-neutral-950/40 hover:bg-neutral-900 hover:border-brand-accent/30 transition-all duration-150 group"
+                >
+                  <div className="flex items-center gap-3 text-neutral-300 group-hover:text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-neutral-400 group-hover:text-white">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    <span className="text-sm font-semibold">LinkedIn</span>
+                  </div>
+                  <ArrowUpRight size={16} className="text-brand-accent" />
+                </a>
+
+                {/* Behance */}
+                <a 
+                  href="https://www.behance.net/nguyenkhanhtr" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-between p-3.5 rounded-xl border border-neutral-800 bg-neutral-950/40 hover:bg-neutral-900 hover:border-brand-accent/30 transition-all duration-150 group"
+                >
+                  <div className="flex items-center gap-3 text-neutral-300 group-hover:text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-neutral-400 group-hover:text-white">
+                      <path d="M22 2H2C0.9 2 0 2.9 0 4V20C0 21.1 0.9 22 2 22H22C23.1 22 24 21.1 24 20V4C24 2.9 23.1 2 22 2ZM10.95 12.35H5.82V14.82H10.95V12.35ZM10.95 8.18H5.82V10.65H10.95V8.18ZM17.65 14.82C15.42 14.82 13.9 13.3 13.9 11.08C13.9 8.85 15.42 7.33 17.65 7.33C19.88 7.33 21.4 8.85 21.4 11.08C21.4 11.3 21.38 11.53 21.34 11.75H16.02C16.15 13.12 16.8 13.88 17.78 13.88C18.4 13.88 18.86 13.56 19.12 12.95H20.68C20.22 14.28 19.16 14.82 17.65 14.82ZM16.02 10.75H19.4C19.28 9.55 18.66 8.82 17.71 8.82C16.76 8.82 16.15 9.55 16.02 10.75ZM19.52 5.88H15.9V4.95H19.52V5.88Z" />
+                    </svg>
+                    <span className="text-sm font-semibold">Behance</span>
+                  </div>
+                  <ArrowUpRight size={16} className="text-brand-accent" />
+                </a>
+              </div>
+
+            </div>
           </div>
+
         </div>
-      )}
+      </div>
     </>
   );
 }

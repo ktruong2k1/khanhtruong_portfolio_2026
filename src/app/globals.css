@@ -120,7 +120,14 @@ body {
   gap: var(--Spacing-Padding-XS, 4px) !important;
   border-radius: var(--Radius-Round, 9999px) !important;
   white-space: nowrap;
-  line-height: 1 !important;
+  background: var(--Colors-Green-Alpha-10, rgba(31, 193, 107, 0.10)) !important;
+  border: none !important;
+  color: var(--Colours-Text-Secondary, #9EA2AD) !important;
+  font-family: "Be Vietnam Pro", sans-serif !important;
+  font-size: 12px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 15px !important;
 }
 
 /* Custom scrollbar */
@@ -136,4 +143,14 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #475569;
+}
+
+/* Global CTA Button Styling Class */
+.cta-btn {
+  display: flex !important;
+  padding: var(--Spacing-Padding-S, 8px) var(--Spacing-s, 12px) !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: var(--Spacing-Gap-XS, 8px) !important;
+  align-self: stretch !important;
 }
