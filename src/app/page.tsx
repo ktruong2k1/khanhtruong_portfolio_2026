@@ -102,7 +102,13 @@ const translations = {
     "austfly-summary": "Đánh giá UX toàn diện ứng dụng di động điều khiển cửa cuốn IoT — tìm kiếm điểm nghẽn, tinh giản thao tác, tái cấu trúc luồng. Kết quả: thao tác chạm ít hơn, sử dụng một tay, phân cấp hình ảnh rõ ràng hơn.",
     "partner-app-summary": "Nghiên cứu thực tế tại nhà xưởng — bao quát toàn bộ vòng đời thiết bị từ firmware đến bảo hành.",
     "thing-ai-summary": "Hệ thống nhận diện thương hiệu cho startup AI — logo, màu sắc và kiểu chữ xây dựng để mở rộng.",
-    "labo-viet-my-summary": "Thiết kế website B2B — cấu trúc thông tin và ngôn ngữ hình ảnh chuyên nghiệp cho đối tác y khoa."
+    "labo-viet-my-summary": "Thiết kế website B2B — cấu trúc thông tin và ngôn ngữ hình ảnh chuyên nghiệp cho đối tác y khoa.",
+    rogoPlatformTitle: "Rogo IoT Platform v2",
+    rogoPlatformDesc: "Rogo Solutions xây dựng và vận hành cốt lõi – bản thân nền tảng cũng được thiết kế whitelabel. Mỗi thương hiệu đối tác nhận được một instance riêng biệt: cùng cấu trúc, cùng trang điều khiển, nhưng mang bản sắc riêng. Logic whitelabel không bắt đầu từ tầng ứng dụng – nó bắt đầu ngay từ đây.",
+    raioSmartTitle: "RaIO Smart",
+    raioSmartDesc: "Được triển khai và quản lý thông qua Rogo Platform như mọi ứng dụng khác trong hệ sinh thái. Tầng whitelabel phía trên cho phép bất kỳ đối tác nào xuất bản ứng dụng mang thương hiệu riêng của họ – mà không cần xây dựng lại logic cốt lõi bên dưới.",
+    austflyTitle: "Ứng dụng IoT Austfly",
+    austflyDesc: "Thương hiệu cửa cuốn hàng đầu Việt Nam, đối tác đầu tiên áp dụng framework RaIO ngoài Rạng Đông. Đã được audit UX đầu cuối, xây dựng lại hệ thống phân cấp trực quan – hệ thống thiết kế và thư viện component sẵn sàng sản xuất, đang chờ triển khai."
   },
   en: {
     navWork: "Work",
@@ -129,13 +135,40 @@ const translations = {
     "austfly-summary": "Full UX audit to hi-fi redesign — fewer steps, one-hand usability.",
     "partner-app-summary": "Field-researched at the factory floor — covers the full device lifecycle from firmware to warranty.",
     "thing-ai-summary": "Visual identity system for an AI startup — logo, color, and type built to scale.",
-    "labo-viet-my-summary": "B2B website design — information hierarchy and visual language for a professional audience."
+    "labo-viet-my-summary": "B2B website design — information hierarchy and visual language for a professional audience.",
+    rogoPlatformTitle: "Rogo IoT Platform v2",
+    rogoPlatformDesc: "Rogo Solutions builds and operates the core – and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity. The whitelabel logic doesn't start at the app layer – it starts here.",
+    raioSmartTitle: "RaIO Smart",
+    raioSmartDesc: "Deployed and managed through Rogo Platform like every app in the ecosystem. The whitelabel layer on top lets any partner ship their own branded app – without rebuilding the core logic underneath.",
+    austflyTitle: "Austfly IoT App",
+    austflyDesc: "Vietnam's leading roller shutter brand, and the first partner to adopt the RaIO framework outside Rạng Đông. UX audited end-to-end, visual hierarchy rebuilt – design system and component library production-ready, pending implementation."
   }
 };
 
 export default function Home() {
   const router = useRouter();
   const [lang, setLang] = useState<"vi" | "en">("vi");
+  const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
+  const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
+
+  const handleLangChange = (newLang: "vi" | "en") => {
+    if (newLang === lang || transitionStage !== "idle") return;
+    setPendingLang(newLang);
+    setTransitionStage("fading-in");
+    
+    setTimeout(() => {
+      setLang(newLang);
+    }, 150);
+
+    setTimeout(() => {
+      setTransitionStage("fading-out");
+    }, 600);
+
+    setTimeout(() => {
+      setTransitionStage("idle");
+      setPendingLang(null);
+    }, 750);
+  };
 
   useEffect(() => {
     const savedLang = typeof window !== 'undefined' ? localStorage.getItem("portfolio_lang") as "vi" | "en" : null;
@@ -396,48 +429,11 @@ export default function Home() {
     switch (type) {
       case "dashboard":
         return (
-          <svg className="w-full h-full bg-[#0d1016]" viewBox="0 0 380 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="15" y="15" width="350" height="210" rx="6" fill="#121824" stroke={strokeColor} strokeWidth="1.5" />
-            <line x1="85" y1="15" x2="85" y2="225" stroke={strokeColor} strokeWidth="1.5" />
-            {/* Sidebar menu items */}
-            <rect x="25" y="30" width="45" height="6" rx="2" fill={accentColor} fillOpacity="0.8" />
-            <rect x="25" y="50" width="45" height="5" rx="1.5" fill="#223047" />
-            <rect x="25" y="65" width="45" height="5" rx="1.5" fill="#223047" />
-            <rect x="25" y="80" width="45" height="5" rx="1.5" fill="#223047" />
-            
-            {/* Search/Header bar */}
-            <rect x="100" y="30" width="100" height="8" rx="3" fill="#223047" />
-            
-            {/* Client Logos inside Dashboard Mockup Top-Right */}
-            <g transform="translate(242, 28)" opacity="0.6">
-              {/* ROGO */}
-              <g transform="translate(0, 0)">
-                <rect x="0" y="3" width="1" height="4" rx="0.5" transform="rotate(-30 0 3)" fill="#fff" />
-                <rect x="2" y="2" width="1" height="6" rx="0.5" transform="rotate(-30 2 2)" fill="#fff" />
-                <rect x="4" y="1" width="1" height="8" rx="0.5" transform="rotate(-30 4 1)" fill="#fff" />
-                <text x="7" y="6" fill="#fff" fontSize="4.5" fontWeight="bold" fontFamily="var(--font-sans), sans-serif">ROGO</text>
-              </g>
-              {/* Rạng Đông */}
-              <g transform="translate(32, 0)">
-                <circle cx="3.5" cy="4" r="3.2" stroke="#fff" strokeWidth="0.5" fill="none" />
-                <text x="8" y="6" fill="#fff" fontSize="4.5" fontWeight="bold" fontFamily="var(--font-sans), sans-serif">Rạng Đông</text>
-              </g>
-              {/* FPT */}
-              <g transform="translate(72, 0)">
-                <text x="0" y="6" fill="#fff" fontSize="5.5" fontWeight="bold" fontStyle="italic" fontFamily="var(--font-sans), sans-serif">FPT</text>
-                <text x="11" y="6" fill="#fff" fontSize="3" fontFamily="var(--font-sans), sans-serif">Smart Home</text>
-              </g>
-            </g>
-
-            {/* Content widgets */}
-            <rect x="100" y="55" width="115" height="60" rx="4" fill="#13233c" stroke={strokeColor} strokeWidth="1" />
-            <rect x="230" y="55" width="120" height="60" rx="4" fill="#13233c" stroke={strokeColor} strokeWidth="1" />
-            <circle cx="120" cy="75" r="10" fill={accentColor} fillOpacity="0.15" />
-            <circle cx="120" cy="75" r="4" fill={accentColor} />
-            <rect x="140" y="70" width="55" height="4" rx="1" fill="#334155" />
-            <rect x="100" y="130" width="250" height="80" rx="4" fill="#13233c" stroke={strokeColor} strokeWidth="1" />
-            <path d="M 110 190 L 150 160 L 190 175 L 240 145 L 290 165 L 340 140" fill="none" stroke={accentColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <img 
+            src="/images/rogo_platform.png" 
+            alt="Rogo IoT Platform Thumbnail" 
+            className="w-full h-full object-cover" 
+          />
         );
       case "smarthome":
         return (
@@ -696,20 +692,52 @@ export default function Home() {
         <div className="flex items-center gap-4">
           {/* Language Switch */}
           <div 
-            style={{ height: '30px' }}
-            className="flex items-center rounded-full p-0.5 bg-neutral-950/80 text-[10px] font-medium select-none"
+            style={{ height: '32px' }}
+            className="flex items-center rounded-full p-0.5 bg-neutral-950/80 select-none"
           >
             <button
-              onClick={() => setLang("vi")}
-              className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              onClick={() => handleLangChange("vi")}
+              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              style={{
+                fontFamily: '"Be Vietnam Pro", sans-serif',
+                fontSize: '12px',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                lineHeight: '15px',
+                color: lang === "vi" ? 'var(--Colors-Neutral-100, #FFF)' : undefined
+              }}
             >
-              Vie
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+                <circle cx="10" cy="10" r="10" fill="#DA251D"/>
+                <path d="M10 6.5L11.1 9.8H14.5L11.7 11.8L12.8 15.1L10 13.1L7.2 15.1L8.3 11.8L5.5 9.8H8.9L10 6.5Z" fill="#FFFF00"/>
+              </svg>
+              <span>Vie</span>
             </button>
             <button
-              onClick={() => setLang("en")}
-              className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              onClick={() => handleLangChange("en")}
+              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              style={{
+                fontFamily: '"Be Vietnam Pro", sans-serif',
+                fontSize: '12px',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                lineHeight: '15px',
+                color: lang === "en" ? 'var(--Colors-Neutral-100, #FFF)' : undefined
+              }}
             >
-              Eng
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+                <clipPath id="uk-clip-home">
+                  <circle cx="10" cy="10" r="10" />
+                </clipPath>
+                <g clipPath="url(#uk-clip-home)">
+                  <circle cx="10" cy="10" r="10" fill="#012169" />
+                  <path d="M0 0 L20 20 M20 0 L0 20" stroke="#FFFFFF" strokeWidth="2.5" />
+                  <path d="M0 0 L20 20 M20 0 L0 20" stroke="#C8102E" strokeWidth="1.2" />
+                  <path d="M10 0 V20 M0 10 H20" stroke="#FFFFFF" strokeWidth="4.5" />
+                  <path d="M10 0 V20 M0 10 H20" stroke="#C8102E" strokeWidth="2.5" />
+                </g>
+              </svg>
+              <span>Eng</span>
             </button>
           </div>
 
@@ -764,12 +792,12 @@ export default function Home() {
           transform: isTransitioning ? 'translateY(-120px)' : (isStuck ? `translateY(-${scrollProgress * 60}px)` : 'none'),
           opacity: isTransitioning ? 0 : (isStuck ? 1 - scrollProgress * 0.5 : 1),
           transition: isTransitioning 
-            ? 'filter 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 600ms cubic-bezier(0.16, 1, 0.3, 1)' 
+            ? 'filter 300ms cubic-bezier(0.16, 1, 0.3, 1), transform 300ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms cubic-bezier(0.16, 1, 0.3, 1)' 
             : 'none'
         }}
       >
         {/* HERO SECTION */}
-        <section id="hero" className="w-full px-[120px] py-[40px] relative flex justify-center">
+        <section id="hero" className="w-full px-[120px] pt-[40px] pb-[24px] relative flex justify-center">
         <div 
           style={{
             display: 'grid',
@@ -807,7 +835,16 @@ export default function Home() {
               <h1 className="text-[34px] font-bold font-serif leading-[51px] text-white">
                 Nguyễn Khánh Trường
               </h1>
-              <h2 className="text-[20px] font-bold leading-[30px] text-brand-accent">
+              <h2 
+                style={{
+                  color: 'var(--Colors-Secondary-300, #E8C468)',
+                  fontFamily: 'Fraunces, serif',
+                  fontSize: '20px',
+                  fontStyle: 'normal',
+                  fontWeight: 700,
+                  lineHeight: '30px'
+                }}
+              >
                 {translations[lang].heroSubheading}
               </h2>
               <p 
@@ -816,9 +853,9 @@ export default function Home() {
                   fontFamily: '"Be Vietnam Pro", sans-serif',
                   fontSize: '14px',
                   fontWeight: 400,
-                  lineHeight: '18px'
+                  lineHeight: '18px',
+                  width: '388px'
                 }}
-                className="max-w-sm"
               >
                 {translations[lang].heroParagraph}
               </p>
@@ -873,14 +910,14 @@ export default function Home() {
       </section>
 
       {/* CORE WORK PORTFOLIO (Featured and More Projects Grid) */}
-      <section id="work" className="w-full px-[120px] py-[40px] relative flex flex-col items-center">
+      <section id="work" className="w-full px-[120px] pt-[24px] pb-[40px] relative flex flex-col items-center">
         <div 
           style={{
             display: 'grid',
             gridTemplateColumns: '2fr 1fr',
             gap: '32px',
             width: '100%',
-            alignItems: 'flex-start'
+            alignItems: 'stretch'
           }}
         >
           
@@ -904,7 +941,8 @@ export default function Home() {
                 style={{
                   display: 'flex',
                   width: '100%',
-                  height: '236px',
+                  minHeight: '260px',
+                  height: 'auto',
                   padding: '24px',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -923,9 +961,6 @@ export default function Home() {
                     <span className="app-chip text-[10px] font-bold bg-brand-accent/15 text-brand-accent border border-brand-accent/10">
                       {translations[lang].featuredBadge}
                     </span>
-                    <span className="app-chip text-[10px] font-sans font-normal bg-neutral-900 text-neutral-400 border border-neutral-800/50 uppercase tracking-wider">
-                      PAAS • B2B
-                    </span>
                   </div>
                   
                   <div className="flex items-center gap-4 opacity-50 group-hover:opacity-90 transition-opacity duration-200">
@@ -941,18 +976,25 @@ export default function Home() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
-                    gap: 'var(--Spacing-s, 12px)',
+                    gap: '12px',
                     alignSelf: 'stretch',
                     width: '100%'
                   }}
-                  className="z-10"
+                  className="z-10 mt-4 mb-4"
                 >
                   <h3 
                     style={{ alignSelf: 'stretch', width: '100%' }}
                     className="text-[26px] font-bold leading-tight text-white font-serif group-hover:text-brand-accent transition-colors duration-150"
                   >
-                    {featuredProjects[0].title}
+                    {translations[lang].rogoPlatformTitle}
                   </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {["PaaS", "B2B", "Dashboard", "Whitelabel"].map((tag, idx) => (
+                      <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                   <p 
                     style={{ 
                       color: 'var(--Colors-Neutral-500, #989898)',
@@ -962,20 +1004,8 @@ export default function Home() {
                       lineHeight: '18px'
                     }}
                   >
-                    {translations[lang]['rogo-dashboard-summary']}
+                    {translations[lang].rogoPlatformDesc}
                   </p>
-                </div>
-
-                {/* Bottom Row: Tech Pills */}
-                <div className="flex flex-wrap gap-2.5 z-10">
-                  {featuredProjects[0].techTokens?.map((t, idx) => (
-                    <span 
-                      key={idx} 
-                      className="app-chip text-[10px] font-sans bg-[#17211B] text-[#2ECC8A] border border-[#2ECC8A]/20 font-normal"
-                    >
-                      {t}
-                    </span>
-                  ))}
                 </div>
               </div>
             )}
@@ -984,9 +1014,10 @@ export default function Home() {
             <div 
               style={{
                 display: 'flex',
-                height: '240px',
+                height: 'auto',
+                minHeight: '270px',
                 justifyContent: 'center',
-                alignItems: 'flex-start',
+                alignItems: 'stretch',
                 gap: '16px',
                 alignSelf: 'stretch',
                 flexShrink: 0
@@ -999,7 +1030,8 @@ export default function Home() {
                   style={{
                     display: 'flex',
                     flex: '1 1 0%',
-                    height: '238px',
+                    minHeight: '270px',
+                    height: 'auto',
                     padding: '16px',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -1017,9 +1049,6 @@ export default function Home() {
                     <div className="flex items-center gap-2">
                       <span className="app-chip text-[9px] font-bold bg-brand-accent/15 text-brand-accent border border-brand-accent/10">
                         {translations[lang].featuredBadge}
-                      </span>
-                      <span className="app-chip text-[10px] font-sans font-normal bg-neutral-900 text-neutral-500 border border-neutral-800/50 uppercase tracking-wide">
-                        IoT • Mobile
                       </span>
                     </div>
                     
@@ -1049,21 +1078,30 @@ export default function Home() {
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'flex-start',
-                      gap: '6px',
+                      gap: '8px',
                       alignSelf: 'stretch',
                       width: '100%'
                     }}
-                    className="z-10"
+                    className="z-10 mt-3"
                   >
-                    <span className="text-[10px] uppercase font-sans font-normal tracking-wider text-brand-accent block">
-                      {proj.id === "raio-smart" ? "SMART HOME" : "REDESIGN"}
-                    </span>
                     <h4 
                       style={{ alignSelf: 'stretch', width: '100%' }}
                       className="text-[20px] font-bold leading-tight text-white font-serif group-hover:text-brand-accent transition-colors duration-150"
                     >
-                      {proj.id === "raio-smart" ? "RaIO Smart" : "Austfly Redesign"}
+                      {proj.id === "raio-smart" 
+                        ? translations[lang].raioSmartTitle 
+                        : translations[lang].austflyTitle}
                     </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {(proj.id === "raio-smart" 
+                        ? ["Mobile", "IoT", "Smart Home", "Whitelabel"]
+                        : ["Mobile", "IoT", "Smart Home", "Redesign"]
+                      ).map((tag, idx) => (
+                        <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                     <p 
                       style={{ 
                         color: 'var(--Colors-Neutral-500, #989898)',
@@ -1074,8 +1112,8 @@ export default function Home() {
                       }}
                     >
                       {proj.id === "raio-smart" 
-                        ? translations[lang]['raio-smart-summary']
-                        : translations[lang]['austfly-summary']}
+                        ? translations[lang].raioSmartDesc
+                        : translations[lang].austflyDesc}
                     </p>
                   </div>
                 </div>
@@ -1085,10 +1123,10 @@ export default function Home() {
           </div>
 
           {/* RIGHT COLUMN: MORE PROJECTS & SIDEBAR QUOTE */}
-          <div className="flex flex-col gap-8 w-full flex-shrink">
+          <div className="flex flex-col gap-8 w-full flex-shrink h-full">
             
             {/* More Projects block */}
-            <div className="flex flex-col gap-6 w-full">
+            <div className="flex flex-col gap-6 w-full h-full">
               <div className="flex items-center justify-between border-b border-neutral-900 pb-4">
                 <span className="text-[10px] font-sans font-normal uppercase tracking-wider text-neutral-500">
                   {translations[lang].moreProjects}
@@ -1105,7 +1143,7 @@ export default function Home() {
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   gap: 'var(--Spacing-m, 16px)',
-                  flex: '1 0 0',
+                  flex: '1 1 0%',
                   width: '100%'
                 }}
               >
@@ -1120,7 +1158,8 @@ export default function Home() {
                       alignSelf: 'stretch',
                       borderRadius: '16px',
                       background: '#1E1E1E',
-                      border: '1px solid rgba(255, 255, 255, 0.05)'
+                      border: '1px solid rgba(255, 255, 255, 0.05)',
+                      flex: '1 1 0%'
                     }}
                     className="transition-all duration-150 relative group hover:bg-[#252525] hover:border-brand-accent/30"
                   >
@@ -1645,6 +1684,36 @@ export default function Home() {
 
         </div>
       </div>
+
+      {/* Language Transition Overlay */}
+      <div 
+        className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B0B0C]/70 transition-all duration-150 ease-out"
+        style={{
+          opacity: transitionStage === "fading-in" ? 1 : 0,
+          backdropFilter: transitionStage === "fading-in" ? "blur(12px)" : "blur(0px)",
+          WebkitBackdropFilter: transitionStage === "fading-in" ? "blur(12px)" : "blur(0px)",
+          pointerEvents: transitionStage === "fading-in" ? "all" : "none",
+        }}
+      >
+        <div className="text-center max-w-md px-6">
+          <p 
+            style={{
+              color: 'var(--Colors-Secondary-300, #E8C468)',
+              fontFamily: 'Fraunces, serif',
+              fontSize: '24px',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: '36px',
+              textAlign: 'center'
+            }}
+          >
+            {pendingLang === "vi" 
+              ? "Đang chuyển sang Tiếng Việt, vui lòng đợi" 
+              : "Changing to English, please wait"}
+          </p>
+        </div>
+      </div>
+
     </>
   );
 }

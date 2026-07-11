@@ -95,6 +95,27 @@ const translations = {
 export default function WorksPage() {
   const [lang, setLang] = useState<"vi" | "en">("vi");
   const [mounted, setMounted] = useState(false);
+  const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
+  const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
+
+  const handleLangChange = (newLang: "vi" | "en") => {
+    if (newLang === lang || transitionStage !== "idle") return;
+    setPendingLang(newLang);
+    setTransitionStage("fading-in");
+    
+    setTimeout(() => {
+      setLang(newLang);
+    }, 150);
+
+    setTimeout(() => {
+      setTransitionStage("fading-out");
+    }, 600);
+
+    setTimeout(() => {
+      setTransitionStage("idle");
+      setPendingLang(null);
+    }, 750);
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -174,15 +195,11 @@ export default function WorksPage() {
       case "thing-partner":
         return (
           <div className="w-full h-full bg-[#0c0d12] flex items-center justify-center relative overflow-hidden">
-            <svg className="w-full h-full opacity-60" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="25" y="25" width="330" height="150" rx="6" fill="#111c30" stroke={strokeColor} />
-              <rect x="40" y="40" width="80" height="120" rx="2" fill="#0d1424" stroke={strokeColor} />
-              <rect x="45" y="50" width="70" height="6" rx="1.5" fill={accentColor} />
-              <rect x="135" y="40" width="200" height="40" rx="3" fill="#13233c" stroke={strokeColor} />
-              <circle cx="155" cy="60" r="10" fill={accentColor} fillOpacity="0.2" />
-              <path d="M 152 60 L 154 62 L 158 58" stroke={accentColor} strokeWidth="1.5" strokeLinecap="round" />
-              <rect x="175" y="57" width="140" height="6" rx="3" fill={accentColor} />
-            </svg>
+            <img 
+              src="/images/thing_partner.png" 
+              alt="Thing Partner Thumbnail" 
+              className="w-full h-full object-cover" 
+            />
           </div>
         );
       case "antaxi":
@@ -329,20 +346,52 @@ export default function WorksPage() {
         <div className="hidden md:flex items-center gap-4">
           {/* Language Switch */}
           <div 
-            style={{ height: '30px' }}
-            className="flex items-center rounded-full p-0.5 bg-neutral-950/80 text-[10px] font-medium select-none"
+            style={{ height: '32px' }}
+            className="flex items-center rounded-full p-0.5 bg-neutral-950/80 select-none"
           >
             <button
-              onClick={() => setLang("vi")}
-              className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              onClick={() => handleLangChange("vi")}
+              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              style={{
+                fontFamily: '"Be Vietnam Pro", sans-serif',
+                fontSize: '12px',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                lineHeight: '15px',
+                color: lang === "vi" ? 'var(--Colors-Neutral-100, #FFF)' : undefined
+              }}
             >
-              Vie
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+                <circle cx="10" cy="10" r="10" fill="#DA251D"/>
+                <path d="M10 6.5L11.1 9.8H14.5L11.7 11.8L12.8 15.1L10 13.1L7.2 15.1L8.3 11.8L5.5 9.8H8.9L10 6.5Z" fill="#FFFF00"/>
+              </svg>
+              <span>Vie</span>
             </button>
             <button
-              onClick={() => setLang("en")}
-              className={`px-3.5 h-full rounded-full transition-all cursor-pointer flex items-center justify-center ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              onClick={() => handleLangChange("en")}
+              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              style={{
+                fontFamily: '"Be Vietnam Pro", sans-serif',
+                fontSize: '12px',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                lineHeight: '15px',
+                color: lang === "en" ? 'var(--Colors-Neutral-100, #FFF)' : undefined
+              }}
             >
-              Eng
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+                <clipPath id="uk-clip-works">
+                  <circle cx="10" cy="10" r="10" />
+                </clipPath>
+                <g clipPath="url(#uk-clip-works)">
+                  <circle cx="10" cy="10" r="10" fill="#012169" />
+                  <path d="M0 0 L20 20 M20 0 L0 20" stroke="#FFFFFF" strokeWidth="2.5" />
+                  <path d="M0 0 L20 20 M20 0 L0 20" stroke="#C8102E" strokeWidth="1.2" />
+                  <path d="M10 0 V20 M0 10 H20" stroke="#FFFFFF" strokeWidth="4.5" />
+                  <path d="M10 0 V20 M0 10 H20" stroke="#C8102E" strokeWidth="2.5" />
+                </g>
+              </svg>
+              <span>Eng</span>
             </button>
           </div>
 
@@ -396,19 +445,47 @@ export default function WorksPage() {
       >
         <a 
           href="/" 
-          className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase text-neutral-400 hover:text-brand-accent hover:translate-x-[-4px] transition-all mb-8"
+          style={{
+            color: 'var(--Colors-Neutral-100, #FFF)',
+            fontFamily: '"Be Vietnam Pro", sans-serif',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            fontWeight: 700,
+            lineHeight: '18px',
+            textAlign: 'center',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}
+          className="hover:text-brand-accent hover:translate-x-[-4px] transition-all mb-8 uppercase"
         >
-          <ArrowLeft size={14} /> {t.backToPortfolio}
+          <ArrowLeft size={16} /> {t.backToPortfolio}
         </a>
 
-        <div className="flex items-baseline gap-4 w-full" style={{ width: '100%' }}>
+        <div className="flex items-center gap-4 w-full" style={{ width: '100%' }}>
           <h1 
             style={{ fontSize: '34px' }}
             className="font-extrabold font-serif tracking-tight text-white leading-tight"
           >
             {t.myWorks}
           </h1>
-          <span className="text-brand-accent text-sm font-sans font-bold bg-brand-accent/10 px-3 py-1 rounded-full border border-brand-accent/20">
+          <span 
+            style={{
+              color: 'var(--Colors-Primary-400, #22C55E)',
+              fontFamily: 'Fraunces, serif',
+              fontSize: '24px',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: '36px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(34, 197, 94, 0.1)',
+              border: '1px solid rgba(34, 197, 94, 0.2)',
+              borderRadius: '9999px',
+              padding: '0px 16px'
+            }}
+          >
             {t.projectsBadge}
           </span>
         </div>
@@ -531,7 +608,7 @@ export default function WorksPage() {
                 className="w-full aspect-[388/256] md:w-[388px] md:h-[256px] md:flex-shrink-0 border border-neutral-900/80 group-hover:border-transparent rounded-xl transition-all duration-300"
               >
                 <Image
-                  src="/images/Rogo_IoT_Platform_Dashboard_Interface.png"
+                  src="/images/rogo_platform.png"
                   alt="Rogo IoT Platform v2"
                   fill
                   sizes="(max-width: 768px) 100vw, 388px"
@@ -820,7 +897,7 @@ export default function WorksPage() {
               {renderMockup("thing-flow")}
             </div>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
+              <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                 {t.thingFlowTitle}
               </h3>
               <ArrowUpRight size={18} className="text-brand-accent" />
@@ -853,7 +930,7 @@ export default function WorksPage() {
               {renderMockup("thing-partner")}
             </div>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
+              <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                 {t.thingPartnerTitle}
               </h3>
               <ArrowUpRight size={18} className="text-brand-accent" />
@@ -938,7 +1015,7 @@ export default function WorksPage() {
               />
             </div>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
+              <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                 {t.thingAiTitle}
               </h3>
               <ArrowUpRight size={18} className="text-brand-accent" />
@@ -971,7 +1048,7 @@ export default function WorksPage() {
               {renderMockup("antaxi")}
             </div>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
+              <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                 {t.antaxiTitle}
               </h3>
               <ArrowUpRight size={18} className="text-brand-accent" />
@@ -1004,7 +1081,7 @@ export default function WorksPage() {
               {renderMockup("labo")}
             </div>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
+              <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                 {t.laboTitle}
               </h3>
               <ArrowUpRight size={18} className="text-brand-accent" />
@@ -1277,6 +1354,35 @@ export default function WorksPage() {
             </div>
           </div>
 
+        </div>
+      </div>
+
+      {/* Language Transition Overlay */}
+      <div 
+        className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B0B0C]/70 transition-all duration-150 ease-out"
+        style={{
+          opacity: transitionStage === "fading-in" ? 1 : 0,
+          backdropFilter: transitionStage === "fading-in" ? "blur(12px)" : "blur(0px)",
+          WebkitBackdropFilter: transitionStage === "fading-in" ? "blur(12px)" : "blur(0px)",
+          pointerEvents: transitionStage === "fading-in" ? "all" : "none",
+        }}
+      >
+        <div className="text-center max-w-md px-6">
+          <p 
+            style={{
+              color: 'var(--Colors-Secondary-300, #E8C468)',
+              fontFamily: 'Fraunces, serif',
+              fontSize: '24px',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: '36px',
+              textAlign: 'center'
+            }}
+          >
+            {pendingLang === "vi" 
+              ? "Đang chuyển sang Tiếng Việt, vui lòng đợi" 
+              : "Changing to English, please wait"}
+          </p>
         </div>
       </div>
 
