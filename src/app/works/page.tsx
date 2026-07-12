@@ -386,7 +386,7 @@ export default function WorksPage() {
                 <circle cx="10" cy="10" r="10" fill="#DA251D"/>
                 <path d="M10 6.5L11.1 9.8H14.5L11.7 11.8L12.8 15.1L10 13.1L7.2 15.1L8.3 11.8L5.5 9.8H8.9L10 6.5Z" fill="#FFFF00"/>
               </svg>
-              <span>Vie</span>
+              <span>VIE</span>
             </button>
             <button
               onClick={() => handleLangChange("en")}
@@ -412,7 +412,7 @@ export default function WorksPage() {
                   <path d="M10 0 V20 M0 10 H20" stroke="#C8102E" strokeWidth="2.5" />
                 </g>
               </svg>
-              <span>Eng</span>
+              <span>ENG</span>
             </button>
           </div>
 

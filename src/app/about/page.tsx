@@ -440,13 +440,14 @@ export default function AboutPage() {
                 fontStyle: 'normal',
                 fontWeight: 500,
                 lineHeight: '15px',
+                color: lang === "vi" ? 'var(--Colors-Neutral-100, #FFF)' : undefined
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 20 20" className="rounded-full overflow-hidden">
-                <rect width="20" height="20" fill="#da251d"/>
-                <polygon points="10,4.5 11.2,8.8 15.5,8.8 12,11.5 13.3,15.8 10,13.1 6.7,15.8 8,11.5 4.5,8.8 8.8,8.8" fill="#ffff00"/>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+                <circle cx="10" cy="10" r="10" fill="#DA251D"/>
+                <path d="M10 6.5L11.1 9.8H14.5L11.7 11.8L12.8 15.1L10 13.1L7.2 15.1L8.3 11.8L5.5 9.8H8.9L10 6.5Z" fill="#FFFF00"/>
               </svg>
-              VIE
+              <span>VIE</span>
             </button>
             <button 
               onClick={() => handleLangChange("en")} 
@@ -457,21 +458,22 @@ export default function AboutPage() {
                 fontStyle: 'normal',
                 fontWeight: 500,
                 lineHeight: '15px',
+                color: lang === "en" ? 'var(--Colors-Neutral-100, #FFF)' : undefined
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 20 20" className="rounded-full overflow-hidden">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
                 <clipPath id="uk-clip-about">
                   <circle cx="10" cy="10" r="10"/>
                 </clipPath>
                 <g clipPath="url(#uk-clip-about)">
-                  <rect width="20" height="20" fill="#012169"/>
-                  <path d="M0 0 L20 20 M0 20 L20 0" stroke="#fff" strokeWidth="3"/>
-                  <path d="M0 0 L20 20 M0 20 L20 0" stroke="#C8102E" strokeWidth="2"/>
-                  <path d="M10 0 L10 20 M0 10 L20 10" stroke="#fff" strokeWidth="5"/>
-                  <path d="M10 0 L10 20 M0 10 L20 10" stroke="#C8102E" strokeWidth="3"/>
+                  <circle cx="10" cy="10" r="10" fill="#012169"/>
+                  <path d="M0 0 L20 20 M20 0 L0 20" stroke="#FFFFFF" strokeWidth="2.5"/>
+                  <path d="M0 0 L20 20 M20 0 L0 20" stroke="#C8102E" strokeWidth="1.2"/>
+                  <path d="M10 0 V20 M0 10 H20" stroke="#FFFFFF" strokeWidth="4.5"/>
+                  <path d="M10 0 V20 M0 10 H20" stroke="#C8102E" strokeWidth="2.5"/>
                 </g>
               </svg>
-              ENG
+              <span>ENG</span>
             </button>
           </div>
 
