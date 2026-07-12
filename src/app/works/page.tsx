@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowUpRight, Mail, Check, Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 // Bilingual translations dictionary
 const translations = {
@@ -25,7 +26,7 @@ const translations = {
     ctaTitle: "Bạn muốn hợp tác cùng tôi?",
     ctaAvailable: "SẴN SÀNG CHO CÁC DỰ ÁN TỰ DO VÀ VAI TRÒ TOÀN THỜI GIAN BẮT ĐẦU TỪ Q3 2026",
     navWork: "Dự án",
-    navAbout: "Giới thiệu",
+    navAbout: "Giới thiệu về tôi",
     navContact: "Liên hệ",
     availableRemote: "Làm việc từ xa",
     copySuccess: "Đã sao chép email!",
@@ -67,7 +68,7 @@ const translations = {
     ctaTitle: "Interested in working together?",
     ctaAvailable: "AVAILABLE FOR FREELANCE PROJECTS AND FULL-TIME ROLES STARTING Q3 2026",
     navWork: "Work",
-    navAbout: "About",
+    navAbout: "About me",
     navContact: "Contact",
     availableRemote: "Available for Remote",
     copySuccess: "Email copied!",
@@ -97,6 +98,7 @@ export default function WorksPage() {
   const [mounted, setMounted] = useState(false);
   const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
   const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
+  const [fadeOpacity, setFadeOpacity] = useState(0);
 
   const handleLangChange = (newLang: "vi" | "en") => {
     if (newLang === lang || transitionStage !== "idle") return;
@@ -123,6 +125,7 @@ export default function WorksPage() {
     if (savedLang && (savedLang === "vi" || savedLang === "en")) {
       setLang(savedLang);
     }
+    setFadeOpacity(1);
   }, []);
 
   useEffect(() => {
@@ -134,6 +137,17 @@ export default function WorksPage() {
   const [copied, setCopied] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (contactModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [contactModalOpen]);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("ktruong2k1@gmail.com");
@@ -231,7 +245,14 @@ export default function WorksPage() {
   };
 
   return (
-    <div className="page-wrapper min-h-screen bg-[#0B0B0C] text-neutral-300 flex flex-col font-sans">
+    <div 
+      className="page-wrapper min-h-screen bg-[#0B0B0C] text-neutral-300 flex flex-col font-sans"
+      style={{
+        opacity: fadeOpacity,
+        transform: `translateY(${(1 - fadeOpacity) * 12}px)`,
+        transition: 'opacity 450ms cubic-bezier(0.215, 0.61, 0.355, 1), transform 450ms cubic-bezier(0.215, 0.61, 0.355, 1)'
+      }}
+    >
       
       {/* HEADER */}
       <header 
@@ -1206,7 +1227,7 @@ export default function WorksPage() {
           style={{
             position: 'relative',
             width: '100%',
-            maxWidth: '800px',
+            maxWidth: '720px',
             background: '#181818',
             borderRadius: '16px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
@@ -1217,7 +1238,7 @@ export default function WorksPage() {
             flexDirection: 'column',
             alignItems: 'flex-start',
             padding: '32px 24px 40px 24px',
-            overflowY: 'auto'
+            overflow: 'hidden'
           }}
         >
           {/* Close button */}
@@ -1290,7 +1311,8 @@ export default function WorksPage() {
                 padding: '8px 24px',
                 flexDirection: 'column',
                 alignItems: 'flex-start',
-                flex: '1 0 0px'
+                flex: '1 1 0%',
+                width: '100%'
               }}
               className="pt-8 md:pt-0"
             >

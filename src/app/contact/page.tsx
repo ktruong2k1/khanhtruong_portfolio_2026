@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowLeft, Mail } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const translations = {
   vi: {
@@ -11,7 +12,7 @@ const translations = {
     desc: "Bạn có nhu cầu hợp tác thiết kế sản phẩm hoặc tuyển dụng từ xa? Vui lòng liên hệ trực tiếp qua email ktruong2k1@gmail.com. Cổng liên hệ trực tuyến đang được xây dựng.",
     backHome: "Quay lại Trang chủ",
     navWork: "Dự án",
-    navAbout: "Giới thiệu",
+    navAbout: "About me",
     navContact: "Liên hệ",
     availableRemote: "Làm việc từ xa",
   },
@@ -21,7 +22,7 @@ const translations = {
     desc: "Looking to collaborate on product design or remote hiring? Please reach out directly to ktruong2k1@gmail.com. The online inquiry system is currently under construction.",
     backHome: "Back to Home",
     navWork: "Work",
-    navAbout: "About",
+    navAbout: "About me",
     navContact: "Contact",
     availableRemote: "Available for Remote",
   }
@@ -31,6 +32,7 @@ export default function ContactPage() {
   const [lang, setLang] = useState<"vi" | "en">("vi");
   const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
   const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
+  const [fadeOpacity, setFadeOpacity] = useState(0);
 
   const handleLangChange = (newLang: "vi" | "en") => {
     if (newLang === lang || transitionStage !== "idle") return;
@@ -56,6 +58,7 @@ export default function ContactPage() {
     if (savedLang && (savedLang === "vi" || savedLang === "en")) {
       setLang(savedLang);
     }
+    setFadeOpacity(1);
   }, []);
 
   useEffect(() => {
@@ -67,7 +70,14 @@ export default function ContactPage() {
   const t = translations[lang];
 
   return (
-    <div className="page-wrapper min-h-screen bg-[#0B0B0C] text-neutral-300 flex flex-col font-sans">
+    <div 
+      className="page-wrapper min-h-screen bg-[#0B0B0C] text-neutral-300 flex flex-col font-sans"
+      style={{
+        opacity: fadeOpacity,
+        transform: `translateY(${(1 - fadeOpacity) * 12}px)`,
+        transition: 'opacity 450ms cubic-bezier(0.215, 0.61, 0.355, 1), transform 450ms cubic-bezier(0.215, 0.61, 0.355, 1)'
+      }}
+    >
       
       {/* HEADER */}
       <header 

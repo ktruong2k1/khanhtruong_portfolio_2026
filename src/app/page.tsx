@@ -79,7 +79,7 @@ const experiencesData = [
 const translations = {
   vi: {
     navWork: "Dự án",
-    navAbout: "Giới thiệu",
+    navAbout: "Giới thiệu về tôi",
     navContact: "Liên hệ",
     availableRemote: "Làm việc từ xa",
     heroSubheading: "Tôi thiết kế sản phẩm. Và tôi triển khai nó.",
@@ -112,7 +112,7 @@ const translations = {
   },
   en: {
     navWork: "Work",
-    navAbout: "About",
+    navAbout: "About me",
     navContact: "Contact",
     availableRemote: "Available for Remote",
     heroSubheading: "I design the product. Then I ship it.",
@@ -150,6 +150,7 @@ export default function Home() {
   const [lang, setLang] = useState<"vi" | "en">("vi");
   const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
   const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
+  const [fadeOpacity, setFadeOpacity] = useState(0);
 
   const handleLangChange = (newLang: "vi" | "en") => {
     if (newLang === lang || transitionStage !== "idle") return;
@@ -175,6 +176,7 @@ export default function Home() {
     if (savedLang && (savedLang === "vi" || savedLang === "en")) {
       setLang(savedLang);
     }
+    setFadeOpacity(1);
   }, []);
 
   useEffect(() => {
@@ -182,6 +184,7 @@ export default function Home() {
       localStorage.setItem("portfolio_lang", lang);
     }
   }, [lang]);
+
 
   const [darkMode, setDarkMode] = useState(true);
   const [specMode, setSpecMode] = useState(false);
@@ -325,6 +328,17 @@ export default function Home() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [contactMessage, setContactMessage] = useState("");
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (contactModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [contactModalOpen]);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("ktruong2k1@gmail.com");
@@ -529,31 +543,31 @@ export default function Home() {
     let alt = "";
     switch (brand) {
       case "rogo":
-        src = "/images/Rogo_logo.png";
+        src = "/images/Rogo_color.svg";
         alt = "Rogo Solutions";
         break;
       case "fpt":
-        src = "/images/FPTSmartHome_logo.png";
+        src = "/images/FPTSmartHome_color.svg";
         alt = "FPT Smart Home";
         break;
       case "rangdong":
-        src = "/images/RangDong_logo.png";
+        src = "/images/RangDong_color.svg";
         alt = "Rạng Đông";
         break;
       case "antaxi":
-        src = "/images/Antaxi_logo.png";
+        src = "/images/Antaxi_color.svg";
         alt = "An Taxi";
         break;
       case "vietin":
-        src = "/images/VietinBankS_logo.png";
+        src = "/images/VietinBankS_color.svg";
         alt = "VietinBank Securities";
         break;
       case "vcbs":
-        src = "/images/VCBS_logo.png";
+        src = "/images/VCBS_color.svg";
         alt = "VCBS";
         break;
       case "think":
-        src = "/images/Think_Action.png";
+        src = "/images/Think_Action_color.svg";
         alt = "Think & Action";
         break;
       default:
@@ -566,7 +580,7 @@ export default function Home() {
         width={customHeight * 5}
         height={customHeight}
         style={{ height: `${customHeight}px`, maxHeight: `${customHeight}px` }}
-        className="w-auto object-contain filter grayscale opacity-50 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-250 ease-in-out"
+        className="w-auto object-contain brightness-0 invert opacity-50 group-hover:brightness-100 group-hover:invert-0 group-hover:opacity-100 hover:brightness-100 hover:invert-0 hover:opacity-100 transition-all duration-250 ease-in-out"
       />
     );
   };
@@ -576,7 +590,14 @@ export default function Home() {
 
   return (
     <>
-      <div className="page-wrapper text-[#E5E5E5] font-sans relative overflow-x-hidden transition-colors duration-300">
+      <div 
+        className="page-wrapper text-[#E5E5E5] font-sans relative overflow-x-hidden transition-colors duration-300"
+        style={{
+          opacity: fadeOpacity,
+          transform: `translateY(${(1 - fadeOpacity) * 12}px)`,
+          transition: 'opacity 450ms cubic-bezier(0.215, 0.61, 0.355, 1), transform 450ms cubic-bezier(0.215, 0.61, 0.355, 1)'
+        }}
+      >
       
       {/* Dev Spec Mode Grid Overlay */}
       {specMode && (
@@ -1534,7 +1555,7 @@ export default function Home() {
           style={{
             position: 'relative',
             width: '100%',
-            maxWidth: '800px',
+            maxWidth: '720px',
             background: '#181818',
             borderRadius: '16px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
@@ -1545,7 +1566,7 @@ export default function Home() {
             flexDirection: 'column',
             alignItems: 'flex-start',
             padding: '32px 24px 40px 24px',
-            overflowY: 'auto'
+            overflow: 'hidden'
           }}
         >
           {/* Close button */}
@@ -1618,7 +1639,8 @@ export default function Home() {
                 padding: '8px 24px',
                 flexDirection: 'column',
                 alignItems: 'flex-start',
-                flex: '1 0 0px'
+                flex: '1 1 0%',
+                width: '100%'
               }}
               className="pt-8 md:pt-0"
             >
