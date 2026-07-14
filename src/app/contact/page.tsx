@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,7 @@ const translations = {
 
 export default function ContactPage() {
   const [lang, setLang] = useState<"vi" | "en">("vi");
+  const isInitialMount = useRef(true);
   const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
   const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
   const [fadeOpacity, setFadeOpacity] = useState(0);
@@ -62,6 +63,10 @@ export default function ContactPage() {
   }, []);
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     if (typeof window !== 'undefined') {
       localStorage.setItem("portfolio_lang", lang);
     }

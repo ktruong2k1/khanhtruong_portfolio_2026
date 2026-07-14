@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ArrowLeft, ArrowUpRight, ArrowRight, Mail, Check, X, Menu, Download } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -43,6 +43,7 @@ const translations = {
     toeicTitle: "Tiếng Anh • TOEIC 850 (B2)",
     toeicDesc: "Tự tin làm việc với khách hàng nói tiếng Anh và các đội ngũ làm việc từ xa.",
     letsWork: "Hãy cùng hợp tác.",
+    trustedBy: "Đối tác tin cậy",
     
     // Featured works data translations
     rogoPlatformTitle: "Rogo IoT Platform v2",
@@ -87,6 +88,7 @@ const translations = {
     toeicTitle: "English • TOEIC 850 (B2)",
     toeicDesc: "Comfortable working with English-speaking clients and remote teams.",
     letsWork: "Let's work together.",
+    trustedBy: "Trusted by",
 
     // Featured works data translations
     rogoPlatformTitle: "Rogo IoT Platform v2",
@@ -100,6 +102,7 @@ const translations = {
 
 export default function AboutPage() {
   const [lang, setLang] = useState<"vi" | "en">("vi");
+  const isInitialMount = useRef(true);
   const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
   const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
   const [contactModalOpen, setContactModalOpen] = useState(false);
@@ -142,6 +145,10 @@ export default function AboutPage() {
   }, []);
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     if (typeof window !== 'undefined') {
       localStorage.setItem("portfolio_lang", lang);
     }
@@ -160,7 +167,7 @@ export default function AboutPage() {
 
   const t = translations[lang];
 
-  const renderBrandLogo = (brand: string, customHeight: number = 28) => {
+  const renderBrandLogo = (brand: string, customHeight: number = 40) => {
     let src = "";
     let alt = "";
     switch (brand) {
@@ -335,7 +342,7 @@ export default function AboutPage() {
       className="page-wrapper min-h-screen bg-[#0B0B0C] text-neutral-300 flex flex-col font-sans"
       style={{
         opacity: fadeOpacity,
-        transform: `translateY(${(1 - fadeOpacity) * 12}px)`,
+        transform: fadeOpacity < 1 ? `translateY(${(1 - fadeOpacity) * 12}px)` : 'none',
         transition: 'opacity 450ms cubic-bezier(0.215, 0.61, 0.355, 1), transform 450ms cubic-bezier(0.215, 0.61, 0.355, 1)'
       }}
     >
@@ -388,12 +395,14 @@ export default function AboutPage() {
               display: 'flex',
               alignItems: 'center',
               position: 'relative',
-              color: '#22C55E'
+              color: contactModalOpen ? '#989898' : '#22C55E'
             }}
-            className="font-bold transition-colors"
+            className={contactModalOpen ? "hover:text-white transition-colors" : "font-bold transition-colors"}
           >
             {t.navAbout}
-            <span style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '2px', backgroundColor: '#22C55E' }}></span>
+            {!contactModalOpen && (
+              <span style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '2px', backgroundColor: '#22C55E' }}></span>
+            )}
           </Link>
           <button 
             onClick={() => setContactModalOpen(true)}
@@ -549,7 +558,7 @@ export default function AboutPage() {
           <Link 
             href="/" 
             style={{
-              color: 'var(--Colors-Neutral-100, #FFF)',
+              color: 'var(--Colors-Primary-400, #22C55E)',
               fontFamily: '"Be Vietnam Pro", sans-serif',
               fontSize: '14px',
               fontStyle: 'normal',
@@ -771,8 +780,20 @@ export default function AboutPage() {
           }}
           className="relative border-t border-neutral-950/60"
         >
-          <span className="text-[10px] font-sans font-normal uppercase tracking-wider text-neutral-500 text-center block mb-8">
-            TRUSTED BY
+          <span 
+            style={{
+              color: 'var(--Colors-Neutral-500, #989898)',
+              fontFamily: '"Be Vietnam Pro", sans-serif',
+              fontSize: '12px',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              lineHeight: '15px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em'
+            }}
+            className="text-center block mb-8"
+          >
+            {translations[lang].trustedBy}
           </span>
           <div className="marquee-container">
             <style dangerouslySetInnerHTML={{ __html: `
@@ -806,7 +827,7 @@ export default function AboutPage() {
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
                   className="group"
                 >
-                  {renderBrandLogo(brand, 36)}
+                  {renderBrandLogo(brand, 40)}
                 </div>
               ))}
             </div>
@@ -1398,7 +1419,7 @@ export default function AboutPage() {
         style={{
           position: 'fixed',
           inset: 0,
-          zIndex: 99999,
+          zIndex: 30,
           pointerEvents: contactModalOpen ? 'auto' : 'none',
           display: 'flex',
           alignItems: 'center',
@@ -1435,17 +1456,17 @@ export default function AboutPage() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            padding: '32px 24px 40px 24px',
+            padding: '40px 32px',
             overflow: 'hidden'
           }}
         >
           {/* Close button */}
           <button 
             onClick={() => setContactModalOpen(false)}
-            className="text-neutral-400 hover:text-white transition-colors cursor-pointer mb-6 p-1 rounded-lg hover:bg-neutral-800 self-start"
-            style={{ background: 'none', border: 'none', marginLeft: '16px' }}
+            className="absolute -top-12 left-4 md:left-0 text-neutral-400 hover:text-white transition-colors cursor-pointer p-1 rounded-lg hover:bg-neutral-800/20"
+            style={{ background: 'none', border: 'none' }}
           >
-            <X size={20} />
+            <X size={24} strokeWidth={1.5} />
           </button>
 
           {/* Two-Column split layout */}

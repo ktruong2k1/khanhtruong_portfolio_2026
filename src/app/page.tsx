@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { 
@@ -78,6 +78,7 @@ const experiencesData = [
 
 const translations = {
   vi: {
+    name: "Nguyễn Khánh Trường",
     navWork: "Dự án",
     navAbout: "Giới thiệu về tôi",
     navContact: "Liên hệ",
@@ -86,9 +87,9 @@ const translations = {
     heroParagraph: "Kết nối khoảng cách giữa tầm nhìn thẩm mỹ độ phân giải cao và khả năng kỹ thuật mạnh mẽ cho các nền tảng doanh nghiệp & IoT.",
     emailMe: "Gửi email",
     viewResume: "Xem Resume",
-    trustedBy: "ĐỐI TÁC TIN CẬY",
-    featuredBadge: "NỔI BẬT",
-    moreProjects: "DỰ ÁN KHÁC",
+    trustedBy: "Đối tác tin cậy",
+    featuredBadge: "Nổi bật",
+    moreProjects: "Dự án khác",
     viewAll: "Xem tất cả",
     scrollMore: "Cuộn để xem thêm dự án",
     copied: "Đã sao chép!",
@@ -107,10 +108,11 @@ const translations = {
     rogoPlatformDesc: "Rogo Solutions xây dựng và vận hành cốt lõi – bản thân nền tảng cũng được thiết kế whitelabel. Mỗi thương hiệu đối tác nhận được một instance riêng biệt: cùng cấu trúc, cùng trang điều khiển, nhưng mang bản sắc riêng. Logic whitelabel không bắt đầu từ tầng ứng dụng – nó bắt đầu ngay từ đây.",
     raioSmartTitle: "RaIO Smart",
     raioSmartDesc: "Được triển khai và quản lý thông qua Rogo Platform như mọi ứng dụng khác trong hệ sinh thái. Tầng whitelabel phía trên cho phép bất kỳ đối tác nào xuất bản ứng dụng mang thương hiệu riêng của họ – mà không cần xây dựng lại logic cốt lõi bên dưới.",
-    austflyTitle: "Ứng dụng IoT Austfly",
+    austflyTitle: "Austfly Redesign",
     austflyDesc: "Thương hiệu cửa cuốn hàng đầu Việt Nam, đối tác đầu tiên áp dụng framework RaIO ngoài Rạng Đông. Đã được audit UX đầu cuối, xây dựng lại hệ thống phân cấp trực quan – hệ thống thiết kế và thư viện component sẵn sàng sản xuất, đang chờ triển khai."
   },
   en: {
+    name: "Nguyen Khanh Truong",
     navWork: "Work",
     navAbout: "About me",
     navContact: "Contact",
@@ -119,10 +121,10 @@ const translations = {
     heroParagraph: "Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution for enterprise and IoT platforms.",
     emailMe: "Email me",
     viewResume: "View Resume",
-    trustedBy: "TRUSTED BY",
-    featuredBadge: "FEATURED",
-    moreProjects: "MORE PROJECTS",
-    viewAll: "View all",
+    trustedBy: "Trusted by",
+    featuredBadge: "Featured",
+    moreProjects: "More Projects",
+    viewAll: "View all Projects",
     scrollMore: "Scroll to see more projects",
     copied: "Copied!",
     contactModalTitle: "Send me a message",
@@ -140,7 +142,7 @@ const translations = {
     rogoPlatformDesc: "Rogo Solutions builds and operates the core – and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity. The whitelabel logic doesn't start at the app layer – it starts here.",
     raioSmartTitle: "RaIO Smart",
     raioSmartDesc: "Deployed and managed through Rogo Platform like every app in the ecosystem. The whitelabel layer on top lets any partner ship their own branded app – without rebuilding the core logic underneath.",
-    austflyTitle: "Austfly IoT App",
+    austflyTitle: "Austfly Redesign",
     austflyDesc: "Vietnam's leading roller shutter brand, and the first partner to adopt the RaIO framework outside Rạng Đông. UX audited end-to-end, visual hierarchy rebuilt – design system and component library production-ready, pending implementation."
   }
 };
@@ -148,6 +150,7 @@ const translations = {
 export default function Home() {
   const router = useRouter();
   const [lang, setLang] = useState<"vi" | "en">("vi");
+  const isInitialMount = useRef(true);
   const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
   const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
   const [fadeOpacity, setFadeOpacity] = useState(0);
@@ -180,6 +183,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     if (typeof window !== 'undefined') {
       localStorage.setItem("portfolio_lang", lang);
     }
@@ -451,30 +458,13 @@ export default function Home() {
         );
       case "smarthome":
         return (
-          <svg className="w-full h-full bg-[#0d1016]" viewBox="0 0 380 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Background Phone */}
-            <rect x="75" y="40" width="95" height="175" rx="10" fill="#111c30" stroke={strokeColor} strokeWidth="1.5" />
-            <rect x="110" y="45" width="25" height="3" rx="1.5" fill={strokeColor} />
-            <circle cx="122.5" cy="80" r="15" fill={accentColor} fillOpacity="0.08" />
-            <circle cx="122.5" cy="80" r="3" fill={accentColor} />
-            <rect x="90" y="110" width="30" height="30" rx="4" fill="#13233c" stroke={strokeColor} />
-            <rect x="125" y="110" width="30" height="30" rx="4" fill="#13233c" stroke={strokeColor} />
-            <rect x="90" y="150" width="30" height="30" rx="4" fill="#13233c" stroke={strokeColor} />
-            <rect x="125" y="150" width="30" height="30" rx="4" fill="#13233c" stroke={strokeColor} />
-            
-            {/* Foreground Phone */}
-            <rect x="195" y="25" width="95" height="180" rx="12" fill="#0d1424" stroke={accentColor} strokeWidth="1.8" />
-            <rect x="227.5" y="31" width="30" height="3.5" rx="1.8" fill={strokeColor} />
-            <circle cx="242.5" cy="70" r="18" fill={accentColor} fillOpacity="0.15" />
-            <path d="M 238 66 C 238 62, 247 62, 247 66 C 247 70, 242.5 73, 242.5 77" stroke={accentColor} strokeWidth="1.8" strokeLinecap="round" />
-            <circle cx="242.5" cy="80" r="1.2" fill={accentColor} />
-            <rect x="207.5" y="105" width="32" height="32" rx="5" fill="#13233c" stroke={strokeColor} />
-            <rect x="247.5" y="105" width="32" height="32" rx="5" fill="#13233c" stroke={strokeColor} />
-            <rect x="207.5" y="145" width="32" height="32" rx="5" fill="#13233c" stroke={strokeColor} />
-            <rect x="247.5" y="145" width="32" height="32" rx="5" fill="#13233c" stroke={strokeColor} />
-            <circle cx="223.5" cy="121" r="5" fill={accentColor} />
-            <circle cx="263.5" cy="121" r="5" fill="#223047" />
-          </svg>
+          <div className="w-full h-full bg-[#0c0d12] flex items-center justify-center relative overflow-hidden">
+            <img 
+              src="/images/raio.png" 
+              alt="RaIO Smart Thumbnail" 
+              className="w-full h-full object-cover" 
+            />
+          </div>
         );
       case "austfly":
         return (
@@ -538,7 +528,7 @@ export default function Home() {
   };
 
   // Render SVG logos for clients with beautiful modern shapes
-  const renderBrandLogo = (brand: string, customHeight: number = 28) => {
+  const renderBrandLogo = (brand: string, customHeight: number = 40) => {
     let src = "";
     let alt = "";
     switch (brand) {
@@ -594,7 +584,7 @@ export default function Home() {
         className="page-wrapper text-[#E5E5E5] font-sans relative overflow-x-hidden transition-colors duration-300"
         style={{
           opacity: fadeOpacity,
-          transform: `translateY(${(1 - fadeOpacity) * 12}px)`,
+          transform: fadeOpacity < 1 ? `translateY(${(1 - fadeOpacity) * 12}px)` : 'none',
           transition: 'opacity 450ms cubic-bezier(0.215, 0.61, 0.355, 1), transform 450ms cubic-bezier(0.215, 0.61, 0.355, 1)'
         }}
       >
@@ -843,7 +833,7 @@ export default function Home() {
             <div className="relative w-[282px] h-[338px] flex-shrink-0 aspect-[136/163]">
               <Image
                 src="/images/KT_profilie.png"
-                alt="Chân dung Nguyễn Khánh Trường"
+                alt={lang === "vi" ? "Chân dung Nguyễn Khánh Trường" : "Nguyen Khanh Truong portrait"}
                 fill
                 priority
                 className="object-contain"
@@ -854,7 +844,7 @@ export default function Home() {
             {/* Biography & Tagline */}
             <div className="flex flex-col gap-4 text-center sm:text-left">
               <h1 className="text-[34px] font-bold font-serif leading-[51px] text-white">
-                Nguyễn Khánh Trường
+                {translations[lang].name}
               </h1>
               <h2 
                 style={{
@@ -890,8 +880,9 @@ export default function Home() {
                   {translations[lang].emailMe}
                 </button>
                 <a
-                  href="file:///Users/khanhtruongvu/Desktop/Portfolio/2026%20Portfolio/CV_NguyenKhanhTruong_2026.pdf"
+                  href={lang === "vi" ? "/CV_NguyenKhanhTruong_2026.pdf" : "/CV_NguyenKhanhTruong_EN_2026.pdf"}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center border border-white/60 hover:bg-white/10 text-white font-bold text-[14px] rounded-full transition-all duration-150 active:scale-[0.97] cta-btn"
                 >
                   {translations[lang].viewResume}
@@ -903,7 +894,19 @@ export default function Home() {
           {/* Right Column: Client Logos (Aligned with heading, padding adjusted, initials badge removed) */}
           <div className="w-full relative flex flex-col gap-6 py-6 pl-0 pr-2">
             <div className="flex items-center">
-              <span className="text-[10px] font-sans font-normal uppercase tracking-wider text-neutral-500 block">
+              <span 
+                style={{
+                  color: 'var(--Colors-Neutral-500, #989898)',
+                  fontFamily: '"Be Vietnam Pro", sans-serif',
+                  fontSize: '12px',
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  lineHeight: '15px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
+                }}
+                className="block"
+              >
                 {translations[lang].trustedBy}
               </span>
             </div>
@@ -911,18 +914,18 @@ export default function Home() {
             {/* Grayscale Client Logos Grid in 3 Columns - Aligned to the left (justify-start) */}
             <div className="grid grid-cols-3 gap-y-8 gap-x-6 items-center">
               {/* Row 1 */}
-              <div className="group flex items-center justify-start">{renderBrandLogo("rogo")}</div>
-              <div className="group flex items-center justify-start">{renderBrandLogo("fpt")}</div>
-              <div className="group flex items-center justify-start">{renderBrandLogo("rangdong")}</div>
+              <div className="group flex items-center justify-start">{renderBrandLogo("rogo", 32)}</div>
+              <div className="group flex items-center justify-start">{renderBrandLogo("fpt", 32)}</div>
+              <div className="group flex items-center justify-start">{renderBrandLogo("rangdong", 32)}</div>
  
               {/* Row 2 */}
-              <div className="group flex items-center justify-start">{renderBrandLogo("antaxi")}</div>
-              <div className="group flex items-center justify-start">{renderBrandLogo("vietin")}</div>
+              <div className="group flex items-center justify-start">{renderBrandLogo("antaxi", 32)}</div>
+              <div className="group flex items-center justify-start">{renderBrandLogo("vietin", 32)}</div>
               <div></div>
  
               {/* Row 3 */}
-              <div className="group flex items-center justify-start">{renderBrandLogo("vcbs")}</div>
-              <div className="group flex items-center justify-start">{renderBrandLogo("think")}</div>
+              <div className="group flex items-center justify-start">{renderBrandLogo("vcbs", 32)}</div>
+              <div className="group flex items-center justify-start">{renderBrandLogo("think", 32)}</div>
               <div></div>
             </div>
           </div>
@@ -957,8 +960,11 @@ export default function Home() {
             
             {/* Project 1: Hero Project (Rogo IoT Platform Box - 2:1 ratio, filling left column) */}
             {featuredProjects[0] && (
-              <div 
-                className="relative group border border-neutral-900 hover:border-brand-accent rounded-3xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1"
+              <a 
+                href="https://rogo-dashboard-web-v2.vercel.app/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative group block border border-neutral-900 hover:border-brand-accent rounded-xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1"
                 style={{
                   display: 'flex',
                   width: '100%',
@@ -972,15 +978,18 @@ export default function Home() {
                 }}
               >
                 {/* SVG Dashboard Mockup as a semi-transparent background */}
-                <div className="absolute inset-0 z-0 opacity-15 pointer-events-none select-none">
+                <div className="absolute inset-0 z-0 opacity-40 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none select-none">
                   {renderProjectCover(featuredProjects[0].coverImage)}
                 </div>
 
                 {/* Top Row: Indicators and Logos */}
                 <div className="w-full flex items-center justify-between z-10">
                   <div className="flex items-center gap-3">
-                    <span className="app-chip text-[10px] font-bold bg-brand-accent/15 text-brand-accent border border-brand-accent/10">
+                    <span className="app-chip text-[10px] font-bold bg-brand-accent/15 text-neutral-100 border border-brand-accent/10">
                       {translations[lang].featuredBadge}
+                    </span>
+                    <span className="app-chip text-[10px] font-bold bg-[#1E1E20] text-neutral-100 border border-neutral-800">
+                      PAAS • B2B • Desktop
                     </span>
                   </div>
                   
@@ -1005,30 +1014,35 @@ export default function Home() {
                 >
                   <h3 
                     style={{ alignSelf: 'stretch', width: '100%' }}
-                    className="text-[26px] font-bold leading-tight text-white font-serif group-hover:text-brand-accent transition-colors duration-150"
+                    className="text-[24px] font-bold leading-tight text-white font-serif group-hover:text-[#E8C468] transition-colors duration-150"
                   >
                     {translations[lang].rogoPlatformTitle}
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {["PaaS", "B2B", "Dashboard", "Whitelabel"].map((tag, idx) => (
-                      <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
-                        {tag}
-                      </span>
-                    ))}
+
+                  {/* Hover content wrapper */}
+                  <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-300 group-hover:max-h-56 group-hover:opacity-100 mt-0 group-hover:mt-3 flex flex-col gap-3 w-full">
+                    <p 
+                      style={{ 
+                        color: 'var(--Colors-Neutral-500, #989898)',
+                        fontFamily: '"Be Vietnam Pro", sans-serif',
+                        fontSize: '14px',
+                        fontWeight: 400,
+                        lineHeight: '18px'
+                      }}
+                      className="text-left"
+                    >
+                      {translations[lang].rogoPlatformDesc}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {(featuredProjects[0]?.techTokens || []).map((tag, idx) => (
+                        <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <p 
-                    style={{ 
-                      color: 'var(--Colors-Neutral-500, #989898)',
-                      fontFamily: '"Be Vietnam Pro", sans-serif',
-                      fontSize: '14px',
-                      fontWeight: 400,
-                      lineHeight: '18px'
-                    }}
-                  >
-                    {translations[lang].rogoPlatformDesc}
-                  </p>
                 </div>
-              </div>
+              </a>
             )}
 
             {/* Row holding Cards 2 and 3 */}
@@ -1044,10 +1058,11 @@ export default function Home() {
                 flexShrink: 0
               }}
             >
-              {featuredProjects.slice(1, 3).map((proj) => (
-                <div
+               {featuredProjects.slice(1, 3).map((proj) => (
+                <a
+                  href="/pending"
                   key={proj.id}
-                  className="relative group border border-neutral-900 hover:border-brand-accent rounded-3xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1"
+                  className="relative group block border border-neutral-900 hover:border-brand-accent rounded-xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1"
                   style={{
                     display: 'flex',
                     flex: '1 1 0%',
@@ -1061,15 +1076,18 @@ export default function Home() {
                   }}
                 >
                   {/* Background mockup graphic */}
-                  <div className="absolute inset-0 z-0 opacity-15 pointer-events-none select-none">
+                  <div className="absolute inset-0 z-0 opacity-40 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none select-none">
                     {renderProjectCover(proj.coverImage)}
                   </div>
 
                   {/* Top Row: Indicators and Logo */}
                   <div className="w-full flex items-center justify-between z-10">
                     <div className="flex items-center gap-2">
-                      <span className="app-chip text-[9px] font-bold bg-brand-accent/15 text-brand-accent border border-brand-accent/10">
+                      <span className="app-chip text-[9px] font-bold bg-brand-accent/15 text-neutral-100 border border-brand-accent/10">
                         {translations[lang].featuredBadge}
+                      </span>
+                      <span className="app-chip text-[9px] font-bold bg-[#1E1E20] text-neutral-100 border border-neutral-800">
+                        IoT • Mobile
                       </span>
                     </div>
                     
@@ -1099,45 +1117,46 @@ export default function Home() {
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'flex-start',
-                      gap: '8px',
+                      gap: '0px',
                       alignSelf: 'stretch',
                       width: '100%'
                     }}
-                    className="z-10 mt-3"
+                    className="z-10 mt-3 w-full text-left"
                   >
+                    {/* Green tag above title, only visible on hover */}
+                    <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-300 group-hover:max-h-6 group-hover:opacity-100 mb-0 group-hover:mb-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#22C55E]">
+                        {proj.id === "raio-smart" ? "SMART HOME" : "REDESIGN"}
+                      </span>
+                    </div>
+
                     <h4 
                       style={{ alignSelf: 'stretch', width: '100%' }}
-                      className="text-[20px] font-bold leading-tight text-white font-serif group-hover:text-brand-accent transition-colors duration-150"
+                      className="text-[24px] font-bold leading-tight text-white font-serif group-hover:text-[#E8C468] transition-colors duration-150"
                     >
                       {proj.id === "raio-smart" 
                         ? translations[lang].raioSmartTitle 
                         : translations[lang].austflyTitle}
                     </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {(proj.id === "raio-smart" 
-                        ? ["Mobile", "IoT", "Smart Home", "Whitelabel"]
-                        : ["Mobile", "IoT", "Smart Home", "Redesign"]
-                      ).map((tag, idx) => (
-                        <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
-                          {tag}
-                        </span>
-                      ))}
+
+                    {/* Description, only visible on hover */}
+                    <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-300 group-hover:max-h-24 group-hover:opacity-100 mt-0 group-hover:mt-2">
+                      <p 
+                        style={{ 
+                          color: 'var(--Colors-Neutral-500, #989898)',
+                          fontFamily: '"Be Vietnam Pro", sans-serif',
+                          fontSize: '14px',
+                          fontWeight: 400,
+                          lineHeight: '18px'
+                        }}
+                      >
+                        {proj.id === "raio-smart" 
+                          ? translations[lang].raioSmartDesc
+                          : translations[lang].austflyDesc}
+                      </p>
                     </div>
-                    <p 
-                      style={{ 
-                        color: 'var(--Colors-Neutral-500, #989898)',
-                        fontFamily: '"Be Vietnam Pro", sans-serif',
-                        fontSize: '14px',
-                        fontWeight: 400,
-                        lineHeight: '18px'
-                      }}
-                    >
-                      {proj.id === "raio-smart" 
-                        ? translations[lang].raioSmartDesc
-                        : translations[lang].austflyDesc}
-                    </p>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
 
@@ -1149,11 +1168,34 @@ export default function Home() {
             {/* More Projects block */}
             <div className="flex flex-col gap-6 w-full h-full">
               <div className="flex items-center justify-between border-b border-neutral-900 pb-4">
-                <span className="text-[10px] font-sans font-normal uppercase tracking-wider text-neutral-500">
+                <span 
+                  style={{
+                    color: 'var(--Colors-Neutral-500, #989898)',
+                    fontFamily: '"Be Vietnam Pro", sans-serif',
+                    fontSize: '12px',
+                    fontStyle: 'normal',
+                    fontWeight: 500,
+                    lineHeight: '15px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
                   {translations[lang].moreProjects}
                 </span>
-                <a href="/works" className="text-brand-accent text-xs font-bold inline-flex items-center gap-1 hover:underline">
-                  {translations[lang].viewAll} <ArrowRight size={12} />
+                <a 
+                  href="/works" 
+                  style={{
+                    color: 'var(--Colors-Primary-400, #22C55E)',
+                    fontFamily: '"Be Vietnam Pro", sans-serif',
+                    fontSize: '14px',
+                    fontStyle: 'normal',
+                    fontWeight: 700,
+                    lineHeight: '18px',
+                    textAlign: 'center'
+                  }}
+                  className="inline-flex items-center gap-1 hover:opacity-85 transition-opacity"
+                >
+                  {translations[lang].viewAll} <ArrowRight size={14} strokeWidth={2.5} />
                 </a>
               </div>
 
@@ -1169,7 +1211,10 @@ export default function Home() {
                 }}
               >
                 {moreProjects.map((proj) => (
-                  <div
+                  <a
+                    href={proj.id === "thing-ai" ? "https://thing.ai.vn/" : "/pending"}
+                    target={proj.id === "thing-ai" ? "_blank" : undefined}
+                    rel={proj.id === "thing-ai" ? "noopener noreferrer" : undefined}
                     key={proj.id}
                     style={{
                       display: 'flex',
@@ -1177,61 +1222,63 @@ export default function Home() {
                       alignItems: 'center',
                       gap: '16px',
                       alignSelf: 'stretch',
-                      borderRadius: '16px',
+                      borderRadius: '12px',
                       background: '#1E1E1E',
                       border: '1px solid rgba(255, 255, 255, 0.05)',
                       flex: '1 1 0%'
                     }}
-                    className="transition-all duration-150 relative group hover:bg-[#252525] hover:border-brand-accent/30"
+                    className="transition-all duration-150 relative group block hover:bg-[#252525] hover:border-brand-accent/30"
                   >
-                    {/* Small Box Icon */}
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden bg-[#2C2C2E]">
-                      {proj.id === "partner-app" ? (
-                        <div className="w-full h-full flex items-center justify-center text-neutral-300">
-                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <rect x="3" y="3" width="7" height="7" rx="1" />
-                            <rect x="14" y="3" width="7" height="7" rx="1" />
-                            <rect x="14" y="14" width="7" height="7" rx="1" />
-                            <rect x="3" y="14" width="7" height="7" rx="1" />
-                          </svg>
-                        </div>
-                      ) : proj.id === "thing-ai" ? (
-                        <div className="w-full h-full flex items-center justify-center">
-                          {/* Stylized Owl Face filling the container */}
-                          <svg width="100%" height="100%" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="40" height="40" rx="8" fill="#00D2FF" />
-                            <circle cx="14" cy="20" r="7" fill="white" />
-                            <circle cx="14" cy="20" r="3.5" fill="#1E293B" />
-                            <circle cx="14" cy="20" r="1.5" fill="white" />
-                            <circle cx="26" cy="20" r="7" fill="white" />
-                            <circle cx="26" cy="20" r="3.5" fill="#1E293B" />
-                            <circle cx="26" cy="20" r="1.5" fill="white" />
-                            <polygon points="20,20 18,24 22,24" fill="#FBBF24" />
-                            <path d="M8 12 L14 15 L20 12 L26 15 L32 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                          </svg>
-                        </div>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-neutral-300">
-                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M3 3v18h18" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M18.7 8l-5.1 5.2-2.8-2.7-4.7 4.7" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </div>
-                      )}
-                    </div>
+                    <div className="flex items-center gap-4 w-full">
+                      {/* Small Box Icon */}
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden bg-[#2C2C2E]">
+                        {proj.id === "partner-app" ? (
+                          <div className="w-full h-full flex items-center justify-center text-neutral-300">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <rect x="3" y="3" width="7" height="7" rx="1" />
+                              <rect x="14" y="3" width="7" height="7" rx="1" />
+                              <rect x="14" y="14" width="7" height="7" rx="1" />
+                              <rect x="3" y="14" width="7" height="7" rx="1" />
+                            </svg>
+                          </div>
+                        ) : proj.id === "thing-ai" ? (
+                          <div className="w-full h-full flex items-center justify-center">
+                            {/* Stylized Owl Face filling the container */}
+                            <svg width="100%" height="100%" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect width="40" height="40" rx="8" fill="#00D2FF" />
+                              <circle cx="14" cy="20" r="7" fill="white" />
+                              <circle cx="14" cy="20" r="3.5" fill="#1E293B" />
+                              <circle cx="14" cy="20" r="1.5" fill="white" />
+                              <circle cx="26" cy="20" r="7" fill="white" />
+                              <circle cx="26" cy="20" r="3.5" fill="#1E293B" />
+                              <circle cx="26" cy="20" r="1.5" fill="white" />
+                              <polygon points="20,20 18,24 22,24" fill="#FBBF24" />
+                              <path d="M8 12 L14 15 L20 12 L26 15 L32 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+                            </svg>
+                          </div>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-neutral-300">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M3 3v18h18" strokeLinecap="round" strokeLinejoin="round" />
+                              <path d="M18.7 8l-5.1 5.2-2.8-2.7-4.7 4.7" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </div>
+                        )}
+                      </div>
 
-                    <div className="flex flex-col gap-1 w-full">
-                      <span className="text-[10px] font-sans font-medium uppercase tracking-wider text-neutral-400">
-                        {proj.tags.join(" · ")}
-                      </span>
-                      <h4 className="text-[18px] font-serif font-bold text-white group-hover:text-brand-accent transition-colors duration-150 leading-snug">
-                        {proj.title}
-                      </h4>
-                      <p className="text-[13px] font-sans text-neutral-400 font-normal leading-normal mt-0.5">
-                        {translations[lang][`${proj.id}-summary` as keyof typeof translations.vi] || proj.summary}
-                      </p>
+                      <div className="flex flex-col gap-1 w-full text-left">
+                        <span className="text-[10px] font-sans font-medium uppercase tracking-wider text-neutral-400">
+                          {proj.tags.join(" · ")}
+                        </span>
+                        <h4 className="text-[18px] font-serif font-bold text-white group-hover:text-brand-accent transition-colors duration-150 leading-snug">
+                          {proj.title}
+                        </h4>
+                        <p className="text-[13px] font-sans text-neutral-400 font-normal leading-normal mt-0.5">
+                          {translations[lang][`${proj.id}-summary` as keyof typeof translations.vi] || proj.summary}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  </a>
                 ))}
 
               </div>
@@ -1511,7 +1558,7 @@ export default function Home() {
           {/* FOOTER */}
           <footer className="w-full px-[120px] py-[40px] border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-400">
             <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4">
-              <span>© 2026 Nguyễn Khánh Trường. All rights reserved.</span>
+              <span>© 2026 {translations[lang].name}. All rights reserved.</span>
               <div className="flex items-center gap-4 font-mono text-[10px]">
                 <span>ENV: PRODUCTION</span>
                 <span>SHIPPED via Gemini CLI</span>
@@ -1528,7 +1575,7 @@ export default function Home() {
         style={{
           position: 'fixed',
           inset: 0,
-          zIndex: 99999,
+          zIndex: 30,
           pointerEvents: contactModalOpen ? 'auto' : 'none',
           display: 'flex',
           alignItems: 'center',
@@ -1565,17 +1612,17 @@ export default function Home() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            padding: '32px 24px 40px 24px',
+            padding: '40px 32px',
             overflow: 'hidden'
           }}
         >
           {/* Close button */}
           <button 
             onClick={() => setContactModalOpen(false)}
-            className="text-neutral-400 hover:text-white transition-colors cursor-pointer mb-6 p-1 rounded-lg hover:bg-neutral-800 self-start"
-            style={{ background: 'none', border: 'none', marginLeft: '16px' }}
+            className="absolute -top-12 left-4 md:left-0 text-neutral-400 hover:text-white transition-colors cursor-pointer p-1 rounded-lg hover:bg-neutral-800/20"
+            style={{ background: 'none', border: 'none' }}
           >
-            <X size={20} />
+            <X size={24} strokeWidth={1.5} />
           </button>
 
           {/* Two-Column split layout */}

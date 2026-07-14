@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowUpRight, Mail, Check, Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -95,6 +95,7 @@ const translations = {
 
 export default function WorksPage() {
   const [lang, setLang] = useState<"vi" | "en">("vi");
+  const isInitialMount = useRef(true);
   const [mounted, setMounted] = useState(false);
   const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
   const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
@@ -129,6 +130,10 @@ export default function WorksPage() {
   }, []);
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     if (typeof window !== 'undefined') {
       localStorage.setItem("portfolio_lang", lang);
     }
@@ -249,7 +254,7 @@ export default function WorksPage() {
       className="page-wrapper min-h-screen bg-[#0B0B0C] text-neutral-300 flex flex-col font-sans"
       style={{
         opacity: fadeOpacity,
-        transform: `translateY(${(1 - fadeOpacity) * 12}px)`,
+        transform: fadeOpacity < 1 ? `translateY(${(1 - fadeOpacity) * 12}px)` : 'none',
         transition: 'opacity 450ms cubic-bezier(0.215, 0.61, 0.355, 1), transform 450ms cubic-bezier(0.215, 0.61, 0.355, 1)'
       }}
     >
@@ -303,21 +308,23 @@ export default function WorksPage() {
               display: 'flex',
               alignItems: 'center',
               position: 'relative',
-              color: '#22C55E'
+              color: contactModalOpen ? '#989898' : '#22C55E'
             }}
-            className="font-bold transition-colors"
+            className={contactModalOpen ? "hover:text-white transition-colors" : "font-bold transition-colors"}
           >
             {t.navWork}
-            <span 
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                width: '100%',
-                height: '2px',
-                backgroundColor: '#22C55E'
-              }}
-            ></span>
+            {!contactModalOpen && (
+              <span 
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '2px',
+                  backgroundColor: '#22C55E'
+                }}
+              ></span>
+            )}
           </a>
           <a 
             href="/about" 
@@ -467,7 +474,7 @@ export default function WorksPage() {
         <a 
           href="/" 
           style={{
-            color: 'var(--Colors-Neutral-100, #FFF)',
+            color: 'var(--Colors-Primary-400, #22C55E)',
             fontFamily: '"Be Vietnam Pro", sans-serif',
             fontSize: '14px',
             fontStyle: 'normal',
@@ -590,8 +597,11 @@ export default function WorksPage() {
             </div>
 
             {/* Details area (Right) */}
-            <div 
-              className="flex flex-col md:flex-row gap-6 w-full items-start flex-1 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-xl cursor-pointer group"
+            <a 
+              href="https://rogo-dashboard-web-v2.vercel.app/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col md:flex-row gap-6 w-full items-start flex-1 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-xl cursor-pointer group block"
             >
               {/* Content Block */}
               <div 
@@ -637,7 +647,7 @@ export default function WorksPage() {
                   priority
                 />
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Connector Dot & Line 1 */}
@@ -679,8 +689,9 @@ export default function WorksPage() {
             </div>
 
             {/* Details area (Right) */}
-            <div 
-              className="flex flex-col md:flex-row gap-6 w-full items-start flex-1 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-xl cursor-pointer group"
+            <a 
+              href="/pending"
+              className="flex flex-col md:flex-row gap-6 w-full items-start flex-1 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-xl cursor-pointer group block"
             >
               {/* Content Block */}
               <div 
@@ -720,7 +731,7 @@ export default function WorksPage() {
               >
                 {renderMockup("raio-smart")}
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Connector Dot & Line 2 */}
@@ -765,7 +776,8 @@ export default function WorksPage() {
             <div className="flex flex-col md:flex-row gap-6 items-stretch justify-start">
               
               {/* Instance 1: Austfly */}
-              <div 
+              <a 
+                href="/pending"
                 style={{
                   maxWidth: '412px',
                   width: '100%',
@@ -779,7 +791,7 @@ export default function WorksPage() {
                   borderRadius: '16px',
                   backgroundColor: 'transparent'
                 }}
-                className="border border-transparent hover:border-[#2ECC8A] transition-all duration-300 cursor-pointer group"
+                className="border border-transparent hover:border-[#2ECC8A] transition-all duration-300 cursor-pointer group block"
               >
                 {/* Thumbnail Block */}
                 <div 
@@ -806,10 +818,11 @@ export default function WorksPage() {
                 <p className="text-neutral-400 text-sm leading-relaxed">
                   {t.austflyDesc}
                 </p>
-              </div>
+              </a>
 
               {/* Instance 2: Kangaroo */}
-              <div 
+              <a 
+                href="/pending"
                 style={{
                   maxWidth: '412px',
                   width: '100%',
@@ -823,7 +836,7 @@ export default function WorksPage() {
                   borderRadius: '16px',
                   backgroundColor: 'transparent'
                 }}
-                className="border border-transparent hover:border-[#2ECC8A] transition-all duration-300 cursor-pointer group"
+                className="border border-transparent hover:border-[#2ECC8A] transition-all duration-300 cursor-pointer group block"
               >
                 {/* Thumbnail Block */}
                 <div 
@@ -850,7 +863,7 @@ export default function WorksPage() {
                 <p className="text-neutral-400 text-sm leading-relaxed">
                   {t.kangarooDesc}
                 </p>
-              </div>
+              </a>
 
             </div>
           </div>
@@ -903,9 +916,10 @@ export default function WorksPage() {
 
         <div className="flex flex-col md:flex-row gap-8 w-full justify-center items-stretch">
           {/* Thing Flow */}
-          <div 
+          <a 
+            href="/pending"
             style={{ maxWidth: '412px', width: '100%', flexShrink: 0 }}
-            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group"
+            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group block text-left"
           >
             <div 
               style={{
@@ -933,12 +947,13 @@ export default function WorksPage() {
             <p className="text-neutral-400 text-sm leading-relaxed flex-1">
               {t.thingFlowDesc}
             </p>
-          </div>
+          </a>
 
           {/* Thing Partner */}
-          <div 
+          <a 
+            href="/pending"
             style={{ maxWidth: '412px', width: '100%', flexShrink: 0 }}
-            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group"
+            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group block text-left"
           >
             <div 
               style={{
@@ -966,7 +981,7 @@ export default function WorksPage() {
             <p className="text-neutral-400 text-sm leading-relaxed flex-1">
               {t.thingPartnerDesc}
             </p>
-          </div>
+          </a>
         </div>
       </section>
 
@@ -1015,9 +1030,12 @@ export default function WorksPage() {
 
         <div className="flex flex-col md:flex-row gap-8 w-full justify-center items-stretch flex-wrap">
           {/* Thing AI VN */}
-          <div 
+          <a 
+            href="https://thing.ai.vn/"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{ maxWidth: '412px', width: '100%', flexShrink: 0 }}
-            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group"
+            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group block text-left"
           >
             <div 
               style={{
@@ -1051,12 +1069,13 @@ export default function WorksPage() {
             <p className="text-neutral-400 text-sm leading-relaxed flex-1">
               {t.thingAiDesc}
             </p>
-          </div>
+          </a>
 
           {/* Antaxi */}
-          <div 
+          <a 
+            href="/pending"
             style={{ maxWidth: '412px', width: '100%', flexShrink: 0 }}
-            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group"
+            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group block text-left"
           >
             <div 
               style={{
@@ -1084,12 +1103,13 @@ export default function WorksPage() {
             <p className="text-neutral-400 text-sm leading-relaxed flex-1">
               {t.antaxiDesc}
             </p>
-          </div>
+          </a>
 
           {/* Labo Viet My */}
-          <div 
+          <a 
+            href="/pending"
             style={{ maxWidth: '412px', width: '100%', flexShrink: 0 }}
-            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group"
+            className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group block text-left"
           >
             <div 
               style={{
@@ -1117,7 +1137,7 @@ export default function WorksPage() {
             <p className="text-neutral-400 text-sm leading-relaxed flex-1">
               {t.laboDesc}
             </p>
-          </div>
+          </a>
         </div>
       </section>
 
@@ -1200,7 +1220,7 @@ export default function WorksPage() {
         style={{
           position: 'fixed',
           inset: 0,
-          zIndex: 99999,
+          zIndex: 30,
           pointerEvents: contactModalOpen ? 'auto' : 'none',
           display: 'flex',
           alignItems: 'center',
@@ -1237,17 +1257,17 @@ export default function WorksPage() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            padding: '32px 24px 40px 24px',
+            padding: '40px 32px',
             overflow: 'hidden'
           }}
         >
           {/* Close button */}
           <button 
             onClick={() => setContactModalOpen(false)}
-            className="text-neutral-400 hover:text-white transition-colors cursor-pointer mb-6 p-1 rounded-lg hover:bg-neutral-800 self-start"
-            style={{ background: 'none', border: 'none', marginLeft: '16px' }}
+            className="absolute -top-12 left-4 md:left-0 text-neutral-400 hover:text-white transition-colors cursor-pointer p-1 rounded-lg hover:bg-neutral-800/20"
+            style={{ background: 'none', border: 'none' }}
           >
-            <X size={20} />
+            <X size={24} strokeWidth={1.5} />
           </button>
 
           {/* Two-Column split layout */}

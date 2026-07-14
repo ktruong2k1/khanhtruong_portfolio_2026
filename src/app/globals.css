@@ -116,7 +116,7 @@ body {
   white-space: nowrap;
   background: var(--Colors-Green-Alpha-10, rgba(31, 193, 107, 0.10)) !important;
   border: none !important;
-  color: var(--Colours-Text-Secondary, #9EA2AD) !important;
+  color: var(--Colors-Neutral-100, #FFF) !important;
   font-family: "Be Vietnam Pro", sans-serif !important;
   font-size: 12px !important;
   font-style: normal !important;
