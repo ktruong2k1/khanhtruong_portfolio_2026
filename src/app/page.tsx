@@ -1230,40 +1230,23 @@ export default function Home() {
                     className="transition-all duration-150 relative group block hover:bg-[#252525] hover:border-brand-accent/30"
                   >
                     <div className="flex items-center gap-4 w-full">
-                      {/* Small Box Icon */}
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden bg-[#2C2C2E]">
-                        {proj.id === "partner-app" ? (
-                          <div className="w-full h-full flex items-center justify-center text-neutral-300">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <rect x="3" y="3" width="7" height="7" rx="1" />
-                              <rect x="14" y="3" width="7" height="7" rx="1" />
-                              <rect x="14" y="14" width="7" height="7" rx="1" />
-                              <rect x="3" y="14" width="7" height="7" rx="1" />
-                            </svg>
-                          </div>
-                        ) : proj.id === "thing-ai" ? (
-                          <div className="w-full h-full flex items-center justify-center">
-                            {/* Stylized Owl Face filling the container */}
-                            <svg width="100%" height="100%" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <rect width="40" height="40" rx="8" fill="#00D2FF" />
-                              <circle cx="14" cy="20" r="7" fill="white" />
-                              <circle cx="14" cy="20" r="3.5" fill="#1E293B" />
-                              <circle cx="14" cy="20" r="1.5" fill="white" />
-                              <circle cx="26" cy="20" r="7" fill="white" />
-                              <circle cx="26" cy="20" r="3.5" fill="#1E293B" />
-                              <circle cx="26" cy="20" r="1.5" fill="white" />
-                              <polygon points="20,20 18,24 22,24" fill="#FBBF24" />
-                              <path d="M8 12 L14 15 L20 12 L26 15 L32 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                            </svg>
-                          </div>
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-neutral-300">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <path d="M3 3v18h18" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M18.7 8l-5.1 5.2-2.8-2.7-4.7 4.7" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </div>
-                        )}
+                      {/* Small Mockup Thumbnail (96x64px, radius 4px) */}
+                      <div 
+                        style={{ borderRadius: '4px' }} 
+                        className="w-24 h-16 flex items-center justify-center flex-shrink-0 overflow-hidden bg-[#2C2C2E] relative border border-neutral-800"
+                      >
+                        <img 
+                          src={
+                            proj.id === "partner-app" 
+                              ? "/images/thing_partner.png" 
+                              : proj.id === "thing-ai" 
+                                ? "/images/Thing_AI_VN.png" 
+                                : "/images/labo_viet_my.png"
+                          }
+                          alt={proj.title}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          style={{ borderRadius: '4px' }}
+                        />
                       </div>
 
                       <div className="flex flex-col gap-1 w-full text-left">
