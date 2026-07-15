@@ -82,7 +82,7 @@ const translations = {
     name: "Nguyễn Khánh Trường",
     navWork: "Dự án",
     navAbout: "Giới thiệu về tôi",
-    navContact: "Liên hệ",
+    navContact: "Kết nối với tôi",
     availableRemote: "Làm việc từ xa",
     heroSubheading: "Tôi thiết kế sản phẩm. Và tôi triển khai nó.",
     heroParagraph: "Nhà thiết kế UX/UI với 3.5 năm kinh nghiệm triển khai các sản phẩm B2B phức tạp — hệ sinh thái IoT, trang quản trị SaaS và các nền tảng whitelabel có khả năng mở rộng cho nhiều đối tác. Tôi sử dụng các công cụ AI để rút ngắn khoảng cách từ thiết kế đến production. Hiện tại đang tìm kiếm các cơ hội làm việc từ xa.",
@@ -116,7 +116,7 @@ const translations = {
     name: "Nguyen Khanh Truong",
     navWork: "Work",
     navAbout: "About me",
-    navContact: "Contact",
+    navContact: "Connect with me",
     availableRemote: "Available for Remote",
     heroSubheading: "I design the product. Then I ship it.",
     heroParagraph: "UX/UI designer with 3.5 years shipping complex B2B products — IoT ecosystems, SaaS dashboards, and whitelabel platforms built to scale across partners. I use AI tools to close the gap between design and production. Currently open to remote roles.",
@@ -455,7 +455,7 @@ export default function Home() {
       case "dashboard":
         return (
           <img 
-            src="/images/rogo_platform.png" 
+            src="/images/Rogo_Platform_large.png" 
             alt="Rogo IoT Platform Thumbnail" 
             className="w-full h-full object-cover" 
           />

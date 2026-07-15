@@ -11,7 +11,7 @@ const translations = {
   vi: {
     navWork: "Dự án",
     navAbout: "Giới thiệu về tôi",
-    navContact: "Liên hệ",
+    navContact: "Kết nối với tôi",
     availableRemote: "Làm việc từ xa",
     backHome: "Quay lại Trang chủ",
     viewResume: "Xem Resume",
@@ -56,7 +56,7 @@ const translations = {
   en: {
     navWork: "Work",
     navAbout: "About me",
-    navContact: "Contact",
+    navContact: "Connect with me",
     availableRemote: "Available for Remote",
     backHome: "Back to Home",
     viewResume: "View Resume",

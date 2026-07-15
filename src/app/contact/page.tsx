@@ -12,8 +12,8 @@ const translations = {
     desc: "Bạn có nhu cầu hợp tác thiết kế sản phẩm hoặc tuyển dụng từ xa? Vui lòng liên hệ trực tiếp qua email ktruong2k1@gmail.com. Cổng liên hệ trực tuyến đang được xây dựng.",
     backHome: "Quay lại Trang chủ",
     navWork: "Dự án",
-    navAbout: "About me",
-    navContact: "Liên hệ",
+    navAbout: "Giới thiệu về tôi",
+    navContact: "Kết nối với tôi",
     availableRemote: "Làm việc từ xa",
   },
   en: {
@@ -23,7 +23,7 @@ const translations = {
     backHome: "Back to Home",
     navWork: "Work",
     navAbout: "About me",
-    navContact: "Contact",
+    navContact: "Connect with me",
     availableRemote: "Available for Remote",
   }
 };
