@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Mail, Check, Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -267,7 +268,7 @@ export default function WorksPage() {
         style={{
           display: 'flex',
           height: '76px',
-          padding: 'var(--Spacing-Padding-L, 16px) 100px',
+          padding: '16px 120px',
           justifyContent: 'space-between',
           alignItems: 'center',
           alignSelf: 'stretch',
@@ -304,72 +305,22 @@ export default function WorksPage() {
           }}
           className="hidden md:flex text-sm font-semibold"
         >
-          <a 
+          <Link 
             href="/works" 
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              color: contactModalOpen ? '#989898' : '#22C55E'
-            }}
-            className={contactModalOpen ? "hover:text-white transition-colors" : "font-bold transition-colors"}
+            className={`nav-item ${!contactModalOpen ? 'active' : ''}`}
           >
             {t.navWork}
-            {!contactModalOpen && (
-              <span 
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '2px',
-                  backgroundColor: '#22C55E'
-                }}
-              ></span>
-            )}
-          </a>
-          <a 
-            href="/about" 
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              color: '#989898'
-            }}
-            className="hover:text-white transition-colors"
-          >
+            {!contactModalOpen && <span className="nav-item-line" />}
+          </Link>
+          <Link href="/about" className="nav-item">
             {t.navAbout}
-          </a>
+          </Link>
           <button 
             onClick={() => setContactModalOpen(true)}
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              color: contactModalOpen ? '#22C55E' : '#989898',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0
-            }}
-            className={`hover:text-white transition-colors font-sans ${contactModalOpen ? 'font-bold' : ''}`}
+            className={`nav-item ${contactModalOpen ? 'active' : ''}`}
           >
             {t.navContact}
-            {contactModalOpen && (
-              <span 
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '2px',
-                  backgroundColor: '#22C55E'
-                }}
-              />
-            )}
+            {contactModalOpen && <span className="nav-item-line" />}
           </button>
         </nav>
 

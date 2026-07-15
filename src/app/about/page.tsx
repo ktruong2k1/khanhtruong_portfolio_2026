@@ -390,51 +390,22 @@ export default function AboutPage() {
           }}
           className="hidden md:flex text-sm font-semibold"
         >
-          <Link href="/works" className="text-neutral-400 hover:text-white transition-colors">{t.navWork}</Link>
+          <Link href="/works" className="nav-item">
+            {t.navWork}
+          </Link>
           <Link 
             href="/about" 
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              color: contactModalOpen ? '#989898' : '#22C55E'
-            }}
-            className={contactModalOpen ? "hover:text-white transition-colors" : "font-bold transition-colors"}
+            className={`nav-item ${!contactModalOpen ? 'active' : ''}`}
           >
             {t.navAbout}
-            {!contactModalOpen && (
-              <span style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '2px', backgroundColor: '#22C55E' }}></span>
-            )}
+            {!contactModalOpen && <span className="nav-item-line" />}
           </Link>
           <button 
             onClick={() => setContactModalOpen(true)}
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              color: contactModalOpen ? '#22C55E' : '#989898',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0
-            }}
-            className={`hover:text-white transition-colors font-sans ${contactModalOpen ? 'font-bold' : ''}`}
+            className={`nav-item ${contactModalOpen ? 'active' : ''}`}
           >
             {t.navContact}
-            {contactModalOpen && (
-              <span 
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '2px',
-                  backgroundColor: '#22C55E'
-                }}
-              />
-            )}
+            {contactModalOpen && <span className="nav-item-line" />}
           </button>
         </nav>
 
@@ -858,79 +829,105 @@ export default function AboutPage() {
 
           <div className="about-work-grid w-full">
             {/* Card 1: Rogo IoT Platform */}
-            <div className="group cursor-pointer mb-8 md:mb-0">
-              <div className="w-full aspect-[388/256] border border-neutral-900 rounded-2xl overflow-hidden relative mb-4">
+            <a 
+              href="https://rogo-dashboard-web-v2.vercel.app/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group block text-left"
+            >
+              <div 
+                style={{
+                  position: 'relative',
+                  borderRadius: '12px',
+                  overflow: 'hidden'
+                }}
+                className="w-full aspect-[388/256] border border-neutral-900/80 mx-auto rounded-xl overflow-hidden"
+              >
                 {renderMockup("dashboard")}
               </div>
-              <div>
-                <div className="flex items-center justify-between w-full mb-2">
-                  <h3 className="text-xl font-serif font-bold text-white group-hover:text-brand-accent transition-colors duration-150">
-                    {t.rogoPlatformTitle}
-                  </h3>
-                  <ArrowUpRight size={18} className="text-brand-accent opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                </div>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {["PaaS", "B2B", "Dashboard", "Whitelabel"].map((tag, idx) => (
-                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-neutral-400 text-sm leading-relaxed line-clamp-3">
-                  {t.rogoPlatformDesc}
-                </p>
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
+                  {t.rogoPlatformTitle}
+                </h3>
+                <ArrowUpRight size={18} className="text-brand-accent" />
               </div>
-            </div>
+              <div className="flex flex-wrap gap-2">
+                {["PaaS", "B2B", "Dashboard", "Whitelabel"].map((tag, idx) => (
+                  <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <p className="text-neutral-400 text-sm leading-relaxed flex-1">
+                {t.rogoPlatformDesc}
+              </p>
+            </a>
 
             {/* Card 2: RaIO Smart */}
-            <div className="group cursor-pointer mb-8 md:mb-0">
-              <div className="w-full aspect-[388/256] border border-neutral-900 rounded-2xl overflow-hidden relative mb-4">
+            <Link 
+              href="/pending"
+              className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group block text-left"
+            >
+              <div 
+                style={{
+                  position: 'relative',
+                  borderRadius: '12px',
+                  overflow: 'hidden'
+                }}
+                className="w-full aspect-[388/256] border border-neutral-900/80 mx-auto rounded-xl overflow-hidden"
+              >
                 {renderMockup("raio-smart")}
               </div>
-              <div>
-                <div className="flex items-center justify-between w-full mb-2">
-                  <h3 className="text-xl font-serif font-bold text-white group-hover:text-brand-accent transition-colors duration-150">
-                    {t.raioSmartTitle}
-                  </h3>
-                  <ArrowUpRight size={18} className="text-brand-accent opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                </div>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {["Mobile", "IoT", "Smart Home", "Whitelabel"].map((tag, idx) => (
-                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-neutral-400 text-sm leading-relaxed line-clamp-3">
-                  {t.raioSmartDesc}
-                </p>
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
+                  {t.raioSmartTitle}
+                </h3>
+                <ArrowUpRight size={18} className="text-brand-accent" />
               </div>
-            </div>
+              <div className="flex flex-wrap gap-2">
+                {["Mobile", "IoT", "Smart Home", "Whitelabel"].map((tag, idx) => (
+                  <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <p className="text-neutral-400 text-sm leading-relaxed flex-1">
+                {t.raioSmartDesc}
+              </p>
+            </Link>
 
             {/* Card 3: Austfly IoT App */}
-            <div className="group cursor-pointer">
-              <div className="w-full aspect-[388/256] border border-neutral-900 rounded-2xl overflow-hidden relative mb-4">
+            <Link 
+              href="/pending"
+              className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group block text-left"
+            >
+              <div 
+                style={{
+                  position: 'relative',
+                  borderRadius: '12px',
+                  overflow: 'hidden'
+                }}
+                className="w-full aspect-[388/256] border border-neutral-900/80 mx-auto rounded-xl overflow-hidden"
+              >
                 {renderMockup("austfly")}
               </div>
-              <div>
-                <div className="flex items-center justify-between w-full mb-2">
-                  <h3 className="text-xl font-serif font-bold text-white group-hover:text-brand-accent transition-colors duration-150">
-                    {t.austflyTitle}
-                  </h3>
-                  <ArrowUpRight size={18} className="text-brand-accent opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                </div>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {["Mobile", "IoT", "Smart Home", "Redesign"].map((tag, idx) => (
-                    <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-neutral-400 text-sm leading-relaxed line-clamp-3">
-                  {t.austflyDesc}
-                </p>
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
+                  {t.austflyTitle}
+                </h3>
+                <ArrowUpRight size={18} className="text-brand-accent" />
               </div>
-            </div>
+              <div className="flex flex-wrap gap-2">
+                {["Mobile", "IoT", "Smart Home", "Redesign"].map((tag, idx) => (
+                  <span key={idx} className="app-chip text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <p className="text-neutral-400 text-sm leading-relaxed flex-1">
+                {t.austflyDesc}
+              </p>
+            </Link>
           </div>
         </section>
 

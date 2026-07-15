@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { 
   Sun, 
   Moon, 
@@ -608,7 +609,7 @@ export default function Home() {
         style={{
           display: 'flex',
           height: '76px',
-          padding: 'var(--Spacing-Padding-L, 16px) var(--side-padding)',
+          padding: '16px 120px',
           justifyContent: 'space-between',
           alignItems: 'center',
           alignSelf: 'stretch',
@@ -645,60 +646,18 @@ export default function Home() {
           }}
           className="hidden md:flex text-sm font-semibold"
         >
-          <a 
-            href="/works" 
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              color: '#989898'
-            }}
-            className="hover:text-white transition-colors"
-          >
+          <Link href="/works" className="nav-item">
             {translations[lang].navWork}
-          </a>
-          <a 
-            href="/about" 
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              color: '#989898'
-            }}
-            className="hover:text-white transition-colors"
-          >
+          </Link>
+          <Link href="/about" className="nav-item">
             {translations[lang].navAbout}
-          </a>
+          </Link>
           <button 
             onClick={() => setContactModalOpen(true)}
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              color: contactModalOpen ? '#22C55E' : '#989898',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0
-            }}
-            className={`hover:text-white transition-colors font-sans ${contactModalOpen ? 'font-bold' : ''}`}
+            className={`nav-item ${contactModalOpen ? 'active' : ''}`}
           >
             {translations[lang].navContact}
-            {contactModalOpen && (
-              <span 
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '2px',
-                  backgroundColor: '#22C55E'
-                }}
-              />
-            )}
+            {contactModalOpen && <span className="nav-item-line" />}
           </button>
         </nav>
 
