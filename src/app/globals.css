@@ -102,6 +102,16 @@ body {
   background: var(--Colors-Neutral-1000, #0B0B0C) !important;
   position: relative;
   min-height: 100vh;
+  padding-top: 76px !important;
+}
+
+header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 50 !important;
+  box-sizing: border-box !important;
 }
 
 /* Global App Chip Layout Class */
@@ -350,6 +360,9 @@ body {
   }
 
   /* Content Wrapper padding overrides */
+  .page-wrapper {
+    padding-top: 76px !important;
+  }
   @media (min-width: 768px) {
     .page-wrapper {
       padding-left: 48px !important;
@@ -363,9 +376,27 @@ body {
     }
   }
   /* Clear inner elements padding-left/right to prevent double padding */
-  .page-wrapper section, .page-wrapper header, .page-wrapper footer {
+  .page-wrapper section, .page-wrapper footer {
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+
+  /* Fixed Header for Mobile/Tablet View */
+  .page-wrapper header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 50 !important;
+    padding-left: 48px !important;
+    padding-right: 48px !important;
+    box-sizing: border-box !important;
+  }
+  @media (max-width: 767px) {
+    .page-wrapper header {
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
   }
 
   /* Centered Layout Wrapper limit */
@@ -383,9 +414,26 @@ body {
   header .md\:hidden {
     display: block !important;
   }
-  /* Ensure mobile menu works correctly */
+  /* Ensure mobile menu works correctly and increase text size to 16px */
   header .absolute.top-\[76px\] {
     display: flex !important;
+  }
+  header .absolute.top-\[76px\] a, header .absolute.top-\[76px\] button {
+    font-size: 16px !important;
+  }
+  /* Staggered entry animation for mobile menu items */
+  header .absolute.top-\[76px\] > * {
+    opacity: 0;
+    animation: mobileMenuSlideIn 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  }
+  header .absolute.top-\[76px\] > *:nth-child(1) {
+    animation-delay: 80ms !important;
+  }
+  header .absolute.top-\[76px\] > *:nth-child(2) {
+    animation-delay: 200ms !important;
+  }
+  header .absolute.top-\[76px\] > *:nth-child(3) {
+    animation-delay: 320ms !important;
   }
 
   /* Tablet-specific overrides (768px - 1279px) */
@@ -520,6 +568,17 @@ body {
     p, .text-sm, .text-base {
       font-size: var(--font-size-body) !important;
     }
+  }
+}
+
+@keyframes mobileMenuSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
