@@ -28,6 +28,7 @@ export default function RootLayout({
     <html
       lang="vi"
       className={`${beVietnam.variable} ${fraunces.variable} h-full scroll-smooth antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full font-sans transition-colors duration-300">
         {children}

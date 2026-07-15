@@ -144,15 +144,18 @@ export default function WorksPage() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
 
   useEffect(() => {
-    if (contactModalOpen) {
+    if (contactModalOpen || mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
-  }, [contactModalOpen]);
+  }, [contactModalOpen, mobileMenuOpen]);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("ktruong2k1@gmail.com");
@@ -379,7 +382,7 @@ export default function WorksPage() {
           >
             <button
               onClick={() => handleLangChange("vi")}
-              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              className={`px-1.5 md:px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-0 md:gap-1.5 ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
               style={{
                 fontFamily: '"Be Vietnam Pro", sans-serif',
                 fontSize: '12px',
@@ -393,11 +396,11 @@ export default function WorksPage() {
                 <circle cx="10" cy="10" r="10" fill="#DA251D"/>
                 <path d="M10 6.5L11.1 9.8H14.5L11.7 11.8L12.8 15.1L10 13.1L7.2 15.1L8.3 11.8L5.5 9.8H8.9L10 6.5Z" fill="#FFFF00"/>
               </svg>
-              <span>VIE</span>
+              <span className="hidden md:inline">VIE</span>
             </button>
             <button
               onClick={() => handleLangChange("en")}
-              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              className={`px-1.5 md:px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-0 md:gap-1.5 ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
               style={{
                 fontFamily: '"Be Vietnam Pro", sans-serif',
                 fontSize: '12px',
@@ -419,13 +422,13 @@ export default function WorksPage() {
                   <path d="M10 0 V20 M0 10 H20" stroke="#C8102E" strokeWidth="2.5" />
                 </g>
               </svg>
-              <span>ENG</span>
+              <span className="hidden md:inline">ENG</span>
             </button>
           </div>
 
           <a 
             href="/contact" 
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-xs text-[#E5E5E5] font-semibold transition-colors duration-150"
+            className="hidden md:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-xs text-[#E5E5E5] font-semibold transition-colors duration-150"
           >
             <span className="w-2 h-2 bg-status-200 rounded-full animate-pulse"></span>
             {t.availableRemote}
@@ -498,6 +501,7 @@ export default function WorksPage() {
             {t.myWorks}
           </h1>
           <span 
+            className="projects-badge"
             style={{
               color: 'var(--Colors-Primary-400, #22C55E)',
               fontFamily: 'Fraunces, serif',
@@ -700,7 +704,8 @@ export default function WorksPage() {
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   gap: '16px',
-                  width: '388px',
+                  width: '100%',
+                  maxWidth: '388px',
                   flexShrink: 0
                 }}
                 className="w-full md:w-[388px]"
@@ -1176,9 +1181,6 @@ export default function WorksPage() {
           </span>
         )}
 
-        <p className="text-neutral-500 font-mono text-[10px] md:text-[11px] tracking-wider mt-12 uppercase">
-          {t.ctaAvailable}
-        </p>
       </section>
 
       {/* FOOTER */}
@@ -1217,9 +1219,11 @@ export default function WorksPage() {
 
       {/* CONTACT DIALOG */}
       <div 
+        className="contact-dialog-container"
         style={{
           position: 'fixed',
           inset: 0,
+          height: '100dvh',
           zIndex: 30,
           pointerEvents: contactModalOpen ? 'auto' : 'none',
           display: 'flex',
@@ -1232,6 +1236,7 @@ export default function WorksPage() {
         {/* Backdrop overlay */}
         <div 
           onClick={() => setContactModalOpen(false)}
+          className="contact-dialog-backdrop"
           style={{
             position: 'absolute',
             inset: 0,
@@ -1244,6 +1249,7 @@ export default function WorksPage() {
 
         {/* Dialog Panel */}
         <div 
+          className="contact-dialog-panel"
           style={{
             position: 'relative',
             width: '100%',

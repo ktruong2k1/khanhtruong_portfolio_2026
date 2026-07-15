@@ -155,15 +155,18 @@ export default function AboutPage() {
   }, [lang]);
 
   useEffect(() => {
-    if (contactModalOpen) {
+    if (contactModalOpen || mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
-  }, [contactModalOpen]);
+  }, [contactModalOpen, mobileMenuOpen]);
 
   const t = translations[lang];
 
@@ -442,7 +445,7 @@ export default function AboutPage() {
           >
             <button 
               onClick={() => handleLangChange("vi")} 
-              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              className={`px-1.5 md:px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-0 md:gap-1.5 ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
               style={{
                 fontFamily: '"Be Vietnam Pro", sans-serif',
                 fontSize: '12px',
@@ -456,11 +459,11 @@ export default function AboutPage() {
                 <circle cx="10" cy="10" r="10" fill="#DA251D"/>
                 <path d="M10 6.5L11.1 9.8H14.5L11.7 11.8L12.8 15.1L10 13.1L7.2 15.1L8.3 11.8L5.5 9.8H8.9L10 6.5Z" fill="#FFFF00"/>
               </svg>
-              <span>VIE</span>
+              <span className="hidden md:inline">VIE</span>
             </button>
             <button 
               onClick={() => handleLangChange("en")} 
-              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              className={`px-1.5 md:px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-0 md:gap-1.5 ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
               style={{
                 fontFamily: '"Be Vietnam Pro", sans-serif',
                 fontSize: '12px',
@@ -482,7 +485,7 @@ export default function AboutPage() {
                   <path d="M10 0 V20 M0 10 H20" stroke="#C8102E" strokeWidth="2.5"/>
                 </g>
               </svg>
-              <span>ENG</span>
+              <span className="hidden md:inline">ENG</span>
             </button>
           </div>
 
@@ -498,6 +501,7 @@ export default function AboutPage() {
               background: 'rgba(46, 204, 138, 0.10)',
               height: '32px'
             }}
+            className="hidden md:flex"
           >
             <span style={{ width: '6px', height: '6px', borderRadius: '50%' }} className="bg-[#2ECC8A]"></span>
             <span 
@@ -983,14 +987,13 @@ export default function AboutPage() {
                     border: isHovered 
                       ? (hasBorder ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid rgba(34, 197, 94, 0.3)')
                       : (hasBorder ? '1px solid rgba(34, 197, 94, 0.2)' : '1px solid transparent'),
-                    height: isAnyHovered ? '600px' : '220px',
                     opacity: isOtherHovered ? 0.6 : 1,
                     transition: 'all 350ms cubic-bezier(0.25, 1, 0.5, 1)',
                     boxSizing: 'border-box',
                     cursor: 'pointer',
                     overflow: 'hidden'
                   }}
-                  className="transition-all duration-300"
+                  className={`about-process-card transition-all duration-300 ${isHovered ? 'is-expanded' : ''} ${isAnyHovered ? 'any-expanded' : ''}`}
                 >
                   <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                     {/* Default State (Visible when NOT hovered) */}
@@ -1416,9 +1419,11 @@ export default function AboutPage() {
 
       {/* CONTACT DIALOG */}
       <div 
+        className="contact-dialog-container"
         style={{
           position: 'fixed',
           inset: 0,
+          height: '100dvh',
           zIndex: 30,
           pointerEvents: contactModalOpen ? 'auto' : 'none',
           display: 'flex',
@@ -1431,6 +1436,7 @@ export default function AboutPage() {
         {/* Backdrop overlay */}
         <div 
           onClick={() => setContactModalOpen(false)}
+          className="contact-dialog-backdrop"
           style={{
             position: 'absolute',
             inset: 0,
@@ -1443,6 +1449,7 @@ export default function AboutPage() {
 
         {/* Dialog Panel */}
         <div 
+          className="contact-dialog-panel"
           style={{
             position: 'relative',
             width: '100%',

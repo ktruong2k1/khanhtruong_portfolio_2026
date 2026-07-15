@@ -84,7 +84,7 @@ const translations = {
     navContact: "Liên hệ",
     availableRemote: "Làm việc từ xa",
     heroSubheading: "Tôi thiết kế sản phẩm. Và tôi triển khai nó.",
-    heroParagraph: "Kết nối khoảng cách giữa tầm nhìn thẩm mỹ độ phân giải cao và khả năng kỹ thuật mạnh mẽ cho các nền tảng doanh nghiệp & IoT.",
+    heroParagraph: "Nhà thiết kế UX/UI với 3.5 năm kinh nghiệm triển khai các sản phẩm B2B phức tạp — hệ sinh thái IoT, trang quản trị SaaS và các nền tảng whitelabel có khả năng mở rộng cho nhiều đối tác. Tôi sử dụng các công cụ AI để rút ngắn khoảng cách từ thiết kế đến production. Hiện tại đang tìm kiếm các cơ hội làm việc từ xa.",
     emailMe: "Gửi email",
     viewResume: "Xem Resume",
     trustedBy: "Đối tác tin cậy",
@@ -118,7 +118,7 @@ const translations = {
     navContact: "Contact",
     availableRemote: "Available for Remote",
     heroSubheading: "I design the product. Then I ship it.",
-    heroParagraph: "Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution for enterprise and IoT platforms.",
+    heroParagraph: "UX/UI designer with 3.5 years shipping complex B2B products — IoT ecosystems, SaaS dashboards, and whitelabel platforms built to scale across partners. I use AI tools to close the gap between design and production. Currently open to remote roles.",
     emailMe: "Email me",
     viewResume: "View Resume",
     trustedBy: "Trusted by",
@@ -337,15 +337,18 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (contactModalOpen) {
+    if (contactModalOpen || mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
-  }, [contactModalOpen]);
+  }, [contactModalOpen, mobileMenuOpen]);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("ktruong2k1@gmail.com");
@@ -605,7 +608,7 @@ export default function Home() {
         style={{
           display: 'flex',
           height: '76px',
-          padding: 'var(--Spacing-Padding-L, 16px) 100px',
+          padding: 'var(--Spacing-Padding-L, 16px) var(--side-padding)',
           justifyContent: 'space-between',
           alignItems: 'center',
           alignSelf: 'stretch',
@@ -708,7 +711,7 @@ export default function Home() {
           >
             <button
               onClick={() => handleLangChange("vi")}
-              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              className={`px-1.5 md:px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-0 md:gap-1.5 ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
               style={{
                 fontFamily: '"Be Vietnam Pro", sans-serif',
                 fontSize: '12px',
@@ -722,11 +725,11 @@ export default function Home() {
                 <circle cx="10" cy="10" r="10" fill="#DA251D"/>
                 <path d="M10 6.5L11.1 9.8H14.5L11.7 11.8L12.8 15.1L10 13.1L7.2 15.1L8.3 11.8L5.5 9.8H8.9L10 6.5Z" fill="#FFFF00"/>
               </svg>
-              <span>VIE</span>
+              <span className="hidden md:inline">VIE</span>
             </button>
             <button
               onClick={() => handleLangChange("en")}
-              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
+              className={`px-1.5 md:px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-0 md:gap-1.5 ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
               style={{
                 fontFamily: '"Be Vietnam Pro", sans-serif',
                 fontSize: '12px',
@@ -748,13 +751,13 @@ export default function Home() {
                   <path d="M10 0 V20 M0 10 H20" stroke="#C8102E" strokeWidth="2.5" />
                 </g>
               </svg>
-              <span>ENG</span>
+              <span className="hidden md:inline">ENG</span>
             </button>
           </div>
 
           <a 
             href="/contact" 
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-xs text-[#E5E5E5] font-semibold transition-colors duration-150"
+            className="hidden md:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-xs text-[#E5E5E5] font-semibold transition-colors duration-150"
           >
             <span className="w-2 h-2 bg-status-200 rounded-full animate-pulse"></span>
             {translations[lang].availableRemote}
@@ -789,7 +792,7 @@ export default function Home() {
 
         {/* Spec Label for Header */}
         {specMode && (
-          <div className="absolute bottom-0 left-0 right-0 bg-red-950/20 text-red-400 border-t border-red-200/50 px-[120px] py-1 text-[10px] font-sans font-normal flex items-center justify-between z-40">
+          <div className="absolute bottom-0 left-0 right-0 bg-red-950/20 text-red-400 border-t border-red-200/50 px-[var(--side-padding)] py-1 text-[10px] font-sans font-normal flex items-center justify-between z-40">
             <span>Class: sticky top-0 | Height: 76px</span>
             <span>Padding: py-4 px-120 | Border-B: 1px</span>
           </div>
@@ -808,52 +811,49 @@ export default function Home() {
         }}
       >
         {/* HERO SECTION */}
-        <section id="hero" className="w-full px-[120px] pt-[40px] pb-[24px] relative flex justify-center">
+        <section id="hero" className="w-full px-[var(--side-padding)] pt-[40px] pb-[24px] relative flex justify-center">
         <div 
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '2fr 1fr',
-            gap: '32px',
-            width: '100%'
-          }}
-          className="items-center"
+          className="grid grid-cols-1 md:grid-cols-5 xl:grid-cols-3 gap-8 w-full items-center max-w-[1440px]"
         >
           
           {/* Left Column: Portrait & Text content */}
           <div 
-            className="flex flex-row items-center w-full"
+            className="md:col-span-3 xl:col-span-2 flex flex-col md:flex-row items-center gap-6 md:gap-[24px] w-full text-center md:text-left"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'var(--Spacing-xl, 24px)',
               flexShrink: 1
             }}
           >
             {/* Portrait Image */}
-            <div className="relative w-[282px] h-[338px] flex-shrink-0 aspect-[136/163]">
+            <div className="relative w-24 h-24 md:w-[282px] md:h-[338px] flex-shrink-0 rounded-full md:rounded-none overflow-hidden md:overflow-visible aspect-square md:aspect-[136/163] mx-auto md:mx-0">
               <Image
                 src="/images/KT_profilie.png"
                 alt={lang === "vi" ? "Chân dung Nguyễn Khánh Trường" : "Nguyen Khanh Truong portrait"}
                 fill
                 priority
-                className="object-contain"
-                sizes="282px"
+                className="object-cover md:object-contain"
+                sizes="(max-width: 768px) 96px, 282px"
               />
             </div>
 
             {/* Biography & Tagline */}
-            <div className="flex flex-col gap-4 text-center sm:text-left">
-              <h1 className="text-[34px] font-bold font-serif leading-[51px] text-white">
+            <div className="flex flex-col gap-4 text-center md:text-left w-full">
+              <h1 
+                style={{
+                  fontSize: 'var(--font-size-hero-title)',
+                  lineHeight: '1.4'
+                }}
+                className="font-bold font-serif text-white"
+              >
                 {translations[lang].name}
               </h1>
               <h2 
                 style={{
                   color: 'var(--Colors-Secondary-300, #E8C468)',
                   fontFamily: 'Fraunces, serif',
-                  fontSize: '20px',
+                  fontSize: 'var(--font-size-hero-subhead)',
                   fontStyle: 'normal',
                   fontWeight: 700,
-                  lineHeight: '30px'
+                  lineHeight: '1.5'
                 }}
               >
                 {translations[lang].heroSubheading}
@@ -862,20 +862,21 @@ export default function Home() {
                 style={{ 
                   color: 'var(--Colors-Neutral-500, #989898)',
                   fontFamily: '"Be Vietnam Pro", sans-serif',
-                  fontSize: '14px',
+                  fontSize: 'var(--font-size-body)',
                   fontWeight: 400,
-                  lineHeight: '18px',
-                  width: '388px'
+                  lineHeight: '1.5',
+                  width: '100%',
+                  alignSelf: 'stretch'
                 }}
               >
                 {translations[lang].heroParagraph}
               </p>
               
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3.5 pt-3">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center sm:justify-start gap-3.5 pt-3 w-full sm:w-auto">
                 <button
                   onClick={() => setContactModalOpen(true)}
-                  className="bg-brand-accent hover:bg-[#27b378] text-[#17211B] font-bold text-[14px] rounded-full transition-all duration-150 active:scale-[0.97] cta-btn"
+                  className="w-full sm:w-auto px-6 py-3 text-center bg-brand-accent hover:bg-[#27b378] text-[#17211B] font-bold text-[14px] rounded-full transition-all duration-150 active:scale-[0.97] cta-btn"
                 >
                   {translations[lang].emailMe}
                 </button>
@@ -883,7 +884,7 @@ export default function Home() {
                   href={lang === "vi" ? "/CV_NguyenKhanhTruong_2026.pdf" : "/CV_NguyenKhanhTruong_EN_2026.pdf"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center border border-white/60 hover:bg-white/10 text-white font-bold text-[14px] rounded-full transition-all duration-150 active:scale-[0.97] cta-btn"
+                  className="w-full sm:w-auto px-6 py-3 text-center inline-flex items-center justify-center border border-white/60 hover:bg-white/10 text-white font-bold text-[14px] rounded-full transition-all duration-150 active:scale-[0.97] cta-btn"
                 >
                   {translations[lang].viewResume}
                 </a>
@@ -892,7 +893,7 @@ export default function Home() {
           </div>
 
           {/* Right Column: Client Logos (Aligned with heading, padding adjusted, initials badge removed) */}
-          <div className="w-full relative flex flex-col gap-6 py-6 pl-0 pr-2">
+          <div className="md:col-span-2 xl:col-span-1 w-full relative flex flex-col gap-6 py-6 pl-0 pr-2">
             <div className="flex items-center">
               <span 
                 style={{
@@ -985,7 +986,7 @@ export default function Home() {
                 {/* Top Row: Indicators and Logos */}
                 <div className="w-full flex items-center justify-between z-10">
                   <div className="flex items-center gap-3">
-                    <span className="app-chip text-[10px] font-bold bg-brand-accent/15 text-neutral-100 border border-brand-accent/10">
+                    <span className="app-chip featured-chip text-[10px] font-bold">
                       {translations[lang].featuredBadge}
                     </span>
                     <span className="app-chip text-[10px] font-bold bg-[#1E1E20] text-neutral-100 border border-neutral-800">
@@ -1006,11 +1007,10 @@ export default function Home() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
-                    gap: '12px',
                     alignSelf: 'stretch',
                     width: '100%'
                   }}
-                  className="z-10 mt-4 mb-4"
+                  className="z-10 mt-4"
                 >
                   <h3 
                     style={{ alignSelf: 'stretch', width: '100%' }}
@@ -1083,7 +1083,7 @@ export default function Home() {
                   {/* Top Row: Indicators and Logo */}
                   <div className="w-full flex items-center justify-between z-10">
                     <div className="flex items-center gap-2">
-                      <span className="app-chip text-[9px] font-bold bg-brand-accent/15 text-neutral-100 border border-brand-accent/10">
+                      <span className="app-chip featured-chip text-[9px] font-bold">
                         {translations[lang].featuredBadge}
                       </span>
                       <span className="app-chip text-[9px] font-bold bg-[#1E1E20] text-neutral-100 border border-neutral-800">
@@ -1253,7 +1253,7 @@ export default function Home() {
                         <span className="text-[10px] font-sans font-medium uppercase tracking-wider text-neutral-400">
                           {proj.tags.join(" · ")}
                         </span>
-                        <h4 className="text-[18px] font-serif font-bold text-white group-hover:text-brand-accent transition-colors duration-150 leading-snug">
+                        <h4 className="text-[18px] font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-150 leading-snug">
                           {proj.title}
                         </h4>
                         <p className="text-[13px] font-sans text-neutral-400 font-normal leading-normal mt-0.5">
@@ -1555,9 +1555,11 @@ export default function Home() {
 
       {/* CONTACT DIALOG */}
       <div 
+        className="contact-dialog-container"
         style={{
           position: 'fixed',
           inset: 0,
+          height: '100dvh',
           zIndex: 30,
           pointerEvents: contactModalOpen ? 'auto' : 'none',
           display: 'flex',
@@ -1570,6 +1572,7 @@ export default function Home() {
         {/* Backdrop overlay */}
         <div 
           onClick={() => setContactModalOpen(false)}
+          className="contact-dialog-backdrop"
           style={{
             position: 'absolute',
             inset: 0,
@@ -1582,6 +1585,7 @@ export default function Home() {
 
         {/* Dialog Panel */}
         <div 
+          className="contact-dialog-panel"
           style={{
             position: 'relative',
             width: '100%',
