@@ -977,7 +977,6 @@ export default function AboutPage() {
                   onClick={() => setHoveredStep(hoveredStep === index ? null : index)}
                   style={{
                     padding: '24px',
-                    borderRadius: '12px',
                     backgroundColor: isHovered 
                       ? (hasBorder ? '#161617' : '#1e2f25')
                       : (hasBorder ? '#0B0B0C' : '#17211B'),

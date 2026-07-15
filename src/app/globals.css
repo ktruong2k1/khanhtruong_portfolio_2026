@@ -80,6 +80,13 @@
   --Radius-Round: 9999px;
   --background: var(--Colors-Neutral-1000, #0B0B0C);
   --foreground: #FFFFFF;
+
+  /* Desktop Typography Defaults */
+  --font-size-hero-title: 34px;
+  --font-size-hero-subhead: 20px;
+  --font-size-project-title: 24px;
+  --font-size-sidebar-title: 18px;
+  --font-size-body: 14px;
 }
 
 .dark {
@@ -568,6 +575,53 @@ header {
     p, .text-sm, .text-base {
       font-size: var(--font-size-body) !important;
     }
+  }
+}
+
+/* Responsive border-radius for about-process-card cluster */
+@media (max-width: 767px) {
+  .about-process-grid .about-process-card {
+    border-radius: 0px !important;
+  }
+  .about-process-grid .about-process-card:first-child {
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+  }
+  .about-process-grid .about-process-card:last-child {
+    border-bottom-left-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .about-process-grid .about-process-card {
+    border-radius: 0px !important;
+  }
+  .about-process-grid .about-process-card:nth-child(1) {
+    border-top-left-radius: 12px !important;
+  }
+  .about-process-grid .about-process-card:nth-child(2) {
+    border-top-right-radius: 12px !important;
+  }
+  .about-process-grid .about-process-card:nth-child(3) {
+    border-bottom-left-radius: 12px !important;
+  }
+  .about-process-grid .about-process-card:nth-child(4) {
+    border-bottom-right-radius: 12px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-process-grid .about-process-card {
+    border-radius: 0px !important;
+  }
+  .about-process-grid .about-process-card:first-child {
+    border-top-left-radius: 12px !important;
+    border-bottom-left-radius: 12px !important;
+  }
+  .about-process-grid .about-process-card:last-child {
+    border-top-right-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
   }
 }
 
