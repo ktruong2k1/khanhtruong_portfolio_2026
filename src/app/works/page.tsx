@@ -552,10 +552,8 @@ export default function WorksPage() {
             </div>
 
             {/* Details area (Right) */}
-            <a 
-              href="https://rogo-dashboard-web-v2.vercel.app/login"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link 
+              href="/works/rogo-dashboard"
               className="flex flex-col md:flex-row gap-6 w-full items-start flex-1 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-xl cursor-pointer group block"
             >
               {/* Content Block */}
@@ -602,7 +600,7 @@ export default function WorksPage() {
                   priority
                 />
               </div>
-            </a>
+            </Link>
           </div>
 
           {/* Connector Dot & Line 1 */}

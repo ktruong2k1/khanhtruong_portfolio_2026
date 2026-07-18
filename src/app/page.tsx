@@ -920,10 +920,8 @@ export default function Home() {
             
             {/* Project 1: Hero Project (Rogo IoT Platform Box - 2:1 ratio, filling left column) */}
             {featuredProjects[0] && (
-              <a 
-                href="https://rogo-dashboard-web-v2.vercel.app/login"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link 
+                href="/works/rogo-dashboard"
                 className="relative group block border border-neutral-900 hover:border-brand-accent rounded-xl bg-[#12141c] overflow-hidden transition-all duration-200 hover:-translate-y-1"
                 style={{
                   display: 'flex',
@@ -1001,7 +999,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </a>
+              </Link>
             )}
 
             {/* Row holding Cards 2 and 3 */}

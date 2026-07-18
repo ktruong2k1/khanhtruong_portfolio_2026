@@ -829,10 +829,8 @@ export default function AboutPage() {
 
           <div className="about-work-grid w-full">
             {/* Card 1: Rogo IoT Platform */}
-            <a 
-              href="https://rogo-dashboard-web-v2.vercel.app/login"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link 
+              href="/works/rogo-dashboard"
               className="flex flex-col gap-4 p-3 border border-transparent rounded-2xl hover:border-[#2ECC8A] hover:bg-neutral-900/10 transition-all duration-300 cursor-pointer group block text-left"
             >
               <div 
@@ -849,7 +847,7 @@ export default function AboutPage() {
                 <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                   {t.rogoPlatformTitle}
                 </h3>
-                <ArrowUpRight size={18} className="text-brand-accent" />
+                <ArrowUpRight size={18} className="text-brand-accent animate-pulse" />
               </div>
               <div className="flex flex-wrap gap-2">
                 {["PaaS", "B2B", "Dashboard", "Whitelabel"].map((tag, idx) => (
@@ -861,7 +859,7 @@ export default function AboutPage() {
               <p className="text-neutral-400 text-sm leading-relaxed flex-1">
                 {t.rogoPlatformDesc}
               </p>
-            </a>
+            </Link>
 
             {/* Card 2: RaIO Smart */}
             <Link 
