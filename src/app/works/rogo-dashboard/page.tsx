@@ -550,8 +550,8 @@ export default function RogoDashboardPage() {
               <p style={{ width: "100%", display: "block" }} className="md:pl-6 md:border-l border-neutral-800 text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.roleRight}</p>
             </div>
 
-            {/* 5 columns of roles in container */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 p-6 rounded-2xl border border-neutral-850 bg-[#0c1410]">
+            {/* List of role items styled as individual cards matching user specifications */}
+            <div className="flex flex-col gap-6 w-full">
               {[
                 { title: t.roleCol1Title, desc: t.roleCol1Desc },
                 { title: t.roleCol2Title, desc: t.roleCol2Desc },
@@ -559,9 +559,34 @@ export default function RogoDashboardPage() {
                 { title: t.roleCol4Title, desc: t.roleCol4Desc },
                 { title: t.roleCol5Title, desc: t.roleCol5Desc },
               ].map((item, idx) => (
-                <div key={idx} className="flex flex-col gap-2 w-full">
-                  <h4 style={{ width: "100%", display: "block" }} className="font-bold text-secondary-300 text-sm tracking-wide">{item.title}</h4>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{item.desc}</p>
+                <div 
+                  key={idx} 
+                  className="flex flex-col bg-[#0c1410] border border-neutral-850 rounded-2xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch"
+                >
+                  <h4 
+                    style={{
+                      color: "var(--color-secondary-300)",
+                      fontFamily: "Fraunces",
+                      fontSize: "24px",
+                      fontWeight: 700,
+                      lineHeight: "36px"
+                    }}
+                    className="w-full text-left"
+                  >
+                    {item.title}
+                  </h4>
+                  <p 
+                    style={{
+                      color: "#989898",
+                      fontFamily: "Be Vietnam Pro",
+                      fontSize: "14px",
+                      fontWeight: 400,
+                      lineHeight: "18px"
+                    }}
+                    className="w-full text-left"
+                  >
+                    {item.desc}
+                  </p>
                 </div>
               ))}
             </div>
