@@ -211,6 +211,7 @@ export default function RogoDashboardPage() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [contactMessage, setContactMessage] = useState("");
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
+  const [activeFlow, setActiveFlow] = useState<number>(0);
 
   // Load language settings from localStorage if available
   useEffect(() => {
@@ -265,6 +266,12 @@ export default function RogoDashboardPage() {
       </div>
     );
   };
+
+  const flows = [
+    { title: t.flow1Title, desc: t.flow1Desc, img: "/images/rogo_project/Diagram 3.png", index: 0 },
+    { title: t.flow2Title, desc: t.flow2Desc, img: "/images/rogo_project/Diagram 4.png", index: 1 },
+    { title: t.flow3Title, desc: t.flow3Desc, img: "/images/rogo_project/Diagram 5.png", index: 2 }
+  ];
 
   return (
     <>
@@ -605,44 +612,40 @@ export default function RogoDashboardPage() {
           </section>
 
           {/* SECTION 04: EXPERIENCE ARCHITECTURE */}
-          <section className="flex flex-col gap-6 w-full">
+          <section className="flex flex-col gap-6 w-full" onMouseLeave={() => setActiveFlow(0)}>
             {renderSectionTitle("04", t.archTitle)}
             <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mb-4">{t.archDesc}</p>
 
-            {/* List of 3 flows stacked vertically, text and diagram side-by-side on desktop */}
-            <div className="flex flex-col gap-8 w-full">
-              {[
-                { title: t.flow1Title, desc: t.flow1Desc, img: "/images/rogo_project/Diagram 3.png" },
-                { title: t.flow2Title, desc: t.flow2Desc, img: "/images/rogo_project/Diagram 4.png" },
-                { title: t.flow3Title, desc: t.flow3Desc, img: "/images/rogo_project/Diagram 5.png" }
-              ].map((flow, index) => (
-                <div 
-                  key={index} 
-                  className="flex flex-col md:flex-row bg-[#0e1713] rounded-2xl w-full p-6 md:py-6 md:px-10 items-start gap-5 self-stretch"
-                >
-                  {/* Left Column: Text (justify flex to left) */}
-                  <div className="flex flex-col gap-3 flex-1 justify-start">
-                    <h3 style={{ width: "100%", display: "block" }} className="font-serif text-lg font-bold text-secondary-300">{flow.title}</h3>
-                    <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{flow.desc}</p>
-                  </div>
-
-                  {/* Right Column: Image Box (800x360px on desktop, without wrapper background/padding/zoom buttons) */}
-                  <div className="w-full md:w-[800px] md:h-[360px] flex-shrink-0 mt-4 md:mt-0">
+            {/* Accordion Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-stretch w-full">
+              {/* Left Expanded Card */}
+              <div 
+                className="md:col-span-3 flex flex-col bg-[#0e1713] rounded-2xl border border-neutral-800 p-6 md:py-8 md:px-10 items-start justify-start gap-4 transition-all duration-300 ease-in-out min-h-[500px]"
+              >
+                <div key={activeFlow} className="animate-fadeIn w-full flex flex-col gap-4">
+                  <h3 style={{ width: "100%", display: "block" }} className="font-serif text-[22px] font-bold text-secondary-300">
+                    {flows[activeFlow].title}
+                  </h3>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">
+                    {flows[activeFlow].desc}
+                  </p>
+                  <div className="w-full flex justify-center mt-4">
                     <div 
-                      className="relative w-full h-full min-h-[240px] md:min-h-0 aspect-[800/360] md:aspect-auto group cursor-zoom-in overflow-hidden"
-                      onClick={() => setLightboxImg(flow.img)}
+                      className="relative w-full aspect-[800/360] md:h-[360px] md:w-auto md:aspect-[800/360] group cursor-zoom-in overflow-hidden rounded-[12px] bg-transparent flex-shrink-0"
+                      onClick={() => setLightboxImg(flows[activeFlow].img)}
                     >
                       <Image 
-                        src={flow.img}
-                        alt={flow.title}
+                        src={flows[activeFlow].img}
+                        alt={flows[activeFlow].title}
                         fill
                         className="object-contain"
+                        sizes="(max-width: 768px) 100vw, 800px"
                       />
                       <button 
                         className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setLightboxImg(flow.img);
+                          setLightboxImg(flows[activeFlow].img);
                         }}
                       >
                         <img src="/images/rogo_project/Zoom_light.svg" alt="Zoom" className="w-6 h-6" />
@@ -650,7 +653,25 @@ export default function RogoDashboardPage() {
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
+
+              {/* Right Collapsed Stack */}
+              <div className="md:col-span-1 flex flex-col gap-6 justify-between items-stretch h-full min-h-[200px] md:min-h-0">
+                {flows.map((item) => (
+                  item.index !== activeFlow && (
+                    <div 
+                      key={item.index}
+                      onMouseEnter={() => setActiveFlow(item.index)}
+                      onClick={() => setActiveFlow(item.index)}
+                      className="flex-1 flex flex-col bg-[#0e1713] rounded-2xl border border-neutral-800 p-6 md:py-6 md:px-8 items-start justify-start cursor-pointer hover:border-neutral-700 transition-all duration-300 ease-in-out select-none min-h-[120px] md:min-h-0"
+                    >
+                      <h3 style={{ width: "100%", display: "block" }} className="font-serif text-lg font-bold text-secondary-300">
+                        {item.title}
+                      </h3>
+                    </div>
+                  )
+                ))}
+              </div>
             </div>
           </section>
 
