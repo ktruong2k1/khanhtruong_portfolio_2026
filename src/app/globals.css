@@ -670,6 +670,10 @@ header {
   animation: smartReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+.animate-smartRevealSlow {
+  animation: smartReveal 1.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .animation-delay-100 {
   animation-delay: 130ms;
 }
