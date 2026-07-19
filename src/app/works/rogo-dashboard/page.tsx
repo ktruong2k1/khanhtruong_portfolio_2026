@@ -641,20 +641,9 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Decision 1 */}
-            <div className="flex flex-col gap-6 p-6 rounded-2xl border border-neutral-800 bg-[#0B0B0C]">
+            <div className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch">
               <h3 className="font-serif text-lg font-bold text-secondary-300">{t.dec1Title}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-red-400 tracking-wider">Old Sidenav</span>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec1Left}</p>
-                </div>
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-primary-300 tracking-wider">New Sidenav</span>
-                  <p className="text-primary-300 font-semibold text-xs leading-relaxed mt-1">{t.dec1RightTitle}</p>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec1RightDesc}</p>
-                </div>
-              </div>
-              <div className="flex justify-center w-full mt-4">
+              <div className="flex justify-center w-full mt-2">
                 <div 
                   className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
@@ -670,21 +659,9 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Decision 2 */}
-            <div className="flex flex-col gap-6 p-6 rounded-2xl border border-neutral-800 bg-[#0B0B0C]">
+            <div className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch">
               <h3 className="font-serif text-lg font-bold text-secondary-300">{t.dec2Title}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
-                <div>
-                  <span className="text-primary-400 font-bold text-xs tracking-wider">01/</span>
-                  <h4 className="font-serif text-base font-bold text-white mt-1">{t.dec2Sub1Title}</h4>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec2Sub1Desc}</p>
-                </div>
-                <div>
-                  <span className="text-primary-400 font-bold text-xs tracking-wider">02/</span>
-                  <h4 className="font-serif text-base font-bold text-white mt-1">{t.dec2Sub2Title}</h4>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec2Sub2Desc}</p>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full mt-4">
+              <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full mt-2">
                 <div 
                   className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 7.png")}
@@ -711,19 +688,9 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Decision 3 */}
-            <div className="flex flex-col gap-6 p-6 rounded-2xl border border-neutral-800 bg-[#0B0B0C]">
+            <div className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch">
               <h3 className="font-serif text-lg font-bold text-secondary-300">{t.dec3Title}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
-                <div>
-                  <h4 className="font-serif text-base font-bold text-white">{t.dec3Row1Title}</h4>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec3Row1Desc}</p>
-                </div>
-                <div>
-                  <h4 className="font-serif text-base font-bold text-white">{t.dec3Row2Title}</h4>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec3Row2Desc}</p>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full mt-4">
+              <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full mt-2">
                 <div 
                   className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
