@@ -550,8 +550,8 @@ export default function RogoDashboardPage() {
               <p style={{ width: "100%", display: "block" }} className="md:pl-6 md:border-l border-neutral-800 text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.roleRight}</p>
             </div>
 
-            {/* List of role items styled as individual cards matching user specifications */}
-            <div className="flex flex-col gap-6 w-full">
+            {/* List of role items styled as individual cards in a horizontal grid on desktop */}
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 w-full">
               {[
                 { title: t.roleCol1Title, desc: t.roleCol1Desc },
                 { title: t.roleCol2Title, desc: t.roleCol2Desc },
