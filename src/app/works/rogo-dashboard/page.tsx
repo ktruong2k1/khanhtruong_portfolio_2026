@@ -733,16 +733,16 @@ export default function RogoDashboardPage() {
               <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
                 <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen1Title}</h4>
                 <div 
-                  className="relative w-full aspect-[426/284] overflow-hidden group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Video 1 .gif")}
+                  className="relative w-full aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Video 1.mp4")}
                 >
-                  <Image 
-                    src="/images/rogo_project/Video 1 .gif"
-                    alt={t.screen1Title}
-                    fill
-                    className="object-contain"
-                    unoptimized={true}
-                    sizes="(max-width: 768px) 100vw, 600px"
+                  <video 
+                    src="/images/rogo_project/Video 1.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-contain rounded-[12px]"
                   />
                 </div>
               </div>
@@ -944,11 +944,23 @@ export default function RogoDashboardPage() {
               <X size={24} />
             </button>
             <div className="relative w-full h-full max-w-[90%] max-h-[90%] flex items-center justify-center">
-              <img 
-                src={lightboxImg}
-                alt="Enlarged Diagram View"
-                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl animate-zoomIn"
-              />
+              {lightboxImg.endsWith('.mp4') ? (
+                <video 
+                  src={lightboxImg}
+                  controls
+                  autoPlay
+                  loop
+                  muted
+                  className="max-w-full max-h-full object-contain rounded-lg shadow-2xl animate-zoomIn"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              ) : (
+                <img 
+                  src={lightboxImg}
+                  alt="Enlarged Diagram View"
+                  className="max-w-full max-h-full object-contain rounded-lg shadow-2xl animate-zoomIn"
+                />
+              )}
             </div>
           </div>
         )}
