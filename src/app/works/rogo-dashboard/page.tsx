@@ -571,7 +571,7 @@ export default function RogoDashboardPage() {
                       fontWeight: 700,
                       lineHeight: "36px"
                     }}
-                    className="w-full text-left"
+                    className="w-full text-left md:min-h-[72px]"
                   >
                     {item.title}
                   </h4>
