@@ -413,17 +413,32 @@ export default function RogoDashboardPage() {
           )}
         </header>
 
+        {/* PROJECT BANNER IMAGE */}
+        <div className="w-full h-[360px] relative overflow-hidden bg-neutral-950">
+          <Image 
+            src="/images/rogo_project/Rogo IoT_Large.png"
+            alt="Rogo IoT Platform Project Banner"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+
         {/* MAIN CONTAINER */}
         <main className="w-full flex flex-col px-4 md:px-[120px] py-12 gap-20 max-w-[1440px] mx-auto">
           
+          {/* BACK TO WORKS LINK */}
+          <div className="w-full flex justify-start -mb-12">
+            <Link href="/works" className="inline-flex items-center gap-2 text-primary-300 hover:text-primary-400 font-semibold text-sm transition-colors group">
+              <ArrowLeft size={16} className="transform group-hover:-translate-x-1 transition-transform" />
+              {t.backToWorks}
+            </Link>
+          </div>
+
           {/* HEADER SECTION (TITLE + INFO CARD) */}
-          <section className="flex flex-col md:flex-row justify-between items-start gap-8 w-full">
+          <section className="flex flex-col md:flex-row justify-between items-start gap-12 w-full">
             {/* Title Block */}
-            <div className="flex flex-col gap-6 md:w-3/5">
-              <Link href="/works" className="inline-flex items-center gap-2 text-primary-300 hover:text-primary-400 font-semibold text-sm transition-colors group">
-                <ArrowLeft size={16} className="transform group-hover:-translate-x-1 transition-transform" />
-                {t.backToWorks}
-              </Link>
+            <div className="flex flex-col gap-6 w-full md:w-1/2">
               <div className="flex items-center gap-3">
                 <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded border border-primary-400 text-primary-300">FEATURED</span>
                 <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded border border-neutral-700 text-neutral-400">PAAS • B2B</span>
@@ -452,17 +467,15 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Project metadata Card */}
-            <div className="w-full md:w-[350px] p-6 rounded-2xl border border-neutral-800 bg-[#0d1712] flex flex-col gap-6 self-stretch">
+            <div className="w-full md:w-1/2 p-6 rounded-2xl border border-neutral-800 bg-[#0d1712] flex flex-col gap-6">
               <div>
                 <span className="text-primary-400 font-bold text-xs tracking-wider block mb-2">{t.role}</span>
-                <p className="text-white text-base font-medium">Lead Product Designer & Frontend Developer</p>
+                <p className="text-white text-[14px] leading-[18px] font-medium">Lead Product Designer & Frontend Developer</p>
               </div>
-              <div className="w-full h-px bg-neutral-800" />
               <div>
                 <span className="text-primary-400 font-bold text-xs tracking-wider block mb-2">{t.timeline}</span>
-                <p className="text-white text-base font-medium">April 2026 — June 2026 (4 Months)</p>
+                <p className="text-white text-[14px] leading-[18px] font-medium">April 2026 — June 2026 (4 Months)</p>
               </div>
-              <div className="w-full h-px bg-neutral-800" />
               <div>
                 <span className="text-primary-400 font-bold text-xs tracking-wider block mb-2">{t.toolsTech}</span>
                 <div className="flex flex-wrap gap-2 mt-2">
