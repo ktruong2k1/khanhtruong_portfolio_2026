@@ -642,7 +642,7 @@ export default function RogoDashboardPage() {
                         key={item.index}
                         onMouseEnter={() => setActiveFlow(item.index)}
                         onClick={() => setActiveFlow(item.index)}
-                        className="flex flex-row items-center p-6 gap-5 self-stretch rounded-xl bg-primary-1000 select-none cursor-pointer w-full transition-all duration-200"
+                        className="flex flex-row items-center p-6 gap-5 self-stretch rounded-xl bg-primary-1000 select-none cursor-pointer w-full transition-all duration-[260ms]"
                       >
                         <div className="w-[3px] h-[24px] bg-primary-400 rounded-full flex-shrink-0" />
                         <h3 className="font-serif text-lg font-bold text-secondary-300">
@@ -656,7 +656,7 @@ export default function RogoDashboardPage() {
                         key={item.index}
                         onMouseEnter={() => setActiveFlow(item.index)}
                         onClick={() => setActiveFlow(item.index)}
-                        className="flex flex-col items-start p-6 gap-5 self-stretch select-none cursor-pointer w-full transition-all duration-200 bg-transparent"
+                        className="flex flex-col items-start p-6 gap-5 self-stretch select-none cursor-pointer w-full transition-all duration-[260ms] bg-transparent"
                       >
                         <h3 className="font-serif text-lg font-bold text-neutral-400 hover:text-neutral-200 transition-colors">
                           {item.title}
@@ -669,7 +669,7 @@ export default function RogoDashboardPage() {
 
               {/* Right Content Card Column */}
               <div 
-                className="md:col-span-3 flex flex-col bg-[#0e1713] rounded-2xl p-6 md:p-10 items-start justify-start gap-4 transition-all duration-300 ease-in-out min-h-[500px] w-full"
+                className="md:col-span-3 flex flex-col bg-[#0e1713] rounded-2xl p-6 md:p-10 items-start justify-start gap-4 transition-all duration-[400ms] ease-in-out min-h-[500px] w-full"
               >
                 <div key={activeFlow} className="w-full flex flex-col gap-4">
                   <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left animate-smartReveal">
@@ -684,7 +684,7 @@ export default function RogoDashboardPage() {
                         src={flows[activeFlow].img}
                         alt={flows[activeFlow].title}
                         fill
-                        className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                        className="object-contain transition-transform duration-[650ms] hover:scale-[1.03]"
                         sizes="(max-width: 768px) 100vw, 800px"
                       />
                       <button 
@@ -712,7 +712,7 @@ export default function RogoDashboardPage() {
 
             {/* Decision 1 */}
             <div 
-              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-300 ease-in-out cursor-pointer"
+              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[400ms] ease-in-out cursor-pointer"
               onMouseEnter={() => setHoveredDecision(1)}
               onMouseLeave={() => setHoveredDecision(null)}
             >
@@ -727,7 +727,7 @@ export default function RogoDashboardPage() {
                       src="/images/rogo_project/Diagram 6-1.png"
                       alt="One Panel Replacing Many Pages"
                       fill
-                      className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                      className="object-contain transition-transform duration-[650ms] hover:scale-[1.03]"
                       sizes="(max-width: 768px) 100vw, 1160px"
                     />
                     <button 
@@ -746,7 +746,7 @@ export default function RogoDashboardPage() {
 
             {/* Decision 2 */}
             <div 
-              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-300 ease-in-out cursor-pointer"
+              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[400ms] ease-in-out cursor-pointer"
               onMouseEnter={() => setHoveredDecision(2)}
               onMouseLeave={() => setHoveredDecision(null)}
             >
@@ -762,15 +762,15 @@ export default function RogoDashboardPage() {
                         src="/images/rogo_project/Diagram 7.png"
                         alt="New Partner Switcher"
                         fill
-                        className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                        className="object-contain transition-transform duration-[650ms] hover:scale-[1.03]"
                         sizes="(max-width: 768px) 100vw, 800px"
                       />
                       <button 
                         className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setLightboxImg("/images/rogo_project/Diagram 7.png");
-                        }}
+                          setLightboxImg("/images/rogo_project/Diagram 7.png")}
+                        }
                       >
                         <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
                       </button>
@@ -783,7 +783,7 @@ export default function RogoDashboardPage() {
                         src="/images/rogo_project/Diagram 8.png"
                         alt="Branding Settings Module"
                         fill
-                        className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                        className="object-contain transition-transform duration-[650ms] hover:scale-[1.03]"
                         sizes="(max-width: 768px) 100vw, 800px"
                       />
                       <button 
@@ -803,7 +803,7 @@ export default function RogoDashboardPage() {
 
             {/* Decision 3 */}
             <div 
-              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-300 ease-in-out cursor-pointer"
+              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[400ms] ease-in-out cursor-pointer"
               onMouseEnter={() => setHoveredDecision(3)}
               onMouseLeave={() => setHoveredDecision(null)}
             >
@@ -818,7 +818,7 @@ export default function RogoDashboardPage() {
                       src="/images/rogo_project/Diagram 9.png"
                       alt="Permissions Scope"
                       fill
-                      className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                      className="object-contain transition-transform duration-[650ms] hover:scale-[1.03]"
                       sizes="(max-width: 768px) 100vw, 1160px"
                     />
                     <button 
@@ -839,7 +839,7 @@ export default function RogoDashboardPage() {
                       src="/images/rogo_project/Diagram 10.png"
                       alt="Permissions Dialogs"
                       fill
-                      className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                      className="object-contain transition-transform duration-[650ms] hover:scale-[1.03]"
                       sizes="(max-width: 768px) 100vw, 1160px"
                     />
                     <button 

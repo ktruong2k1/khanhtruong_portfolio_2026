@@ -667,14 +667,14 @@ header {
 }
 
 .animate-smartReveal {
-  animation: smartReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: smartReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animation-delay-100 {
-  animation-delay: 100ms;
+  animation-delay: 130ms;
 }
 
 .animation-delay-200 {
-  animation-delay: 200ms;
+  animation-delay: 260ms;
 }
 
