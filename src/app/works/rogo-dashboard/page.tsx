@@ -620,9 +620,9 @@ export default function RogoDashboardPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-stretch w-full">
               {/* Left Expanded Card */}
               <div 
-                className="md:col-span-3 flex flex-col bg-[#0e1713] rounded-2xl border border-neutral-800 p-6 md:py-8 md:px-10 items-start justify-start gap-4 transition-all duration-300 ease-in-out min-h-[500px]"
+                className="md:col-span-3 flex flex-col bg-[#0e1713] rounded-2xl border border-primary-400 p-6 md:py-8 md:px-10 items-start justify-start gap-4 transition-all duration-300 ease-in-out min-h-[500px]"
               >
-                <div key={activeFlow} className="animate-fadeIn w-full flex flex-col gap-4">
+                <div key={activeFlow} className="animate-zoomIn w-full flex flex-col gap-4">
                   <h3 style={{ width: "100%", display: "block" }} className="font-serif text-[22px] font-bold text-secondary-300">
                     {flows[activeFlow].title}
                   </h3>
@@ -638,7 +638,7 @@ export default function RogoDashboardPage() {
                         src={flows[activeFlow].img}
                         alt={flows[activeFlow].title}
                         fill
-                        className="object-contain"
+                        className="object-contain transition-transform duration-500 hover:scale-[1.03]"
                         sizes="(max-width: 768px) 100vw, 800px"
                       />
                       <button 
@@ -663,7 +663,7 @@ export default function RogoDashboardPage() {
                       key={item.index}
                       onMouseEnter={() => setActiveFlow(item.index)}
                       onClick={() => setActiveFlow(item.index)}
-                      className="flex-1 flex flex-col bg-[#0e1713] rounded-2xl border border-neutral-800 p-6 md:py-6 md:px-8 items-start justify-start cursor-pointer hover:border-neutral-700 transition-all duration-300 ease-in-out select-none min-h-[120px] md:min-h-0"
+                      className="flex-1 flex flex-col bg-[#0e1713] rounded-2xl border border-transparent p-6 md:py-6 md:px-8 items-start justify-start cursor-pointer hover:border-primary-400 transition-all duration-300 ease-in-out select-none min-h-[120px] md:min-h-0"
                     >
                       <h3 style={{ width: "100%", display: "block" }} className="font-serif text-lg font-bold text-secondary-300">
                         {item.title}
