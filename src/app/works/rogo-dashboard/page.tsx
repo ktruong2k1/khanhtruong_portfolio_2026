@@ -542,7 +542,7 @@ export default function RogoDashboardPage() {
             {renderSectionTitle("02", t.contextTitle)}
             <div className="flex flex-col md:flex-row gap-8 items-start justify-between w-full">
               {/* Left description */}
-              <div className="flex flex-col justify-between gap-4 py-2 flex-1 w-full text-left md:max-w-[400px]">
+              <div className="flex flex-col justify-between gap-4 py-2 flex-1 w-full text-left">
                 <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.contextDesc}</p>
                 <p className="text-primary-300 font-medium text-base mt-2">{t.contextHighlight}</p>
               </div>
