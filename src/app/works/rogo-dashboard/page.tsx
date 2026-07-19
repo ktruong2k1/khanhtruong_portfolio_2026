@@ -235,6 +235,37 @@ export default function RogoDashboardPage() {
 
   const t = translations[lang];
 
+  const renderSectionTitle = (num: string, text: string) => {
+    // Remove leading numbers/prefixes like "01 Problem" or "02 Context" if they are present in translations
+    const cleanText = text.replace(/^\d+\s+—?\s*/, "").replace(/^\d+\s+/, "");
+    return (
+      <div className="flex items-baseline gap-2 mb-2">
+        <span 
+          style={{
+            color: "#E8C468",
+            fontFamily: "Be Vietnam Pro",
+            fontSize: "16px",
+            fontWeight: 400,
+            lineHeight: "21px"
+          }}
+        >
+          {num}
+        </span>
+        <h2 
+          style={{
+            color: "#FFF",
+            fontFamily: "Fraunces",
+            fontSize: "28px",
+            fontWeight: 700,
+            lineHeight: "42px"
+          }}
+        >
+          {cleanText}
+        </h2>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="page-wrapper text-[#E5E5E5] font-sans relative overflow-x-hidden transition-colors duration-300">
@@ -445,11 +476,9 @@ export default function RogoDashboardPage() {
 
           {/* SECTION 01: THE PROBLEM */}
           <section className="flex flex-col gap-6 w-full">
-            <div className="flex flex-col md:flex-row justify-between gap-6 items-start md:items-center">
-              <h2 className="font-serif text-2xl font-bold text-[#E8C468]">{t.problemTitle}</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-400 text-sm leading-relaxed mb-4">
-              <p>{t.problemDesc}</p>
+            {renderSectionTitle("01", t.problemTitle)}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
+              <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.problemDesc}</p>
               <p className="text-brand-300 font-medium md:pl-6 md:border-l border-neutral-800 text-base">{t.problemHighlight}</p>
             </div>
             
@@ -472,11 +501,11 @@ export default function RogoDashboardPage() {
 
           {/* SECTION 02: CONTEXT */}
           <section className="flex flex-col gap-6 w-full">
-            <h2 className="font-serif text-2xl font-bold text-[#E8C468]">{t.contextTitle}</h2>
+            {renderSectionTitle("02", t.contextTitle)}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
               {/* Left description */}
-              <div className="md:col-span-4 flex flex-col justify-between gap-4 text-neutral-400 text-sm leading-relaxed py-2">
-                <p>{t.contextDesc}</p>
+              <div className="md:col-span-4 flex flex-col justify-between gap-4 py-2">
+                <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.contextDesc}</p>
                 <p className="text-brand-300 font-medium text-base mt-2">{t.contextHighlight}</p>
               </div>
               
@@ -502,10 +531,10 @@ export default function RogoDashboardPage() {
 
           {/* SECTION 03: MY ROLE */}
           <section className="flex flex-col gap-6 w-full">
-            <h2 className="font-serif text-2xl font-bold text-[#E8C468]">{t.roleTitle}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-400 text-sm leading-relaxed mb-4">
-              <p>{t.roleLeft}</p>
-              <p className="md:pl-6 md:border-l border-neutral-800">{t.roleRight}</p>
+            {renderSectionTitle("03", t.roleTitle)}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
+              <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.roleLeft}</p>
+              <p style={{ width: "100%", display: "block" }} className="md:pl-6 md:border-l border-neutral-800 text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.roleRight}</p>
             </div>
 
             {/* 5 columns of roles in container */}
@@ -517,9 +546,9 @@ export default function RogoDashboardPage() {
                 { title: t.roleCol4Title, desc: t.roleCol4Desc },
                 { title: t.roleCol5Title, desc: t.roleCol5Desc },
               ].map((item, idx) => (
-                <div key={idx} className="flex flex-col gap-2">
-                  <h4 className="font-bold text-[#E8C468] text-sm tracking-wide">{item.title}</h4>
-                  <p className="text-neutral-400 text-xs leading-relaxed">{item.desc}</p>
+                <div key={idx} className="flex flex-col gap-2 w-full">
+                  <h4 style={{ width: "100%", display: "block" }} className="font-bold text-[#E8C468] text-sm tracking-wide">{item.title}</h4>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -527,35 +556,38 @@ export default function RogoDashboardPage() {
 
           {/* SECTION 04: EXPERIENCE ARCHITECTURE */}
           <section className="flex flex-col gap-6 w-full">
-            <h2 className="font-serif text-2xl font-bold text-[#E8C468]">{t.archTitle}</h2>
-            <p className="text-neutral-400 text-sm leading-relaxed max-w-2xl mb-4">{t.archDesc}</p>
+            {renderSectionTitle("04", t.archTitle)}
+            <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mb-4">{t.archDesc}</p>
 
-            {/* List of 3 flows */}
-            <div className="flex flex-col gap-6">
+            {/* List of 3 flows stacked vertically, text and diagram side-by-side on desktop */}
+            <div className="flex flex-col gap-8 w-full">
               {[
-                { title: t.flow1Title, desc: t.flow1Desc, img: "/images/rogo_project/Diagram 4.png" },
-                { title: t.flow2Title, desc: t.flow2Desc, img: "/images/rogo_project/Diagram 6.png" },
-                { title: t.flow3Title, desc: t.flow3Desc, img: "/images/rogo_project/Diagram 7.png" }
+                { title: t.flow1Title, desc: t.flow1Desc, img: "/images/rogo_project/Diagram 3.png" },
+                { title: t.flow2Title, desc: t.flow2Desc, img: "/images/rogo_project/Diagram 4.png" },
+                { title: t.flow3Title, desc: t.flow3Desc, img: "/images/rogo_project/Diagram 5.png" }
               ].map((flow, index) => (
-                <div key={index} className="grid grid-cols-1 md:grid-cols-12 gap-8 p-6 rounded-2xl border border-neutral-850 bg-[#0e1713] items-stretch">
-                  <div className="md:col-span-4 flex flex-col justify-center gap-3">
-                    <h3 className="font-serif text-lg font-bold text-[#E8C468]">{flow.title}</h3>
-                    <p className="text-neutral-400 text-xs leading-relaxed">{flow.desc}</p>
+                <div 
+                  key={index} 
+                  className="flex flex-col md:flex-row bg-[#0e1713] rounded-2xl w-full p-6 md:py-6 md:px-10 items-start gap-5 self-stretch"
+                >
+                  {/* Left Column: Text (justify flex to left) */}
+                  <div className="flex flex-col gap-3 flex-1 justify-start">
+                    <h3 style={{ width: "100%", display: "block" }} className="font-serif text-lg font-bold text-[#E8C468]">{flow.title}</h3>
+                    <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{flow.desc}</p>
                   </div>
-                  <div className="md:col-span-8">
+
+                  {/* Right Column: Image Box (800x360px on desktop, without wrapper background/padding/zoom buttons) */}
+                  <div className="w-full md:w-[800px] md:h-[360px] flex-shrink-0 mt-4 md:mt-0">
                     <div 
-                      className="relative w-full h-[280px] rounded-xl overflow-hidden border border-neutral-800 bg-[#e2e8f0] group cursor-zoom-in"
+                      className="relative w-full h-full min-h-[240px] md:min-h-0 aspect-[800/360] md:aspect-auto group cursor-zoom-in overflow-hidden"
                       onClick={() => setLightboxImg(flow.img)}
                     >
                       <Image 
                         src={flow.img}
                         alt={flow.title}
                         fill
-                        className="object-contain p-4"
+                        className="object-contain"
                       />
-                      <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                        <Maximize2 size={16} />
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -566,8 +598,8 @@ export default function RogoDashboardPage() {
           {/* SECTION 05: DESIGN DECISIONS */}
           <section className="flex flex-col gap-8 w-full">
             <div className="flex flex-col gap-3">
-              <h2 className="font-serif text-2xl font-bold text-[#E8C468]">{t.decisionsTitle}</h2>
-              <p className="text-neutral-400 text-sm leading-relaxed max-w-3xl">{t.decisionsDesc}</p>
+              {renderSectionTitle("05", t.decisionsTitle)}
+              <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.decisionsDesc}</p>
             </div>
 
             {/* Decision 1 */}
@@ -592,7 +624,7 @@ export default function RogoDashboardPage() {
                   </div>
                   <div>
                     <span className="text-[10px] uppercase font-bold text-red-400 tracking-wider">Old Sidenav</span>
-                    <p className="text-neutral-400 text-xs leading-relaxed mt-1">{t.dec1Left}</p>
+                    <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec1Left}</p>
                   </div>
                 </div>
 
@@ -615,7 +647,7 @@ export default function RogoDashboardPage() {
                   <div>
                     <span className="text-[10px] uppercase font-bold text-brand-300 tracking-wider">New Sidenav</span>
                     <p className="text-brand-300 font-semibold text-xs leading-relaxed mt-1">{t.dec1RightTitle}</p>
-                    <p className="text-neutral-400 text-xs leading-relaxed mt-1">{t.dec1RightDesc}</p>
+                    <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec1RightDesc}</p>
                   </div>
                 </div>
               </div>
@@ -646,7 +678,7 @@ export default function RogoDashboardPage() {
                 <div className="md:col-span-6 flex flex-col gap-2">
                   <span className="text-brand-400 font-bold text-xs tracking-wider">01/</span>
                   <h4 className="font-serif text-base font-bold text-white">{t.dec2Sub1Title}</h4>
-                  <p className="text-neutral-400 text-xs leading-relaxed">{t.dec2Sub1Desc}</p>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.dec2Sub1Desc}</p>
                 </div>
               </div>
 
@@ -671,7 +703,7 @@ export default function RogoDashboardPage() {
                 <div className="md:col-span-6 flex flex-col gap-2">
                   <span className="text-brand-400 font-bold text-xs tracking-wider">02/</span>
                   <h4 className="font-serif text-base font-bold text-white">{t.dec2Sub2Title}</h4>
-                  <p className="text-neutral-400 text-xs leading-relaxed">{t.dec2Sub2Desc}</p>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.dec2Sub2Desc}</p>
                 </div>
               </div>
             </div>
@@ -708,7 +740,7 @@ export default function RogoDashboardPage() {
                 </div>
                 <div className="md:col-span-5 flex flex-col gap-2">
                   <h4 className="font-serif text-base font-bold text-[#FB3748]">{t.dec3Row1Title}</h4>
-                  <p className="text-neutral-400 text-xs leading-relaxed">{t.dec3Row1Desc}</p>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.dec3Row1Desc}</p>
                 </div>
               </div>
 
@@ -740,7 +772,7 @@ export default function RogoDashboardPage() {
                 </div>
                 <div className="md:col-span-5 flex flex-col gap-2">
                   <h4 className="font-serif text-base font-bold text-[#FB3748]">{t.dec3Row2Title}</h4>
-                  <p className="text-neutral-400 text-xs leading-relaxed">{t.dec3Row2Desc}</p>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.dec3Row2Desc}</p>
                 </div>
               </div>
             </div>
@@ -748,7 +780,7 @@ export default function RogoDashboardPage() {
 
           {/* SECTION 06: KEY SCREENS */}
           <section className="flex flex-col gap-6 w-full">
-            <h2 className="font-serif text-2xl font-bold text-[#E8C468]">{t.screensTitle}</h2>
+            {renderSectionTitle("06", t.screensTitle)}
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Screen 1 */}
@@ -831,8 +863,8 @@ export default function RogoDashboardPage() {
 
           {/* SECTION 07: DESIGN SYSTEM */}
           <section className="flex flex-col gap-6 w-full">
-            <h2 className="font-serif text-2xl font-bold text-[#E8C468]">{t.designSystemTitle}</h2>
-            <p className="text-neutral-400 text-sm leading-relaxed max-w-2xl">{t.designSystemDesc}</p>
+            {renderSectionTitle("07", t.designSystemTitle)}
+            <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left max-w-2xl">{t.designSystemDesc}</p>
 
             <div 
               className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-neutral-800 bg-[#0B0B0C] group cursor-zoom-in"
@@ -852,7 +884,7 @@ export default function RogoDashboardPage() {
 
           {/* SECTION 08: IMPACT */}
           <section className="flex flex-col gap-6 w-full">
-            <h2 className="font-serif text-2xl font-bold text-[#E8C468]">{t.impactTitle}</h2>
+            {renderSectionTitle("08", t.impactTitle)}
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6 rounded-2xl border border-neutral-800 bg-[#0c1410]">
               {[
@@ -861,9 +893,9 @@ export default function RogoDashboardPage() {
                 { title: t.impactCol3Title, desc: t.impactCol3Desc },
                 { title: t.impactCol4Title, desc: t.impactCol4Desc }
               ].map((item, idx) => (
-                <div key={idx} className="flex flex-col gap-2">
-                  <h4 className="font-bold text-[#E8C468] text-sm tracking-wide">{item.title}</h4>
-                  <p className="text-neutral-400 text-xs leading-relaxed">{item.desc}</p>
+                <div key={idx} className="flex flex-col gap-2 w-full">
+                  <h4 style={{ width: "100%", display: "block" }} className="font-bold text-[#E8C468] text-sm tracking-wide">{item.title}</h4>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -871,9 +903,9 @@ export default function RogoDashboardPage() {
 
           {/* SECTION 09: REFLECTION */}
           <section className="flex flex-col gap-6 w-full">
-            <h2 className="font-serif text-2xl font-bold text-[#E8C468]">{t.reflectionTitle}</h2>
+            {renderSectionTitle("09", t.reflectionTitle)}
             
-            <div className="p-8 rounded-2xl border border-neutral-800 bg-[#0d1712] flex flex-col items-center text-center gap-6">
+            <div className="w-full p-8 rounded-2xl border border-neutral-800 bg-[#0d1712] flex flex-col items-center text-center gap-6">
               <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-brand-400">
                 <Image 
                   src="/images/mini_avatar.png"
@@ -882,10 +914,10 @@ export default function RogoDashboardPage() {
                   className="object-cover"
                 />
               </div>
-              <div className="flex flex-col gap-4 max-w-3xl">
-                <p className="text-neutral-400 text-sm leading-relaxed">{t.reflectionDesc}</p>
-                <p className="text-brand-300 font-semibold text-lg leading-relaxed">{t.reflectionHighlight}</p>
-                <p className="text-neutral-400 text-sm leading-relaxed">{t.reflectionBody}</p>
+              <div style={{ width: "100%", maxWidth: "768px" }} className="flex flex-col gap-4">
+                <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-center">{t.reflectionDesc}</p>
+                <p style={{ width: "100%", display: "block" }} className="text-brand-300 font-semibold text-lg leading-relaxed text-center">{t.reflectionHighlight}</p>
+                <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-center">{t.reflectionBody}</p>
               </div>
             </div>
           </section>
@@ -920,7 +952,7 @@ export default function RogoDashboardPage() {
                       <span key={cat} className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-850 text-neutral-400">{cat}</span>
                     ))}
                   </div>
-                  <p className="text-neutral-400 text-xs leading-relaxed mt-1">
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">
                     {lang === "vi" 
                       ? "Được triển khai và quản lý thông qua Rogo Platform như mọi ứng dụng khác trong hệ sinh thái..." 
                       : "Deployed and managed through Rogo Platform like every app in the ecosystem..."}
@@ -948,7 +980,7 @@ export default function RogoDashboardPage() {
                       <span key={cat} className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-850 text-neutral-400">{cat}</span>
                     ))}
                   </div>
-                  <p className="text-neutral-400 text-xs leading-relaxed mt-1">
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">
                     {lang === "vi" 
                       ? "Thương hiệu cửa cuốn hàng đầu Việt Nam, đối tác đầu tiên áp dụng framework RaIO ngoài Rạng Đông..." 
                       : "Vietnam's leading roller shutter brand, and the first partner to adopt the RaIO framework..."}
