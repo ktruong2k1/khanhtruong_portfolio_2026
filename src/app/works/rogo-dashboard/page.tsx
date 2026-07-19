@@ -667,7 +667,7 @@ export default function RogoDashboardPage() {
 
               {/* Right Content Card Column */}
               <div 
-                className="md:col-span-3 flex flex-col bg-[#0e1713] rounded-2xl p-6 md:p-10 items-start justify-start gap-4 transition-all duration-[400ms] ease-in-out min-h-[500px] w-full"
+                className="md:col-span-3 flex flex-col bg-[#0e1713] rounded-2xl p-6 md:p-10 items-start justify-start gap-4 transition-all duration-[400ms] ease-in-out min-h-[500px] w-full md:max-w-[880px]"
               >
                 <div key={activeFlow} className="w-full flex flex-col gap-4">
                   <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left animate-smartReveal">
@@ -675,7 +675,7 @@ export default function RogoDashboardPage() {
                   </p>
                   <div className="w-full flex justify-center mt-4 animate-smartReveal animation-delay-100">
                     <div 
-                      className="relative w-full aspect-[800/360] md:h-[360px] md:w-auto md:aspect-[800/360] group cursor-zoom-in overflow-hidden rounded-[12px] bg-transparent flex-shrink-0"
+                      className="relative w-full aspect-[800/360] md:h-[360px] md:w-[800px] md:aspect-[800/360] group cursor-zoom-in overflow-hidden rounded-[12px] bg-transparent flex-shrink-0"
                       onClick={() => setLightboxImg(flows[activeFlow].img)}
                     >
                       <Image 
