@@ -641,42 +641,9 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Decision 1 */}
-            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch overflow-x-auto max-w-full">
-              <div className="flex-1 w-full text-left md:min-w-[320px]">
-                <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec1Title}</h3>
-              </div>
-              <div className="w-full md:w-auto flex-shrink-0">
-                <div 
-                  className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
-                >
-                  <Image 
-                    src="/images/rogo_project/Diagram 6-1.png"
-                    alt="New Partner Switcher"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Decision 2 */}
-            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch overflow-x-auto max-w-full">
-              <div className="flex-1 w-full text-left md:min-w-[320px]">
-                <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec2Title}</h3>
-              </div>
-              <div className="flex flex-col gap-6 w-full md:w-auto flex-shrink-0">
-                <div 
-                  className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 7.png")}
-                >
-                  <Image 
-                    src="/images/rogo_project/Diagram 7.png"
-                    alt="Navigation Map"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+            <div className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full">
+              <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec1Title}</h3>
+              <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full mt-2">
                 <div 
                   className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 8.png")}
@@ -686,17 +653,9 @@ export default function RogoDashboardPage() {
                     alt="Old Sidenav UI"
                     fill
                     className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 800px"
                   />
                 </div>
-              </div>
-            </div>
-
-            {/* Decision 3 */}
-            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch overflow-x-auto max-w-full">
-              <div className="flex-1 w-full text-left md:min-w-[320px]">
-                <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec3Title}</h3>
-              </div>
-              <div className="flex flex-col gap-6 w-full md:w-auto flex-shrink-0">
                 <div 
                   className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
@@ -706,6 +665,28 @@ export default function RogoDashboardPage() {
                     alt="New Sidenav UI"
                     fill
                     className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 1160px"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Decision 2 */}
+            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch overflow-x-auto max-w-full">
+              <div className="w-full md:w-[320px] md:flex-shrink-0 text-left">
+                <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec2Title}</h3>
+              </div>
+              <div className="flex flex-col gap-6 w-full md:flex-1 md:min-w-0">
+                <div 
+                  className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
+                >
+                  <Image 
+                    src="/images/rogo_project/Diagram 6-1.png"
+                    alt="New Partner Switcher"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 1160px"
                   />
                 </div>
                 <div 
@@ -717,7 +698,69 @@ export default function RogoDashboardPage() {
                     alt="Branding Settings"
                     fill
                     className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 1160px"
                   />
+                </div>
+              </div>
+            </div>
+
+            {/* Decision 3 */}
+            <div className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full">
+              <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec3Title}</h3>
+              <div className="flex flex-col gap-6 w-full mt-2">
+                {/* Row 1 */}
+                <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full">
+                  <div 
+                    className="relative w-full aspect-[1056/699] md:h-[360px] md:w-auto md:aspect-[1056/699] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 11.png")}
+                  >
+                    <Image 
+                      src="/images/rogo_project/Diagram 11.png"
+                      alt="Partner Scope"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 544px"
+                    />
+                  </div>
+                  <div 
+                    className="relative w-full aspect-[1056/699] md:h-[360px] md:w-auto md:aspect-[1056/699] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 12.png")}
+                  >
+                    <Image 
+                      src="/images/rogo_project/Diagram 12.png"
+                      alt="Project Scope"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 544px"
+                    />
+                  </div>
+                </div>
+                {/* Row 2 */}
+                <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full">
+                  <div 
+                    className="relative w-full aspect-[1056/699] md:h-[360px] md:w-auto md:aspect-[1056/699] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 13.png")}
+                  >
+                    <Image 
+                      src="/images/rogo_project/Diagram 13.png"
+                      alt="Partner Dialog"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 544px"
+                    />
+                  </div>
+                  <div 
+                    className="relative w-full aspect-[1056/699] md:h-[360px] md:w-auto md:aspect-[1056/699] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 14.png")}
+                  >
+                    <Image 
+                      src="/images/rogo_project/Diagram 14.png"
+                      alt="Project Dialog"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 544px"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
