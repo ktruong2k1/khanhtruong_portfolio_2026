@@ -273,12 +273,17 @@ export default function RogoDashboardPage() {
   ];
 
   const renderDecisionTitle = (fullTitle: string) => {
-    const parts = fullTitle.split(" — ");
+    let parts = fullTitle.split(" — ");
+    let separator = " — ";
+    if (parts.length < 2) {
+      parts = fullTitle.split(" - ");
+      separator = " - ";
+    }
     if (parts.length >= 2) {
       return (
         <>
           <span className="text-white">{parts[0]}</span>
-          <span className="text-secondary-300"> — {parts[1]}</span>
+          <span className="text-secondary-300">{separator}{parts[1]}</span>
         </>
       );
     }
