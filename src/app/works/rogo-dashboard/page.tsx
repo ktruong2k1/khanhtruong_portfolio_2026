@@ -616,20 +616,42 @@ export default function RogoDashboardPage() {
             {renderSectionTitle("04", t.archTitle)}
             <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mb-4">{t.archDesc}</p>
 
-            {/* Accordion Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-stretch w-full">
-              {/* Left Expanded Card */}
+            {/* Tab Layout (Left Menu / Right Content Card) */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start w-full">
+              {/* Left Tabs Column */}
+              <div className="md:col-span-1 flex flex-col gap-4 w-full">
+                {flows.map((item) => {
+                  const isActive = item.index === activeFlow;
+                  return (
+                    <div 
+                      key={item.index}
+                      onMouseEnter={() => setActiveFlow(item.index)}
+                      onClick={() => setActiveFlow(item.index)}
+                      className={`flex items-center pl-4 py-4 pr-6 select-none cursor-pointer w-full transition-all duration-200 ${
+                        isActive 
+                          ? "bg-[#17211B] border-l-[3px] border-primary-400 rounded-r-xl" 
+                          : "bg-transparent border-l-[3px] border-transparent"
+                      }`}
+                    >
+                      <h3 className={`font-serif text-lg font-bold transition-colors ml-2 ${
+                        isActive ? "text-secondary-300" : "text-neutral-400 hover:text-neutral-200"
+                      }`}>
+                        {item.title}
+                      </h3>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Right Content Card Column */}
               <div 
-                className="md:col-span-3 flex flex-col bg-[#0e1713] rounded-2xl border border-primary-400 p-6 md:py-8 md:px-10 items-start justify-start gap-4 transition-all duration-300 ease-in-out min-h-[500px]"
+                className="md:col-span-3 flex flex-col bg-[#0e1713] rounded-2xl p-6 md:p-10 items-start justify-start gap-4 transition-all duration-300 ease-in-out min-h-[500px] w-full"
               >
                 <div key={activeFlow} className="w-full flex flex-col gap-4">
-                  <h3 style={{ width: "100%", display: "block" }} className="font-serif text-[22px] font-bold text-secondary-300 animate-smartReveal">
-                    {flows[activeFlow].title}
-                  </h3>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left animate-smartReveal animation-delay-100">
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left animate-smartReveal">
                     {flows[activeFlow].desc}
                   </p>
-                  <div className="w-full flex justify-center mt-4 animate-smartReveal animation-delay-200">
+                  <div className="w-full flex justify-center mt-4 animate-smartReveal animation-delay-100">
                     <div 
                       className="relative w-full aspect-[800/360] md:h-[360px] md:w-auto md:aspect-[800/360] group cursor-zoom-in overflow-hidden rounded-[12px] bg-transparent flex-shrink-0"
                       onClick={() => setLightboxImg(flows[activeFlow].img)}
@@ -653,24 +675,6 @@ export default function RogoDashboardPage() {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Right Collapsed Stack */}
-              <div className="md:col-span-1 flex flex-col gap-6 justify-between items-stretch h-full min-h-[200px] md:min-h-0">
-                {flows.map((item) => (
-                  item.index !== activeFlow && (
-                    <div 
-                      key={item.index}
-                      onMouseEnter={() => setActiveFlow(item.index)}
-                      onClick={() => setActiveFlow(item.index)}
-                      className="flex-1 flex flex-col bg-[#0e1713] rounded-2xl border border-transparent p-6 md:py-6 md:px-8 items-start justify-start cursor-pointer hover:border-primary-400 transition-all duration-300 ease-in-out select-none min-h-[120px] md:min-h-0"
-                    >
-                      <h3 style={{ width: "100%", display: "block" }} className="font-serif text-lg font-bold text-secondary-300">
-                        {item.title}
-                      </h3>
-                    </div>
-                  )
-                ))}
               </div>
             </div>
           </section>
