@@ -622,24 +622,34 @@ export default function RogoDashboardPage() {
               <div className="md:col-span-1 flex flex-col gap-4 w-full">
                 {flows.map((item) => {
                   const isActive = item.index === activeFlow;
-                  return (
-                    <div 
-                      key={item.index}
-                      onMouseEnter={() => setActiveFlow(item.index)}
-                      onClick={() => setActiveFlow(item.index)}
-                      className={`flex items-center pl-4 py-4 pr-6 select-none cursor-pointer w-full transition-all duration-200 ${
-                        isActive 
-                          ? "bg-[#17211B] border-l-[3px] border-primary-400 rounded-r-xl" 
-                          : "bg-transparent border-l-[3px] border-transparent"
-                      }`}
-                    >
-                      <h3 className={`font-serif text-lg font-bold transition-colors ml-2 ${
-                        isActive ? "text-secondary-300" : "text-neutral-400 hover:text-neutral-200"
-                      }`}>
-                        {item.title}
-                      </h3>
-                    </div>
-                  );
+                  if (isActive) {
+                    return (
+                      <div 
+                        key={item.index}
+                        onMouseEnter={() => setActiveFlow(item.index)}
+                        onClick={() => setActiveFlow(item.index)}
+                        className="flex flex-row items-center p-6 gap-5 self-stretch rounded-xl bg-primary-1000 select-none cursor-pointer w-full transition-all duration-200"
+                      >
+                        <div className="w-[3px] h-[24px] bg-primary-400 rounded-full flex-shrink-0" />
+                        <h3 className="font-serif text-lg font-bold text-secondary-300">
+                          {item.title}
+                        </h3>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div 
+                        key={item.index}
+                        onMouseEnter={() => setActiveFlow(item.index)}
+                        onClick={() => setActiveFlow(item.index)}
+                        className="flex flex-col items-start p-6 gap-5 self-stretch select-none cursor-pointer w-full transition-all duration-200 bg-transparent"
+                      >
+                        <h3 className="font-serif text-lg font-bold text-neutral-400 hover:text-neutral-200 transition-colors">
+                          {item.title}
+                        </h3>
+                      </div>
+                    );
+                  }
                 })}
               </div>
 
