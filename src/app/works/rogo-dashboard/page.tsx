@@ -641,52 +641,30 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Decision 1 */}
-            <div className="flex flex-col gap-4 p-6 rounded-2xl border border-neutral-800 bg-[#0B0B0C]">
+            <div className="flex flex-col gap-6 p-6 rounded-2xl border border-neutral-800 bg-[#0B0B0C]">
               <h3 className="font-serif text-lg font-bold text-secondary-300">{t.dec1Title}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch mt-2">
-                {/* Old sidenav */}
-                <div className="flex flex-col gap-4">
-                  <div 
-                    className="relative w-full h-[240px] overflow-hidden group cursor-zoom-in bg-transparent"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 8.png")}
-                  >
-                    <Image 
-                      src="/images/rogo_project/Diagram 8.png"
-                      alt="Old Sidenav"
-                      fill
-                      className="object-contain"
-                    />
-                    <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                      <Maximize2 size={16} />
-                    </button>
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-red-400 tracking-wider">Old Sidenav</span>
-                    <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec1Left}</p>
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-red-400 tracking-wider">Old Sidenav</span>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec1Left}</p>
                 </div>
-
-                {/* New sidenav */}
-                <div className="flex flex-col gap-4">
-                  <div 
-                    className="relative w-full h-[240px] overflow-hidden group cursor-zoom-in bg-transparent"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
-                  >
-                    <Image 
-                      src="/images/rogo_project/Diagram 9.png"
-                      alt="New Sidenav"
-                      fill
-                      className="object-contain"
-                    />
-                    <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                      <Maximize2 size={16} />
-                    </button>
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-primary-300 tracking-wider">New Sidenav</span>
-                    <p className="text-primary-300 font-semibold text-xs leading-relaxed mt-1">{t.dec1RightTitle}</p>
-                    <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec1RightDesc}</p>
-                  </div>
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-primary-300 tracking-wider">New Sidenav</span>
+                  <p className="text-primary-300 font-semibold text-xs leading-relaxed mt-1">{t.dec1RightTitle}</p>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec1RightDesc}</p>
+                </div>
+              </div>
+              <div className="flex justify-center w-full mt-4">
+                <div 
+                  className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
+                >
+                  <Image 
+                    src="/images/rogo_project/Diagram 6-1.png"
+                    alt="New Partner Switcher"
+                    fill
+                    className="object-contain"
+                  />
                 </div>
               </div>
             </div>
@@ -694,54 +672,40 @@ export default function RogoDashboardPage() {
             {/* Decision 2 */}
             <div className="flex flex-col gap-6 p-6 rounded-2xl border border-neutral-800 bg-[#0B0B0C]">
               <h3 className="font-serif text-lg font-bold text-secondary-300">{t.dec2Title}</h3>
-              
-              {/* Sub-item 1 */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border-b border-neutral-800 pb-6">
-                <div className="md:col-span-6">
-                  <div 
-                    className="relative w-full h-[240px] overflow-hidden group cursor-zoom-in bg-transparent"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
-                  >
-                    <Image 
-                      src="/images/rogo_project/Diagram 6-1.png"
-                      alt="New Partner Switcher"
-                      fill
-                      className="object-contain"
-                    />
-                    <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                      <Maximize2 size={16} />
-                    </button>
-                  </div>
-                </div>
-                <div className="md:col-span-6 flex flex-col gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
+                <div>
                   <span className="text-primary-400 font-bold text-xs tracking-wider">01/</span>
-                  <h4 className="font-serif text-base font-bold text-white">{t.dec2Sub1Title}</h4>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.dec2Sub1Desc}</p>
+                  <h4 className="font-serif text-base font-bold text-white mt-1">{t.dec2Sub1Title}</h4>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec2Sub1Desc}</p>
+                </div>
+                <div>
+                  <span className="text-primary-400 font-bold text-xs tracking-wider">02/</span>
+                  <h4 className="font-serif text-base font-bold text-white mt-1">{t.dec2Sub2Title}</h4>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec2Sub2Desc}</p>
                 </div>
               </div>
-
-              {/* Sub-item 2 */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                <div className="md:col-span-6">
-                  <div 
-                    className="relative w-full h-[240px] overflow-hidden group cursor-zoom-in bg-transparent"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
-                  >
-                    <Image 
-                      src="/images/rogo_project/Diagram 10.png"
-                      alt="Branding Settings Module"
-                      fill
-                      className="object-contain"
-                    />
-                    <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                      <Maximize2 size={16} />
-                    </button>
-                  </div>
+              <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full mt-4">
+                <div 
+                  className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 7.png")}
+                >
+                  <Image 
+                    src="/images/rogo_project/Diagram 7.png"
+                    alt="Navigation Map"
+                    fill
+                    className="object-contain"
+                  />
                 </div>
-                <div className="md:col-span-6 flex flex-col gap-2">
-                  <span className="text-primary-400 font-bold text-xs tracking-wider">02/</span>
-                  <h4 className="font-serif text-base font-bold text-white">{t.dec2Sub2Title}</h4>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.dec2Sub2Desc}</p>
+                <div 
+                  className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 8.png")}
+                >
+                  <Image 
+                    src="/images/rogo_project/Diagram 8.png"
+                    alt="Old Sidenav UI"
+                    fill
+                    className="object-contain"
+                  />
                 </div>
               </div>
             </div>
@@ -749,68 +713,38 @@ export default function RogoDashboardPage() {
             {/* Decision 3 */}
             <div className="flex flex-col gap-6 p-6 rounded-2xl border border-neutral-800 bg-[#0B0B0C]">
               <h3 className="font-serif text-lg font-bold text-secondary-300">{t.dec3Title}</h3>
-
-              {/* Row 1 */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border-b border-neutral-800 pb-6">
-                <div className="md:col-span-7 flex gap-4">
-                  <div 
-                    className="relative w-1/2 h-[180px] overflow-hidden group cursor-zoom-in bg-transparent"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 11.png")}
-                  >
-                    <Image 
-                      src="/images/rogo_project/Diagram 11.png"
-                      alt="Partner Scope"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <div 
-                    className="relative w-1/2 h-[180px] overflow-hidden group cursor-zoom-in bg-transparent"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 12.png")}
-                  >
-                    <Image 
-                      src="/images/rogo_project/Diagram 12.png"
-                      alt="Project Scope"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
+                <div>
+                  <h4 className="font-serif text-base font-bold text-white">{t.dec3Row1Title}</h4>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec3Row1Desc}</p>
                 </div>
-                <div className="md:col-span-5 flex flex-col gap-2">
-                  <h4 className="font-serif text-base font-bold text-[#FB3748]">{t.dec3Row1Title}</h4>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.dec3Row1Desc}</p>
+                <div>
+                  <h4 className="font-serif text-base font-bold text-white">{t.dec3Row2Title}</h4>
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">{t.dec3Row2Desc}</p>
                 </div>
               </div>
-
-              {/* Row 2 */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                <div className="md:col-span-7 flex gap-4">
-                  <div 
-                    className="relative w-1/2 h-[180px] overflow-hidden group cursor-zoom-in bg-transparent"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 13.png")}
-                  >
-                    <Image 
-                      src="/images/rogo_project/Diagram 13.png"
-                      alt="Partner Dialog"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <div 
-                    className="relative w-1/2 h-[180px] overflow-hidden group cursor-zoom-in bg-transparent"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 14.png")}
-                  >
-                    <Image 
-                      src="/images/rogo_project/Diagram 14.png"
-                      alt="Project Dialog"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
+              <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full mt-4">
+                <div 
+                  className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
+                >
+                  <Image 
+                    src="/images/rogo_project/Diagram 9.png"
+                    alt="New Sidenav UI"
+                    fill
+                    className="object-contain"
+                  />
                 </div>
-                <div className="md:col-span-5 flex flex-col gap-2">
-                  <h4 className="font-serif text-base font-bold text-[#FB3748]">{t.dec3Row2Title}</h4>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.dec3Row2Desc}</p>
+                <div 
+                  className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
+                >
+                  <Image 
+                    src="/images/rogo_project/Diagram 10.png"
+                    alt="Branding Settings"
+                    fill
+                    className="object-contain"
+                  />
                 </div>
               </div>
             </div>
