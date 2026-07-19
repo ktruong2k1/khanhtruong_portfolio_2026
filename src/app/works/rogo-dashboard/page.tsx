@@ -86,9 +86,8 @@ const translations = {
     dec3Row2Desc: "Thay thế thiết kế phẳng, hộp thoại Cấp quyền chia các tùy chọn này thành hai tab rõ ràng. Partner Permission quản lý quyền truy cập cấp đối tác trên cả 5 nhóm quyền trong một màn hình. Project Permission cho phép quản trị viên chọn một hoặc nhiều dự án từ sơ đồ cây và chỉ định các quyền cấp dự án trong cùng một thao tác. Cả hai có thể cấu hình độc lập cho mỗi người dùng, theo bất kỳ tổ hợp nào.",
     
     screen1Title: "Tổng quan — Quản trị viên",
-    screen2Title: "Người dùng & Phân quyền — Phạm vi Đối tác",
+    screen2Title: "Người dùng & Phân quyền — Phạm vi Đối tác/ Dự án",
     screen3Title: "Tài khoản (Cài đặt thương hiệu)",
-    screen4Title: "Người dùng & Phân quyền — Phạm vi Dự án",
     
     designSystemDesc: "Toàn bộ giao diện được xây dựng dựa trên một hệ sinh thái design system tự thiết kế và phát triển từ đầu — không sử dụng các mẫu có sẵn.",
     
@@ -184,9 +183,8 @@ const translations = {
     dec3Row2Desc: "Instead, the Grant dialog separates these cleanly into two tabs. Partner Permission handles org-wide access across all five groups in one screen. Project Permission lets the admin select one or multiple projects from a tree and assign project-scoped access in the same action. The two can be configured independently per user, in any combination.",
     
     screen1Title: "Overview — Admin",
-    screen2Title: "Users & Permissions — Partner Scope",
+    screen2Title: "Users & Permissions — Partner/ Project scope",
     screen3Title: "Account",
-    screen4Title: "Users & Permissions — Project Scope",
     
     designSystemDesc: "The entire interface was built on a design system created from scratch — no templates.",
     
@@ -893,21 +891,22 @@ export default function RogoDashboardPage() {
               <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
                 <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen2Title}</h4>
                 <div 
-                  className="relative w-full aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
+                  className="relative w-full aspect-[16/10] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Video 2.mp4")}
                 >
-                  <Image 
-                    src="/images/rogo_project/Diagram 9.png"
-                    alt={t.screen2Title}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 600px"
+                  <video 
+                    src="/images/rogo_project/Video 2.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-contain rounded-[12px]"
                   />
                   <button 
                     className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Diagram 9.png");
+                      setLightboxImg("/images/rogo_project/Video 2.mp4");
                     }}
                   >
                     <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
@@ -934,32 +933,6 @@ export default function RogoDashboardPage() {
                     onClick={(e) => {
                       e.stopPropagation();
                       setLightboxImg("/images/rogo_project/Diagram 8.png");
-                    }}
-                  >
-                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Screen 4 */}
-              <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
-                <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen4Title}</h4>
-                <div 
-                  className="relative w-full aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
-                >
-                  <Image 
-                    src="/images/rogo_project/Diagram 10.png"
-                    alt={t.screen4Title}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 600px"
-                  />
-                  <button 
-                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Diagram 10.png");
                     }}
                   >
                     <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
