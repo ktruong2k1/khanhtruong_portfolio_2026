@@ -629,9 +629,9 @@ export default function RogoDashboardPage() {
             <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mb-4">{t.archDesc}</p>
 
             {/* Tab Layout (Left Menu / Right Content Card) */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start w-full">
+            <div className="flex flex-col md:flex-row gap-8 items-start w-full justify-between">
               {/* Left Tabs Column */}
-              <div className="md:col-span-1 flex flex-col gap-4 w-full">
+              <div className="flex flex-col gap-4 flex-1 w-full">
                 {flows.map((item) => {
                   const isActive = item.index === activeFlow;
                   if (isActive) {
@@ -667,7 +667,7 @@ export default function RogoDashboardPage() {
 
               {/* Right Content Card Column */}
               <div 
-                className="md:col-span-3 flex flex-col bg-[#0e1713] rounded-2xl p-6 md:p-10 items-start justify-start gap-4 transition-all duration-[400ms] ease-in-out min-h-[500px] w-full md:max-w-[880px]"
+                className="flex flex-col bg-[#0e1713] rounded-2xl p-6 md:p-10 items-start justify-start gap-4 transition-all duration-[400ms] ease-in-out min-h-[500px] w-full md:w-[880px] flex-shrink-0"
               >
                 <div key={activeFlow} className="w-full flex flex-col gap-4">
                   <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left animate-smartReveal">
