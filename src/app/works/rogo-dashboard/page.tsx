@@ -506,8 +506,14 @@ export default function RogoDashboardPage() {
                 fill
                 className="object-contain"
               />
-              <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                <Maximize2 size={16} />
+              <button 
+                className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxImg("/images/rogo_project/Diagram 01.png");
+                }}
+              >
+                <img src="/images/rogo_project/Zoom_light.svg" alt="Zoom" className="w-6 h-6" />
               </button>
             </div>
           </section>
@@ -515,27 +521,33 @@ export default function RogoDashboardPage() {
           {/* SECTION 02: CONTEXT */}
           <section className="flex flex-col gap-6 w-full">
             {renderSectionTitle("02", t.contextTitle)}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+            <div className="flex flex-col md:flex-row gap-8 items-start justify-between w-full">
               {/* Left description */}
-              <div className="md:col-span-4 flex flex-col justify-between gap-4 py-2">
+              <div className="flex flex-col justify-between gap-4 py-2 flex-1 w-full text-left md:max-w-[400px]">
                 <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.contextDesc}</p>
                 <p className="text-primary-300 font-medium text-base mt-2">{t.contextHighlight}</p>
               </div>
               
               {/* Right diagram */}
-              <div className="md:col-span-8">
+              <div className="w-full md:w-auto flex-shrink-0 overflow-x-auto max-w-full">
                 <div 
-                  className="relative w-full h-[280px] overflow-hidden group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 3.png")}
+                  className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 2.png")}
                 >
                   <Image 
-                    src="/images/rogo_project/Diagram 3.png"
+                    src="/images/rogo_project/Diagram 2.png"
                     alt="Context diagram"
                     fill
                     className="object-contain"
                   />
-                  <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                    <Maximize2 size={16} />
+                  <button 
+                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxImg("/images/rogo_project/Diagram 2.png");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_light.svg" alt="Zoom" className="w-6 h-6" />
                   </button>
                 </div>
               </div>
@@ -626,6 +638,15 @@ export default function RogoDashboardPage() {
                         fill
                         className="object-contain"
                       />
+                      <button 
+                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxImg(flow.img);
+                        }}
+                      >
+                        <img src="/images/rogo_project/Zoom_light.svg" alt="Zoom" className="w-6 h-6" />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -655,6 +676,15 @@ export default function RogoDashboardPage() {
                     className="object-contain"
                     sizes="(max-width: 768px) 100vw, 1160px"
                   />
+                  <button 
+                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxImg("/images/rogo_project/Diagram 6-1.png");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -676,6 +706,15 @@ export default function RogoDashboardPage() {
                     className="object-contain"
                     sizes="(max-width: 768px) 100vw, 800px"
                   />
+                  <button 
+                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxImg("/images/rogo_project/Diagram 7.png");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                  </button>
                 </div>
                 <div 
                   className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
@@ -688,6 +727,15 @@ export default function RogoDashboardPage() {
                     className="object-contain"
                     sizes="(max-width: 768px) 100vw, 800px"
                   />
+                  <button 
+                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxImg("/images/rogo_project/Diagram 8.png");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -707,6 +755,15 @@ export default function RogoDashboardPage() {
                     className="object-contain"
                     sizes="(max-width: 768px) 100vw, 1160px"
                   />
+                  <button 
+                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxImg("/images/rogo_project/Diagram 9.png");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                  </button>
                 </div>
                 <div 
                   className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
@@ -719,6 +776,15 @@ export default function RogoDashboardPage() {
                     className="object-contain"
                     sizes="(max-width: 768px) 100vw, 1160px"
                   />
+                  <button 
+                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxImg("/images/rogo_project/Diagram 10.png");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -744,6 +810,15 @@ export default function RogoDashboardPage() {
                     playsInline
                     className="w-full h-full object-contain rounded-[12px]"
                   />
+                  <button 
+                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxImg("/images/rogo_project/Video 1.mp4");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                  </button>
                 </div>
               </div>
 
@@ -761,6 +836,15 @@ export default function RogoDashboardPage() {
                     className="object-contain"
                     sizes="(max-width: 768px) 100vw, 600px"
                   />
+                  <button 
+                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxImg("/images/rogo_project/Diagram 9.png");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                  </button>
                 </div>
               </div>
 
@@ -778,6 +862,15 @@ export default function RogoDashboardPage() {
                     className="object-contain"
                     sizes="(max-width: 768px) 100vw, 600px"
                   />
+                  <button 
+                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxImg("/images/rogo_project/Diagram 8.png");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                  </button>
                 </div>
               </div>
 
@@ -795,6 +888,15 @@ export default function RogoDashboardPage() {
                     className="object-contain"
                     sizes="(max-width: 768px) 100vw, 600px"
                   />
+                  <button 
+                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxImg("/images/rogo_project/Diagram 10.png");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -815,8 +917,14 @@ export default function RogoDashboardPage() {
                 fill
                 className="object-contain"
               />
-              <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                <Maximize2 size={16} />
+              <button 
+                className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxImg("/images/rogo_project/Frame 35.png");
+                }}
+              >
+                <img src="/images/rogo_project/Zoom_light.svg" alt="Zoom" className="w-6 h-6" />
               </button>
             </div>
           </section>
