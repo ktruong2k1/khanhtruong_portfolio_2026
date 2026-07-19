@@ -730,78 +730,71 @@ export default function RogoDashboardPage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Screen 1 */}
-              <div className="flex flex-col gap-3">
-                <h4 className="font-bold text-secondary-300 text-sm">{t.screen1Title}</h4>
+              <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
+                <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen1Title}</h4>
                 <div 
-                  className="relative w-full h-[280px] overflow-hidden group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Rogo IoT_Large.png")}
+                  className="relative w-full aspect-[426/284] overflow-hidden group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Video 1 .gif")}
                 >
                   <Image 
-                    src="/images/rogo_project/Rogo IoT_Large.png"
-                    alt="Overview - Admin Screen"
+                    src="/images/rogo_project/Video 1 .gif"
+                    alt={t.screen1Title}
                     fill
-                    className="object-cover"
+                    className="object-contain"
+                    unoptimized={true}
+                    sizes="(max-width: 768px) 100vw, 600px"
                   />
-                  <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                    <Maximize2 size={16} />
-                  </button>
                 </div>
               </div>
 
               {/* Screen 2 */}
-              <div className="flex flex-col gap-3">
-                <h4 className="font-bold text-secondary-300 text-sm">{t.screen2Title}</h4>
+              <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
+                <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen2Title}</h4>
                 <div 
-                  className="relative w-full h-[280px] overflow-hidden group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 13.png")}
+                  className="relative w-full aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
                 >
                   <Image 
-                    src="/images/rogo_project/Diagram 13.png"
-                    alt="Partner Scope Permissions Screen"
+                    src="/images/rogo_project/Diagram 9.png"
+                    alt={t.screen2Title}
                     fill
                     className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 600px"
                   />
-                  <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                    <Maximize2 size={16} />
-                  </button>
                 </div>
               </div>
 
               {/* Screen 3 */}
-              <div className="flex flex-col gap-3">
-                <h4 className="font-bold text-secondary-300 text-sm">{t.screen3Title}</h4>
+              <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
+                <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen3Title}</h4>
                 <div 
-                  className="relative w-full h-[280px] overflow-hidden group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
+                  className="relative w-full aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 8.png")}
                 >
                   <Image 
-                    src="/images/rogo_project/Diagram 10.png"
-                    alt="Branding settings Screen"
+                    src="/images/rogo_project/Diagram 8.png"
+                    alt={t.screen3Title}
                     fill
                     className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 600px"
                   />
-                  <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                    <Maximize2 size={16} />
-                  </button>
                 </div>
               </div>
 
               {/* Screen 4 */}
-              <div className="flex flex-col gap-3">
-                <h4 className="font-bold text-secondary-300 text-sm">{t.screen4Title}</h4>
+              <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
+                <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen4Title}</h4>
                 <div 
-                  className="relative w-full h-[280px] overflow-hidden group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 14.png")}
+                  className="relative w-full aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
                 >
                   <Image 
-                    src="/images/rogo_project/Diagram 14.png"
-                    alt="Project Scope Permissions Screen"
+                    src="/images/rogo_project/Diagram 10.png"
+                    alt={t.screen4Title}
                     fill
                     className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 600px"
                   />
-                  <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
-                    <Maximize2 size={16} />
-                  </button>
                 </div>
               </div>
             </div>
