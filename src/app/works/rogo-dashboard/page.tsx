@@ -440,10 +440,10 @@ export default function RogoDashboardPage() {
             {/* Title Block */}
             <div className="flex flex-col gap-6 w-full md:w-1/2">
               <div className="flex items-center gap-3">
-                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded border border-primary-400 text-primary-300">FEATURED</span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded border border-neutral-700 text-neutral-400">PAAS • B2B</span>
+                <span className="text-[10px] uppercase font-semibold px-2.5 py-1 rounded bg-[#17211B] border border-primary-400 text-primary-400">FEATURED</span>
+                <span className="text-[10px] uppercase font-semibold px-2.5 py-1 rounded bg-neutral-900 border border-neutral-800 text-neutral-300">PAAS • B2B</span>
               </div>
-              <h1 className="font-serif text-white text-[32px] md:text-[54px] font-bold leading-tight tracking-tight">
+              <h1 className="font-serif text-white text-[32px] md:text-[48px] font-bold leading-tight tracking-tight">
                 Rogo IoT Platform dashboard V2
               </h1>
               <div className="flex flex-wrap gap-4 mt-2">
