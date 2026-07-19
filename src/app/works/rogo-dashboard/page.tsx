@@ -212,6 +212,7 @@ export default function RogoDashboardPage() {
   const [contactMessage, setContactMessage] = useState("");
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [activeFlow, setActiveFlow] = useState<number>(0);
+  const [hoveredDecision, setHoveredDecision] = useState<number | null>(null);
 
   // Load language settings from localStorage if available
   useEffect(() => {
@@ -272,6 +273,19 @@ export default function RogoDashboardPage() {
     { title: t.flow2Title, desc: t.flow2Desc, img: "/images/rogo_project/Diagram 4.png", index: 1 },
     { title: t.flow3Title, desc: t.flow3Desc, img: "/images/rogo_project/Diagram 5.png", index: 2 }
   ];
+
+  const renderDecisionTitle = (fullTitle: string) => {
+    const parts = fullTitle.split(" — ");
+    if (parts.length >= 2) {
+      return (
+        <>
+          <span className="text-white">{parts[0]}</span>
+          <span className="text-secondary-300"> — {parts[1]}</span>
+        </>
+      );
+    }
+    return <span className="text-white">{fullTitle}</span>;
+  };
 
   return (
     <>
@@ -697,131 +711,149 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Decision 1 */}
-            <div className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full">
-              <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec1Title}</h3>
-              <div className="flex justify-center w-full mt-2">
-                <div 
-                  className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
-                >
-                  <Image 
-                    src="/images/rogo_project/Diagram 6-1.png"
-                    alt="One Panel Replacing Many Pages"
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 1160px"
-                  />
-                  <button 
-                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Diagram 6-1.png");
-                    }}
+            <div 
+              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-300 ease-in-out cursor-pointer"
+              onMouseEnter={() => setHoveredDecision(1)}
+              onMouseLeave={() => setHoveredDecision(null)}
+            >
+              <h3 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.dec1Title)}</h3>
+              {hoveredDecision === 1 && (
+                <div className="flex justify-center w-full mt-2 animate-smartReveal">
+                  <div 
+                    className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
                   >
-                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                  </button>
+                    <Image 
+                      src="/images/rogo_project/Diagram 6-1.png"
+                      alt="One Panel Replacing Many Pages"
+                      fill
+                      className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                      sizes="(max-width: 768px) 100vw, 1160px"
+                    />
+                    <button 
+                      className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLightboxImg("/images/rogo_project/Diagram 6-1.png");
+                      }}
+                    >
+                      <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Decision 2 */}
-            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch overflow-x-auto max-w-full">
-              <div className="w-full md:w-[320px] md:flex-shrink-0 text-left">
-                <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec2Title}</h3>
-              </div>
-              <div className="flex flex-col gap-6 w-full md:flex-1 md:min-w-0">
-                <div 
-                  className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 7.png")}
-                >
-                  <Image 
-                    src="/images/rogo_project/Diagram 7.png"
-                    alt="New Partner Switcher"
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 800px"
-                  />
-                  <button 
-                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Diagram 7.png");
-                    }}
-                  >
-                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                  </button>
+            <div 
+              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-300 ease-in-out cursor-pointer"
+              onMouseEnter={() => setHoveredDecision(2)}
+              onMouseLeave={() => setHoveredDecision(null)}
+            >
+              <h3 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.dec2Title)}</h3>
+              {hoveredDecision === 2 && (
+                <div className="flex flex-col md:flex-row items-start gap-8 w-full mt-2 animate-smartReveal">
+                  <div className="flex flex-col gap-6 w-full md:flex-1 md:min-w-0">
+                    <div 
+                      className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                      onClick={() => setLightboxImg("/images/rogo_project/Diagram 7.png")}
+                    >
+                      <Image 
+                        src="/images/rogo_project/Diagram 7.png"
+                        alt="New Partner Switcher"
+                        fill
+                        className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                        sizes="(max-width: 768px) 100vw, 800px"
+                      />
+                      <button 
+                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxImg("/images/rogo_project/Diagram 7.png");
+                        }}
+                      >
+                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                      </button>
+                    </div>
+                    <div 
+                      className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                      onClick={() => setLightboxImg("/images/rogo_project/Diagram 8.png")}
+                    >
+                      <Image 
+                        src="/images/rogo_project/Diagram 8.png"
+                        alt="Branding Settings Module"
+                        fill
+                        className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                        sizes="(max-width: 768px) 100vw, 800px"
+                      />
+                      <button 
+                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxImg("/images/rogo_project/Diagram 8.png");
+                        }}
+                      >
+                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div 
-                  className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 8.png")}
-                >
-                  <Image 
-                    src="/images/rogo_project/Diagram 8.png"
-                    alt="Branding Settings Module"
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 800px"
-                  />
-                  <button 
-                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Diagram 8.png");
-                    }}
-                  >
-                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                  </button>
-                </div>
-              </div>
+              )}
             </div>
 
             {/* Decision 3 */}
-            <div className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full">
-              <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec3Title}</h3>
-              <div className="flex flex-col gap-6 w-full mt-2 justify-center items-center">
-                <div 
-                  className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
-                >
-                  <Image 
-                    src="/images/rogo_project/Diagram 9.png"
-                    alt="Permissions Scope"
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 1160px"
-                  />
-                  <button 
-                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Diagram 9.png");
-                    }}
+            <div 
+              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-300 ease-in-out cursor-pointer"
+              onMouseEnter={() => setHoveredDecision(3)}
+              onMouseLeave={() => setHoveredDecision(null)}
+            >
+              <h3 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.dec3Title)}</h3>
+              {hoveredDecision === 3 && (
+                <div className="flex flex-col gap-6 w-full mt-2 justify-center items-center animate-smartReveal">
+                  <div 
+                    className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
                   >
-                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                  </button>
-                </div>
-                <div 
-                  className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
-                >
-                  <Image 
-                    src="/images/rogo_project/Diagram 10.png"
-                    alt="Permissions Dialogs"
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 1160px"
-                  />
-                  <button 
-                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Diagram 10.png");
-                    }}
+                    <Image 
+                      src="/images/rogo_project/Diagram 9.png"
+                      alt="Permissions Scope"
+                      fill
+                      className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                      sizes="(max-width: 768px) 100vw, 1160px"
+                    />
+                    <button 
+                      className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLightboxImg("/images/rogo_project/Diagram 9.png");
+                      }}
+                    >
+                      <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                    </button>
+                  </div>
+                  <div 
+                    className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
                   >
-                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                  </button>
+                    <Image 
+                      src="/images/rogo_project/Diagram 10.png"
+                      alt="Permissions Dialogs"
+                      fill
+                      className="object-contain transition-transform duration-500 hover:scale-[1.03]"
+                      sizes="(max-width: 768px) 100vw, 1160px"
+                    />
+                    <button 
+                      className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLightboxImg("/images/rogo_project/Diagram 10.png");
+                      }}
+                    >
+                      <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </section>
 
