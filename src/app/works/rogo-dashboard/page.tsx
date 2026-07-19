@@ -550,8 +550,8 @@ export default function RogoDashboardPage() {
               <p style={{ width: "100%", display: "block" }} className="md:pl-6 md:border-l border-neutral-800 text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.roleRight}</p>
             </div>
 
-            {/* List of role items styled as individual cards in a horizontal grid on desktop */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 w-full">
+            {/* Unified horizontal table-like grid block in Section 03 */}
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-0 w-full bg-[#0c1410] border border-neutral-800 rounded-[12px] overflow-hidden divide-y md:divide-y-0 md:divide-x divide-neutral-800">
               {[
                 { title: t.roleCol1Title, desc: t.roleCol1Desc },
                 { title: t.roleCol2Title, desc: t.roleCol2Desc },
@@ -561,7 +561,7 @@ export default function RogoDashboardPage() {
               ].map((item, idx) => (
                 <div 
                   key={idx} 
-                  className="flex flex-col bg-[#0c1410] rounded-2xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch"
+                  className="flex flex-col p-6 md:py-6 md:px-10 items-start gap-5 self-stretch"
                 >
                   <h4 
                     style={{
