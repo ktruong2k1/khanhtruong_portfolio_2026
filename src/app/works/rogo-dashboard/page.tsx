@@ -239,7 +239,7 @@ export default function RogoDashboardPage() {
     // Remove leading numbers/prefixes like "01 Problem" or "02 Context" if they are present in translations
     const cleanText = text.replace(/^\d+\s+—?\s*/, "").replace(/^\d+\s+/, "");
     return (
-      <div className="flex items-baseline gap-2 mb-2">
+      <div className="flex items-start gap-2 mb-2">
         <span 
           style={{
             color: "var(--color-secondary-300)",
@@ -497,14 +497,14 @@ export default function RogoDashboardPage() {
             
             {/* Diagram Wrapper with zoom button */}
             <div 
-              className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden border border-neutral-800 bg-[#161617] group cursor-zoom-in"
+              className="relative w-full aspect-[21/9] overflow-hidden group cursor-zoom-in bg-transparent"
               onClick={() => setLightboxImg("/images/rogo_project/Diagram 01.png")}
             >
               <Image 
                 src="/images/rogo_project/Diagram 01.png"
                 alt="The Problem diagram"
                 fill
-                className="object-contain p-4 md:p-8"
+                className="object-contain"
               />
               <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
                 <Maximize2 size={16} />
@@ -525,14 +525,14 @@ export default function RogoDashboardPage() {
               {/* Right diagram */}
               <div className="md:col-span-8">
                 <div 
-                  className="relative w-full h-[280px] rounded-2xl overflow-hidden border border-neutral-800 bg-white group cursor-zoom-in"
+                  className="relative w-full h-[280px] overflow-hidden group cursor-zoom-in bg-transparent"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 3.png")}
                 >
                   <Image 
                     src="/images/rogo_project/Diagram 3.png"
                     alt="Context diagram"
                     fill
-                    className="object-contain p-4 md:p-6"
+                    className="object-contain"
                   />
                   <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
                     <Maximize2 size={16} />
@@ -622,14 +622,14 @@ export default function RogoDashboardPage() {
                 {/* Old sidenav */}
                 <div className="flex flex-col gap-4">
                   <div 
-                    className="relative w-full h-[240px] rounded-xl overflow-hidden border border-neutral-800 bg-[#161617] group cursor-zoom-in"
+                    className="relative w-full h-[240px] overflow-hidden group cursor-zoom-in bg-transparent"
                     onClick={() => setLightboxImg("/images/rogo_project/Diagram 8.png")}
                   >
                     <Image 
                       src="/images/rogo_project/Diagram 8.png"
                       alt="Old Sidenav"
                       fill
-                      className="object-contain p-4"
+                      className="object-contain"
                     />
                     <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
                       <Maximize2 size={16} />
@@ -644,14 +644,14 @@ export default function RogoDashboardPage() {
                 {/* New sidenav */}
                 <div className="flex flex-col gap-4">
                   <div 
-                    className="relative w-full h-[240px] rounded-xl overflow-hidden border border-neutral-800 bg-[#161617] group cursor-zoom-in"
+                    className="relative w-full h-[240px] overflow-hidden group cursor-zoom-in bg-transparent"
                     onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
                   >
                     <Image 
                       src="/images/rogo_project/Diagram 9.png"
                       alt="New Sidenav"
                       fill
-                      className="object-contain p-4"
+                      className="object-contain"
                     />
                     <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
                       <Maximize2 size={16} />
@@ -674,14 +674,14 @@ export default function RogoDashboardPage() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border-b border-neutral-850 pb-6">
                 <div className="md:col-span-6">
                   <div 
-                    className="relative w-full h-[240px] rounded-xl overflow-hidden border border-neutral-800 bg-[#e2e8f0] group cursor-zoom-in"
+                    className="relative w-full h-[240px] overflow-hidden group cursor-zoom-in bg-transparent"
                     onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
                   >
                     <Image 
                       src="/images/rogo_project/Diagram 6-1.png"
                       alt="New Partner Switcher"
                       fill
-                      className="object-contain p-4"
+                      className="object-contain"
                     />
                     <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
                       <Maximize2 size={16} />
@@ -699,14 +699,14 @@ export default function RogoDashboardPage() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                 <div className="md:col-span-6">
                   <div 
-                    className="relative w-full h-[240px] rounded-xl overflow-hidden border border-neutral-800 bg-[#e2e8f0] group cursor-zoom-in"
+                    className="relative w-full h-[240px] overflow-hidden group cursor-zoom-in bg-transparent"
                     onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
                   >
                     <Image 
                       src="/images/rogo_project/Diagram 10.png"
                       alt="Branding Settings Module"
                       fill
-                      className="object-contain p-4"
+                      className="object-contain"
                     />
                     <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
                       <Maximize2 size={16} />
@@ -729,25 +729,25 @@ export default function RogoDashboardPage() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border-b border-neutral-850 pb-6">
                 <div className="md:col-span-7 flex gap-4">
                   <div 
-                    className="relative w-1/2 h-[180px] rounded-xl overflow-hidden border border-neutral-800 bg-[#e2e8f0] group cursor-zoom-in"
+                    className="relative w-1/2 h-[180px] overflow-hidden group cursor-zoom-in bg-transparent"
                     onClick={() => setLightboxImg("/images/rogo_project/Diagram 11.png")}
                   >
                     <Image 
                       src="/images/rogo_project/Diagram 11.png"
                       alt="Partner Scope"
                       fill
-                      className="object-contain p-2"
+                      className="object-contain"
                     />
                   </div>
                   <div 
-                    className="relative w-1/2 h-[180px] rounded-xl overflow-hidden border border-neutral-800 bg-[#e2e8f0] group cursor-zoom-in"
+                    className="relative w-1/2 h-[180px] overflow-hidden group cursor-zoom-in bg-transparent"
                     onClick={() => setLightboxImg("/images/rogo_project/Diagram 12.png")}
                   >
                     <Image 
                       src="/images/rogo_project/Diagram 12.png"
                       alt="Project Scope"
                       fill
-                      className="object-contain p-2"
+                      className="object-contain"
                     />
                   </div>
                 </div>
@@ -761,25 +761,25 @@ export default function RogoDashboardPage() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                 <div className="md:col-span-7 flex gap-4">
                   <div 
-                    className="relative w-1/2 h-[180px] rounded-xl overflow-hidden border border-neutral-800 bg-[#e2e8f0] group cursor-zoom-in"
+                    className="relative w-1/2 h-[180px] overflow-hidden group cursor-zoom-in bg-transparent"
                     onClick={() => setLightboxImg("/images/rogo_project/Diagram 13.png")}
                   >
                     <Image 
                       src="/images/rogo_project/Diagram 13.png"
                       alt="Partner Dialog"
                       fill
-                      className="object-contain p-2"
+                      className="object-contain"
                     />
                   </div>
                   <div 
-                    className="relative w-1/2 h-[180px] rounded-xl overflow-hidden border border-neutral-800 bg-[#e2e8f0] group cursor-zoom-in"
+                    className="relative w-1/2 h-[180px] overflow-hidden group cursor-zoom-in bg-transparent"
                     onClick={() => setLightboxImg("/images/rogo_project/Diagram 14.png")}
                   >
                     <Image 
                       src="/images/rogo_project/Diagram 14.png"
                       alt="Project Dialog"
                       fill
-                      className="object-contain p-2"
+                      className="object-contain"
                     />
                   </div>
                 </div>
@@ -800,7 +800,7 @@ export default function RogoDashboardPage() {
               <div className="flex flex-col gap-3">
                 <h4 className="font-bold text-secondary-300 text-sm">{t.screen1Title}</h4>
                 <div 
-                  className="relative w-full h-[280px] rounded-2xl overflow-hidden border border-neutral-850 bg-[#161617] group cursor-zoom-in"
+                  className="relative w-full h-[280px] overflow-hidden group cursor-zoom-in bg-transparent"
                   onClick={() => setLightboxImg("/images/rogo_project/Rogo IoT_Large.png")}
                 >
                   <Image 
@@ -819,14 +819,14 @@ export default function RogoDashboardPage() {
               <div className="flex flex-col gap-3">
                 <h4 className="font-bold text-secondary-300 text-sm">{t.screen2Title}</h4>
                 <div 
-                  className="relative w-full h-[280px] rounded-2xl overflow-hidden border border-neutral-850 bg-[#161617] group cursor-zoom-in"
+                  className="relative w-full h-[280px] overflow-hidden group cursor-zoom-in bg-transparent"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 13.png")}
                 >
                   <Image 
                     src="/images/rogo_project/Diagram 13.png"
                     alt="Partner Scope Permissions Screen"
                     fill
-                    className="object-contain p-4"
+                    className="object-contain"
                   />
                   <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
                     <Maximize2 size={16} />
@@ -838,14 +838,14 @@ export default function RogoDashboardPage() {
               <div className="flex flex-col gap-3">
                 <h4 className="font-bold text-secondary-300 text-sm">{t.screen3Title}</h4>
                 <div 
-                  className="relative w-full h-[280px] rounded-2xl overflow-hidden border border-neutral-850 bg-[#161617] group cursor-zoom-in"
+                  className="relative w-full h-[280px] overflow-hidden group cursor-zoom-in bg-transparent"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
                 >
                   <Image 
                     src="/images/rogo_project/Diagram 10.png"
                     alt="Branding settings Screen"
                     fill
-                    className="object-contain p-4"
+                    className="object-contain"
                   />
                   <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
                     <Maximize2 size={16} />
@@ -857,14 +857,14 @@ export default function RogoDashboardPage() {
               <div className="flex flex-col gap-3">
                 <h4 className="font-bold text-secondary-300 text-sm">{t.screen4Title}</h4>
                 <div 
-                  className="relative w-full h-[280px] rounded-2xl overflow-hidden border border-neutral-850 bg-[#161617] group cursor-zoom-in"
+                  className="relative w-full h-[280px] overflow-hidden group cursor-zoom-in bg-transparent"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 14.png")}
                 >
                   <Image 
                     src="/images/rogo_project/Diagram 14.png"
                     alt="Project Scope Permissions Screen"
                     fill
-                    className="object-contain p-4"
+                    className="object-contain"
                   />
                   <button className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-950/80 border border-neutral-800 text-neutral-400 hover:text-white transition-colors">
                     <Maximize2 size={16} />
@@ -880,7 +880,7 @@ export default function RogoDashboardPage() {
             <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left max-w-2xl">{t.designSystemDesc}</p>
 
             <div 
-              className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-neutral-800 bg-[#0B0B0C] group cursor-zoom-in"
+              className="relative w-full aspect-[16/10] overflow-hidden group cursor-zoom-in bg-transparent"
               onClick={() => setLightboxImg("/images/rogo_project/Frame 35.png")}
             >
               <Image 
