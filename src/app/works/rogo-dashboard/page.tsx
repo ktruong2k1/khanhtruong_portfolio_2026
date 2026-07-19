@@ -561,7 +561,7 @@ export default function RogoDashboardPage() {
               ].map((item, idx) => (
                 <div 
                   key={idx} 
-                  className="flex flex-col bg-[#0c1410] border border-neutral-850 rounded-2xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch"
+                  className="flex flex-col bg-[#0c1410] rounded-2xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch"
                 >
                   <h4 
                     style={{
@@ -696,7 +696,7 @@ export default function RogoDashboardPage() {
               <h3 className="font-serif text-lg font-bold text-secondary-300">{t.dec2Title}</h3>
               
               {/* Sub-item 1 */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border-b border-neutral-850 pb-6">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border-b border-neutral-800 pb-6">
                 <div className="md:col-span-6">
                   <div 
                     className="relative w-full h-[240px] overflow-hidden group cursor-zoom-in bg-transparent"
@@ -751,7 +751,7 @@ export default function RogoDashboardPage() {
               <h3 className="font-serif text-lg font-bold text-secondary-300">{t.dec3Title}</h3>
 
               {/* Row 1 */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border-b border-neutral-850 pb-6">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border-b border-neutral-800 pb-6">
                 <div className="md:col-span-7 flex gap-4">
                   <div 
                     className="relative w-1/2 h-[180px] overflow-hidden group cursor-zoom-in bg-transparent"
@@ -987,7 +987,7 @@ export default function RogoDashboardPage() {
                   </div>
                   <div className="flex flex-wrap gap-1.5 mt-1">
                     {["Mobile", "IoT", "Smart Home", "Whitelabel"].map((cat) => (
-                      <span key={cat} className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-850 text-neutral-400">{cat}</span>
+                      <span key={cat} className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400">{cat}</span>
                     ))}
                   </div>
                   <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">
@@ -1015,7 +1015,7 @@ export default function RogoDashboardPage() {
                   </div>
                   <div className="flex flex-wrap gap-1.5 mt-1">
                     {["Mobile", "IoT", "Smart Home", "Redesign"].map((cat) => (
-                      <span key={cat} className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-850 text-neutral-400">{cat}</span>
+                      <span key={cat} className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400">{cat}</span>
                     ))}
                   </div>
                   <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">
