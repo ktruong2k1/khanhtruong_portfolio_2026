@@ -425,7 +425,7 @@ export default function RogoDashboardPage() {
         </div>
 
         {/* MAIN CONTAINER */}
-        <main className="w-full flex flex-col px-4 md:px-[120px] py-12 gap-20 max-w-[1440px] mx-auto">
+        <main className="w-full flex flex-col px-4 md:px-[120px] py-12 gap-20 mx-auto">
           
           {/* BACK TO WORKS LINK */}
           <div className="w-full flex justify-start -mb-12">
@@ -641,11 +641,11 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Decision 1 */}
-            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch">
-              <div className="w-full md:w-[320px] md:flex-shrink-0 text-left">
+            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch overflow-x-auto max-w-full">
+              <div className="flex-1 w-full text-left md:min-w-[320px]">
                 <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec1Title}</h3>
               </div>
-              <div className="w-full md:flex-1 md:min-w-0 overflow-x-auto max-w-full">
+              <div className="w-full md:w-auto flex-shrink-0">
                 <div 
                   className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
@@ -661,11 +661,11 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Decision 2 */}
-            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch">
-              <div className="w-full md:w-[320px] md:flex-shrink-0 text-left">
+            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch overflow-x-auto max-w-full">
+              <div className="flex-1 w-full text-left md:min-w-[320px]">
                 <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec2Title}</h3>
               </div>
-              <div className="flex flex-col gap-6 w-full md:flex-1 md:min-w-0 overflow-x-auto max-w-full">
+              <div className="flex flex-col gap-6 w-full md:w-auto flex-shrink-0">
                 <div 
                   className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 7.png")}
@@ -692,11 +692,11 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Decision 3 */}
-            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch">
-              <div className="w-full md:w-[320px] md:flex-shrink-0 text-left">
+            <div className="flex flex-col md:flex-row bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-8 self-stretch overflow-x-auto max-w-full">
+              <div className="flex-1 w-full text-left md:min-w-[320px]">
                 <h3 className="font-serif text-lg font-bold text-neutral-100">{t.dec3Title}</h3>
               </div>
-              <div className="flex flex-col gap-6 w-full md:flex-1 md:min-w-0 overflow-x-auto max-w-full">
+              <div className="flex flex-col gap-6 w-full md:w-auto flex-shrink-0">
                 <div 
                   className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
                   onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
