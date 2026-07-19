@@ -87,7 +87,7 @@ const translations = {
     
     screen1Title: "Tổng quan — Quản trị viên",
     screen2Title: "Người dùng & Phân quyền — Phạm vi Đối tác/ Dự án",
-    screen3Title: "Tài khoản (Cài đặt thương hiệu)",
+    screen3Title: "Cài đặt Whitelabel - Logo, Màu thương hiệu",
     
     designSystemDesc: "Toàn bộ giao diện được xây dựng dựa trên một hệ sinh thái design system tự thiết kế và phát triển từ đầu — không sử dụng các mẫu có sẵn.",
     
@@ -184,7 +184,7 @@ const translations = {
     
     screen1Title: "Overview — Admin",
     screen2Title: "Users & Permissions — Partner/ Project scope",
-    screen3Title: "Account",
+    screen3Title: "Whitelabel settings - Logo, Brand color",
     
     designSystemDesc: "The entire interface was built on a design system created from scratch — no templates.",
     
@@ -918,21 +918,22 @@ export default function RogoDashboardPage() {
               <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
                 <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen3Title}</h4>
                 <div 
-                  className="relative w-full aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Diagram 8.png")}
+                  className="relative w-full aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent"
+                  onClick={() => setLightboxImg("/images/rogo_project/Video 3.mp4")}
                 >
-                  <Image 
-                    src="/images/rogo_project/Diagram 8.png"
-                    alt={t.screen3Title}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 600px"
+                  <video 
+                    src="/images/rogo_project/Video 3.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-contain rounded-[12px]"
                   />
                   <button 
                     className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Diagram 8.png");
+                      setLightboxImg("/images/rogo_project/Video 3.mp4");
                     }}
                   >
                     <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
