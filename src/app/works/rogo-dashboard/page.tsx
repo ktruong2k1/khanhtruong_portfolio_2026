@@ -891,7 +891,7 @@ export default function RogoDashboardPage() {
               <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
                 <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen2Title}</h4>
                 <div 
-                  className="relative w-full aspect-[16/10] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent"
+                  className="relative w-full aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent"
                   onClick={() => setLightboxImg("/images/rogo_project/Video 2.mp4")}
                 >
                   <video 
