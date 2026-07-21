@@ -211,6 +211,7 @@ export default function RogoDashboardPage() {
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [activeFlow, setActiveFlow] = useState<number>(0);
   const [hoveredDecision, setHoveredDecision] = useState<number | null>(null);
+  const [hoveredScreen, setHoveredScreen] = useState<number | null>(null);
 
   // Load language settings from localStorage if available
   useEffect(() => {
@@ -861,89 +862,113 @@ export default function RogoDashboardPage() {
           </section>
 
           {/* SECTION 06: KEY SCREENS */}
-          <section className="flex flex-col gap-6 w-full">
+          <section className="flex flex-col gap-6 w-full" onMouseLeave={() => setHoveredScreen(null)}>
             {renderSectionTitle("06", t.screensTitle)}
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="flex flex-col gap-6 w-full">
               {/* Screen 1 */}
-              <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
-                <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen1Title}</h4>
-                <div 
-                  className="relative w-full aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Video 1.mp4")}
-                >
-                  <video 
-                    src="/images/rogo_project/Video 1.mp4"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-contain rounded-[12px]"
-                  />
-                  <button 
-                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Video 1.mp4");
-                    }}
-                  >
-                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                  </button>
-                </div>
+              <div 
+                className="flex flex-col bg-primary-1000 rounded-xl p-6 md:p-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[600ms] ease-in-out cursor-pointer"
+                onMouseEnter={() => setHoveredScreen(1)}
+                onMouseLeave={() => setHoveredScreen(null)}
+              >
+                <h4 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.screen1Title)}</h4>
+                {hoveredScreen === 1 && (
+                  <div className="flex justify-center w-full mt-2 animate-smartRevealSlow">
+                    <div 
+                      className="relative w-full aspect-[426/284] md:h-[360px] md:w-auto md:aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent flex-shrink-0"
+                      onClick={() => setLightboxImg("/images/rogo_project/Video 1.mp4")}
+                    >
+                      <video 
+                        src="/images/rogo_project/Video 1.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-contain rounded-[12px]"
+                      />
+                      <button 
+                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxImg("/images/rogo_project/Video 1.mp4");
+                        }}
+                      >
+                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Screen 2 */}
-              <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
-                <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen2Title}</h4>
-                <div 
-                  className="relative w-full aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Video 2.mp4")}
-                >
-                  <video 
-                    src="/images/rogo_project/Video 2.mp4"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-contain rounded-[12px]"
-                  />
-                  <button 
-                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Video 2.mp4");
-                    }}
-                  >
-                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                  </button>
-                </div>
+              <div 
+                className="flex flex-col bg-primary-1000 rounded-xl p-6 md:p-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[600ms] ease-in-out cursor-pointer"
+                onMouseEnter={() => setHoveredScreen(2)}
+                onMouseLeave={() => setHoveredScreen(null)}
+              >
+                <h4 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.screen2Title)}</h4>
+                {hoveredScreen === 2 && (
+                  <div className="flex justify-center w-full mt-2 animate-smartRevealSlow">
+                    <div 
+                      className="relative w-full aspect-[426/284] md:h-[360px] md:w-auto md:aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent flex-shrink-0"
+                      onClick={() => setLightboxImg("/images/rogo_project/Video 2.mp4")}
+                    >
+                      <video 
+                        src="/images/rogo_project/Video 2.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-contain rounded-[12px]"
+                      />
+                      <button 
+                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxImg("/images/rogo_project/Video 2.mp4");
+                        }}
+                      >
+                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Screen 3 */}
-              <div className="flex flex-col p-10 items-start gap-4 self-stretch rounded-xl bg-primary-1000">
-                <h4 className="font-serif text-lg font-bold text-secondary-300">{t.screen3Title}</h4>
-                <div 
-                  className="relative w-full aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent"
-                  onClick={() => setLightboxImg("/images/rogo_project/Video 3.mp4")}
-                >
-                  <video 
-                    src="/images/rogo_project/Video 3.mp4"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-contain rounded-[12px]"
-                  />
-                  <button 
-                    className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLightboxImg("/images/rogo_project/Video 3.mp4");
-                    }}
-                  >
-                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                  </button>
-                </div>
+              <div 
+                className="flex flex-col bg-primary-1000 rounded-xl p-6 md:p-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[600ms] ease-in-out cursor-pointer"
+                onMouseEnter={() => setHoveredScreen(3)}
+                onMouseLeave={() => setHoveredScreen(null)}
+              >
+                <h4 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.screen3Title)}</h4>
+                {hoveredScreen === 3 && (
+                  <div className="flex justify-center w-full mt-2 animate-smartRevealSlow">
+                    <div 
+                      className="relative w-full aspect-[426/284] md:h-[360px] md:w-auto md:aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent flex-shrink-0"
+                      onClick={() => setLightboxImg("/images/rogo_project/Video 3.mp4")}
+                    >
+                      <video 
+                        src="/images/rogo_project/Video 3.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-contain rounded-[12px]"
+                      />
+                      <button 
+                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxImg("/images/rogo_project/Video 3.mp4");
+                        }}
+                      >
+                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </section>
