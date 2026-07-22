@@ -976,7 +976,7 @@ export default function RogoDashboardPage() {
           {/* SECTION 07: DESIGN SYSTEM */}
           <section className="flex flex-col gap-6 w-full">
             {renderSectionTitle("07", t.designSystemTitle)}
-            <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left max-w-2xl">{t.designSystemDesc}</p>
+            <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.designSystemDesc}</p>
 
             <div 
               className="relative w-full aspect-[16/10] overflow-hidden group cursor-zoom-in bg-transparent"
