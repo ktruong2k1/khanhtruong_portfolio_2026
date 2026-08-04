@@ -29,11 +29,17 @@ const translations = {
 };
 
 export default function ContactPage() {
-  const [lang, setLang] = useState<"vi" | "en">("vi");
+  const [lang, setLang] = useState<"vi" | "en">(() => {
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem("portfolio_lang") as "vi" | "en" | null;
+      if (savedLang === "vi" || savedLang === "en") return savedLang;
+    }
+    return "vi";
+  });
   const isInitialMount = useRef(true);
   const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
   const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
-  const [fadeOpacity, setFadeOpacity] = useState(0);
+  const [fadeOpacity] = useState(1);
 
   const handleLangChange = (newLang: "vi" | "en") => {
     if (newLang === lang || transitionStage !== "idle") return;
@@ -54,13 +60,7 @@ export default function ContactPage() {
     }, 750);
   };
 
-  useEffect(() => {
-    const savedLang = typeof window !== 'undefined' ? localStorage.getItem("portfolio_lang") as "vi" | "en" : null;
-    if (savedLang && (savedLang === "vi" || savedLang === "en")) {
-      setLang(savedLang);
-    }
-    setFadeOpacity(1);
-  }, []);
+
 
   useEffect(() => {
     if (isInitialMount.current) {

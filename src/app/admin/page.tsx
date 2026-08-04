@@ -36,8 +36,18 @@ interface Project {
 }
 
 export default function AdminPage() {
-  const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [password, setPassword] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("admin_password") || "";
+    }
+    return "";
+  });
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !!sessionStorage.getItem("admin_password");
+    }
+    return false;
+  });
   const [error, setError] = useState("");
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
@@ -78,15 +88,6 @@ export default function AdminPage() {
       .catch(() => setError("Lỗi kết nối server."));
   };
 
-  // Restore session
-  useEffect(() => {
-    const saved = sessionStorage.getItem("admin_password");
-    if (saved) {
-      setPassword(saved);
-      setIsLoggedIn(true);
-    }
-  }, []);
-
   const handleSaveAll = () => {
     setIsSaving(true);
     fetch("/api/projects", {
@@ -95,15 +96,17 @@ export default function AdminPage() {
       body: JSON.stringify({ password, projects })
     })
       .then(res => {
+        setIsSaving(false);
         if (res.ok) {
-          alert("Lưu cơ sở dữ liệu thành công! Hãy commit thay đổi để cập nhật.");
+          alert("Lưu thành công tất cả thay đổi!");
         } else {
-          setError("Lỗi lưu dữ liệu. Hãy đăng nhập lại.");
-          setIsLoggedIn(false);
+          alert("Lưu thất bại. Kiểm tra lại mật khẩu.");
         }
       })
-      .catch(() => setError("Lỗi kết nối."))
-      .finally(() => setIsSaving(false));
+      .catch(() => {
+        setIsSaving(false);
+        alert("Lỗi kết nối khi lưu.");
+      });
   };
 
   const moveProject = (index: number, direction: "up" | "down") => {
@@ -159,14 +162,14 @@ export default function AdminPage() {
     setActiveProject(newProj);
   };
 
-  const updateActiveProjectField = (field: keyof Project, value: any) => {
+  const updateActiveProjectField = (field: keyof Project, value: unknown) => {
     if (!activeProject) return;
     const updatedProj = { ...activeProject, [field]: value };
     setActiveProject(updatedProj);
     setProjects(projects.map(p => p.id === activeProject.id ? updatedProj : p));
   };
 
-  const updateActiveProjectNested = (parent: "links" | "specInfo" | "caseStudyContent", field: string, value: any) => {
+  const updateActiveProjectNested = (parent: "links" | "specInfo" | "caseStudyContent", field: string, value: unknown) => {
     if (!activeProject) return;
     const updatedProj = {
       ...activeProject,

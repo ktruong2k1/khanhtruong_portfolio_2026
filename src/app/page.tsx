@@ -150,11 +150,17 @@ const translations = {
 
 export default function Home() {
   const router = useRouter();
-  const [lang, setLang] = useState<"vi" | "en">("vi");
+  const [lang, setLang] = useState<"vi" | "en">(() => {
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem("portfolio_lang") as "vi" | "en" | null;
+      if (savedLang === "vi" || savedLang === "en") return savedLang;
+    }
+    return "vi";
+  });
   const isInitialMount = useRef(true);
   const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
   const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
-  const [fadeOpacity, setFadeOpacity] = useState(0);
+  const [fadeOpacity] = useState(1);
 
   const handleLangChange = (newLang: "vi" | "en") => {
     if (newLang === lang || transitionStage !== "idle") return;
@@ -174,14 +180,6 @@ export default function Home() {
       setPendingLang(null);
     }, 750);
   };
-
-  useEffect(() => {
-    const savedLang = typeof window !== 'undefined' ? localStorage.getItem("portfolio_lang") as "vi" | "en" : null;
-    if (savedLang && (savedLang === "vi" || savedLang === "en")) {
-      setLang(savedLang);
-    }
-    setFadeOpacity(1);
-  }, []);
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -210,14 +208,11 @@ export default function Home() {
 
   // Cooldown timer to prevent scroll momentum from triggering transition instantly
   useEffect(() => {
-    if (isAtBottom) {
-      const timer = setTimeout(() => {
-        setCanTriggerWorksTransition(true);
-      }, 600);
-      return () => clearTimeout(timer);
-    } else {
-      setCanTriggerWorksTransition(false);
-    }
+    if (!isAtBottom) return;
+    const timer = setTimeout(() => {
+      setCanTriggerWorksTransition(true);
+    }, 600);
+    return () => clearTimeout(timer);
   }, [isAtBottom]);
 
   // Scroll to works transition
@@ -257,11 +252,13 @@ export default function Home() {
             } else {
               setBannerHeight(`${targetHeight}px`);
               setIsAtBottom(false);
+              setCanTriggerWorksTransition(false);
             }
           }
         } else {
           setIsStuck(false);
           setIsAtBottom(false);
+          setCanTriggerWorksTransition(false);
           setScrollProgress(0);
           if (!isTransitioning) {
             setBannerHeight("64px");

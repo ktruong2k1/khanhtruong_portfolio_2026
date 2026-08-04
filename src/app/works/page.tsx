@@ -95,12 +95,18 @@ const translations = {
 };
 
 export default function WorksPage() {
-  const [lang, setLang] = useState<"vi" | "en">("vi");
+  const [lang, setLang] = useState<"vi" | "en">(() => {
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem("portfolio_lang") as "vi" | "en" | null;
+      if (savedLang === "vi" || savedLang === "en") return savedLang;
+    }
+    return "vi";
+  });
   const isInitialMount = useRef(true);
-  const [mounted, setMounted] = useState(false);
+  const [mounted] = useState(true);
   const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
   const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
-  const [fadeOpacity, setFadeOpacity] = useState(0);
+  const [fadeOpacity] = useState(1);
 
   const handleLangChange = (newLang: "vi" | "en") => {
     if (newLang === lang || transitionStage !== "idle") return;
@@ -120,15 +126,6 @@ export default function WorksPage() {
       setPendingLang(null);
     }, 750);
   };
-
-  useEffect(() => {
-    setMounted(true);
-    const savedLang = typeof window !== 'undefined' ? localStorage.getItem("portfolio_lang") as "vi" | "en" : null;
-    if (savedLang && (savedLang === "vi" || savedLang === "en")) {
-      setLang(savedLang);
-    }
-    setFadeOpacity(1);
-  }, []);
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -280,7 +277,7 @@ export default function WorksPage() {
         className="w-full sticky top-0 z-40 transition-all duration-300"
       >
         {/* Left: Logo */}
-        <a href="/" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight hover:scale-105 transition-transform duration-150">
+        <Link href="/" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight hover:scale-105 transition-transform duration-150">
           <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="header-logo-mask-works">
               <rect width="28" height="28" fill="white" />
@@ -290,7 +287,7 @@ export default function WorksPage() {
             <circle cx="14" cy="14" r="14" fill="#22C55E" mask="url(#header-logo-mask-works)" />
           </svg>
           khanhtruong_nguyen
-        </a>
+        </Link>
 
         {/* Center: Centered navigation links (selected state highlighted) */}
         <nav 
@@ -425,7 +422,7 @@ export default function WorksPage() {
         }}
         className="relative"
       >
-        <a 
+        <Link 
           href="/" 
           style={{
             color: 'var(--Colors-Primary-400, #22C55E)',
@@ -442,7 +439,7 @@ export default function WorksPage() {
           className="hover:text-brand-accent hover:translate-x-[-4px] transition-all mb-8 uppercase"
         >
           <ArrowLeft size={16} /> {t.backToPortfolio}
-        </a>
+        </Link>
 
         <div className="flex items-center gap-4 w-full" style={{ width: '100%' }}>
           <h1 
@@ -1148,7 +1145,7 @@ export default function WorksPage() {
           <div className="flex items-center gap-6 font-semibold">
             <a href="https://www.linkedin.com/in/nguyen-khanh-truong-designer/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
             <a href="https://www.behance.net/nguyenkhanhtr" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Behance</a>
-            <a href="/" className="hover:text-white transition-colors">Archive</a>
+            <Link href="/" className="hover:text-white transition-colors">Archive</Link>
           </div>
         </div>
       </footer>

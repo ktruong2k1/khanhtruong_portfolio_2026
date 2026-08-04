@@ -5,14 +5,13 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 export default function PendingPage() {
-  const [lang, setLang] = useState<"vi" | "en">("vi");
-
-  useEffect(() => {
-    const savedLang = typeof window !== 'undefined' ? localStorage.getItem("portfolio_lang") as "vi" | "en" : null;
-    if (savedLang === "vi" || savedLang === "en") {
-      setLang(savedLang);
+  const [lang] = useState<"vi" | "en">(() => {
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem("portfolio_lang") as "vi" | "en" | null;
+      if (savedLang === "vi" || savedLang === "en") return savedLang;
     }
-  }, []);
+    return "vi";
+  });
 
   const t = {
     vi: {

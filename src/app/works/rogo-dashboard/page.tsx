@@ -204,7 +204,13 @@ const translations = {
 };
 
 export default function RogoDashboardPage() {
-  const [lang, setLang] = useState<"vi" | "en">("en");
+  const [lang, setLang] = useState<"vi" | "en">(() => {
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem("portfolio_lang") as "vi" | "en" | null;
+      if (savedLang === "vi" || savedLang === "en") return savedLang;
+    }
+    return "en";
+  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [contactMessage, setContactMessage] = useState("");
@@ -212,14 +218,179 @@ export default function RogoDashboardPage() {
   const [activeFlow, setActiveFlow] = useState<number>(0);
   const [hoveredDecision, setHoveredDecision] = useState<number | null>(null);
   const [hoveredScreen, setHoveredScreen] = useState<number | null>(null);
+  const [activeStep, setActiveStep] = useState<number>(1);
+  const [activeScreenStep, setActiveScreenStep] = useState<number>(1);
+  const [activeImpactStep, setActiveImpactStep] = useState<number>(1);
 
-  // Load language settings from localStorage if available
+  const decisionsContainerRef = useRef<HTMLDivElement>(null);
+  const screensContainerRef = useRef<HTMLDivElement>(null);
+  const impactContainerRef = useRef<HTMLDivElement>(null);
+  
+  const video1Ref = useRef<HTMLVideoElement>(null);
+  const video2Ref = useRef<HTMLVideoElement>(null);
+  const video3Ref = useRef<HTMLVideoElement>(null);
+
+  // Play active screen video and pause non-revealed screen videos
   useEffect(() => {
-    const savedLang = localStorage.getItem("portfolio_lang") as "vi" | "en" | null;
-    if (savedLang) {
-      setLang(savedLang);
+    if (activeScreenStep === 1) {
+      video1Ref.current?.play().catch(() => {});
+      video2Ref.current?.pause();
+      video3Ref.current?.pause();
+    } else if (activeScreenStep === 2) {
+      video1Ref.current?.pause();
+      video2Ref.current?.play().catch(() => {});
+      video3Ref.current?.pause();
+    } else if (activeScreenStep === 3) {
+      video1Ref.current?.pause();
+      video2Ref.current?.pause();
+      video3Ref.current?.play().catch(() => {});
     }
+  }, [activeScreenStep]);
+
+  // Sticky scroll progress handler for Section 05 (Design Decisions), Section 06 (Key Screens), & Section 08 (Impact)
+  useEffect(() => {
+    const handleScroll = () => {
+      // Section 05 scroll progress (5 sub-steps)
+      if (decisionsContainerRef.current) {
+        const rect = decisionsContainerRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const totalScrollableDistance = rect.height - viewportHeight;
+        if (totalScrollableDistance > 0) {
+          const topOffset = 116;
+          const scrolled = topOffset - rect.top;
+
+          let nextStep = 1;
+          if (scrolled <= 0) {
+            nextStep = 1;
+          } else if (scrolled >= totalScrollableDistance) {
+            nextStep = 5;
+          } else {
+            const progress = scrolled / totalScrollableDistance;
+            if (progress < 0.20) nextStep = 1;
+            else if (progress < 0.40) nextStep = 2;
+            else if (progress < 0.60) nextStep = 3;
+            else if (progress < 0.80) nextStep = 4;
+            else nextStep = 5;
+          }
+          setActiveStep((prev) => (prev !== nextStep ? nextStep : prev));
+        }
+      }
+
+      // Section 06 scroll progress (3 screen steps)
+      if (screensContainerRef.current) {
+        const rect = screensContainerRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const totalScrollableDistance = rect.height - viewportHeight;
+        if (totalScrollableDistance > 0) {
+          const topOffset = 116;
+          const scrolled = topOffset - rect.top;
+
+          let nextScreen = 1;
+          if (scrolled <= 0) {
+            nextScreen = 1;
+          } else if (scrolled >= totalScrollableDistance) {
+            nextScreen = 3;
+          } else {
+            const progress = scrolled / totalScrollableDistance;
+            if (progress < 0.33) nextScreen = 1;
+            else if (progress < 0.66) nextScreen = 2;
+            else nextScreen = 3;
+          }
+          setActiveScreenStep((prev) => (prev !== nextScreen ? nextScreen : prev));
+        }
+      }
+
+      // Section 08 scroll progress (4 impact steps)
+      if (impactContainerRef.current) {
+        const rect = impactContainerRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const totalScrollableDistance = rect.height - viewportHeight;
+        if (totalScrollableDistance > 0) {
+          const topOffset = 116;
+          const scrolled = topOffset - rect.top;
+
+          let nextImpact = 1;
+          if (scrolled <= 0) {
+            nextImpact = 1;
+          } else if (scrolled >= totalScrollableDistance) {
+            nextImpact = 4;
+          } else {
+            const progress = scrolled / totalScrollableDistance;
+            if (progress < 0.25) nextImpact = 1;
+            else if (progress < 0.50) nextImpact = 2;
+            else if (progress < 0.75) nextImpact = 3;
+            else nextImpact = 4;
+          }
+          setActiveImpactStep((prev) => (prev !== nextImpact ? nextImpact : prev));
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const scrollToDecisionStep = (decisionIndex: number) => {
+    if (!decisionsContainerRef.current) {
+      if (decisionIndex === 1) setActiveStep(1);
+      if (decisionIndex === 2) setActiveStep(2);
+      if (decisionIndex === 3) setActiveStep(4);
+      return;
+    }
+    const rect = decisionsContainerRef.current.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const containerTop = rect.top + scrollTop;
+    const totalScrollableDistance = rect.height - window.innerHeight;
+
+    let targetStep = 1;
+    let targetRatio = 0.1;
+    if (decisionIndex === 2) { targetStep = 2; targetRatio = 0.3; }
+    if (decisionIndex === 3) { targetStep = 4; targetRatio = 0.7; }
+
+    const targetY = containerTop - 116 + totalScrollableDistance * targetRatio;
+    window.scrollTo({ top: targetY, behavior: "smooth" });
+    setActiveStep(targetStep);
+  };
+
+  const scrollToScreenStep = (screenIndex: number) => {
+    if (!screensContainerRef.current) {
+      setActiveScreenStep(screenIndex);
+      return;
+    }
+    const rect = screensContainerRef.current.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const containerTop = rect.top + scrollTop;
+    const totalScrollableDistance = rect.height - window.innerHeight;
+
+    let targetRatio = 0.1;
+    if (screenIndex === 2) targetRatio = 0.5;
+    if (screenIndex === 3) targetRatio = 0.9;
+
+    const targetY = containerTop - 116 + totalScrollableDistance * targetRatio;
+    window.scrollTo({ top: targetY, behavior: "smooth" });
+    setActiveScreenStep(screenIndex);
+  };
+
+  const scrollToImpactStep = (impactIndex: number) => {
+    if (!impactContainerRef.current) {
+      setActiveImpactStep(impactIndex);
+      return;
+    }
+    const rect = impactContainerRef.current.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const containerTop = rect.top + scrollTop;
+    const totalScrollableDistance = rect.height - window.innerHeight;
+
+    let targetRatio = 0.1;
+    if (impactIndex === 2) targetRatio = 0.35;
+    if (impactIndex === 3) targetRatio = 0.65;
+    if (impactIndex === 4) targetRatio = 0.9;
+
+    const targetY = containerTop - 116 + totalScrollableDistance * targetRatio;
+    window.scrollTo({ top: targetY, behavior: "smooth" });
+    setActiveImpactStep(impactIndex);
+  };
 
   const handleLangChange = (newLang: "vi" | "en") => {
     setLang(newLang);
@@ -293,7 +464,7 @@ export default function RogoDashboardPage() {
 
   return (
     <>
-      <div className="page-wrapper text-[#E5E5E5] font-sans relative overflow-x-hidden transition-colors duration-300">
+      <div className="page-wrapper text-[#E5E5E5] font-sans relative overflow-x-clip transition-colors duration-300">
         
         {/* STICKY/FIXED HEADER */}
         <header 
@@ -636,8 +807,8 @@ export default function RogoDashboardPage() {
 
             {/* Tab Layout (Left Menu / Right Content Card) */}
             <div className="flex flex-col md:flex-row gap-8 items-start w-full justify-between">
-              {/* Left Tabs Column */}
-              <div className="flex flex-col gap-4 flex-1 w-full">
+              {/* Left Column Tabs */}
+              <div className="flex flex-col gap-3 w-full md:w-[320px] flex-shrink-0">
                 {flows.map((item) => {
                   const isActive = item.index === activeFlow;
                   if (isActive) {
@@ -646,9 +817,8 @@ export default function RogoDashboardPage() {
                         key={item.index}
                         onMouseEnter={() => setActiveFlow(item.index)}
                         onClick={() => setActiveFlow(item.index)}
-                        className="flex flex-row items-center p-6 gap-5 self-stretch rounded-xl bg-primary-1000 select-none cursor-pointer w-full transition-all duration-[260ms]"
+                        className="flex flex-col items-start p-6 gap-3 self-stretch rounded-2xl bg-[#0e1713] border border-[#182920] select-none cursor-pointer w-full transition-all duration-[260ms]"
                       >
-                        <div className="w-[3px] h-[24px] bg-primary-400 rounded-full flex-shrink-0" />
                         <h3 className="font-serif text-lg font-bold text-secondary-300">
                           {item.title}
                         </h3>
@@ -660,9 +830,9 @@ export default function RogoDashboardPage() {
                         key={item.index}
                         onMouseEnter={() => setActiveFlow(item.index)}
                         onClick={() => setActiveFlow(item.index)}
-                        className="flex flex-col items-start p-6 gap-5 self-stretch select-none cursor-pointer w-full transition-all duration-[260ms] bg-transparent"
+                        className="flex flex-col items-start p-6 gap-3 self-stretch rounded-2xl bg-transparent border border-transparent select-none cursor-pointer w-full transition-all duration-[260ms]"
                       >
-                        <h3 className="font-serif text-lg font-bold text-neutral-400 hover:text-neutral-200 transition-colors">
+                        <h3 className="font-serif text-lg font-bold text-neutral-500 hover:text-neutral-300 transition-colors">
                           {item.title}
                         </h3>
                       </div>
@@ -673,15 +843,15 @@ export default function RogoDashboardPage() {
 
               {/* Right Content Card Column */}
               <div 
-                className="flex flex-col bg-[#0e1713] rounded-2xl p-6 md:p-10 items-start justify-start gap-4 transition-all duration-[400ms] ease-in-out min-h-[500px] w-full md:w-[880px] flex-shrink-0"
+                className="flex flex-col bg-[#0e1713] rounded-2xl p-6 md:p-10 items-start justify-start gap-4 transition-all duration-[400ms] ease-in-out min-h-[460px] w-full md:flex-1"
               >
                 <div key={activeFlow} className="w-full flex flex-col gap-4">
                   <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left animate-smartReveal">
                     {flows[activeFlow].desc}
                   </p>
-                  <div className="w-full flex justify-center mt-4 animate-smartReveal animation-delay-100">
+                  <div className="w-full flex justify-center mt-4 animate-smartReveal">
                     <div 
-                      className="relative w-full aspect-[800/360] md:h-[360px] md:w-[800px] md:aspect-[800/360] group cursor-zoom-in overflow-hidden rounded-[12px] bg-transparent flex-shrink-0"
+                      className="relative w-full aspect-[1600/720] md:h-[340px] md:w-auto md:aspect-[1600/720] group cursor-zoom-in overflow-hidden rounded-[12px] bg-transparent flex-shrink-0"
                       onClick={() => setLightboxImg(flows[activeFlow].img)}
                     >
                       <Image 
@@ -692,13 +862,13 @@ export default function RogoDashboardPage() {
                         sizes="(max-width: 768px) 100vw, 800px"
                       />
                       <button 
-                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
+                        className="absolute bottom-4 right-4 hover:scale-110 transition-transform cursor-pointer z-10 p-2 rounded-full bg-black/50 backdrop-blur-sm"
                         onClick={(e) => {
                           e.stopPropagation();
                           setLightboxImg(flows[activeFlow].img);
                         }}
                       >
-                        <img src="/images/rogo_project/Zoom_light.svg" alt="Zoom" className="w-6 h-6" />
+                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-5 h-5" />
                       </button>
                     </div>
                   </div>
@@ -707,324 +877,496 @@ export default function RogoDashboardPage() {
             </div>
           </section>
 
-          {/* SECTION 05: DESIGN DECISIONS */}
-          <section className="flex flex-col gap-8 w-full">
-            <div className="flex flex-col gap-3">
-              {renderSectionTitle("05", t.decisionsTitle)}
-              <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.decisionsDesc}</p>
-            </div>
+          {/* SECTION 05: DESIGN DECISIONS (5-STEP ANIMATION RUNWAY WITH 40PX TOP PADDING WHEN STICKY) */}
+          <div ref={decisionsContainerRef} className="relative w-full h-[400vh]">
+            <div className="sticky top-[116px] w-full flex flex-col gap-6 py-4 transition-all duration-300">
+              <div className="flex flex-col gap-3">
+                {renderSectionTitle("05", t.decisionsTitle)}
+                <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">
+                  {t.decisionsDesc}
+                </p>
+              </div>
 
-            {/* Decision 1 */}
-            <div 
-              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[600ms] ease-in-out cursor-pointer"
-              onMouseEnter={() => setHoveredDecision(1)}
-              onMouseLeave={() => setHoveredDecision(null)}
-            >
-              <h3 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.dec1Title)}</h3>
-              {hoveredDecision === 1 && (
-                <div className="flex justify-center w-full mt-2 animate-smartRevealSlow">
-                  <div 
-                    className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
+              <div className="flex flex-col gap-4 w-full mt-2">
+                {/* Decision 1 */}
+                <div 
+                  className={`flex flex-col rounded-2xl transition-all duration-500 ease-in-out ${
+                    activeStep === 1 
+                      ? "bg-[#0b1511] p-6 md:p-8 shadow-2xl" 
+                      : "py-2 cursor-pointer"
+                  }`}
+                >
+                  <h3 
+                    onClick={() => scrollToDecisionStep(1)}
+                    className={`font-serif text-xl md:text-2xl font-bold select-none cursor-pointer transition-colors duration-300 ${
+                      activeStep === 1 ? "text-secondary-300" : "text-neutral-500 hover:text-neutral-300"
+                    }`}
                   >
-                    <Image 
-                      src="/images/rogo_project/Diagram 6-1.png"
-                      alt="One Panel Replacing Many Pages"
-                      fill
-                      className="object-contain transition-transform duration-[1000ms] hover:scale-[1.03]"
-                      sizes="(max-width: 768px) 100vw, 1160px"
-                    />
-                    <button 
-                      className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLightboxImg("/images/rogo_project/Diagram 6-1.png");
-                      }}
-                    >
-                      <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+                    {t.dec1Title}
+                  </h3>
 
-            {/* Decision 2 */}
-            <div 
-              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[600ms] ease-in-out cursor-pointer"
-              onMouseEnter={() => setHoveredDecision(2)}
-              onMouseLeave={() => setHoveredDecision(null)}
-            >
-              <h3 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.dec2Title)}</h3>
-              {hoveredDecision === 2 && (
-                <div className="flex flex-col md:flex-row items-start gap-8 w-full mt-2 animate-smartRevealSlow">
-                  <div className="flex flex-col gap-6 w-full md:flex-1 md:min-w-0">
-                    <div 
-                      className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                      onClick={() => setLightboxImg("/images/rogo_project/Diagram 7.png")}
-                    >
-                      <Image 
-                        src="/images/rogo_project/Diagram 7.png"
-                        alt="New Partner Switcher"
-                        fill
-                        className="object-contain transition-transform duration-[1000ms] hover:scale-[1.03]"
-                        sizes="(max-width: 768px) 100vw, 800px"
-                      />
-                      <button 
-                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setLightboxImg("/images/rogo_project/Diagram 7.png")}
-                        }
+                  <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    activeStep === 1 ? "max-h-[600px] opacity-100 mt-4" : "max-h-0 opacity-0"
+                  }`}>
+                    <div className="flex justify-center w-full">
+                      <div 
+                        className="relative w-full aspect-[2320/720] md:h-[340px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
+                        onClick={() => setLightboxImg("/images/rogo_project/Diagram 6-1.png")}
                       >
-                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                      </button>
-                    </div>
-                    <div 
-                      className="relative w-full aspect-[1600/720] md:h-[360px] md:w-auto md:aspect-[1600/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                      onClick={() => setLightboxImg("/images/rogo_project/Diagram 8.png")}
-                    >
-                      <Image 
-                        src="/images/rogo_project/Diagram 8.png"
-                        alt="Branding Settings Module"
-                        fill
-                        className="object-contain transition-transform duration-[1000ms] hover:scale-[1.03]"
-                        sizes="(max-width: 768px) 100vw, 800px"
-                      />
-                      <button 
-                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setLightboxImg("/images/rogo_project/Diagram 8.png");
-                        }}
-                      >
-                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                      </button>
+                        <Image 
+                          src="/images/rogo_project/Diagram 6-1.png"
+                          alt={t.dec1Title}
+                          fill
+                          className="object-contain transition-transform duration-700 hover:scale-[1.02]"
+                          sizes="(max-width: 768px) 100vw, 1160px"
+                        />
+                        <button 
+                          className="absolute bottom-4 right-4 hover:scale-110 transition-transform cursor-pointer z-10 p-2 rounded-full bg-black/50 backdrop-blur-sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setLightboxImg("/images/rogo_project/Diagram 6-1.png");
+                          }}
+                        >
+                          <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-5 h-5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              )}
-            </div>
 
-            {/* Decision 3 */}
-            <div 
-              className="flex flex-col bg-primary-1000 rounded-xl p-6 md:py-6 md:px-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[600ms] ease-in-out cursor-pointer"
-              onMouseEnter={() => setHoveredDecision(3)}
-              onMouseLeave={() => setHoveredDecision(null)}
-            >
-              <h3 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.dec3Title)}</h3>
-              {hoveredDecision === 3 && (
-                <div className="flex flex-col gap-6 w-full mt-2 justify-center items-center animate-smartRevealSlow">
-                  <div 
-                    className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
+                {/* Decision 2 */}
+                <div 
+                  className={`flex flex-col rounded-2xl transition-all duration-500 ease-in-out ${
+                    (activeStep === 2 || activeStep === 3)
+                      ? "bg-[#0b1511] p-6 md:p-8 shadow-2xl" 
+                      : "py-2 cursor-pointer"
+                  }`}
+                >
+                  <h3 
+                    onClick={() => scrollToDecisionStep(2)}
+                    className={`font-serif text-xl md:text-2xl font-bold select-none cursor-pointer transition-colors duration-300 ${
+                      (activeStep === 2 || activeStep === 3) ? "text-secondary-300" : "text-neutral-500 hover:text-neutral-300"
+                    }`}
                   >
-                    <Image 
-                      src="/images/rogo_project/Diagram 9.png"
-                      alt="Permissions Scope"
-                      fill
-                      className="object-contain transition-transform duration-[1000ms] hover:scale-[1.03]"
-                      sizes="(max-width: 768px) 100vw, 1160px"
-                    />
-                    <button 
-                      className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLightboxImg("/images/rogo_project/Diagram 9.png");
-                      }}
-                    >
-                      <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                    </button>
-                  </div>
-                  <div 
-                    className="relative w-full aspect-[2320/720] md:h-[360px] md:w-auto md:aspect-[2320/720] overflow-hidden group cursor-zoom-in bg-transparent flex-shrink-0"
-                    onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
-                  >
-                    <Image 
-                      src="/images/rogo_project/Diagram 10.png"
-                      alt="Permissions Dialogs"
-                      fill
-                      className="object-contain transition-transform duration-[1000ms] hover:scale-[1.03]"
-                      sizes="(max-width: 768px) 100vw, 1160px"
-                    />
-                    <button 
-                      className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLightboxImg("/images/rogo_project/Diagram 10.png");
-                      }}
-                    >
-                      <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                    </button>
+                    {t.dec2Title}
+                  </h3>
+
+                  <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    (activeStep === 2 || activeStep === 3) ? "max-h-[700px] opacity-100 mt-4" : "max-h-0 opacity-0"
+                  }`}>
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full items-center">
+                      {/* Left side: 1/ and 2/ texts */}
+                      <div className="lg:col-span-4 flex flex-col gap-6">
+                        <div 
+                          onClick={() => setActiveStep(2)}
+                          className={`flex gap-4 items-start cursor-pointer transition-opacity duration-300 ${
+                            activeStep === 2 ? "opacity-100" : "opacity-40"
+                          }`}
+                        >
+                          <span className="font-serif text-2xl font-bold text-secondary-300 flex-shrink-0">1/</span>
+                          <p className="text-[#989898] font-sans text-sm leading-[22px] text-left">
+                            {t.dec2Sub1Desc}
+                          </p>
+                        </div>
+                        <div 
+                          onClick={() => setActiveStep(3)}
+                          className={`flex gap-4 items-start cursor-pointer transition-opacity duration-300 ${
+                            activeStep === 3 ? "opacity-100" : "opacity-40"
+                          }`}
+                        >
+                          <span className="font-serif text-2xl font-bold text-secondary-300 flex-shrink-0">2/</span>
+                          <p className="text-[#989898] font-sans text-sm leading-[22px] text-left">
+                            {t.dec2Sub2Desc}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Right side: Diagram 7 (Step 2A) or Diagram 8 (Step 2B) */}
+                      <div className="lg:col-span-8 flex justify-center items-center relative w-full aspect-[2320/720] md:h-[320px] md:w-auto md:aspect-[2320/720]">
+                        {/* Step 2A: Diagram 7 */}
+                        <div 
+                          className={`absolute inset-0 transition-opacity duration-700 ease-in-out group cursor-zoom-in ${
+                            activeStep === 2 ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
+                          }`}
+                          onClick={() => setLightboxImg("/images/rogo_project/Diagram 7.png")}
+                        >
+                          <Image 
+                            src="/images/rogo_project/Diagram 7.png"
+                            alt={t.dec2Sub1Title}
+                            fill
+                            className="object-contain transition-transform duration-700 hover:scale-[1.02]"
+                            sizes="(max-width: 768px) 100vw, 1000px"
+                          />
+                          <button 
+                            className="absolute bottom-4 right-4 hover:scale-110 transition-transform cursor-pointer z-20 p-2 rounded-full bg-black/50 backdrop-blur-sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setLightboxImg("/images/rogo_project/Diagram 7.png");
+                            }}
+                          >
+                            <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-5 h-5" />
+                          </button>
+                        </div>
+
+                        {/* Step 2B: Diagram 8 */}
+                        <div 
+                          className={`absolute inset-0 transition-opacity duration-700 ease-in-out group cursor-zoom-in ${
+                            activeStep === 3 ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
+                          }`}
+                          onClick={() => setLightboxImg("/images/rogo_project/Diagram 8.png")}
+                        >
+                          <Image 
+                            src="/images/rogo_project/Diagram 8.png"
+                            alt={t.dec2Sub2Title}
+                            fill
+                            className="object-contain transition-transform duration-700 hover:scale-[1.02]"
+                            sizes="(max-width: 768px) 100vw, 1000px"
+                          />
+                          <button 
+                            className="absolute bottom-4 right-4 hover:scale-110 transition-transform cursor-pointer z-20 p-2 rounded-full bg-black/50 backdrop-blur-sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setLightboxImg("/images/rogo_project/Diagram 8.png");
+                            }}
+                          >
+                            <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              )}
-            </div>
-          </section>
 
-          {/* SECTION 06: KEY SCREENS */}
-          <section className="flex flex-col gap-6 w-full" onMouseLeave={() => setHoveredScreen(null)}>
-            {renderSectionTitle("06", t.screensTitle)}
-            
-            <div className="flex flex-col gap-6 w-full">
-              {/* Screen 1 */}
-              <div 
-                className="flex flex-col bg-primary-1000 rounded-xl p-6 md:p-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[600ms] ease-in-out cursor-pointer"
-                onMouseEnter={() => setHoveredScreen(1)}
-                onMouseLeave={() => setHoveredScreen(null)}
-              >
-                <h4 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.screen1Title)}</h4>
-                {hoveredScreen === 1 && (
-                  <div className="flex justify-center w-full mt-2 animate-smartRevealSlow">
-                    <div 
-                      className="relative w-full aspect-[426/284] md:h-[360px] md:w-auto md:aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent flex-shrink-0"
-                      onClick={() => setLightboxImg("/images/rogo_project/Video 1.mp4")}
-                    >
-                      <video 
-                        src="/images/rogo_project/Video 1.mp4"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-contain rounded-[12px]"
-                      />
-                      <button 
-                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setLightboxImg("/images/rogo_project/Video 1.mp4");
-                        }}
+                {/* Decision 3 */}
+                <div 
+                  className={`flex flex-col rounded-2xl transition-all duration-500 ease-in-out ${
+                    (activeStep === 4 || activeStep === 5)
+                      ? "bg-[#0b1511] p-6 md:p-8 shadow-2xl" 
+                      : "py-2 cursor-pointer"
+                  }`}
+                >
+                  <h3 
+                    onClick={() => scrollToDecisionStep(3)}
+                    className={`font-serif text-xl md:text-2xl font-bold select-none cursor-pointer transition-colors duration-300 ${
+                      (activeStep === 4 || activeStep === 5) ? "text-secondary-300" : "text-neutral-500 hover:text-neutral-300"
+                    }`}
+                  >
+                    {t.dec3Title}
+                  </h3>
+
+                  <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    (activeStep === 4 || activeStep === 5) ? "max-h-[750px] opacity-100 mt-4" : "max-h-0 opacity-0"
+                  }`}>
+                    <div className="w-full flex justify-center items-center relative rounded-xl overflow-hidden bg-[#0b1511] p-2 md:p-4">
+                      {/* Step 3A: Diagram 9 */}
+                      <div 
+                        className={`w-full transition-opacity duration-700 ease-in-out group cursor-zoom-in ${
+                          activeStep === 4 ? "opacity-100 block z-10" : "opacity-0 hidden z-0"
+                        }`}
+                        onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
                       >
-                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                      </button>
+                        <div className="relative w-full overflow-hidden rounded-xl">
+                          <img 
+                            src="/images/rogo_project/Diagram 9.png"
+                            alt={t.dec3Row1Title}
+                            className="w-full h-auto object-contain rounded-xl transition-transform duration-700 hover:scale-[1.02] block"
+                          />
+                          <button 
+                            className="absolute bottom-4 right-4 hover:scale-110 transition-transform cursor-pointer z-20 p-2 rounded-full bg-black/50 backdrop-blur-sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setLightboxImg("/images/rogo_project/Diagram 9.png");
+                            }}
+                          >
+                            <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Step 3B: Diagram 10 */}
+                      <div 
+                        className={`w-full transition-opacity duration-700 ease-in-out group cursor-zoom-in ${
+                          activeStep === 5 ? "opacity-100 block z-10" : "opacity-0 hidden z-0"
+                        }`}
+                        onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
+                      >
+                        <div className="relative w-full overflow-hidden rounded-xl">
+                          <img 
+                            src="/images/rogo_project/Diagram 10.png"
+                            alt={t.dec3Row2Title}
+                            className="w-full h-auto object-contain rounded-xl transition-transform duration-700 hover:scale-[1.02] block"
+                          />
+                          <button 
+                            className="absolute bottom-4 right-4 hover:scale-110 transition-transform cursor-pointer z-20 p-2 rounded-full bg-black/50 backdrop-blur-sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setLightboxImg("/images/rogo_project/Diagram 10.png");
+                            }}
+                          >
+                            <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                )}
-              </div>
-
-              {/* Screen 2 */}
-              <div 
-                className="flex flex-col bg-primary-1000 rounded-xl p-6 md:p-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[600ms] ease-in-out cursor-pointer"
-                onMouseEnter={() => setHoveredScreen(2)}
-                onMouseLeave={() => setHoveredScreen(null)}
-              >
-                <h4 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.screen2Title)}</h4>
-                {hoveredScreen === 2 && (
-                  <div className="flex justify-center w-full mt-2 animate-smartRevealSlow">
-                    <div 
-                      className="relative w-full aspect-[426/284] md:h-[360px] md:w-auto md:aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent flex-shrink-0"
-                      onClick={() => setLightboxImg("/images/rogo_project/Video 2.mp4")}
-                    >
-                      <video 
-                        src="/images/rogo_project/Video 2.mp4"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-contain rounded-[12px]"
-                      />
-                      <button 
-                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setLightboxImg("/images/rogo_project/Video 2.mp4");
-                        }}
-                      >
-                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Screen 3 */}
-              <div 
-                className="flex flex-col bg-primary-1000 rounded-xl p-6 md:p-10 items-start gap-5 self-stretch overflow-x-auto max-w-full transition-all duration-[600ms] ease-in-out cursor-pointer"
-                onMouseEnter={() => setHoveredScreen(3)}
-                onMouseLeave={() => setHoveredScreen(null)}
-              >
-                <h4 className="font-serif text-lg font-bold select-none">{renderDecisionTitle(t.screen3Title)}</h4>
-                {hoveredScreen === 3 && (
-                  <div className="flex justify-center w-full mt-2 animate-smartRevealSlow">
-                    <div 
-                      className="relative w-full aspect-[426/284] md:h-[360px] md:w-auto md:aspect-[426/284] overflow-hidden rounded-[12px] group cursor-zoom-in bg-transparent flex-shrink-0"
-                      onClick={() => setLightboxImg("/images/rogo_project/Video 3.mp4")}
-                    >
-                      <video 
-                        src="/images/rogo_project/Video 3.mp4"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-contain rounded-[12px]"
-                      />
-                      <button 
-                        className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setLightboxImg("/images/rogo_project/Video 3.mp4");
-                        }}
-                      >
-                        <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-6 h-6" />
-                      </button>
-                    </div>
-                  </div>
-                )}
+                </div>
               </div>
             </div>
-          </section>
+          </div>
+
+          {/* SECTION 06: KEY SCREENS (CENTERED CARD WITH TOP TAB BAR & STICKY SCROLL) */}
+          <div ref={screensContainerRef} className="relative w-full h-[250vh]">
+            <div className="sticky top-[116px] w-full flex flex-col gap-6 py-4 transition-all duration-300">
+              {renderSectionTitle("06", t.screensTitle)}
+              
+              {/* Top Navigation Bar with 3 Tab Titles */}
+              <div className="flex flex-wrap items-center justify-center gap-6 md:gap-14 w-full py-2 px-4 mb-2">
+                <button 
+                  onClick={() => scrollToScreenStep(1)}
+                  className={`font-serif text-lg md:text-xl font-bold transition-all duration-300 cursor-pointer select-none ${
+                    activeScreenStep === 1 ? "text-secondary-300 scale-[1.03]" : "text-[#5f5743] hover:text-neutral-300"
+                  }`}
+                >
+                  {t.screen1Title}
+                </button>
+                <button 
+                  onClick={() => scrollToScreenStep(2)}
+                  className={`font-serif text-lg md:text-xl font-bold transition-all duration-300 cursor-pointer select-none ${
+                    activeScreenStep === 2 ? "text-secondary-300 scale-[1.03]" : "text-[#5f5743] hover:text-neutral-300"
+                  }`}
+                >
+                  {t.screen2Title}
+                </button>
+                <button 
+                  onClick={() => scrollToScreenStep(3)}
+                  className={`font-serif text-lg md:text-xl font-bold transition-all duration-300 cursor-pointer select-none ${
+                    activeScreenStep === 3 ? "text-secondary-300 scale-[1.03]" : "text-[#5f5743] hover:text-neutral-300"
+                  }`}
+                >
+                  {t.screen3Title}
+                </button>
+              </div>
+
+              {/* Center Main Viewport Card */}
+              <div className="w-full flex justify-center items-center">
+                <div 
+                  className="relative w-full max-w-[780px] rounded-3xl overflow-hidden bg-white shadow-2xl transition-all duration-500 border-4 border-white group cursor-zoom-in"
+                  onClick={() => {
+                    if (activeScreenStep === 1) setLightboxImg("/images/rogo_project/Video 1.mp4");
+                    if (activeScreenStep === 2) setLightboxImg("/images/rogo_project/Video 2.mp4");
+                    if (activeScreenStep === 3) setLightboxImg("/images/rogo_project/Video 3.mp4");
+                  }}
+                >
+                  {/* Screen 1 Video */}
+                  <div className={`w-full transition-opacity duration-500 ${
+                    activeScreenStep === 1 ? "opacity-100 block z-10" : "opacity-0 hidden z-0"
+                  }`}>
+                    <video 
+                      ref={video1Ref}
+                      src="/images/rogo_project/Video 1.mp4"
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-auto object-cover rounded-2xl block"
+                    />
+                  </div>
+
+                  {/* Screen 2 Video */}
+                  <div className={`w-full transition-opacity duration-500 ${
+                    activeScreenStep === 2 ? "opacity-100 block z-10" : "opacity-0 hidden z-0"
+                  }`}>
+                    <video 
+                      ref={video2Ref}
+                      src="/images/rogo_project/Video 2.mp4"
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-auto object-cover rounded-2xl block"
+                    />
+                  </div>
+
+                  {/* Screen 3 Video */}
+                  <div className={`w-full transition-opacity duration-500 ${
+                    activeScreenStep === 3 ? "opacity-100 block z-10" : "opacity-0 hidden z-0"
+                  }`}>
+                    <video 
+                      ref={video3Ref}
+                      src="/images/rogo_project/Video 3.mp4"
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-auto object-cover rounded-2xl block"
+                    />
+                  </div>
+
+                  {/* Zoom Lightbox Button */}
+                  <button 
+                    className="absolute bottom-4 right-4 hover:scale-110 transition-transform cursor-pointer z-20 p-2.5 rounded-full bg-black/60 backdrop-blur-md"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (activeScreenStep === 1) setLightboxImg("/images/rogo_project/Video 1.mp4");
+                      if (activeScreenStep === 2) setLightboxImg("/images/rogo_project/Video 2.mp4");
+                      if (activeScreenStep === 3) setLightboxImg("/images/rogo_project/Video 3.mp4");
+                    }}
+                  >
+                    <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* SECTION 07: DESIGN SYSTEM */}
           <section className="flex flex-col gap-6 w-full">
             {renderSectionTitle("07", t.designSystemTitle)}
             <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left w-full">{t.designSystemDesc}</p>
 
-            <div 
-              className="relative w-full aspect-[16/10] overflow-hidden group cursor-zoom-in bg-transparent"
-              onClick={() => setLightboxImg("/images/rogo_project/Frame 35.png")}
-            >
-              <Image 
-                src="/images/rogo_project/Frame 35.png"
-                alt="Design System Style Guide"
-                fill
-                className="object-contain"
-              />
-              <button 
-                className="absolute bottom-6 right-6 hover:scale-110 transition-transform cursor-pointer z-10"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setLightboxImg("/images/rogo_project/Frame 35.png");
-                }}
+            <div className="w-full mt-2">
+              <div 
+                className="relative w-full overflow-hidden rounded-2xl group cursor-zoom-in shadow-2xl bg-[#0c1410] border border-neutral-800/50"
+                onClick={() => setLightboxImg("/images/rogo_project/Diagram 15.png")}
               >
-                <img src="/images/rogo_project/Zoom_light.svg" alt="Zoom" className="w-6 h-6" />
-              </button>
+                <img 
+                  src="/images/rogo_project/Diagram 15.png"
+                  alt="Design System Style Guide"
+                  className="w-full h-auto object-contain rounded-2xl transition-transform duration-700 hover:scale-[1.01] block"
+                />
+                <button 
+                  className="absolute bottom-4 right-4 hover:scale-110 transition-transform cursor-pointer z-10 p-2 rounded-full bg-black/50 backdrop-blur-sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxImg("/images/rogo_project/Diagram 15.png");
+                  }}
+                >
+                  <img src="/images/rogo_project/Zoom_dark.svg" alt="Zoom" className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </section>
 
-          {/* SECTION 08: IMPACT */}
-          <section className="flex flex-col gap-6 w-full">
-            {renderSectionTitle("08", t.impactTitle)}
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6 rounded-2xl border border-neutral-800 bg-[#0c1410]">
-              {[
-                { title: t.impactCol1Title, desc: t.impactCol1Desc },
-                { title: t.impactCol2Title, desc: t.impactCol2Desc },
-                { title: t.impactCol3Title, desc: t.impactCol3Desc },
-                { title: t.impactCol4Title, desc: t.impactCol4Desc }
-              ].map((item, idx) => (
-                <div key={idx} className="flex flex-col gap-2 w-full">
-                  <h4 style={{ width: "100%", display: "block" }} className="font-bold text-secondary-300 text-sm tracking-wide">{item.title}</h4>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{item.desc}</p>
+          {/* SECTION 08: IMPACT (STICKY SCROLL RUNWAY & 2X2 REVEAL CARDS) */}
+          <div ref={impactContainerRef} className="relative w-full h-[300vh]">
+            <div className="sticky top-[116px] w-full flex flex-col gap-6 py-4 transition-all duration-300">
+              {renderSectionTitle("08", t.impactTitle)}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-12 w-full max-w-[1160px] mx-auto mt-4 items-center">
+                {/* Card 1: Platform */}
+                <div 
+                  onClick={() => scrollToImpactStep(1)}
+                  onMouseEnter={() => setActiveImpactStep(1)}
+                  className={`flex flex-col sm:flex-row items-center gap-5 cursor-pointer select-none transition-all duration-500 ${
+                    activeImpactStep === 1 
+                      ? "opacity-100 scale-[1.02] z-10" 
+                      : "opacity-25 filter brightness-40 grayscale-[60%] scale-95 z-0 hover:opacity-60"
+                  }`}
+                >
+                  <img 
+                    src="/images/rogo_project/Vector 1.svg" 
+                    alt={t.impactCol1Title} 
+                    className="w-[190px] h-[190px] md:w-[210px] md:h-[210px] object-contain flex-shrink-0"
+                  />
+                  <div className="flex flex-col justify-center gap-2 max-w-[320px]">
+                    <h4 className={`font-serif text-2xl md:text-3xl font-bold transition-colors duration-300 ${
+                      activeImpactStep === 1 ? "text-secondary-300" : "text-[#5f5743]"
+                    }`}>
+                      {t.impactCol1Title}
+                    </h4>
+                    <p className="text-[#989898] font-sans text-sm leading-[22px] text-left">
+                      {t.impactCol1Desc}
+                    </p>
+                  </div>
                 </div>
-              ))}
+
+                {/* Card 2: Experience */}
+                <div 
+                  onClick={() => scrollToImpactStep(2)}
+                  onMouseEnter={() => setActiveImpactStep(2)}
+                  className={`flex flex-col sm:flex-row items-center gap-5 cursor-pointer select-none transition-all duration-500 ${
+                    activeImpactStep === 2 
+                      ? "opacity-100 scale-[1.02] z-10" 
+                      : "opacity-25 filter brightness-40 grayscale-[60%] scale-95 z-0 hover:opacity-60"
+                  }`}
+                >
+                  <img 
+                    src="/images/rogo_project/Vector 2.svg" 
+                    alt={t.impactCol2Title} 
+                    className="w-[190px] h-[190px] md:w-[210px] md:h-[210px] object-contain flex-shrink-0"
+                  />
+                  <div className="flex flex-col justify-center gap-2 max-w-[320px]">
+                    <h4 className={`font-serif text-2xl md:text-3xl font-bold transition-colors duration-300 ${
+                      activeImpactStep === 2 ? "text-secondary-300" : "text-[#5f5743]"
+                    }`}>
+                      {t.impactCol2Title}
+                    </h4>
+                    <p className="text-[#989898] font-sans text-sm leading-[22px] text-left">
+                      {t.impactCol2Desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Card 3: Engineering */}
+                <div 
+                  onClick={() => scrollToImpactStep(3)}
+                  onMouseEnter={() => setActiveImpactStep(3)}
+                  className={`flex flex-col sm:flex-row items-center gap-5 cursor-pointer select-none transition-all duration-500 ${
+                    activeImpactStep === 3 
+                      ? "opacity-100 scale-[1.02] z-10" 
+                      : "opacity-25 filter brightness-40 grayscale-[60%] scale-95 z-0 hover:opacity-60"
+                  }`}
+                >
+                  <img 
+                    src="/images/rogo_project/Vector 3.svg" 
+                    alt={t.impactCol3Title} 
+                    className="w-[190px] h-[190px] md:w-[210px] md:h-[210px] object-contain flex-shrink-0"
+                  />
+                  <div className="flex flex-col justify-center gap-2 max-w-[320px]">
+                    <h4 className={`font-serif text-2xl md:text-3xl font-bold transition-colors duration-300 ${
+                      activeImpactStep === 3 ? "text-secondary-300" : "text-[#5f5743]"
+                    }`}>
+                      {t.impactCol3Title}
+                    </h4>
+                    <p className="text-[#989898] font-sans text-sm leading-[22px] text-left">
+                      {t.impactCol3Desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Card 4: Scalability */}
+                <div 
+                  onClick={() => scrollToImpactStep(4)}
+                  onMouseEnter={() => setActiveImpactStep(4)}
+                  className={`flex flex-col sm:flex-row items-center gap-5 cursor-pointer select-none transition-all duration-500 ${
+                    activeImpactStep === 4 
+                      ? "opacity-100 scale-[1.02] z-10" 
+                      : "opacity-25 filter brightness-40 grayscale-[60%] scale-95 z-0 hover:opacity-60"
+                  }`}
+                >
+                  <img 
+                    src="/images/rogo_project/Vector 4.svg" 
+                    alt={t.impactCol4Title} 
+                    className="w-[190px] h-[190px] md:w-[210px] md:h-[210px] object-contain flex-shrink-0"
+                  />
+                  <div className="flex flex-col justify-center gap-2 max-w-[320px]">
+                    <h4 className={`font-serif text-2xl md:text-3xl font-bold transition-colors duration-300 ${
+                      activeImpactStep === 4 ? "text-secondary-300" : "text-[#5f5743]"
+                    }`}>
+                      {t.impactCol4Title}
+                    </h4>
+                    <p className="text-[#989898] font-sans text-sm leading-[22px] text-left">
+                      {t.impactCol4Desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </section>
+          </div>
 
           {/* SECTION 09: REFLECTION */}
           <section className="flex flex-col gap-6 w-full">
             {renderSectionTitle("09", t.reflectionTitle)}
             
-            <div className="w-full p-8 rounded-2xl border border-neutral-800 bg-[#0d1712] flex flex-col items-center text-center gap-6">
-              <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-primary-400">
+            <div className="w-full max-w-[960px] mx-auto p-8 md:p-10 rounded-3xl bg-[#0d1612] flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-10 border-none">
+              <div className="relative w-[150px] h-[150px] md:w-[170px] md:h-[170px] rounded-full overflow-hidden shrink-0">
                 <Image 
                   src="/images/mini_avatar.png"
                   alt="Nguyen Khanh Truong profile"
@@ -1032,55 +1374,65 @@ export default function RogoDashboardPage() {
                   className="object-cover"
                 />
               </div>
-              <div style={{ width: "100%", maxWidth: "768px" }} className="flex flex-col gap-4">
-                <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-center">{t.reflectionDesc}</p>
-                <p style={{ width: "100%", display: "block" }} className="text-primary-300 font-semibold text-lg leading-relaxed text-center">{t.reflectionHighlight}</p>
-                <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-center">{t.reflectionBody}</p>
+              <div className="flex flex-col gap-4 text-left">
+                <p className="text-[#a3a3a3] font-sans text-base leading-[24px]">{t.reflectionDesc}</p>
+                <p className="text-[#34D399] font-bold font-sans text-base leading-[24px]">{t.reflectionHighlight}</p>
+                <p className="text-[#a3a3a3] font-sans text-base leading-[24px]">{t.reflectionBody}</p>
               </div>
             </div>
           </section>
 
           {/* SECTION 10: CONTINUE EXPLORING */}
-          <section className="flex flex-col md:flex-row justify-between items-stretch gap-8 w-full pt-12 border-t border-neutral-900">
+          <section className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 w-full pt-12 border-t border-neutral-900">
             {/* Title column */}
-            <div className="flex flex-col gap-2 md:w-1/4">
-              <span className="text-primary-400 font-bold text-xs tracking-wider">{t.exploreTitle}</span>
+            <div className="flex flex-col gap-2 md:w-1/4 shrink-0">
+              <span className="text-[#22C55E] font-sans text-xs font-bold uppercase tracking-wider">{t.exploreTitle}</span>
               <h2 className="font-serif text-2xl md:text-3xl font-bold text-white">{t.continueExploring}</h2>
             </div>
 
             {/* Other 2 projects cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:w-3/4">
-              {/* Card 1: RaIO */}
-              <Link href="/pending" className="group flex flex-col gap-4 p-4 rounded-2xl border border-neutral-800 bg-[#161617] hover:border-primary-400 hover:shadow-lg hover:shadow-primary-400/5 transition-all duration-300">
-                <div className="relative w-full h-[180px] rounded-xl overflow-hidden bg-white flex items-center justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:w-3/4 w-full">
+              {/* Card 1: RaIO Smart */}
+              <Link 
+                href="/pending" 
+                className="flex flex-col gap-4 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-xl cursor-pointer group block"
+              >
+                <div className="w-full aspect-[388/256] rounded-xl overflow-hidden border border-neutral-900/80 relative bg-[#0c0d12]">
                   <Image 
                     src="/images/raio.png"
                     alt="RaIO Smart"
                     fill
-                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-serif font-bold text-white group-hover:text-secondary-300 text-base transition-colors">RaIO Smart</h3>
-                    <ArrowUpRight size={18} className="text-neutral-500 group-hover:text-primary-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                    <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] leading-tight transition-colors duration-300">
+                      RaIO Smart
+                    </h3>
+                    <ArrowUpRight size={20} className="text-neutral-500 group-hover:text-[#22C55E] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
-                  <div className="flex flex-wrap gap-1.5 mt-1">
+                  <div className="flex flex-wrap gap-2">
                     {["Mobile", "IoT", "Smart Home", "Whitelabel"].map((cat) => (
-                      <span key={cat} className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400">{cat}</span>
+                      <span key={cat} className="text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300 px-3 py-1 rounded-full">
+                        {cat}
+                      </span>
                     ))}
                   </div>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">
+                  <p className="text-neutral-400 text-sm leading-relaxed">
                     {lang === "vi" 
-                      ? "Được triển khai và quản lý thông qua Rogo Platform như mọi ứng dụng khác trong hệ sinh thái..." 
-                      : "Deployed and managed through Rogo Platform like every app in the ecosystem..."}
+                      ? "Được triển khai và quản lý thông qua Rogo Platform như mọi ứng dụng khác trong hệ sinh thái. Tầng whitelabel phía trên cho phép bất kỳ đối tác nào xuất bản ứng dụng mang thương hiệu riêng của họ – mà không cần xây dựng lại logic cốt lõi bên dưới." 
+                      : "Deployed and managed through Rogo Platform like every app in the ecosystem. The whitelabel layer on top lets any partner ship their own branded app – without rebuilding the core logic underneath."}
                   </p>
                 </div>
               </Link>
 
-              {/* Card 2: Austfly */}
-              <Link href="/pending" className="group flex flex-col gap-4 p-4 rounded-2xl border border-neutral-800 bg-[#161617] hover:border-primary-400 hover:shadow-lg hover:shadow-primary-400/5 transition-all duration-300">
-                <div className="relative w-full h-[180px] rounded-xl overflow-hidden bg-[#1a1b1d] flex items-center justify-center">
+              {/* Card 2: Austfly IoT App */}
+              <Link 
+                href="/pending" 
+                className="flex flex-col gap-4 p-3 border border-transparent hover:border-[#2ECC8A] transition-all duration-300 rounded-xl cursor-pointer group block"
+              >
+                <div className="w-full aspect-[388/256] rounded-xl overflow-hidden border border-neutral-900/80 relative bg-[#0c0d12]">
                   <Image 
                     src="/images/austfly.png"
                     alt="Austfly IoT App"
@@ -1088,20 +1440,24 @@ export default function RogoDashboardPage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-serif font-bold text-white group-hover:text-secondary-300 text-base transition-colors">Austfly IoT App</h3>
-                    <ArrowUpRight size={18} className="text-neutral-500 group-hover:text-primary-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                    <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] leading-tight transition-colors duration-300">
+                      Austfly IoT App
+                    </h3>
+                    <ArrowUpRight size={20} className="text-neutral-500 group-hover:text-[#2ECC8A] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
-                  <div className="flex flex-wrap gap-1.5 mt-1">
+                  <div className="flex flex-wrap gap-2">
                     {["Mobile", "IoT", "Smart Home", "Redesign"].map((cat) => (
-                      <span key={cat} className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400">{cat}</span>
+                      <span key={cat} className="text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300 px-3 py-1 rounded-full">
+                        {cat}
+                      </span>
                     ))}
                   </div>
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mt-1">
+                  <p className="text-neutral-400 text-sm leading-relaxed">
                     {lang === "vi" 
-                      ? "Thương hiệu cửa cuốn hàng đầu Việt Nam, đối tác đầu tiên áp dụng framework RaIO ngoài Rạng Đông..." 
-                      : "Vietnam's leading roller shutter brand, and the first partner to adopt the RaIO framework..."}
+                      ? "Thương hiệu cửa cuốn hàng đầu Việt Nam, đối tác đầu tiên áp dụng framework RaIO ngoài Rạng Đông. Đã được audit UX đầu cuối, xây dựng lại hệ thống phân cấp trực quan – hệ thống thiết kế và thư viện component sẵn sàng sản xuất, đang chờ triển khai." 
+                      : "Vietnam's leading roller shutter brand, and the first partner to adopt the RaIO framework outside Rạng Đông. UX audited end-to-end, visual hierarchy rebuilt – design system and component library production-ready, pending implementation."}
                   </p>
                 </div>
               </Link>
