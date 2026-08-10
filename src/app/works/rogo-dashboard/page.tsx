@@ -426,7 +426,7 @@ export default function RogoDashboardPage() {
         <h2 
           style={{
             color: "#FFF",
-            fontFamily: "Fraunces",
+            fontFamily: "var(--font-serif)",
             fontSize: "28px",
             fontWeight: 700,
             lineHeight: "42px"
@@ -774,7 +774,7 @@ export default function RogoDashboardPage() {
                   <h4 
                     style={{
                       color: "var(--color-secondary-300)",
-                      fontFamily: "Fraunces",
+                      fontFamily: "var(--font-serif)",
                       fontSize: "24px",
                       fontWeight: 700,
                       lineHeight: "36px"

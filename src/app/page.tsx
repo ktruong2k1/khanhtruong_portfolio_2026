@@ -805,7 +805,7 @@ export default function Home() {
               <h2 
                 style={{
                   color: 'var(--Colors-Secondary-300, #E8C468)',
-                  fontFamily: 'Fraunces, serif',
+                  fontFamily: 'var(--font-serif), sans-serif',
                   fontSize: 'var(--font-size-hero-subhead)',
                   fontStyle: 'normal',
                   fontWeight: 700,
@@ -1606,7 +1606,7 @@ export default function Home() {
                   <span 
                     style={{
                       color: 'var(--Colors-Neutral-100, #FFF)',
-                      fontFamily: 'Fraunces, Georgia, serif',
+                      fontFamily: 'var(--font-serif), sans-serif',
                       fontSize: '20px',
                       fontStyle: 'normal',
                       fontWeight: 700,
@@ -1709,7 +1709,7 @@ export default function Home() {
           <p 
             style={{
               color: 'var(--Colors-Secondary-300, #E8C468)',
-              fontFamily: 'Fraunces, serif',
+              fontFamily: 'var(--font-serif), sans-serif',
               fontSize: '24px',
               fontStyle: 'normal',
               fontWeight: 700,

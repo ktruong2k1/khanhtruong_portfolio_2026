@@ -251,7 +251,7 @@ export default function ContactPage() {
           <p 
             style={{
               color: 'var(--Colors-Secondary-300, #E8C468)',
-              fontFamily: 'Fraunces, serif',
+              fontFamily: 'var(--font-serif), sans-serif',
               fontSize: '24px',
               fontStyle: 'normal',
               fontWeight: 700,

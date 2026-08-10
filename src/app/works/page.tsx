@@ -452,7 +452,7 @@ export default function WorksPage() {
             className="projects-badge"
             style={{
               color: 'var(--Colors-Primary-400, #22C55E)',
-              fontFamily: 'Fraunces, serif',
+              fontFamily: 'var(--font-serif), sans-serif',
               fontSize: '24px',
               fontStyle: 'normal',
               fontWeight: 700,
@@ -1262,7 +1262,7 @@ export default function WorksPage() {
                   <span 
                     style={{
                       color: 'var(--Colors-Neutral-100, #FFF)',
-                      fontFamily: 'Fraunces, Georgia, serif',
+                      fontFamily: 'var(--font-serif), sans-serif',
                       fontSize: '20px',
                       fontStyle: 'normal',
                       fontWeight: 700,
@@ -1365,7 +1365,7 @@ export default function WorksPage() {
           <p 
             style={{
               color: 'var(--Colors-Secondary-300, #E8C468)',
-              fontFamily: 'Fraunces, serif',
+              fontFamily: 'var(--font-serif), sans-serif',
               fontSize: '24px',
               fontStyle: 'normal',
               fontWeight: 700,

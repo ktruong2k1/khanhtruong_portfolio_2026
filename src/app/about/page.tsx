@@ -584,7 +584,7 @@ export default function AboutPage() {
               <div 
                 style={{ 
                   color: 'var(--Colors-Secondary-300, #E8C468)',
-                  fontFamily: 'Fraunces, serif',
+                  fontFamily: 'var(--font-serif), sans-serif',
                   fontSize: '20px',
                   fontWeight: 700,
                   lineHeight: '30px'
@@ -1009,7 +1009,7 @@ export default function AboutPage() {
                           <div 
                             style={{
                               color: 'var(--Colors-Secondary-300, #E8C468)',
-                              fontFamily: 'Fraunces, serif',
+                              fontFamily: 'var(--font-serif), sans-serif',
                               fontSize: '36px',
                               fontWeight: 700,
                               lineHeight: '40px',
@@ -1021,7 +1021,7 @@ export default function AboutPage() {
                           <h3 
                             style={{
                               color: '#FFF',
-                              fontFamily: 'Fraunces, serif',
+                              fontFamily: 'var(--font-serif), sans-serif',
                               fontSize: '24px',
                               fontWeight: 700,
                               lineHeight: '30px'
@@ -1053,7 +1053,7 @@ export default function AboutPage() {
                         <div 
                           style={{
                             color: 'var(--Colors-Secondary-300, #E8C468)',
-                            fontFamily: 'Fraunces, serif',
+                            fontFamily: 'var(--font-serif), sans-serif',
                             fontSize: '36px',
                             fontWeight: 700,
                             lineHeight: '40px',
@@ -1065,7 +1065,7 @@ export default function AboutPage() {
                         <h3 
                           style={{
                             color: '#FFF',
-                            fontFamily: 'Fraunces, serif',
+                            fontFamily: 'var(--font-serif), sans-serif',
                             fontSize: '24px',
                             fontWeight: 700,
                             lineHeight: '30px',
@@ -1509,7 +1509,7 @@ export default function AboutPage() {
                   <span 
                     style={{
                       color: 'var(--Colors-Neutral-100, #FFF)',
-                      fontFamily: 'Fraunces, Georgia, serif',
+                      fontFamily: 'var(--font-serif), sans-serif',
                       fontSize: '20px',
                       fontStyle: 'normal',
                       fontWeight: 700,
@@ -1612,7 +1612,7 @@ export default function AboutPage() {
           <p 
             style={{
               color: 'var(--Colors-Secondary-300, #E8C468)',
-              fontFamily: 'Fraunces, serif',
+              fontFamily: 'var(--font-serif), sans-serif',
               fontSize: '24px',
               fontStyle: 'normal',
               fontWeight: 700,

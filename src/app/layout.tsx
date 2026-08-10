@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro, Fraunces } from "next/font/google";
+import { Be_Vietnam_Pro, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 
 const beVietnam = Be_Vietnam_Pro({
@@ -8,9 +8,9 @@ const beVietnam = Be_Vietnam_Pro({
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-const fraunces = Fraunces({
+const bricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-serif",
-  subsets: ["latin"],
+  subsets: ["latin", "vietnamese"],
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${beVietnam.variable} ${fraunces.variable} h-full scroll-smooth antialiased`}
+      className={`${beVietnam.variable} ${bricolageGrotesque.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full font-sans transition-colors duration-300">
