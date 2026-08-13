@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro, Bricolage_Grotesque } from "next/font/google";
+import { Be_Vietnam_Pro, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const beVietnam = Be_Vietnam_Pro({
@@ -12,6 +12,12 @@ const bricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-serif",
   subsets: ["latin", "vietnamese"],
   weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -27,10 +33,10 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${beVietnam.variable} ${bricolageGrotesque.variable} h-full scroll-smooth antialiased`}
+      className={`${beVietnam.variable} ${bricolageGrotesque.variable} ${jetbrainsMono.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full font-sans transition-colors duration-300">
+      <body className="min-h-full font-sans transition-colors duration-300 bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black">
         {children}
       </body>
     </html>

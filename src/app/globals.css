@@ -3,6 +3,7 @@
 @theme {
   --font-sans: var(--font-sans), sans-serif;
   --font-serif: var(--font-serif), serif;
+  --font-mono: var(--font-mono), monospace;
   
   /* Style Guide Colors */
   --color-brand-100: #CAF3E2;
