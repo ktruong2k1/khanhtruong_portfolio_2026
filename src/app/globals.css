@@ -2,9 +2,10 @@
 
 @theme {
   --font-sans: var(--font-sans), sans-serif;
-  --font-serif: var(--font-serif), serif;
+  --font-serif: var(--font-mono), monospace;
   --font-mono: var(--font-mono), monospace;
-  
+  --font-heading: var(--font-mono), monospace;
+
   /* Style Guide Colors */
   --color-brand-100: #CAF3E2;
   --color-brand-200: #A7EFC2;
@@ -86,6 +87,11 @@
   --spacing-5xl: 56px;
   --spacing-6xl: 64px;
   --spacing-no-spacing: 0px;
+}
+
+/* Heading Font Default (IBM Plex Mono) */
+h1, h2, h3, h4, h5, h6, .font-heading, .font-serif {
+  font-family: var(--font-mono), monospace !important;
 }
 
 :root {
