@@ -19,47 +19,47 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
   return (
     <section
       id="hero"
-      className="min-h-screen flex flex-col justify-center bg-[#121212] relative overflow-hidden px-6 md:px-12 lg:px-[80px] pt-32 pb-16"
+      className="min-h-screen flex flex-col justify-center bg-[#121212] relative overflow-hidden px-6 md:px-12 lg:px-[80px] pt-36 pb-20"
     >
       <div className="max-w-[1440px] mx-auto w-full my-auto flex flex-col justify-center">
-        {/* Main Grid Layout */}
+        {/* Main Grid: Left Column (Portfolio + Name + 16px Sub Content equal to Name width) & Right Column (Job Title + Badges + Avatar + CTA Buttons aligned left) */}
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Portfolio Gold Tag + Name Heading (96px) + 16px Sub Content */}
+          {/* Left Column (col-span-7): Portfolio + Name Heading (96px) + Sub Content (equal width ~635px & 16px text) */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-7 flex flex-col items-start min-w-0 space-y-6"
+            className="lg:col-span-7 flex flex-col items-start min-w-0"
           >
             {/* Gold Portfolio tag */}
-            <div className="font-mono text-[#C6A85B] text-lg md:text-xl font-bold tracking-wide">
+            <div className="font-mono text-[#C6A85B] text-lg md:text-xl font-bold tracking-wide mb-4">
               Portfolio
             </div>
 
             {/* Main Name Heading (96px font size) */}
-            <h1 className="font-mono text-5xl sm:text-7xl lg:text-[96px] font-normal text-white leading-[1.0] tracking-tight whitespace-normal">
+            <h1 className="font-mono text-5xl sm:text-7xl lg:text-[96px] font-normal text-white leading-[1.0] tracking-tight whitespace-normal mb-8">
               Khanhtruong
               <br />
               Nguyen
             </h1>
 
-            {/* Sub Content - Equal width with name heading & 16px font size */}
-            <p className="font-sans text-white/80 text-[16px] leading-relaxed font-light w-full max-w-xl block whitespace-normal pt-2">
+            {/* Sub Content - Equal width with "Khanhtruong Nguyen" text (~635px) & 16px font size */}
+            <p className="font-sans text-white/80 text-[16px] leading-relaxed font-light w-full max-w-[635px] block whitespace-normal">
               {lang === "vi"
                 ? "Thu hẹp khoảng cách giữa tầm nhìn thẩm mỹ độ trung thực cao và việc thực thi kỹ thuật nghiêm ngặt — dành cho các sản phẩm SaaS, từ nền tảng multi-tenant đến hệ sinh thái IoT."
                 : "Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution — for SaaS products, from multi-tenant platforms to IoT ecosystems."}
             </p>
           </motion.div>
 
-          {/* Right Column: Product Designer Job Title + Badges + Avatar + Left-aligned CTA Buttons */}
+          {/* Right Column (col-span-5): Job Title + Badges + Avatar + CTA Buttons aligned left under job title */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-5 flex flex-col justify-between items-start space-y-12 pt-2"
+            className="lg:col-span-5 flex flex-col items-start pt-2"
           >
             {/* Top Part: Job Title + Badges + Avatar */}
-            <div className="flex items-start gap-6">
+            <div className="flex items-start gap-6 w-full">
               <div className="flex flex-col items-start text-left">
                 <h2 className="font-mono text-3xl sm:text-4xl lg:text-[44px] font-bold text-white mb-3 tracking-tight whitespace-nowrap">
                   Product Designer
@@ -87,8 +87,8 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
               </div>
             </div>
 
-            {/* Bottom Part: CTA Cluster aligned left under job title */}
-            <div className="flex items-center gap-3 pt-6">
+            {/* Bottom Part: CTA Cluster aligned left directly under job title (~60px spacing) */}
+            <div className="flex items-center gap-3 mt-[60px]">
               <button
                 onClick={scrollToAbout}
                 className="bg-[#00DC6C] hover:bg-[#00c560] text-black font-sans font-semibold rounded-xl px-7 py-3.5 text-base transition-all duration-200 cursor-pointer shadow-lg hover:shadow-[#00DC6C]/20 hover:scale-[1.02] active:scale-95"
