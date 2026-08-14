@@ -18,16 +18,16 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
 
   return (
     <section id="why-me" className="py-24 px-6 md:px-12 lg:px-[80px] bg-[#121212] text-white border-b border-white/5 relative overflow-hidden">
-      <div className="max-w-[1440px] mx-auto space-y-20">
+      <div className="max-w-[1440px] mx-auto space-y-20 w-full">
         {/* Top Header & Paragraph */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full">
           {/* Left Label */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-3"
+            className="lg:col-span-3 min-w-0"
           >
             <h3 className="font-mono text-xl md:text-2xl font-bold text-white">
               Why me
@@ -40,9 +40,9 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-9 space-y-8"
+            className="lg:col-span-9 space-y-8 w-full min-w-0"
           >
-            <h2 className="font-mono text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold leading-snug text-white tracking-tight">
+            <h2 className="font-mono text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold leading-snug text-white tracking-tight w-full block whitespace-normal">
               {lang === "vi"
                 ? "Thu hẹp khoảng cách giữa tầm nhìn thẩm mỹ độ trung thực cao và việc thực thi kỹ thuật nghiêm ngặt — dành cho các sản phẩm SaaS, từ nền tảng multi-tenant đến hệ sinh thái IoT."
                 : "Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution — for SaaS products, from multi-tenant platforms to IoT ecosystems."}
@@ -66,7 +66,7 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
         </div>
 
         {/* Stats Grid - Appear from top to bottom */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8 w-full">
           {stats.map((stat, idx) => (
             <motion.div
               key={idx}
@@ -74,12 +74,12 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 + idx * 0.15 }}
-              className="border-t border-white/20 pt-8 flex flex-col justify-between"
+              className="border-t border-white/20 pt-8 flex flex-col justify-between min-w-0"
             >
               <div className="font-mono text-6xl sm:text-7xl lg:text-[88px] font-bold text-white tracking-tight mb-4">
                 {stat.number}
               </div>
-              <div className="font-mono text-base md:text-xl font-medium text-white/90">
+              <div className="font-mono text-base md:text-xl font-medium text-white/90 whitespace-normal">
                 {stat.label}
               </div>
             </motion.div>
