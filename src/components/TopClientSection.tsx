@@ -15,7 +15,7 @@ const clientLogos = [
 
 export default function TopClientSection() {
   return (
-    <section className="py-16 px-6 md:px-12 lg:px-[80px] bg-[#141414] border-t border-b border-white/5">
+    <section className="py-16 px-6 md:px-12 lg:px-[80px] bg-[#121212] border-t border-b border-white/5">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         {/* Left Heading */}
         <div className="lg:col-span-3">
@@ -24,8 +24,8 @@ export default function TopClientSection() {
           </h3>
         </div>
 
-        {/* Right Logo Grid */}
-        <div className="lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-12 items-center justify-items-center">
+        {/* Right Logo Grid - No card backgrounds, pure monochrome white logos */}
+        <div className="lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center">
           {clientLogos.map((client, index) => (
             <motion.div
               key={client.name}
@@ -33,14 +33,14 @@ export default function TopClientSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="w-full flex items-center justify-center p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 transition-all duration-300 group"
+              className="w-full flex items-center justify-center p-2 transition-all duration-300 group"
             >
-              <div className="relative h-10 md:h-12 w-full max-w-[160px] opacity-80 group-hover:opacity-100 transition-opacity">
+              <div className="relative h-10 md:h-12 w-full max-w-[140px] opacity-80 group-hover:opacity-100 transition-opacity">
                 <Image
                   src={client.src}
                   alt={client.name}
                   fill
-                  className="object-contain filter brightness-100 contrast-100"
+                  className="object-contain filter brightness-0 invert"
                 />
               </div>
             </motion.div>
