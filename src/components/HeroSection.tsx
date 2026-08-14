@@ -19,12 +19,12 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
   return (
     <section
       id="hero"
-      className="min-h-screen pt-32 pb-20 px-6 md:px-12 lg:px-[80px] flex flex-col justify-center bg-[#121212] relative overflow-hidden"
+      className="h-screen min-h-[680px] max-h-screen pt-28 pb-12 px-6 md:px-12 lg:px-[80px] flex flex-col justify-between bg-[#121212] relative overflow-hidden"
     >
-      <div className="max-w-[1440px] mx-auto w-full flex flex-col justify-between space-y-16 lg:space-y-24">
-        {/* Top Row: Left (Portfolio + Name) & Right (Role + Exp + Avatar) */}
-        <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-start gap-8">
-          {/* Top Left: Gold tag + Huge Name Heading */}
+      <div className="max-w-[1440px] mx-auto w-full h-full flex flex-col justify-between">
+        {/* Top Area: Portfolio label + Name Heading (96px) aligned with Job Title & Avatar */}
+        <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 pt-4">
+          {/* Top Left: Gold tag + Name Heading (96px) */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -32,27 +32,27 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             className="flex flex-col items-start min-w-0"
           >
             {/* Gold Portfolio tag */}
-            <div className="font-mono text-[#C6A85B] text-lg md:text-xl font-bold tracking-wide mb-4">
+            <div className="font-mono text-[#C6A85B] text-lg md:text-xl font-bold tracking-wide mb-3">
               Portfolio
             </div>
 
-            {/* Main Name Heading */}
-            <h1 className="font-mono text-5xl sm:text-7xl lg:text-[88px] font-normal text-white leading-[1.05] tracking-tight whitespace-normal">
+            {/* Main Name Heading - Exactly 96px */}
+            <h1 className="font-mono text-5xl sm:text-7xl lg:text-[96px] font-normal text-white leading-[1.0] tracking-tight whitespace-normal">
               Khanhtruong
               <br />
               Nguyen
             </h1>
           </motion.div>
 
-          {/* Top Right: Role + Years Exp + Avatar */}
+          {/* Top Right: Job Title + 3.5 years exp & Remote Badge + Avatar */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex items-center gap-6 pt-2 flex-shrink-0"
+            className="flex items-center gap-6 pb-2 flex-shrink-0"
           >
             <div className="flex flex-col items-start lg:items-end">
-              <h2 className="font-mono text-3xl sm:text-4xl font-bold text-white mb-2 tracking-tight whitespace-nowrap">
+              <h2 className="font-mono text-3xl sm:text-4xl lg:text-[42px] font-bold text-white mb-3 tracking-tight whitespace-nowrap">
                 Product Designer
               </h2>
               <div className="flex items-center gap-3 flex-wrap justify-start lg:justify-end">
@@ -67,7 +67,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             </div>
 
             {/* Profile Avatar */}
-            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#00DC6C] flex-shrink-0 overflow-hidden shadow-2xl border-2 border-[#00DC6C]">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-[104px] lg:h-[104px] rounded-full bg-[#00DC6C] flex-shrink-0 overflow-hidden shadow-2xl border-2 border-[#00DC6C]">
               <Image
                 src="/images/KT_profilie.png"
                 alt="Khanhtruong Nguyen"
@@ -79,15 +79,15 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
           </motion.div>
         </div>
 
-        {/* Bottom Row: Left (Sub Content Expanded Horizontally) & Right (CTA Cluster) */}
+        {/* Bottom Area: Sub Content (Expanded horizontally up to 928px) & CTA Cluster */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-full flex flex-col md:flex-row items-start md:items-end justify-between gap-8 pt-8"
+          className="w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-4"
         >
-          {/* Sub Content - Expanded Horizontally across full available width */}
-          <div className="w-full flex-1 max-w-2xl lg:max-w-3xl min-w-0">
+          {/* Sub Content - Expanded Horizontally */}
+          <div className="w-full flex-1 max-w-[928px] min-w-0">
             <p className="font-sans text-white/80 text-base md:text-lg leading-relaxed font-light w-full block whitespace-normal">
               {lang === "vi"
                 ? "Thu hẹp khoảng cách giữa tầm nhìn thẩm mỹ độ trung thực cao và việc thực thi kỹ thuật nghiêm ngặt — dành cho các sản phẩm SaaS, từ nền tảng multi-tenant đến hệ sinh thái IoT."
