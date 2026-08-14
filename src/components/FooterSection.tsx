@@ -17,8 +17,8 @@ export default function FooterSection({ lang, onOpenContact }: FooterSectionProp
   return (
     <footer id="contact" className="w-full bg-[#121212] text-white">
       {/* Top Green Box (#00DC6C) */}
-      <div className="bg-[#00DC6C] text-black w-full pt-16 pb-6 px-6 md:px-16 lg:px-20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <div className="bg-[#00DC6C] text-black w-full pt-16 pb-6 px-6 md:px-12 lg:px-[80px]">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Left Column (60%) */}
           <div className="lg:col-span-7 flex flex-col justify-between pr-0 lg:pr-12 lg:border-r border-black/20 pb-8 lg:pb-0">
             <div>
@@ -101,8 +101,8 @@ export default function FooterSection({ lang, onOpenContact }: FooterSectionProp
       </div>
 
       {/* Bottom Dark Section */}
-      <div className="bg-[#121212] py-16 px-6 md:px-16 lg:px-20 border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
+      <div className="bg-[#121212] py-16 px-6 md:px-12 lg:px-[80px] border-t border-white/5">
+        <div className="max-w-[1440px] mx-auto">
           {/* Huge Brand Typography */}
           <h1 className="font-sans text-5xl sm:text-7xl md:text-8xl lg:text-[130px] font-bold text-[#15803D] leading-none tracking-tight select-none">
             KhanhTruong Nguyen

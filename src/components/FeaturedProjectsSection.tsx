@@ -17,8 +17,8 @@ export default function FeaturedProjectsSection({
   return (
     <section id="featured-projects" className="bg-[#121212] text-white">
       {/* Project 1 Block - 100vh Height Scroll Section */}
-      <div className="min-h-screen py-20 px-6 md:px-16 lg:px-24 flex items-center border-b border-white/5 relative">
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+      <div className="min-h-screen py-20 px-6 md:px-12 lg:px-[80px] flex items-center border-b border-white/5 relative">
+        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
           {/* Left Column - Branding & Hero Stand Mockup */}
           <div className="lg:col-span-5 flex flex-col justify-between space-y-12">
             {/* Top Brand Info */}
@@ -161,8 +161,8 @@ export default function FeaturedProjectsSection({
       </div>
 
       {/* Project 2 Block - RaIO Smart (100vh Height Scroll Section) */}
-      <div className="min-h-screen py-20 px-6 md:px-16 lg:px-24 flex items-center relative bg-[#0E0E0E]">
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="min-h-screen py-20 px-6 md:px-12 lg:px-[80px] flex items-center relative bg-[#0E0E0E]">
+        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column - Card Preview */}
           <div className="lg:col-span-5 space-y-6">
             <div className="font-mono text-xl font-bold text-white mb-2">

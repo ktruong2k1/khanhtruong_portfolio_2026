@@ -17,8 +17,8 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
   ];
 
   return (
-    <section id="why-me" className="py-24 px-6 md:px-16 lg:px-24 bg-[#121212] text-white border-b border-white/5 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto space-y-20">
+    <section id="why-me" className="py-24 px-6 md:px-12 lg:px-[80px] bg-[#121212] text-white border-b border-white/5 relative overflow-hidden">
+      <div className="max-w-[1440px] mx-auto space-y-20">
         {/* Top Header & Paragraph */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Label */}

@@ -64,8 +64,8 @@ export default function HorizontalProcessSection({
       className="relative h-[300vh] bg-[#121212] text-white"
     >
       {/* Sticky full screen viewport wrapper */}
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center px-6 md:px-16 lg:px-24">
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center h-full py-16">
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center px-6 md:px-12 lg:px-[80px]">
+        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center h-full py-16">
           {/* Fixed Left Sidebar Info */}
           <div className="lg:col-span-4 flex flex-col justify-between h-full max-w-md z-10 pr-6">
             <div className="space-y-8 my-auto">

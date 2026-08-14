@@ -39,8 +39,8 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
   return (
     <>
       {/* Fixed top container to hold navbar */}
-      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none p-4 md:p-6 transition-all duration-500">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none p-4 md:p-6 lg:px-[80px] transition-all duration-500">
+        <div className="max-w-[1440px] mx-auto flex justify-between items-center">
           <AnimatePresence mode="wait">
             {!isScrolled ? (
               /* State 1: Floating Centered Pill Topnav (Hero Section) */

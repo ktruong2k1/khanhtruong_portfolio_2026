@@ -37,9 +37,9 @@ export default function TypingTitleSection() {
   return (
     <section
       ref={containerRef}
-      className="min-h-screen py-20 px-6 md:px-16 lg:px-24 bg-[#121212] flex flex-col justify-center items-center relative overflow-hidden border-b border-white/5"
+      className="min-h-screen py-20 px-6 md:px-12 lg:px-[80px] bg-[#121212] flex flex-col justify-center items-center relative overflow-hidden border-b border-white/5"
     >
-      <div className="max-w-6xl w-full flex flex-col items-start font-mono text-3xl sm:text-5xl md:text-6xl lg:text-[76px] font-normal leading-tight">
+      <div className="max-w-[1440px] w-full flex flex-col items-start font-mono text-3xl sm:text-5xl md:text-6xl lg:text-[76px] font-normal leading-tight">
         {/* Line 1 with horizontal baseline line */}
         <div className="w-full relative pb-4 mb-6 border-b border-white/20 flex items-center">
           <span className="text-[#00DC6C] whitespace-pre">

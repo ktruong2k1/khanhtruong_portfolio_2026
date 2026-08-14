@@ -15,8 +15,8 @@ const clientLogos = [
 
 export default function TopClientSection() {
   return (
-    <section className="py-16 px-6 md:px-16 lg:px-24 bg-[#141414] border-t border-b border-white/5">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <section className="py-16 px-6 md:px-12 lg:px-[80px] bg-[#141414] border-t border-b border-white/5">
+      <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         {/* Left Heading */}
         <div className="lg:col-span-3">
           <h3 className="font-mono text-xl md:text-2xl font-bold text-white tracking-tight">
