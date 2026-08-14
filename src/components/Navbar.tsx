@@ -39,7 +39,7 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
   return (
     <>
       {/* Fixed top container to hold navbar */}
-      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none p-4 md:p-6 lg:px-[80px] transition-all duration-500">
+      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none p-4 md:p-6 lg:pt-[80px] lg:px-[80px] transition-all duration-500">
         <div className="max-w-[1440px] mx-auto flex justify-between items-center">
           <AnimatePresence mode="wait">
             {!isScrolled ? (
@@ -50,7 +50,7 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="pointer-events-auto bg-[#242424]/90 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-3 shadow-2xl flex items-center justify-between gap-6 md:gap-10"
+                className="pointer-events-auto bg-[#242424]/90 backdrop-blur-md rounded-2xl px-5 py-3 shadow-2xl flex items-center justify-between gap-6 md:gap-10"
               >
                 <div className="flex items-center gap-6 md:gap-8 font-sans text-sm font-medium text-white/90">
                   <button
