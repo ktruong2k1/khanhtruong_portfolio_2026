@@ -30,20 +30,20 @@ export default function TopClientSection({
   const sectionRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Track scroll progress within pinned container
+  // Track scroll progress from when section enters viewport until end
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start start", "end end"],
+    offset: ["start end", "end end"],
   });
 
-  // Timeline Transforms (Seamless Cross-fade, ZERO Blank Frames)
-  // 1. Compact Logo Grid (Screenshot 2): 100% visible from 0.0 -> 0.30 progress!
-  const compactOpacity = useTransform(scrollYProgress, [0.0, 0.30, 0.40], [1, 1, 0]);
-  const compactScale = useTransform(scrollYProgress, [0.30, 0.40], [1, 0.94]);
+  // Timeline Transforms (Guaranteed 100% visible 6-logo grid at entry)
+  // 1. Compact Logo Grid (6 Logos): 100% visible from 0.00 -> 0.40 scroll progress!
+  const compactOpacity = useTransform(scrollYProgress, [0.0, 0.40, 0.50], [1, 1, 0]);
+  const compactScale = useTransform(scrollYProgress, [0.40, 0.50], [1, 0.94]);
 
-  // 2. Expanded Detail View: Direct cross-fade from 0.30 -> 0.40, scrubbing contentY from 0.35 -> 0.92
-  const expandedOpacity = useTransform(scrollYProgress, [0.30, 0.40], [0, 1]);
-  const contentY = useTransform(scrollYProgress, [0.35, 0.92], ["0%", "-62%"]);
+  // 2. Expanded Detail View: Direct cross-fade from 0.40 -> 0.50, then scrub contentY 0.45 -> 0.90
+  const expandedOpacity = useTransform(scrollYProgress, [0.40, 0.50], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.45, 0.90], ["0%", "-62%"]);
 
   // Fallback for Reduced Motion
   if (shouldReduceMotion) {
@@ -118,7 +118,7 @@ export default function TopClientSection({
           </h3>
         </div>
 
-        {/* STATE 1: Compact Overview 3x2 Grid (Screenshot 2 - 100% Visible at start!) */}
+        {/* STATE 1: Compact Overview 3x2 Grid (100% Visible from 0.0 -> 0.40 progress!) */}
         <motion.div
           style={{ opacity: compactOpacity, scale: compactScale }}
           className="absolute inset-0 max-w-4xl mx-auto my-auto flex flex-col items-center justify-center pointer-events-none px-6 z-10"
@@ -142,7 +142,7 @@ export default function TopClientSection({
           </div>
         </motion.div>
 
-        {/* STATE 2: Expanded Detail View - Internal Scroll Scrub (Progress: 0.30 -> 0.92) */}
+        {/* STATE 2: Expanded Detail View - Internal Scroll Scrub (Progress: 0.40 -> 0.90) */}
         <motion.div
           style={{ opacity: expandedOpacity }}
           className="w-full max-w-[1440px] mx-auto h-full pt-16 flex-1 overflow-hidden z-0"
@@ -290,7 +290,7 @@ export default function TopClientSection({
                   <div className="font-mono text-sm font-bold text-white/70">
                     Featured project
                   </div>
-                  <div className="bg-white p-10 rounded-2xl shadow-xl flex items-center justify-center min-h-[200px]">
+                  <div className="bg-[#FFFFFF] p-10 rounded-2xl shadow-xl flex items-center justify-center min-h-[200px]">
                     <div className="relative w-44 h-16">
                       <Image
                         src="/images/raio.png"
