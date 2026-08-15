@@ -30,14 +30,27 @@ export default function TopClientSection({
   const sectionRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Track scroll progress within pinned container
+  // Track scroll progress within tall pinned container (450vh)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  // Vertical scroll scrub for detailed featured project cards
-  const contentY = useTransform(scrollYProgress, [0.05, 0.90], ["0%", "-62%"]);
+  // STEP 1 (Screenshot 1): Single horizontal row next to "Top Client" at section top (0.00 -> 0.22)
+  const rowOpacity = useTransform(scrollYProgress, [0.0, 0.16, 0.24], [1, 1, 0]);
+  const rowY = useTransform(scrollYProgress, [0.0, 0.24], ["0px", "15px"]);
+
+  // STEP 2 (Screenshot 2 & 3): 6 logos rearrange & align center in middle of section (0.20 -> 0.46)
+  const gridOpacity = useTransform(
+    scrollYProgress,
+    [0.18, 0.26, 0.40, 0.48],
+    [0, 1, 1, 0]
+  );
+  const gridScale = useTransform(scrollYProgress, [0.18, 0.26, 0.40, 0.48], [0.95, 1, 1, 0.95]);
+
+  // STEP 3 (Screenshot 4): Expanded detail cards appear and scroll up (0.44 -> 0.90)
+  const expandedOpacity = useTransform(scrollYProgress, [0.44, 0.52], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.48, 0.90], ["0%", "-62%"]);
 
   // Fallback for Reduced Motion
   if (shouldReduceMotion) {
@@ -105,18 +118,23 @@ export default function TopClientSection({
       {/* Sticky 100vh Viewport Container (Locks scroll inside section) */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-12 px-6 md:px-12 lg:px-[80px]">
         
-        {/* Persistent Top Header Bar with "Top Client" label + 6 Monochrome Client Logos Row */}
-        <div className="w-full max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6 z-20 pb-6 border-b border-white/10">
-          <h3 className="font-mono text-2xl md:text-3xl font-bold text-white tracking-tight shrink-0">
+        {/* Persistent Section Header */}
+        <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between z-30">
+          <h3 className="font-mono text-2xl md:text-3xl font-bold text-white tracking-tight">
             Top Client
           </h3>
+        </div>
 
-          {/* 6 Partner Monochrome Logos Row - Always Visible */}
-          <div className="flex items-center gap-6 md:gap-10 overflow-x-auto no-scrollbar py-1">
+        {/* STEP 1 (Screenshot 1): Single Horizontal Row of 6 Logos next to Top Client (Progress: 0.00 -> 0.22) */}
+        <motion.div
+          style={{ opacity: rowOpacity, y: rowY }}
+          className="absolute top-12 left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[80px] z-20 pointer-events-none flex items-center justify-end"
+        >
+          <div className="flex items-center gap-6 md:gap-10 overflow-x-auto no-scrollbar py-1 pr-4">
             {clientLogos.map((client) => (
               <div
                 key={client.name}
-                className="shrink-0 relative h-7 md:h-8 w-24 md:w-28 opacity-85 hover:opacity-100 transition-opacity"
+                className="shrink-0 relative h-7 md:h-8 w-24 md:w-28 opacity-85"
               >
                 <Image
                   src={client.src}
@@ -127,10 +145,37 @@ export default function TopClientSection({
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        {/* Expanded Detail View - Internal Scroll Scrub */}
-        <div className="w-full max-w-[1440px] mx-auto h-full pt-8 flex-1 overflow-hidden z-0">
+        {/* STEP 2 (Screenshot 2 & 3): 6 Logos Rearrange & Align Center into 3x2 Grid in Middle of Section (Progress: 0.20 -> 0.46) */}
+        <motion.div
+          style={{ opacity: gridOpacity, scale: gridScale }}
+          className="absolute inset-0 max-w-4xl mx-auto my-auto flex flex-col items-center justify-center pointer-events-none px-6 z-10"
+        >
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 sm:gap-16 items-center justify-items-center w-full">
+            {clientLogos.map((client) => (
+              <div
+                key={client.name}
+                className="w-full flex items-center justify-center p-4"
+              >
+                <div className="relative h-12 md:h-14 w-full max-w-[180px] opacity-85">
+                  <Image
+                    src={client.src}
+                    alt={client.name}
+                    fill
+                    className="object-contain filter brightness-0 invert"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* STEP 3 (Screenshot 4): Expanded Detail Cards Appear & Scroll Up (Progress: 0.44 -> 0.90) */}
+        <motion.div
+          style={{ opacity: expandedOpacity }}
+          className="w-full max-w-[1440px] mx-auto h-full pt-16 flex-1 overflow-hidden z-0"
+        >
           <motion.div
             style={{ y: contentY }}
             className="w-full space-y-24 pb-32"
@@ -311,9 +356,7 @@ export default function TopClientSection({
             </div>
 
           </motion.div>
-        </div>
-
-        <div />
+        </motion.div>
       </div>
     </section>
   );
