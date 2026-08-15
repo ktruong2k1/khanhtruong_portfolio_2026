@@ -36,23 +36,55 @@ export default function TopClientSection({
     offset: ["start start", "end end"],
   });
 
-  // STEP 1 -> STEP 2A: Single horizontal row starts 80px below topnav and glides down to center of (100vh - 80px)
-  const rowY = useTransform(scrollYProgress, [0.0, 0.25], ["0px", "calc(45vh - 80px)"]);
-  const rowOpacity = useTransform(scrollYProgress, [0.0, 0.25, 0.32], [1, 1, 0]);
+  // Smart Animate Progress Ranges:
+  // Phase 1 (0.00 -> 0.15): Single horizontal row top right
+  // Phase 2 (0.15 -> 0.35): Smart Animate morph each logo into centered 3x2 grid
+  // Phase 3 (0.35 -> 0.45): Hold 3x2 grid centered in 100vh
+  // Phase 4 (0.45 -> 0.52): Fade out 3x2 grid, expanded detail view scrubs up
 
-  // STEP 2B (Screenshot 4): 6 logos expand into 3x2 grid aligned dead-center in (100vh - 80px) space
-  const gridOpacity = useTransform(
+  // Container Opacity & Scale for logos
+  const logoGroupOpacity = useTransform(
     scrollYProgress,
-    [0.26, 0.33, 0.42, 0.48],
-    [0, 1, 1, 0]
+    [0.0, 0.42, 0.50],
+    [1, 1, 0]
   );
-  const gridScale = useTransform(
+  const logoGroupScale = useTransform(
     scrollYProgress,
-    [0.26, 0.33, 0.42, 0.48],
-    [0.95, 1, 1, 0.95]
+    [0.42, 0.50],
+    [1, 0.92]
   );
 
-  // STEP 3: Expanded detail cards appear and scroll up below 80px header
+  // Individual Smart Animate Motion Transforms for Logos 0 to 5
+  // Row 1 Logos (ROGO, FPT, Rạng Đông)
+  const logo0_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "-240px"]);
+  const logo0_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "32vh"]);
+
+  const logo1_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "0px"]);
+  const logo1_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "32vh"]);
+
+  const logo2_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "240px"]);
+  const logo2_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "32vh"]);
+
+  // Row 2 Logos (VietinBank, VCBS, Think & Action)
+  const logo3_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "-240px"]);
+  const logo3_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "46vh"]);
+
+  const logo4_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "0px"]);
+  const logo4_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "46vh"]);
+
+  const logo5_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "240px"]);
+  const logo5_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "46vh"]);
+
+  const logoTransforms = [
+    { x: logo0_X, y: logo0_Y },
+    { x: logo1_X, y: logo1_Y },
+    { x: logo2_X, y: logo2_Y },
+    { x: logo3_X, y: logo3_Y },
+    { x: logo4_X, y: logo4_Y },
+    { x: logo5_X, y: logo5_Y },
+  ];
+
+  // Step 3: Expanded Detail View (0.45 -> 0.90)
   const expandedOpacity = useTransform(scrollYProgress, [0.45, 0.52], [0, 1]);
   const contentY = useTransform(scrollYProgress, [0.50, 0.90], ["0%", "-62%"]);
 
@@ -129,49 +161,31 @@ export default function TopClientSection({
           </h3>
         </div>
 
-        {/* STEP 1 -> STEP 2A: Single Horizontal Row of 6 Logos (Starts 80px below topnav, glides down to center of (100vh - 80px)) */}
+        {/* SMART ANIMATE LOGO CONTAINER: Single continuous morphing layer */}
         <motion.div
-          style={{ opacity: rowOpacity, y: rowY }}
-          className="absolute top-[88px] left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[80px] z-20 pointer-events-none flex items-center justify-end"
+          style={{ opacity: logoGroupOpacity, scale: logoGroupScale }}
+          className="absolute top-[88px] left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[80px] z-20 pointer-events-none"
         >
-          <div className="flex items-center gap-6 md:gap-10 overflow-x-auto no-scrollbar py-1 pr-4">
-            {clientLogos.map((client) => (
-              <div
-                key={client.name}
-                className="shrink-0 relative h-7 md:h-8 w-24 md:w-28 opacity-85"
-              >
-                <Image
-                  src={client.src}
-                  alt={client.name}
-                  fill
-                  className="object-contain filter brightness-0 invert"
-                />
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* STEP 2B (Screenshot 4): 6 Logos expand into 3x2 grid aligned dead-center in (100vh - 80px) space */}
-        <motion.div
-          style={{ opacity: gridOpacity, scale: gridScale }}
-          className="absolute inset-0 pt-[80px] max-w-4xl mx-auto my-auto flex flex-col items-center justify-center pointer-events-none px-6 z-10"
-        >
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 sm:gap-16 items-center justify-items-center w-full">
-            {clientLogos.map((client) => (
-              <div
-                key={client.name}
-                className="w-full flex items-center justify-center p-4"
-              >
-                <div className="relative h-12 md:h-14 w-full max-w-[180px] opacity-85">
+          <div className="relative w-full flex items-center justify-end">
+            <div className="flex items-center gap-6 md:gap-10 py-1 pr-4">
+              {clientLogos.map((client, idx) => (
+                <motion.div
+                  key={client.name}
+                  style={{
+                    x: logoTransforms[idx].x,
+                    y: logoTransforms[idx].y,
+                  }}
+                  className="shrink-0 relative h-8 md:h-9 w-28 md:w-32 opacity-85"
+                >
                   <Image
                     src={client.src}
                     alt={client.name}
                     fill
                     className="object-contain filter brightness-0 invert"
                   />
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
 
