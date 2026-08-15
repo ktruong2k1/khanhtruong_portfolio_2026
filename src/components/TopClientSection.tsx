@@ -17,12 +17,12 @@ interface TopClientSectionProps {
 }
 
 const clientLogos = [
-  { name: "ROGO Solutions", src: "/images/Rogo_color.svg", tag: "Top innovation brand in Vietnam 2023" },
-  { name: "FPT Smart Home", src: "/images/FPTSmartHome_color.svg", tag: "Leading Smart Home Ecosystem" },
-  { name: "Rạng Đông", src: "/images/RangDong_color.svg", tag: "Top 1 IoT manufacturer brand in Vietnam" },
-  { name: "VietinBank Securities", src: "/images/VietinBankS_color.svg", tag: "Enterprise Financial Tech" },
-  { name: "VCBS", src: "/images/VCBS_color.svg", tag: "Securities & Trading System" },
-  { name: "Think & Action", src: "/images/Think_Action_color.svg", tag: "Innovation & Growth Partner" },
+  { name: "ROGO Solutions", src: "/images/Rogo_color.svg" },
+  { name: "FPT Smart Home", src: "/images/FPTSmartHome_color.svg" },
+  { name: "Rạng Đông", src: "/images/RangDong_color.svg" },
+  { name: "VietinBank Securities", src: "/images/VietinBankS_color.svg" },
+  { name: "VCBS", src: "/images/VCBS_color.svg" },
+  { name: "Think & Action", src: "/images/Think_Action_color.svg" },
 ];
 
 export default function TopClientSection({
@@ -30,10 +30,11 @@ export default function TopClientSection({
   onOpenContact,
 }: TopClientSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { amount: 0.2, once: false });
+  
+  // Trigger expansion when scrolling to center of section (amount: 0.45)
+  const isInView = useInView(sectionRef, { amount: 0.45, once: false });
   const [userToggled, setUserToggled] = useState<boolean | null>(null);
 
-  // Auto-expand when section scrolls into view or when manually toggled
   const isExpanded = userToggled !== null ? userToggled : isInView;
   const shouldReduceMotion = useReducedMotion();
 
@@ -47,9 +48,9 @@ export default function TopClientSection({
       <section
         ref={sectionRef}
         id="top-clients"
-        className="w-full bg-[#121212] text-white py-20 px-6 md:px-12 lg:px-[80px] border-t border-b border-white/5 relative overflow-hidden transition-all duration-500"
+        className="w-full bg-[#121212] text-white py-20 px-6 md:px-12 lg:px-[80px] border-t border-b border-white/5 relative overflow-hidden transition-all duration-500 min-h-screen flex flex-col justify-between"
       >
-        <div className="max-w-[1440px] mx-auto w-full">
+        <div className="max-w-[1440px] mx-auto w-full flex flex-col justify-between my-auto">
           
           {/* Header Row with Toggle Button */}
           <div className="w-full flex items-center justify-between mb-12">
@@ -80,37 +81,40 @@ export default function TopClientSection({
             </button>
           </div>
 
-          {/* INITIAL COMPACT STATE: Horizontal Logo Row */}
+          {/* INITIAL STATE: Compact 3x2 Grid (Screenshot 1) */}
           {!isExpanded && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: shouldReduceMotion ? 0.2 : 0.4 }}
-              className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center py-12"
+              className="w-full max-w-4xl mx-auto py-16 flex flex-col items-center justify-center space-y-12"
             >
-              {clientLogos.map((client) => (
-                <motion.div
-                  key={client.name}
-                  layoutId={shouldReduceMotion ? undefined : `logo-${client.name}`}
-                  transition={springTransition}
-                  className="w-full flex items-center justify-center p-2 group cursor-pointer"
-                  onClick={() => setUserToggled(true)}
-                >
-                  <div className="relative h-10 md:h-12 w-full max-w-[140px] opacity-80 group-hover:opacity-100 transition-opacity">
-                    <Image
-                      src={client.src}
-                      alt={client.name}
-                      fill
-                      className="object-contain filter brightness-0 invert"
-                    />
-                  </div>
-                </motion.div>
-              ))}
+              {/* 3 Columns x 2 Rows Grid matching Screenshot 1 */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-16 items-center justify-items-center w-full">
+                {clientLogos.map((client) => (
+                  <motion.div
+                    key={client.name}
+                    layoutId={shouldReduceMotion ? undefined : `logo-${client.name}`}
+                    transition={springTransition}
+                    className="w-full flex items-center justify-center p-4 group cursor-pointer"
+                    onClick={() => setUserToggled(true)}
+                  >
+                    <div className="relative h-12 md:h-14 w-full max-w-[180px] opacity-80 group-hover:opacity-100 transition-opacity">
+                      <Image
+                        src={client.src}
+                        alt={client.name}
+                        fill
+                        className="object-contain filter brightness-0 invert"
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
           )}
 
-          {/* EXPANDED STATE: LayoutId Logo Morphing + Staggered Reveal Sequence */}
+          {/* EXPANDED STATE: All 4 Detail Blocks (Screenshot 2) */}
           {isExpanded && (
             <div className="w-full space-y-24">
               
@@ -132,7 +136,6 @@ export default function TopClientSection({
                       />
                     </motion.div>
 
-                    {/* Caption text fades in 150ms after logo morph settles */}
                     <motion.div
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -174,7 +177,7 @@ export default function TopClientSection({
                   </motion.div>
                 </div>
 
-                {/* Related Featured Project Card 1: Rogo IoT Platform v2 (Reveals last) */}
+                {/* Related Featured Project Card 1: Rogo IoT Platform v2 */}
                 <motion.div
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -281,7 +284,7 @@ export default function TopClientSection({
                   </motion.div>
                 </div>
 
-                {/* Related Featured Project Card 2: RaIO Smart (Reveals last) */}
+                {/* Related Featured Project Card 2: RaIO Smart */}
                 <motion.div
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -327,7 +330,7 @@ export default function TopClientSection({
                       {lang === "vi"
                         ? "Ứng dụng nhà thông minh Whitelabel — Giao diện thích ứng linh hoạt theo thương hiệu đối tác, tối ưu quy trình kết nối & onboarding thiết bị phần cứng IoT phức tạp."
                         : "Whitelabel smart home app — partner-adaptive UI, complex device onboarding."}
-                      </p>
+                    </p>
                   </div>
                 </motion.div>
               </div>
