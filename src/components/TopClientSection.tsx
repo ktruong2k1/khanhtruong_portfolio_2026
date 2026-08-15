@@ -36,21 +36,25 @@ export default function TopClientSection({
     offset: ["start start", "end end"],
   });
 
-  // STEP 1 (Screenshot 1): Single horizontal row next to "Top Client" at section top (0.00 -> 0.22)
-  const rowOpacity = useTransform(scrollYProgress, [0.0, 0.16, 0.24], [1, 1, 0]);
-  const rowY = useTransform(scrollYProgress, [0.0, 0.24], ["0px", "15px"]);
+  // STEP 1 -> STEP 2A: Single horizontal row moves down vertically into 100vh vertical center (0.00 -> 0.28)
+  const rowY = useTransform(scrollYProgress, [0.0, 0.25], ["0px", "35vh"]);
+  const rowOpacity = useTransform(scrollYProgress, [0.0, 0.25, 0.32], [1, 1, 0]);
 
-  // STEP 2 (Screenshot 2 & 3): 6 logos rearrange & align center in middle of section (0.20 -> 0.46)
+  // STEP 2B (Screenshot 3): 6 logos expand & rearrange into 3x2 grid centered in 100vh (0.26 -> 0.46)
   const gridOpacity = useTransform(
     scrollYProgress,
-    [0.18, 0.26, 0.40, 0.48],
+    [0.26, 0.33, 0.42, 0.48],
     [0, 1, 1, 0]
   );
-  const gridScale = useTransform(scrollYProgress, [0.18, 0.26, 0.40, 0.48], [0.95, 1, 1, 0.95]);
+  const gridScale = useTransform(
+    scrollYProgress,
+    [0.26, 0.33, 0.42, 0.48],
+    [0.95, 1, 1, 0.95]
+  );
 
-  // STEP 3 (Screenshot 4): Expanded detail cards appear and scroll up (0.44 -> 0.90)
-  const expandedOpacity = useTransform(scrollYProgress, [0.44, 0.52], [0, 1]);
-  const contentY = useTransform(scrollYProgress, [0.48, 0.90], ["0%", "-62%"]);
+  // STEP 3 (Screenshot 4): Expanded detail cards appear and scroll up (0.45 -> 0.90)
+  const expandedOpacity = useTransform(scrollYProgress, [0.45, 0.52], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.50, 0.90], ["0%", "-62%"]);
 
   // Fallback for Reduced Motion
   if (shouldReduceMotion) {
@@ -125,7 +129,7 @@ export default function TopClientSection({
           </h3>
         </div>
 
-        {/* STEP 1 (Screenshot 1): Single Horizontal Row of 6 Logos next to Top Client (Progress: 0.00 -> 0.22) */}
+        {/* STEP 1 -> STEP 2A: Single Horizontal Row of 6 Logos aligns center vertically in 100vh (Progress: 0.00 -> 0.28) */}
         <motion.div
           style={{ opacity: rowOpacity, y: rowY }}
           className="absolute top-12 left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[80px] z-20 pointer-events-none flex items-center justify-end"
@@ -147,7 +151,7 @@ export default function TopClientSection({
           </div>
         </motion.div>
 
-        {/* STEP 2 (Screenshot 2 & 3): 6 Logos Rearrange & Align Center into 3x2 Grid in Middle of Section (Progress: 0.20 -> 0.46) */}
+        {/* STEP 2B (Screenshot 3): 6 Logos expand into 3x2 Grid centered in 100vh (Progress: 0.26 -> 0.48) */}
         <motion.div
           style={{ opacity: gridOpacity, scale: gridScale }}
           className="absolute inset-0 max-w-4xl mx-auto my-auto flex flex-col items-center justify-center pointer-events-none px-6 z-10"
@@ -171,7 +175,7 @@ export default function TopClientSection({
           </div>
         </motion.div>
 
-        {/* STEP 3 (Screenshot 4): Expanded Detail Cards Appear & Scroll Up (Progress: 0.44 -> 0.90) */}
+        {/* STEP 3 (Screenshot 4): Expanded Detail Cards Appear & Scroll Up (Progress: 0.45 -> 0.90) */}
         <motion.div
           style={{ opacity: expandedOpacity }}
           className="w-full max-w-[1440px] mx-auto h-full pt-16 flex-1 overflow-hidden z-0"
