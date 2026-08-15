@@ -30,20 +30,20 @@ export default function TopClientSection({
   const sectionRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Track scroll progress within the tall pinned container (450vh)
+  // Track scroll progress within the tall pinned container (400vh)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
   // Timeline Transforms (Scrub)
-  // 1. Compact Overview Opacity & Scale: 0.0 -> 0.18
-  const compactOpacity = useTransform(scrollYProgress, [0.0, 0.18], [1, 0]);
-  const compactScale = useTransform(scrollYProgress, [0.0, 0.18], [1, 0.95]);
+  // 1. Compact Overview 3x2 Grid Opacity & Scale: 0.0 -> 0.16
+  const compactOpacity = useTransform(scrollYProgress, [0.0, 0.16], [1, 0]);
+  const compactScale = useTransform(scrollYProgress, [0.0, 0.16], [1, 0.92]);
 
-  // 2. Expanded Detail View Opacity & Vertical Translation Scrub: 0.15 -> 0.85
-  const expandedOpacity = useTransform(scrollYProgress, [0.15, 0.25], [0, 1]);
-  const contentY = useTransform(scrollYProgress, [0.25, 0.85], ["0%", "-55%"]);
+  // 2. Expanded Detail View Opacity & Vertical Translation Scrub: 0.14 -> 0.88
+  const expandedOpacity = useTransform(scrollYProgress, [0.14, 0.22], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.20, 0.88], ["0%", "-62%"]);
 
   // Fallback for Reduced Motion
   if (shouldReduceMotion) {
@@ -106,7 +106,7 @@ export default function TopClientSection({
     <section
       ref={sectionRef}
       id="top-clients"
-      className="relative w-full h-[450vh] bg-[#121212] text-white border-t border-b border-white/5"
+      className="relative w-full h-[400vh] bg-[#121212] text-white border-t border-b border-white/5"
     >
       {/* Sticky 100vh Viewport Container (Locks scroll inside section) */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-12 px-6 md:px-12 lg:px-[80px]">
@@ -118,10 +118,10 @@ export default function TopClientSection({
           </h3>
         </div>
 
-        {/* STATE 1: Compact Overview 3x2 Grid (Pinned Progress: 0.0 -> 0.18) */}
+        {/* STATE 1: Compact Overview 3x2 Grid (Pinned Progress: 0.0 -> 0.16) */}
         <motion.div
           style={{ opacity: compactOpacity, scale: compactScale }}
-          className="absolute inset-0 max-w-4xl mx-auto my-auto flex flex-col items-center justify-center pointer-events-none px-6"
+          className="absolute inset-0 max-w-4xl mx-auto my-auto flex flex-col items-center justify-center pointer-events-none px-6 z-10"
         >
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 sm:gap-16 items-center justify-items-center w-full">
             {clientLogos.map((client) => (
@@ -142,10 +142,10 @@ export default function TopClientSection({
           </div>
         </motion.div>
 
-        {/* STATE 2: Expanded Detail View - Internal Scroll Scrub (Pinned Progress: 0.15 -> 0.85) */}
+        {/* STATE 2: Expanded Detail View - Internal Scroll Scrub (Pinned Progress: 0.14 -> 0.88) */}
         <motion.div
           style={{ opacity: expandedOpacity }}
-          className="w-full max-w-[1440px] mx-auto h-full pt-16 flex-1 overflow-hidden"
+          className="w-full max-w-[1440px] mx-auto h-full pt-16 flex-1 overflow-hidden z-0"
         >
           <motion.div
             style={{ y: contentY }}
