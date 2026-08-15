@@ -2,8 +2,14 @@
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { motion, useInView, useReducedMotion, Transition } from "framer-motion";
-import { Maximize2, Minimize2 } from "lucide-react";
+import {
+  motion,
+  useScroll,
+  useMotionValueEvent,
+  useReducedMotion,
+  Transition,
+} from "framer-motion";
+import { ChevronDown, Maximize2, Minimize2 } from "lucide-react";
 
 interface TopClientSectionProps {
   lang?: "vi" | "en";
@@ -24,11 +30,26 @@ export default function TopClientSection({
   onOpenContact,
 }: TopClientSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { amount: 0.35, once: false });
+  const [scrollExpanded, setScrollExpanded] = useState(false);
   const [userToggled, setUserToggled] = useState<boolean | null>(null);
 
-  // Auto-expand when locked into view or manually toggled
-  const isExpanded = userToggled !== null ? userToggled : isInView;
+  // Track scroll progress within section
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Expand detail view ONLY after scrolling through ~30vh into section
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (latest > 0.12) {
+      setScrollExpanded(true);
+    } else {
+      setScrollExpanded(false);
+    }
+  });
+
+  // Final expanded state: user manual toggle overrides, otherwise scroll threshold (> 30vh)
+  const isExpanded = userToggled !== null ? userToggled : scrollExpanded;
   const shouldReduceMotion = useReducedMotion();
 
   // Spring physics for logo layout morphing
@@ -40,12 +61,15 @@ export default function TopClientSection({
     <section
       ref={sectionRef}
       id="top-clients"
-      className="w-full bg-[#0A0A0A] text-white overflow-hidden relative border-t border-b border-white/5 py-16 px-6 md:px-12 lg:px-[80px]"
+      className={`w-full bg-[#0A0A0A] text-white relative border-t border-b border-white/5 transition-all duration-500 ${
+        isExpanded ? "min-h-[250vh]" : "min-h-screen"
+      }`}
     >
-      <div className="max-w-[1440px] mx-auto w-full transition-all duration-500">
+      {/* Sticky viewport container */}
+      <div className="sticky top-0 w-full min-h-screen flex flex-col justify-between py-16 px-6 md:px-12 lg:px-[80px] overflow-hidden">
         
         {/* Top Header Row with Toggle Button */}
-        <div className="w-full flex items-center justify-between mb-12">
+        <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between z-20 mb-6">
           <div className="flex items-center gap-4">
             <h3 className="font-mono text-2xl md:text-3xl font-bold text-white tracking-tight">
               Top Client
@@ -57,7 +81,7 @@ export default function TopClientSection({
 
           <button
             onClick={() => setUserToggled(!isExpanded)}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white/80 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white/80 transition-all cursor-pointer z-30"
           >
             {isExpanded ? (
               <>
@@ -73,42 +97,55 @@ export default function TopClientSection({
           </button>
         </div>
 
-        {/* INITIAL STATE: Compact Horizontal Row */}
+        {/* PHASE 1: Compact Overview (Shown for initial 30vh of scroll) */}
         {!isExpanded && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: shouldReduceMotion ? 0.2 : 0.4 }}
-            className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center py-12"
+            className="max-w-[1440px] mx-auto w-full my-auto flex flex-col justify-center items-center py-12"
           >
-            {clientLogos.map((client) => (
-              <motion.div
-                key={client.name}
-                layoutId={shouldReduceMotion ? undefined : `logo-${client.name}`}
-                transition={springTransition}
-                className="w-full flex items-center justify-center p-2 group cursor-pointer"
-                onClick={() => setUserToggled(true)}
-              >
-                <div className="relative h-10 md:h-12 w-full max-w-[140px] opacity-75 group-hover:opacity-100 transition-opacity">
-                  <Image
-                    src={client.src}
-                    alt={client.name}
-                    fill
-                    className="object-contain filter brightness-0 invert"
-                  />
-                </div>
-              </motion.div>
-            ))}
+            <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center py-8">
+              {clientLogos.map((client) => (
+                <motion.div
+                  key={client.name}
+                  layoutId={shouldReduceMotion ? undefined : `logo-${client.name}`}
+                  transition={springTransition}
+                  className="w-full flex items-center justify-center p-2 group cursor-pointer"
+                  onClick={() => setUserToggled(true)}
+                >
+                  <div className="relative h-10 md:h-12 w-full max-w-[140px] opacity-80 group-hover:opacity-100 transition-opacity">
+                    <Image
+                      src={client.src}
+                      alt={client.name}
+                      fill
+                      className="object-contain filter brightness-0 invert"
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Scroll Down Hint */}
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="flex flex-col items-center gap-2 text-white/50 font-mono text-xs tracking-widest uppercase mt-8 cursor-pointer"
+              onClick={() => setUserToggled(true)}
+            >
+              <span>Scroll past 30vh to expand details</span>
+              <ChevronDown className="w-4 h-4 text-[#00DC6C]" />
+            </motion.div>
           </motion.div>
         )}
 
-        {/* EXPANDED STATE: Staggered Partner Blocks & Featured Cards */}
+        {/* PHASE 2 & 3: Expanded Detail View with Scroll-Snap Sub-Blocks */}
         {isExpanded && (
-          <div className="space-y-24">
+          <div className="max-w-[1440px] mx-auto w-full overflow-y-auto max-h-[80vh] snap-y snap-mandatory motion-reduce:snap-none pr-2 custom-scrollbar">
             
             {/* PARTNER BLOCK 1: Rogo Solutions */}
-            <div className="space-y-12">
+            <div className="min-h-[75vh] w-full snap-start snap-always flex flex-col justify-center space-y-12 py-8 border-b border-white/5">
               {/* Partner Highlight Row */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 {/* Left Column: Shared Layout Logo + Caption */}
@@ -175,7 +212,7 @@ export default function TopClientSection({
                   duration: 0.5,
                   delay: shouldReduceMotion ? 0 : 0.4,
                 }}
-                className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#141414] p-8 md:p-12 rounded-3xl border border-white/10"
+                className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#141414] p-8 md:p-10 rounded-3xl border border-white/10"
               >
                 {/* Left Column: Laptop Stand Screen Mockup */}
                 <div className="lg:col-span-5">
@@ -216,7 +253,7 @@ export default function TopClientSection({
             </div>
 
             {/* PARTNER BLOCK 2: Rạng Đông */}
-            <div className="space-y-12 pt-12 border-t border-white/10">
+            <div className="min-h-[75vh] w-full snap-start snap-always flex flex-col justify-center space-y-12 py-8">
               {/* Partner Highlight Row */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 {/* Left Column: Shared Layout Logo + Caption */}
@@ -283,14 +320,14 @@ export default function TopClientSection({
                   duration: 0.5,
                   delay: shouldReduceMotion ? 0 : 0.4,
                 }}
-                className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#141414] p-8 md:p-12 rounded-3xl border border-white/10"
+                className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#141414] p-8 md:p-10 rounded-3xl border border-white/10"
               >
                 {/* Left Column: RaIO White Card Preview */}
                 <div className="lg:col-span-5 space-y-4">
                   <div className="font-mono text-sm font-bold text-white/70">
                     Featured project
                   </div>
-                  <div className="bg-white p-10 rounded-2xl shadow-xl flex items-center justify-center min-h-[220px]">
+                  <div className="bg-white p-10 rounded-2xl shadow-xl flex items-center justify-center min-h-[200px]">
                     <div className="relative w-44 h-16">
                       <Image
                         src="/images/raio.png"
@@ -329,6 +366,7 @@ export default function TopClientSection({
           </div>
         )}
 
+        <div />
       </div>
     </section>
   );
