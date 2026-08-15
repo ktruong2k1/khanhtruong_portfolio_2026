@@ -30,20 +30,14 @@ export default function TopClientSection({
   const sectionRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Track scroll progress from when section enters viewport until end
+  // Track scroll progress within pinned container
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end end"],
+    offset: ["start start", "end end"],
   });
 
-  // Timeline Transforms (Guaranteed 100% visible 6-logo grid at entry)
-  // 1. Compact Logo Grid (6 Logos): 100% visible from 0.00 -> 0.40 scroll progress!
-  const compactOpacity = useTransform(scrollYProgress, [0.0, 0.40, 0.50], [1, 1, 0]);
-  const compactScale = useTransform(scrollYProgress, [0.40, 0.50], [1, 0.94]);
-
-  // 2. Expanded Detail View: Direct cross-fade from 0.40 -> 0.50, then scrub contentY 0.45 -> 0.90
-  const expandedOpacity = useTransform(scrollYProgress, [0.40, 0.50], [0, 1]);
-  const contentY = useTransform(scrollYProgress, [0.45, 0.90], ["0%", "-62%"]);
+  // Vertical scroll scrub for detailed featured project cards
+  const contentY = useTransform(scrollYProgress, [0.05, 0.90], ["0%", "-62%"]);
 
   // Fallback for Reduced Motion
   if (shouldReduceMotion) {
@@ -111,42 +105,32 @@ export default function TopClientSection({
       {/* Sticky 100vh Viewport Container (Locks scroll inside section) */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-12 px-6 md:px-12 lg:px-[80px]">
         
-        {/* Header Bar */}
-        <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between z-20">
-          <h3 className="font-mono text-2xl md:text-3xl font-bold text-white tracking-tight">
+        {/* Persistent Top Header Bar with "Top Client" label + 6 Monochrome Client Logos Row */}
+        <div className="w-full max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6 z-20 pb-6 border-b border-white/10">
+          <h3 className="font-mono text-2xl md:text-3xl font-bold text-white tracking-tight shrink-0">
             Top Client
           </h3>
-        </div>
 
-        {/* STATE 1: Compact Overview 3x2 Grid (100% Visible from 0.0 -> 0.40 progress!) */}
-        <motion.div
-          style={{ opacity: compactOpacity, scale: compactScale }}
-          className="absolute inset-0 max-w-4xl mx-auto my-auto flex flex-col items-center justify-center pointer-events-none px-6 z-10"
-        >
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 sm:gap-16 items-center justify-items-center w-full">
+          {/* 6 Partner Monochrome Logos Row - Always Visible */}
+          <div className="flex items-center gap-6 md:gap-10 overflow-x-auto no-scrollbar py-1">
             {clientLogos.map((client) => (
               <div
                 key={client.name}
-                className="w-full flex items-center justify-center p-4"
+                className="shrink-0 relative h-7 md:h-8 w-24 md:w-28 opacity-85 hover:opacity-100 transition-opacity"
               >
-                <div className="relative h-12 md:h-14 w-full max-w-[180px] opacity-85">
-                  <Image
-                    src={client.src}
-                    alt={client.name}
-                    fill
-                    className="object-contain filter brightness-0 invert"
-                  />
-                </div>
+                <Image
+                  src={client.src}
+                  alt={client.name}
+                  fill
+                  className="object-contain filter brightness-0 invert"
+                />
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* STATE 2: Expanded Detail View - Internal Scroll Scrub (Progress: 0.40 -> 0.90) */}
-        <motion.div
-          style={{ opacity: expandedOpacity }}
-          className="w-full max-w-[1440px] mx-auto h-full pt-16 flex-1 overflow-hidden z-0"
-        >
+        {/* Expanded Detail View - Internal Scroll Scrub */}
+        <div className="w-full max-w-[1440px] mx-auto h-full pt-8 flex-1 overflow-hidden z-0">
           <motion.div
             style={{ y: contentY }}
             className="w-full space-y-24 pb-32"
@@ -327,7 +311,7 @@ export default function TopClientSection({
             </div>
 
           </motion.div>
-        </motion.div>
+        </div>
 
         <div />
       </div>
