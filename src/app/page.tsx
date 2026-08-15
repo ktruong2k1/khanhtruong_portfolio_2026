@@ -30,11 +30,8 @@ export default function Home() {
         onOpenContact={() => setContactOpen(true)}
       />
 
-      {/* Section 2: Top Client logos */}
-      <TopClientSection />
-
-      {/* Section 2 extension: Featured Projects (100vh full-height scroll) */}
-      <FeaturedProjectsSection
+      {/* Section 2: Top Client logos & Featured Projects Scroll-Snap Flow */}
+      <TopClientSection
         lang={lang}
         onOpenContact={() => setContactOpen(true)}
       />
