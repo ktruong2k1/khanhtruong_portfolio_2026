@@ -32,7 +32,7 @@ const processSteps = [
     title: "Execute in parallel, hand off clean",
     image: "/images/process_step_3.jpg",
     description:
-      "Before anything gets drawn, everyone in the room needs to see the same product. That means sitting with stakeholders, reading BA docs, mapping API flows — and asking enough questions until the ambiguity runs out. Design built on assumptions costs more to fix than the time it takes to align.",
+      "Design handoff isn't throwing files over a fence. It's a continuous conversation with engineering — establishing clear token systems, component specs, states, and edge cases early so development builds with speed and precision without guesswork.",
     isWhite: true,
   },
   {
@@ -40,7 +40,7 @@ const processSteps = [
     title: "Keep moving after handoff",
     image: "/images/process_step_4.jpg",
     description:
-      "Before anything gets drawn, everyone in the room needs to see the same product. That means sitting with stakeholders, reading BA docs, mapping API flows — and asking enough questions until the ambiguity runs out. Design built on assumptions costs more to fix than the time it takes to align.",
+      "Shipped is just the starting line. Once real users interact with the product, real data flows in — revealing telemetry, edge cases, and friction points. Continuous iteration, QA reviews, and UX refinements ensure the product evolves into a market-leading ecosystem.",
     isWhite: false,
   },
 ];
