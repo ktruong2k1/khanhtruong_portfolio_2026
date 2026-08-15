@@ -36,11 +36,11 @@ export default function TopClientSection({
     offset: ["start start", "end end"],
   });
 
-  // STEP 1 -> STEP 2A: Single horizontal row moves down vertically into 100vh vertical center (0.00 -> 0.28)
-  const rowY = useTransform(scrollYProgress, [0.0, 0.25], ["0px", "35vh"]);
+  // STEP 1 -> STEP 2A: Single horizontal row starts 80px below topnav and glides down to center of (100vh - 80px)
+  const rowY = useTransform(scrollYProgress, [0.0, 0.25], ["0px", "calc(45vh - 80px)"]);
   const rowOpacity = useTransform(scrollYProgress, [0.0, 0.25, 0.32], [1, 1, 0]);
 
-  // STEP 2B (Screenshot 3): 6 logos expand & rearrange into 3x2 grid centered in 100vh (0.26 -> 0.46)
+  // STEP 2B (Screenshot 4): 6 logos expand into 3x2 grid aligned dead-center in (100vh - 80px) space
   const gridOpacity = useTransform(
     scrollYProgress,
     [0.26, 0.33, 0.42, 0.48],
@@ -52,7 +52,7 @@ export default function TopClientSection({
     [0.95, 1, 1, 0.95]
   );
 
-  // STEP 3 (Screenshot 4): Expanded detail cards appear and scroll up (0.45 -> 0.90)
+  // STEP 3: Expanded detail cards appear and scroll up below 80px header
   const expandedOpacity = useTransform(scrollYProgress, [0.45, 0.52], [0, 1]);
   const contentY = useTransform(scrollYProgress, [0.50, 0.90], ["0%", "-62%"]);
 
@@ -119,20 +119,20 @@ export default function TopClientSection({
       id="top-clients"
       className="relative w-full h-[450vh] bg-[#121212] text-white border-t border-b border-white/5"
     >
-      {/* Sticky 100vh Viewport Container (Locks scroll inside section) */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-12 px-6 md:px-12 lg:px-[80px]">
+      {/* Sticky 100vh Viewport Container (Locks scroll inside section, top padding 80px below topnav) */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden pt-[80px] pb-12 px-6 md:px-12 lg:px-[80px]">
         
-        {/* Persistent Section Header */}
-        <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between z-30">
+        {/* Fixed Header Bar: "Top Client" text exactly 80px below topnav */}
+        <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between z-30 relative pt-2">
           <h3 className="font-mono text-2xl md:text-3xl font-bold text-white tracking-tight">
             Top Client
           </h3>
         </div>
 
-        {/* STEP 1 -> STEP 2A: Single Horizontal Row of 6 Logos aligns center vertically in 100vh (Progress: 0.00 -> 0.28) */}
+        {/* STEP 1 -> STEP 2A: Single Horizontal Row of 6 Logos (Starts 80px below topnav, glides down to center of (100vh - 80px)) */}
         <motion.div
           style={{ opacity: rowOpacity, y: rowY }}
-          className="absolute top-12 left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[80px] z-20 pointer-events-none flex items-center justify-end"
+          className="absolute top-[88px] left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[80px] z-20 pointer-events-none flex items-center justify-end"
         >
           <div className="flex items-center gap-6 md:gap-10 overflow-x-auto no-scrollbar py-1 pr-4">
             {clientLogos.map((client) => (
@@ -151,10 +151,10 @@ export default function TopClientSection({
           </div>
         </motion.div>
 
-        {/* STEP 2B (Screenshot 3): 6 Logos expand into 3x2 Grid centered in 100vh (Progress: 0.26 -> 0.48) */}
+        {/* STEP 2B (Screenshot 4): 6 Logos expand into 3x2 grid aligned dead-center in (100vh - 80px) space */}
         <motion.div
           style={{ opacity: gridOpacity, scale: gridScale }}
-          className="absolute inset-0 max-w-4xl mx-auto my-auto flex flex-col items-center justify-center pointer-events-none px-6 z-10"
+          className="absolute inset-0 pt-[80px] max-w-4xl mx-auto my-auto flex flex-col items-center justify-center pointer-events-none px-6 z-10"
         >
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 sm:gap-16 items-center justify-items-center w-full">
             {clientLogos.map((client) => (
@@ -175,7 +175,7 @@ export default function TopClientSection({
           </div>
         </motion.div>
 
-        {/* STEP 3 (Screenshot 4): Expanded Detail Cards Appear & Scroll Up (Progress: 0.45 -> 0.90) */}
+        {/* STEP 3: Expanded Detail Cards Appear & Scroll Up below 80px header */}
         <motion.div
           style={{ opacity: expandedOpacity }}
           className="w-full max-w-[1440px] mx-auto h-full pt-16 flex-1 overflow-hidden z-0"
