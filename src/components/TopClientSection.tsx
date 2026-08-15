@@ -37,13 +37,13 @@ export default function TopClientSection({
   });
 
   // Timeline Transforms (Scrub)
-  // 1. Compact Logo Grid (Screenshot 1 & 2): 100% visible right from 0.0 -> 0.28 progress!
-  const compactOpacity = useTransform(scrollYProgress, [0.0, 0.28, 0.38], [1, 1, 0]);
-  const compactScale = useTransform(scrollYProgress, [0.28, 0.38], [1, 0.92]);
+  // 1. Compact Logo Grid (Screenshot 1 & 2): 100% visible right from 0.0 -> 0.35 progress!
+  const compactOpacity = useTransform(scrollYProgress, [0.0, 0.35, 0.45], [1, 1, 0]);
+  const compactScale = useTransform(scrollYProgress, [0.35, 0.45], [1, 0.92]);
 
-  // 2. Expanded Detail View (Screenshot 3): Fades in 0.34 -> 0.44, then scrubs contentY 0.44 -> 0.88
-  const expandedOpacity = useTransform(scrollYProgress, [0.34, 0.44], [0, 1]);
-  const contentY = useTransform(scrollYProgress, [0.44, 0.88], ["0%", "-62%"]);
+  // 2. Expanded Detail View (Screenshot 3): Fades in 0.40 -> 0.50, then scrubs contentY 0.50 -> 0.92
+  const expandedOpacity = useTransform(scrollYProgress, [0.40, 0.50], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.50, 0.92], ["0%", "-62%"]);
 
   // Fallback for Reduced Motion
   if (shouldReduceMotion) {
@@ -142,7 +142,7 @@ export default function TopClientSection({
           </div>
         </motion.div>
 
-        {/* STATE 2: Expanded Detail View (Screenshot 3) - Internal Scroll Scrub (Progress: 0.34 -> 0.88) */}
+        {/* STATE 2: Expanded Detail View (Screenshot 3) - Internal Scroll Scrub (Progress: 0.40 -> 0.92) */}
         <motion.div
           style={{ opacity: expandedOpacity }}
           className="w-full max-w-[1440px] mx-auto h-full pt-16 flex-1 overflow-hidden z-0"
