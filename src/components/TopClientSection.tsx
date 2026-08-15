@@ -30,20 +30,20 @@ export default function TopClientSection({
   const sectionRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Track scroll progress starting EXACTLY when top of section hits top-0
+  // Track scroll progress within pinned container
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  // Timeline Transforms (Scrub)
-  // 1. Compact Logo Grid (Screenshot 1 & 2): 100% visible right from 0.0 -> 0.35 progress!
-  const compactOpacity = useTransform(scrollYProgress, [0.0, 0.35, 0.45], [1, 1, 0]);
-  const compactScale = useTransform(scrollYProgress, [0.35, 0.45], [1, 0.92]);
+  // Timeline Transforms (Seamless Cross-fade, ZERO Blank Frames)
+  // 1. Compact Logo Grid (Screenshot 2): 100% visible from 0.0 -> 0.30 progress!
+  const compactOpacity = useTransform(scrollYProgress, [0.0, 0.30, 0.40], [1, 1, 0]);
+  const compactScale = useTransform(scrollYProgress, [0.30, 0.40], [1, 0.94]);
 
-  // 2. Expanded Detail View (Screenshot 3): Fades in 0.40 -> 0.50, then scrubs contentY 0.50 -> 0.92
-  const expandedOpacity = useTransform(scrollYProgress, [0.40, 0.50], [0, 1]);
-  const contentY = useTransform(scrollYProgress, [0.50, 0.92], ["0%", "-62%"]);
+  // 2. Expanded Detail View: Direct cross-fade from 0.30 -> 0.40, scrubbing contentY from 0.35 -> 0.92
+  const expandedOpacity = useTransform(scrollYProgress, [0.30, 0.40], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.35, 0.92], ["0%", "-62%"]);
 
   // Fallback for Reduced Motion
   if (shouldReduceMotion) {
@@ -118,7 +118,7 @@ export default function TopClientSection({
           </h3>
         </div>
 
-        {/* STATE 1: Compact Overview 3x2 Grid (Screenshot 1 & 2 - 100% Visible at start!) */}
+        {/* STATE 1: Compact Overview 3x2 Grid (Screenshot 2 - 100% Visible at start!) */}
         <motion.div
           style={{ opacity: compactOpacity, scale: compactScale }}
           className="absolute inset-0 max-w-4xl mx-auto my-auto flex flex-col items-center justify-center pointer-events-none px-6 z-10"
@@ -142,7 +142,7 @@ export default function TopClientSection({
           </div>
         </motion.div>
 
-        {/* STATE 2: Expanded Detail View (Screenshot 3) - Internal Scroll Scrub (Progress: 0.40 -> 0.92) */}
+        {/* STATE 2: Expanded Detail View - Internal Scroll Scrub (Progress: 0.30 -> 0.92) */}
         <motion.div
           style={{ opacity: expandedOpacity }}
           className="w-full max-w-[1440px] mx-auto h-full pt-16 flex-1 overflow-hidden z-0"
