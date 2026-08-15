@@ -41,7 +41,7 @@ export default function TopClientSection({
 
   // Expand detail view ONLY after scrolling through ~30vh into section
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest > 0.12) {
+    if (latest > 0.1) {
       setScrollExpanded(true);
     } else {
       setScrollExpanded(false);
@@ -61,15 +61,12 @@ export default function TopClientSection({
     <section
       ref={sectionRef}
       id="top-clients"
-      className={`w-full bg-[#0A0A0A] text-white relative border-t border-b border-white/5 transition-all duration-500 ${
-        isExpanded ? "min-h-[250vh]" : "min-h-screen"
-      }`}
+      className="w-full bg-[#0A0A0A] text-white relative border-t border-b border-white/5 transition-all duration-500 py-16 px-6 md:px-12 lg:px-[80px]"
     >
-      {/* Sticky viewport container */}
-      <div className="sticky top-0 w-full min-h-screen flex flex-col justify-between py-16 px-6 md:px-12 lg:px-[80px] overflow-hidden">
+      <div className="max-w-[1440px] mx-auto w-full">
         
         {/* Top Header Row with Toggle Button */}
-        <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between z-20 mb-6">
+        <div className="w-full flex items-center justify-between mb-12">
           <div className="flex items-center gap-4">
             <h3 className="font-mono text-2xl md:text-3xl font-bold text-white tracking-tight">
               Top Client
@@ -97,14 +94,14 @@ export default function TopClientSection({
           </button>
         </div>
 
-        {/* PHASE 1: Compact Overview (Shown for initial 30vh of scroll) */}
+        {/* PHASE 1: Compact Overview (Initial horizontal row) */}
         {!isExpanded && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: shouldReduceMotion ? 0.2 : 0.4 }}
-            className="max-w-[1440px] mx-auto w-full my-auto flex flex-col justify-center items-center py-12"
+            className="w-full flex flex-col justify-center items-center py-16"
           >
             <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center py-8">
               {clientLogos.map((client) => (
@@ -134,18 +131,18 @@ export default function TopClientSection({
               className="flex flex-col items-center gap-2 text-white/50 font-mono text-xs tracking-widest uppercase mt-8 cursor-pointer"
               onClick={() => setUserToggled(true)}
             >
-              <span>Scroll past 30vh to expand details</span>
+              <span>Scroll to expand details</span>
               <ChevronDown className="w-4 h-4 text-[#00DC6C]" />
             </motion.div>
           </motion.div>
         )}
 
-        {/* PHASE 2 & 3: Expanded Detail View with Scroll-Snap Sub-Blocks */}
+        {/* PHASE 2 & 3: Expanded Detail View with Unclipped Full-Height Sub-Blocks */}
         {isExpanded && (
-          <div className="max-w-[1440px] mx-auto w-full overflow-y-auto max-h-[80vh] snap-y snap-mandatory motion-reduce:snap-none pr-2 custom-scrollbar">
+          <div className="w-full space-y-24">
             
             {/* PARTNER BLOCK 1: Rogo Solutions */}
-            <div className="min-h-[75vh] w-full snap-start snap-always flex flex-col justify-center space-y-12 py-8 border-b border-white/5">
+            <div className="w-full space-y-12 py-8 border-b border-white/5">
               {/* Partner Highlight Row */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 {/* Left Column: Shared Layout Logo + Caption */}
@@ -212,7 +209,7 @@ export default function TopClientSection({
                   duration: 0.5,
                   delay: shouldReduceMotion ? 0 : 0.4,
                 }}
-                className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#141414] p-8 md:p-10 rounded-3xl border border-white/10"
+                className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#141414] p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl"
               >
                 {/* Left Column: Laptop Stand Screen Mockup */}
                 <div className="lg:col-span-5">
@@ -253,7 +250,7 @@ export default function TopClientSection({
             </div>
 
             {/* PARTNER BLOCK 2: Rạng Đông */}
-            <div className="min-h-[75vh] w-full snap-start snap-always flex flex-col justify-center space-y-12 py-8">
+            <div className="w-full space-y-12 py-8">
               {/* Partner Highlight Row */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 {/* Left Column: Shared Layout Logo + Caption */}
@@ -320,7 +317,7 @@ export default function TopClientSection({
                   duration: 0.5,
                   delay: shouldReduceMotion ? 0 : 0.4,
                 }}
-                className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#141414] p-8 md:p-10 rounded-3xl border border-white/10"
+                className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#141414] p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl"
               >
                 {/* Left Column: RaIO White Card Preview */}
                 <div className="lg:col-span-5 space-y-4">
@@ -366,7 +363,6 @@ export default function TopClientSection({
           </div>
         )}
 
-        <div />
       </div>
     </section>
   );
