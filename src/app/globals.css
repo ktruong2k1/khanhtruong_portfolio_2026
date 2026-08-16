@@ -251,14 +251,17 @@ header {
   }
 }
 
-/* Global CTA Button Styling Class */
-.cta-btn {
+/* Global CTA Button Styling Rule: Exactly 56px Height & 8px Radius */
+.cta-btn, button.cta-btn, a.cta-btn, .btn-cta {
   display: flex !important;
-  padding: var(--Spacing-Padding-S, 8px) var(--Spacing-s, 12px) !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  max-height: 56px !important;
+  border-radius: 8px !important;
   justify-content: center !important;
   align-items: center !important;
   gap: var(--Spacing-Gap-XS, 8px) !important;
-  align-self: stretch !important;
+  box-sizing: border-box !important;
 }
 
 /* Process Step Card Heights */
@@ -688,4 +691,3 @@ header {
 .animation-delay-200 {
   animation-delay: 260ms;
 }
-

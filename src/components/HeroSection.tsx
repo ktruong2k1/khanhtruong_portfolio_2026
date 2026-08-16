@@ -96,7 +96,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             </p>
           </motion.div>
 
-          {/* Bottom-Right: CTA Buttons (Aligned LEFT with Product Designer job title) */}
+          {/* Bottom-Right: CTA Buttons (56px height & 8px radius) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -105,13 +105,13 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
           >
             <button
               onClick={scrollToAbout}
-              className="bg-[#00DC6C] hover:bg-[#00c560] text-black font-sans font-semibold rounded-xl px-7 py-3.5 text-base transition-all duration-200 cursor-pointer shadow-lg hover:shadow-[#00DC6C]/20 hover:scale-[1.02] active:scale-95"
+              className="cta-btn h-[56px] min-h-[56px] rounded-[8px] bg-[#00DC6C] hover:bg-[#00c560] text-black font-sans font-semibold px-8 text-base transition-all duration-200 cursor-pointer shadow-lg hover:shadow-[#00DC6C]/20 hover:scale-[1.02] active:scale-95"
             >
               {lang === "vi" ? "Về tôi" : "About me"}
             </button>
             <button
               onClick={onOpenContact}
-              className="bg-white hover:bg-gray-100 text-black p-3.5 rounded-xl transition-all duration-200 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-95 flex items-center justify-center"
+              className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[8px] bg-white hover:bg-gray-100 text-black transition-all duration-200 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-95 flex items-center justify-center"
               aria-label="Contact"
             >
               <ArrowRight className="w-5 h-5 text-black" />

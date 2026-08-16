@@ -32,15 +32,15 @@ export default function FooterSection({ lang, onOpenContact }: FooterSectionProp
             <div className="flex items-center gap-3 mt-auto">
               <button
                 onClick={onOpenContact}
-                className="bg-[#141414] hover:bg-black text-white font-sans text-xs font-semibold rounded-xl px-6 py-3 transition-all cursor-pointer shadow-lg active:scale-95"
+                className="cta-btn h-[56px] min-h-[56px] rounded-[8px] bg-[#141414] hover:bg-black text-white font-sans text-sm font-semibold px-8 transition-all cursor-pointer shadow-lg active:scale-95"
               >
                 Contact
               </button>
               <button
                 onClick={onOpenContact}
-                className="bg-white hover:bg-gray-100 text-black p-3 rounded-xl transition-all cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
+                className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[8px] bg-white hover:bg-gray-100 text-black transition-all cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
               >
-                <ArrowRight className="w-4 h-4 text-black" />
+                <ArrowRight className="w-5 h-5 text-black" />
               </button>
             </div>
           </div>

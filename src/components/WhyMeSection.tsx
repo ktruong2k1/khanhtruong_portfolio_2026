@@ -1,12 +1,56 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 interface WhyMeSectionProps {
   lang: "vi" | "en";
   onOpenContact: () => void;
+}
+
+function CountingStatNumber({ value }: { value: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const [displayVal, setDisplayVal] = useState(value.includes("3,5") || value.includes("3.5") ? "0,0+" : "0+");
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    if (value.includes("3,5") || value.includes("3.5")) {
+      let start = 0;
+      const interval = setInterval(() => {
+        start += 0.1;
+        if (start >= 3.5) {
+          setDisplayVal("3,5+");
+          clearInterval(interval);
+        } else {
+          setDisplayVal(start.toFixed(1).replace(".", ",") + "+");
+        }
+      }, 45);
+      return () => clearInterval(interval);
+    } else {
+      const target = parseInt(value, 10) || 20;
+      let start = 0;
+      const step = Math.max(1, Math.floor(target / 20));
+      const interval = setInterval(() => {
+        start += step;
+        if (start >= target) {
+          setDisplayVal(target + "+");
+          clearInterval(interval);
+        } else {
+          setDisplayVal(start + "+");
+        }
+      }, 40);
+      return () => clearInterval(interval);
+    }
+  }, [isInView, value]);
+
+  return (
+    <div ref={ref} className="font-mono text-6xl sm:text-7xl lg:text-[96px] font-bold text-white tracking-tight mb-4">
+      {displayVal}
+    </div>
+  );
 }
 
 export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps) {
@@ -51,13 +95,13 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
             <div className="flex items-center gap-3">
               <button
                 onClick={onOpenContact}
-                className="bg-[#00DC6C] hover:bg-[#00c560] text-black font-sans font-semibold rounded-xl px-7 py-3 text-base transition-all cursor-pointer shadow-lg active:scale-95"
+                className="cta-btn h-[56px] min-h-[56px] rounded-[8px] bg-[#00DC6C] hover:bg-[#00c560] text-black font-sans font-semibold px-8 text-base transition-all cursor-pointer shadow-lg active:scale-95"
               >
                 Explore Now
               </button>
               <button
                 onClick={onOpenContact}
-                className="bg-white hover:bg-gray-100 text-black p-3 rounded-xl transition-all cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
+                className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[8px] bg-white hover:bg-gray-100 text-black transition-all duration-200 cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
               >
                 <ArrowRight className="w-5 h-5 text-black" />
               </button>
@@ -65,7 +109,7 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
           </motion.div>
         </div>
 
-        {/* Stats Grid - Appear from top to bottom */}
+        {/* Stats Grid with 96px Digits and Number Running Effect */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8 w-full">
           {stats.map((stat, idx) => (
             <motion.div
@@ -76,41 +120,12 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
               transition={{ duration: 0.6, delay: 0.2 + idx * 0.15 }}
               className="border-t border-white/20 pt-8 flex flex-col justify-between min-w-0"
             >
-              <div className="font-mono text-6xl sm:text-7xl lg:text-[88px] font-bold text-white tracking-tight mb-4">
-                {stat.number}
-              </div>
+              <CountingStatNumber value={stat.number} />
               <div className="font-mono text-base md:text-xl font-medium text-white/90 whitespace-normal">
                 {stat.label}
               </div>
             </motion.div>
           ))}
-        </div>
-
-        {/* Running Marquee Text Ticker ("text chữ sẽ chạy") */}
-        <div className="w-full overflow-hidden py-8 border-t border-b border-white/10 mt-16 bg-[#161616]">
-          <motion.div
-            animate={{ x: [0, -1000] }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="flex items-center gap-16 whitespace-nowrap font-mono text-4xl md:text-6xl font-bold text-white/20 select-none"
-          >
-            <span>3,5+ YEARS EXP</span>
-            <span>•</span>
-            <span>20+ PROJECTS DEPLOYED</span>
-            <span>•</span>
-            <span>20+ HAPPY CLIENTS</span>
-            <span>•</span>
-            <span>PRODUCT DESIGNER</span>
-            <span>•</span>
-            <span>IOT PLATFORMS</span>
-            <span>•</span>
-            <span>SAAS & DASHBOARDS</span>
-            <span>•</span>
-            <span>3,5+ YEARS EXP</span>
-            <span>•</span>
-            <span>20+ PROJECTS DEPLOYED</span>
-            <span>•</span>
-            <span>20+ HAPPY CLIENTS</span>
-          </motion.div>
         </div>
       </div>
     </section>

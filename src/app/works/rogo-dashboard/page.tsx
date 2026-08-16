@@ -1397,7 +1397,7 @@ export default function RogoDashboardPage() {
                 href="/pending" 
                 className="flex flex-col gap-4 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-xl cursor-pointer group block"
               >
-                <div className="w-full aspect-[388/256] rounded-xl overflow-hidden border border-neutral-900/80 relative bg-[#0c0d12]">
+                <div className="w-full aspect-[3/2] rounded-xl overflow-hidden relative bg-[#0c0d12]">
                   <Image 
                     src="/images/raio.png"
                     alt="RaIO Smart"
@@ -1432,7 +1432,7 @@ export default function RogoDashboardPage() {
                 href="/pending" 
                 className="flex flex-col gap-4 p-3 border border-transparent hover:border-[#2ECC8A] transition-all duration-300 rounded-xl cursor-pointer group block"
               >
-                <div className="w-full aspect-[388/256] rounded-xl overflow-hidden border border-neutral-900/80 relative bg-[#0c0d12]">
+                <div className="w-full aspect-[3/2] rounded-xl overflow-hidden relative bg-[#0c0d12]">
                   <Image 
                     src="/images/austfly.png"
                     alt="Austfly IoT App"

@@ -36,44 +36,42 @@ export default function TopClientSection({
     offset: ["start start", "end end"],
   });
 
-  // Smart Animate Progress Ranges:
-  // Phase 1 (0.00 -> 0.15): Single horizontal row top right
-  // Phase 2 (0.15 -> 0.35): Smart Animate morph each logo into centered 3x2 grid
-  // Phase 3 (0.35 -> 0.45): Hold 3x2 grid centered in 100vh
-  // Phase 4 (0.45 -> 0.52): Fade out 3x2 grid, expanded detail view scrubs up
+  // Header "Top Client" Opacity: Fixed 100% visible throughout entire section, ONLY fades out when scrolling past the last project card (0.90 -> 0.98)
+  const headerOpacity = useTransform(scrollYProgress, [0.0, 0.90, 0.98], [1, 1, 0]);
 
-  // Container Opacity & Scale for logos
+  // Container Opacity & Scale & Display for logos
   const logoGroupOpacity = useTransform(
     scrollYProgress,
-    [0.0, 0.42, 0.50],
+    [0.0, 0.35, 0.42],
     [1, 1, 0]
   );
   const logoGroupScale = useTransform(
     scrollYProgress,
-    [0.42, 0.50],
+    [0.35, 0.42],
     [1, 0.92]
   );
+  const logoDisplay = useTransform(scrollYProgress, (v) => (v >= 0.42 ? "none" : "block"));
 
-  // Individual Smart Animate Motion Transforms for Logos 0 to 5
-  // Row 1 Logos (ROGO, FPT, Rạng Đông)
-  const logo0_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "-240px"]);
-  const logo0_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "32vh"]);
+  // Smart Animate Motion Transforms: 6 logos starting from Horizontally Centered single row -> morph into 3x2 grid
+  // Row 1 Target Grid Slots (ROGO, FPT, Rạng Đông)
+  const logo0_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "210px"]);
+  const logo0_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "32vh"]);
 
-  const logo1_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "0px"]);
-  const logo1_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "32vh"]);
+  const logo1_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "270px"]);
+  const logo1_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "32vh"]);
 
-  const logo2_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "240px"]);
-  const logo2_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "32vh"]);
+  const logo2_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "330px"]);
+  const logo2_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "32vh"]);
 
-  // Row 2 Logos (VietinBank, VCBS, Think & Action)
-  const logo3_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "-240px"]);
-  const logo3_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "46vh"]);
+  // Row 2 Target Grid Slots (VietinBank, VCBS, Think & Action)
+  const logo3_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "-330px"]);
+  const logo3_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "46vh"]);
 
-  const logo4_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "0px"]);
-  const logo4_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "46vh"]);
+  const logo4_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "-270px"]);
+  const logo4_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "46vh"]);
 
-  const logo5_X = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "240px"]);
-  const logo5_Y = useTransform(scrollYProgress, [0.12, 0.32], ["0px", "46vh"]);
+  const logo5_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "-210px"]);
+  const logo5_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "46vh"]);
 
   const logoTransforms = [
     { x: logo0_X, y: logo0_Y },
@@ -84,9 +82,10 @@ export default function TopClientSection({
     { x: logo5_X, y: logo5_Y },
   ];
 
-  // Step 3: Expanded Detail View (0.45 -> 0.90)
-  const expandedOpacity = useTransform(scrollYProgress, [0.45, 0.52], [0, 1]);
-  const contentY = useTransform(scrollYProgress, [0.50, 0.90], ["0%", "-62%"]);
+  // Step 3: Expanded Detail View - Remains 100% SOLID OPAQUE (opacity: 1) continuously throughout the entire scroll
+  const expandedOpacity = useTransform(scrollYProgress, [0.42, 0.48, 0.95, 1.0], [0, 1, 1, 1]);
+  const expandedDisplay = useTransform(scrollYProgress, (v) => (v < 0.40 ? "none" : "block"));
+  const contentY = useTransform(scrollYProgress, [0.44, 0.90], ["0%", "-62%"]);
 
   // Fallback for Reduced Motion
   if (shouldReduceMotion) {
@@ -122,7 +121,7 @@ export default function TopClientSection({
                 <p className="text-white/70">Partnered to engineer enterprise IoT control planes and whitelabel SaaS ecosystems.</p>
               </div>
               <div className="lg:col-span-7">
-                <div className="relative w-full aspect-[16/9] rounded-3xl overflow-hidden border border-white/10">
+                <div className="relative w-full aspect-[3/2] rounded-3xl overflow-hidden border border-white/10">
                   <Image src="/images/Thing_AI_VN.png" alt="Award" fill className="object-cover" />
                 </div>
               </div>
@@ -130,7 +129,7 @@ export default function TopClientSection({
 
             <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#181818] p-8 md:p-12 rounded-3xl border border-white/10">
               <div className="lg:col-span-5">
-                <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 p-2">
+                <div className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden border border-white/10 p-2">
                   <Image src="/images/Rogo_Platform_large.png" alt="Rogo Platform" fill className="object-cover" />
                 </div>
               </div>
@@ -151,23 +150,30 @@ export default function TopClientSection({
       id="top-clients"
       className="relative w-full h-[450vh] bg-[#121212] text-white border-t border-b border-white/5"
     >
-      {/* Sticky 100vh Viewport Container (Locks scroll inside section, top padding 80px below topnav) */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden pt-[80px] pb-12 px-6 md:px-12 lg:px-[80px]">
+      {/* Sticky 100vh Viewport Container (Locks scroll inside section, top padding 130px for 60px gap below topnav) */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden pt-[130px] pb-12 px-6 md:px-12 lg:px-[80px]">
         
-        {/* Fixed Header Bar: "Top Client" text exactly 80px below topnav */}
-        <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between z-30 relative pt-2">
+        {/* Fixed Header Bar: "Top Client" text fixed 60px below topnav, ONLY fades out when scrolling past last project card */}
+        <motion.div
+          style={{ opacity: headerOpacity }}
+          className="w-full max-w-[1440px] mx-auto flex items-center justify-between z-30 relative pt-1"
+        >
           <h3 className="font-mono text-2xl md:text-3xl font-bold text-white tracking-tight">
             Top Client
           </h3>
-        </div>
+        </motion.div>
 
-        {/* SMART ANIMATE LOGO CONTAINER: Single continuous morphing layer */}
+        {/* SMART ANIMATE LOGO CONTAINER: Horizontally Centered (justify-center) */}
         <motion.div
-          style={{ opacity: logoGroupOpacity, scale: logoGroupScale }}
-          className="absolute top-[88px] left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[80px] z-20 pointer-events-none"
+          style={{
+            opacity: logoGroupOpacity,
+            scale: logoGroupScale,
+            display: logoDisplay,
+          }}
+          className="absolute top-[138px] left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[80px] z-20 pointer-events-none"
         >
-          <div className="relative w-full flex items-center justify-end">
-            <div className="flex items-center gap-6 md:gap-10 py-1 pr-4">
+          <div className="relative w-full flex items-center justify-center">
+            <div className="flex items-center gap-6 md:gap-12 py-1">
               {clientLogos.map((client, idx) => (
                 <motion.div
                   key={client.name}
@@ -175,7 +181,7 @@ export default function TopClientSection({
                     x: logoTransforms[idx].x,
                     y: logoTransforms[idx].y,
                   }}
-                  className="shrink-0 relative h-8 md:h-9 w-28 md:w-32 opacity-85"
+                  className="shrink-0 relative h-8 md:h-10 w-28 md:w-36 opacity-85"
                 >
                   <Image
                     src={client.src}
@@ -189,10 +195,13 @@ export default function TopClientSection({
           </div>
         </motion.div>
 
-        {/* STEP 3: Expanded Detail Cards Appear & Scroll Up below 80px header */}
+        {/* EXPANDED DETAIL VIEW: Remains 100% SOLID OPAQUE (opacity: 1) continuously throughout the entire scroll */}
         <motion.div
-          style={{ opacity: expandedOpacity }}
-          className="w-full max-w-[1440px] mx-auto h-full pt-16 flex-1 overflow-hidden z-0"
+          style={{
+            opacity: expandedOpacity,
+            display: expandedDisplay,
+          }}
+          className="w-full max-w-[1440px] mx-auto h-full pt-12 flex-1 overflow-hidden z-0"
         >
           <motion.div
             style={{ y: contentY }}
@@ -228,7 +237,7 @@ export default function TopClientSection({
 
                 {/* Right Column: Supporting Award Photo */}
                 <div className="lg:col-span-7">
-                  <div className="relative w-full aspect-[16/9] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                  <div className="relative w-full aspect-[3/2] rounded-3xl overflow-hidden shadow-2xl">
                     <Image
                       src="/images/Thing_AI_VN.png"
                       alt="Rogo Solutions Award Ceremony"
@@ -243,7 +252,7 @@ export default function TopClientSection({
               <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#181818] p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
                 {/* Left Column: Laptop Stand Screen Mockup */}
                 <div className="lg:col-span-5">
-                  <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-[#1E1E1E] border border-white/10 p-3 shadow-2xl group">
+                  <div className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden shadow-2xl group">
                     <div className="relative w-full h-full rounded-xl overflow-hidden">
                       <Image
                         src="/images/Rogo_Platform_large.png"
@@ -319,7 +328,7 @@ export default function TopClientSection({
 
                 {/* Right Column: Supporting Showroom Photo */}
                 <div className="lg:col-span-7">
-                  <div className="relative w-full aspect-[16/9] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                  <div className="relative w-full aspect-[3/2] rounded-3xl overflow-hidden shadow-2xl">
                     <Image
                       src="/images/thing_partner.png"
                       alt="Rạng Đông Showroom Display"
@@ -337,7 +346,7 @@ export default function TopClientSection({
                   <div className="font-mono text-sm font-bold text-white/70">
                     Featured project
                   </div>
-                  <div className="bg-[#FFFFFF] p-10 rounded-2xl shadow-xl flex items-center justify-center min-h-[200px]">
+                  <div className="bg-[#FFFFFF] p-10 rounded-2xl shadow-xl flex items-center justify-center w-full aspect-[3/2]">
                     <div className="relative w-44 h-16">
                       <Image
                         src="/images/raio.png"

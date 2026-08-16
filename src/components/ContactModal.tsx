@@ -117,7 +117,7 @@ export default function ContactModal({ isOpen, onClose, lang }: ContactModalProp
 
               <button
                 type="submit"
-                className="w-full bg-[#00DC6C] hover:bg-[#00c560] text-black font-semibold rounded-2xl py-3.5 text-base flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg active:scale-95"
+                className="cta-btn h-[56px] min-h-[56px] rounded-[8px] w-full bg-[#00DC6C] hover:bg-[#00c560] text-black font-semibold text-base flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg active:scale-95"
               >
                 <Send className="w-4 h-4" />
                 <span>{lang === "vi" ? "Tạo thư nháp & Gửi" : "Send Email"}</span>
