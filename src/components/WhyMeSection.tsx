@@ -47,7 +47,7 @@ function CountingStatNumber({ value }: { value: string }) {
   }, [isInView, value]);
 
   return (
-    <div ref={ref} className="font-mono text-6xl sm:text-7xl lg:text-[96px] font-bold text-white tracking-tight mb-4">
+    <div ref={ref} className="text-h1 lg:text-h0 font-bold text-white tracking-tight mb-4">
       {displayVal}
     </div>
   );
@@ -61,8 +61,11 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
   ];
 
   return (
-    <section id="why-me" className="py-24 px-6 md:px-12 lg:px-[80px] bg-[#121212] text-white border-b border-white/5 relative overflow-hidden">
-      <div className="max-w-[1440px] mx-auto space-y-20 w-full">
+    <section
+      id="why-me"
+      className="w-full min-h-screen lg:h-screen snap-start snap-always bg-[#121212] text-white border-b border-white/5 relative overflow-hidden flex flex-col justify-center px-6 md:px-12 lg:px-[10vh] py-12 md:py-16 scroll-mt-0"
+    >
+      <div className="max-w-[1440px] mx-auto space-y-12 lg:space-y-16 w-full my-auto">
         {/* Top Header & Paragraph */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full">
           {/* Left Label */}
@@ -73,7 +76,7 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
             transition={{ duration: 0.5 }}
             className="lg:col-span-3 min-w-0"
           >
-            <h3 className="font-mono text-xl md:text-2xl font-bold text-white">
+            <h3 className="text-h6 md:text-h5 font-bold text-white">
               Why me
             </h3>
           </motion.div>
@@ -86,7 +89,7 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-9 space-y-8 w-full min-w-0"
           >
-            <h2 className="font-mono text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold leading-snug text-white tracking-tight w-full block whitespace-normal">
+            <h2 className="text-h5 sm:text-h4 md:text-h3 font-bold text-white tracking-tight w-full block whitespace-normal">
               {lang === "vi"
                 ? "Thu hẹp khoảng cách giữa tầm nhìn thẩm mỹ độ trung thực cao và việc thực thi kỹ thuật nghiêm ngặt — dành cho các sản phẩm SaaS, từ nền tảng multi-tenant đến hệ sinh thái IoT."
                 : "Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution — for SaaS products, from multi-tenant platforms to IoT ecosystems."}
@@ -95,13 +98,13 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
             <div className="flex items-center gap-3">
               <button
                 onClick={onOpenContact}
-                className="cta-btn h-[56px] min-h-[56px] rounded-[8px] bg-[#00DC6C] hover:bg-[#00c560] text-black font-sans font-semibold px-8 text-base transition-all cursor-pointer shadow-lg active:scale-95"
+                className="cta-btn h-[56px] min-h-[56px] rounded-[12px] bg-[#00DC6C] hover:bg-[#00c560] text-black text-b1 font-semibold px-8 transition-all cursor-pointer shadow-lg active:scale-95"
               >
                 Explore Now
               </button>
               <button
                 onClick={onOpenContact}
-                className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[8px] bg-white hover:bg-gray-100 text-black transition-all duration-200 cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
+                className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[12px] bg-white hover:bg-gray-100 text-black transition-all duration-200 cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
               >
                 <ArrowRight className="w-5 h-5 text-black" />
               </button>
@@ -121,7 +124,7 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
               className="border-t border-white/20 pt-8 flex flex-col justify-between min-w-0"
             >
               <CountingStatNumber value={stat.number} />
-              <div className="font-mono text-base md:text-xl font-medium text-white/90 whitespace-normal">
+              <div className="text-h7 md:text-h6 font-medium text-white/90 whitespace-normal">
                 {stat.label}
               </div>
             </motion.div>

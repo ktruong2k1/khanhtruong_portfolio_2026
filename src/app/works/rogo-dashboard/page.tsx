@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ArrowUpRight, Menu, X, Maximize2, ExternalLink } from "lucide-react";
+import FooterSection from "@/components/FooterSection";
 
 // Bilingual translations dictionary
 const translations = {
@@ -464,7 +465,7 @@ export default function RogoDashboardPage() {
 
   return (
     <>
-      <div className="page-wrapper text-[#E5E5E5] font-sans relative overflow-x-clip transition-colors duration-300">
+      <div className="page-wrapper text-[#E5E5E5] relative overflow-x-clip transition-colors duration-300">
         
         {/* STICKY/FIXED HEADER */}
         <header 
@@ -483,7 +484,7 @@ export default function RogoDashboardPage() {
           className="w-full sticky top-0 z-40 transition-all duration-300"
         >
           {/* Left: Logo */}
-          <Link href="/" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight hover:scale-105 transition-transform duration-150">
+          <Link href="/" className="flex items-center gap-2 text-white text-h6 font-bold tracking-tight hover:scale-105 transition-transform duration-150">
             <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
               <mask id="header-logo-mask-rogo">
                 <rect width="28" height="28" fill="white" />
@@ -506,7 +507,7 @@ export default function RogoDashboardPage() {
               left: '50%',
               transform: 'translateX(-50%)'
             }}
-            className="hidden md:flex text-sm font-semibold"
+            className="hidden md:flex text-b2 font-semibold"
           >
             <Link href="/works" className="nav-item active">
               {t.navWork}
@@ -575,7 +576,7 @@ export default function RogoDashboardPage() {
 
             <a 
               href="/contact" 
-              className="hidden md:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-xs text-[#E5E5E5] font-semibold transition-colors duration-150"
+              className="hidden md:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-b3 text-[#E5E5E5] font-semibold transition-colors duration-150"
             >
               <span className="w-2 h-2 bg-status-200 rounded-full animate-pulse"></span>
               {t.availableRemote}
@@ -636,10 +637,10 @@ export default function RogoDashboardPage() {
             {/* Title Block */}
             <div className="flex flex-col gap-6 w-full md:w-1/2">
               <div className="flex items-center gap-3">
-                <span className="text-[10px] uppercase font-semibold px-2.5 py-1 rounded bg-[#17211B] border border-primary-400 text-primary-400">FEATURED</span>
-                <span className="text-[10px] uppercase font-semibold px-2.5 py-1 rounded bg-neutral-900 border border-neutral-800 text-neutral-300">PAAS • B2B</span>
+                <span className="text-b4 uppercase font-semibold px-2.5 py-1 rounded bg-[#17211B] border border-primary-400 text-primary-400">FEATURED</span>
+                <span className="text-b4 uppercase font-semibold px-2.5 py-1 rounded bg-neutral-900 border border-neutral-800 text-neutral-300">PAAS • B2B</span>
               </div>
-              <h1 className="font-serif text-white text-[32px] md:text-[48px] font-bold leading-tight tracking-tight">
+              <h1 className="text-h4 md:text-h2 font-bold text-white tracking-tight">
                 Rogo IoT Platform dashboard V2
               </h1>
               <div className="flex flex-wrap gap-4 mt-2">
@@ -663,20 +664,20 @@ export default function RogoDashboardPage() {
             </div>
 
             {/* Project metadata Card */}
-            <div className="w-full md:w-1/2 p-6 rounded-2xl border border-neutral-800 bg-[#0d1712] flex flex-col gap-6">
+            <div className="w-full md:w-1/2 p-6 rounded-[12px] border border-neutral-800 bg-[#0d1712] flex flex-col gap-6">
               <div>
                 <span className="text-primary-400 font-bold text-xs tracking-wider block mb-2">{t.role}</span>
-                <p className="text-white text-[14px] leading-[18px] font-medium">Lead Product Designer & Frontend Developer</p>
+                <p className="text-white text-b2 font-medium">Lead Product Designer & Frontend Developer</p>
               </div>
-              <div>
-                <span className="text-primary-400 font-bold text-xs tracking-wider block mb-2">{t.timeline}</span>
-                <p className="text-white text-[14px] leading-[18px] font-medium">April 2026 — June 2026 (4 Months)</p>
+              <div className="space-y-1">
+                <span className="text-b4 uppercase font-bold tracking-wider text-neutral-500 block">TIMELINE</span>
+                <p className="text-white text-b2 font-medium">April 2026 — June 2026 (4 Months)</p>
               </div>
-              <div>
-                <span className="text-primary-400 font-bold text-xs tracking-wider block mb-2">{t.toolsTech}</span>
-                <div className="flex flex-wrap gap-2 mt-2">
+              <div className="space-y-1">
+                <span className="text-b4 uppercase font-bold tracking-wider text-neutral-500 block">TOOLS & STACK</span>
+                <div className="flex flex-wrap gap-1.5 pt-0.5">
                   {["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
-                    <span key={tool} className="text-[10px] font-semibold px-2.5 py-1 rounded bg-neutral-900 border border-neutral-800 text-neutral-300">{tool}</span>
+                    <span key={tool} className="text-b4 font-semibold px-2.5 py-1 rounded bg-neutral-900 border border-neutral-800 text-neutral-300">{tool}</span>
                   ))}
                 </div>
               </div>
@@ -687,7 +688,7 @@ export default function RogoDashboardPage() {
           <section className="flex flex-col gap-6 w-full">
             {renderSectionTitle("01", t.problemTitle)}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
-              <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.problemDesc}</p>
+              <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-b2 font-normal text-left">{t.problemDesc}</p>
               <p className="text-primary-300 font-medium md:pl-6 md:border-l border-neutral-800 text-base">{t.problemHighlight}</p>
             </div>
             
@@ -720,7 +721,7 @@ export default function RogoDashboardPage() {
             <div className="flex flex-col md:flex-row gap-8 items-start justify-between w-full">
               {/* Left description */}
               <div className="flex flex-col justify-between gap-4 py-2 flex-1 w-full text-left">
-                <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.contextDesc}</p>
+                <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-b2 font-normal text-left">{t.contextDesc}</p>
                 <p className="text-primary-300 font-medium text-base mt-2">{t.contextHighlight}</p>
               </div>
               
@@ -753,9 +754,9 @@ export default function RogoDashboardPage() {
           {/* SECTION 03: MY ROLE */}
           <section className="flex flex-col gap-6 w-full">
             {renderSectionTitle("03", t.roleTitle)}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
-              <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.roleLeft}</p>
-              <p style={{ width: "100%", display: "block" }} className="md:pl-6 md:border-l border-neutral-800 text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">{t.roleRight}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-300 leading-relaxed">
+              <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-b2 font-normal text-left">{t.roleLeft}</p>
+              <p style={{ width: "100%", display: "block" }} className="md:pl-6 md:border-l border-neutral-800 text-[#989898] font-sans text-b2 font-normal text-left">{t.roleRight}</p>
             </div>
 
             {/* Unified horizontal table-like grid block in Section 03 */}
@@ -803,7 +804,7 @@ export default function RogoDashboardPage() {
           {/* SECTION 04: EXPERIENCE ARCHITECTURE */}
           <section className="flex flex-col gap-6 w-full" onMouseLeave={() => setActiveFlow(0)}>
             {renderSectionTitle("04", t.archTitle)}
-            <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left mb-4">{t.archDesc}</p>
+            <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-b2 font-normal text-left mb-4">{t.archDesc}</p>
 
             {/* Tab Layout (Left Menu / Right Content Card) */}
             <div className="flex flex-col md:flex-row gap-8 items-start w-full justify-between">
@@ -817,7 +818,7 @@ export default function RogoDashboardPage() {
                         key={item.index}
                         onMouseEnter={() => setActiveFlow(item.index)}
                         onClick={() => setActiveFlow(item.index)}
-                        className="flex flex-col items-start p-6 gap-3 self-stretch rounded-2xl bg-[#0e1713] border border-[#182920] select-none cursor-pointer w-full transition-all duration-[260ms]"
+                        className="flex flex-col items-start p-6 gap-3 self-stretch rounded-[12px] bg-[#0e1713] border border-[#182920] select-none cursor-pointer w-full transition-all duration-[260ms]"
                       >
                         <h3 className="font-serif text-lg font-bold text-secondary-300">
                           {item.title}
@@ -830,7 +831,7 @@ export default function RogoDashboardPage() {
                         key={item.index}
                         onMouseEnter={() => setActiveFlow(item.index)}
                         onClick={() => setActiveFlow(item.index)}
-                        className="flex flex-col items-start p-6 gap-3 self-stretch rounded-2xl bg-transparent border border-transparent select-none cursor-pointer w-full transition-all duration-[260ms]"
+                        className="flex flex-col items-start p-6 gap-3 self-stretch rounded-[12px] bg-transparent border border-transparent select-none cursor-pointer w-full transition-all duration-[260ms]"
                       >
                         <h3 className="font-serif text-lg font-bold text-neutral-500 hover:text-neutral-300 transition-colors">
                           {item.title}
@@ -843,10 +844,10 @@ export default function RogoDashboardPage() {
 
               {/* Right Content Card Column */}
               <div 
-                className="flex flex-col bg-[#0e1713] rounded-2xl p-6 md:p-10 items-start justify-start gap-4 transition-all duration-[400ms] ease-in-out min-h-[460px] w-full md:flex-1"
+                className="flex flex-col bg-[#0e1713] rounded-[12px] p-6 md:p-10 items-start justify-start gap-4 transition-all duration-[400ms] ease-in-out min-h-[460px] w-full md:flex-1"
               >
                 <div key={activeFlow} className="w-full flex flex-col gap-4">
-                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left animate-smartReveal">
+                  <p style={{ width: "100%", display: "block" }} className="text-[#989898] font-sans text-b2 font-normal text-left animate-smartReveal">
                     {flows[activeFlow].desc}
                   </p>
                   <div className="w-full flex justify-center mt-4 animate-smartReveal">
@@ -882,7 +883,7 @@ export default function RogoDashboardPage() {
             <div className="sticky top-[116px] w-full flex flex-col gap-6 py-4 transition-all duration-300">
               <div className="flex flex-col gap-3">
                 {renderSectionTitle("05", t.decisionsTitle)}
-                <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left">
+                <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-b2 font-normal text-left">
                   {t.decisionsDesc}
                 </p>
               </div>
@@ -890,7 +891,7 @@ export default function RogoDashboardPage() {
               <div className="flex flex-col gap-4 w-full mt-2">
                 {/* Decision 1 */}
                 <div 
-                  className={`flex flex-col rounded-2xl transition-all duration-500 ease-in-out ${
+                  className={`flex flex-col rounded-[12px] transition-all duration-500 ease-in-out ${
                     activeStep === 1 
                       ? "bg-[#0b1511] p-6 md:p-8 shadow-2xl" 
                       : "py-2 cursor-pointer"
@@ -936,7 +937,7 @@ export default function RogoDashboardPage() {
 
                 {/* Decision 2 */}
                 <div 
-                  className={`flex flex-col rounded-2xl transition-all duration-500 ease-in-out ${
+                  className={`flex flex-col rounded-[12px] transition-all duration-500 ease-in-out ${
                     (activeStep === 2 || activeStep === 3)
                       ? "bg-[#0b1511] p-6 md:p-8 shadow-2xl" 
                       : "py-2 cursor-pointer"
@@ -1039,7 +1040,7 @@ export default function RogoDashboardPage() {
 
                 {/* Decision 3 */}
                 <div 
-                  className={`flex flex-col rounded-2xl transition-all duration-500 ease-in-out ${
+                  className={`flex flex-col rounded-[12px] transition-all duration-500 ease-in-out ${
                     (activeStep === 4 || activeStep === 5)
                       ? "bg-[#0b1511] p-6 md:p-8 shadow-2xl" 
                       : "py-2 cursor-pointer"
@@ -1057,7 +1058,7 @@ export default function RogoDashboardPage() {
                   <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
                     (activeStep === 4 || activeStep === 5) ? "max-h-[750px] opacity-100 mt-4" : "max-h-0 opacity-0"
                   }`}>
-                    <div className="w-full flex justify-center items-center relative rounded-xl overflow-hidden bg-[#0b1511] p-2 md:p-4">
+                    <div className="w-full flex justify-center items-center relative rounded-[12px] overflow-hidden bg-[#0b1511] p-2 md:p-4">
                       {/* Step 3A: Diagram 9 */}
                       <div 
                         className={`w-full transition-opacity duration-700 ease-in-out group cursor-zoom-in ${
@@ -1065,11 +1066,11 @@ export default function RogoDashboardPage() {
                         }`}
                         onClick={() => setLightboxImg("/images/rogo_project/Diagram 9.png")}
                       >
-                        <div className="relative w-full overflow-hidden rounded-xl">
+                        <div className="relative w-full overflow-hidden rounded-[12px]">
                           <img 
                             src="/images/rogo_project/Diagram 9.png"
                             alt={t.dec3Row1Title}
-                            className="w-full h-auto object-contain rounded-xl transition-transform duration-700 hover:scale-[1.02] block"
+                            className="w-full h-auto object-contain rounded-[12px] transition-transform duration-700 hover:scale-[1.02] block"
                           />
                           <button 
                             className="absolute bottom-4 right-4 hover:scale-110 transition-transform cursor-pointer z-20 p-2 rounded-full bg-black/50 backdrop-blur-sm"
@@ -1090,11 +1091,11 @@ export default function RogoDashboardPage() {
                         }`}
                         onClick={() => setLightboxImg("/images/rogo_project/Diagram 10.png")}
                       >
-                        <div className="relative w-full overflow-hidden rounded-xl">
+                        <div className="relative w-full overflow-hidden rounded-[12px]">
                           <img 
                             src="/images/rogo_project/Diagram 10.png"
                             alt={t.dec3Row2Title}
-                            className="w-full h-auto object-contain rounded-xl transition-transform duration-700 hover:scale-[1.02] block"
+                            className="w-full h-auto object-contain rounded-[12px] transition-transform duration-700 hover:scale-[1.02] block"
                           />
                           <button 
                             className="absolute bottom-4 right-4 hover:scale-110 transition-transform cursor-pointer z-20 p-2 rounded-full bg-black/50 backdrop-blur-sm"
@@ -1150,7 +1151,7 @@ export default function RogoDashboardPage() {
               {/* Center Main Viewport Card */}
               <div className="w-full flex justify-center items-center">
                 <div 
-                  className="relative w-full max-w-[780px] rounded-3xl overflow-hidden bg-white shadow-2xl transition-all duration-500 border-4 border-white group cursor-zoom-in"
+                  className="relative w-full max-w-[780px] rounded-[12px] overflow-hidden bg-white shadow-2xl transition-all duration-500 border-4 border-white group cursor-zoom-in"
                   onClick={() => {
                     if (activeScreenStep === 1) setLightboxImg("/images/rogo_project/Video 1.mp4");
                     if (activeScreenStep === 2) setLightboxImg("/images/rogo_project/Video 2.mp4");
@@ -1167,7 +1168,7 @@ export default function RogoDashboardPage() {
                       loop
                       muted
                       playsInline
-                      className="w-full h-auto object-cover rounded-2xl block"
+                      className="w-full h-auto object-cover rounded-[12px] block"
                     />
                   </div>
 
@@ -1181,7 +1182,7 @@ export default function RogoDashboardPage() {
                       loop
                       muted
                       playsInline
-                      className="w-full h-auto object-cover rounded-2xl block"
+                      className="w-full h-auto object-cover rounded-[12px] block"
                     />
                   </div>
 
@@ -1219,7 +1220,7 @@ export default function RogoDashboardPage() {
           {/* SECTION 07: DESIGN SYSTEM */}
           <section className="flex flex-col gap-6 w-full">
             {renderSectionTitle("07", t.designSystemTitle)}
-            <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-[14px] font-normal leading-[18px] text-left w-full">{t.designSystemDesc}</p>
+            <p style={{ width: "100%", maxWidth: "896px", display: "block" }} className="text-[#989898] font-sans text-b2 font-normal text-left w-full">{t.designSystemDesc}</p>
 
             <div className="w-full mt-2">
               <div 
@@ -1365,7 +1366,7 @@ export default function RogoDashboardPage() {
           <section className="flex flex-col gap-6 w-full">
             {renderSectionTitle("09", t.reflectionTitle)}
             
-            <div className="w-full max-w-[960px] mx-auto p-8 md:p-10 rounded-3xl bg-[#0d1612] flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-10 border-none">
+            <div className="w-full max-w-[960px] mx-auto p-8 md:p-10 rounded-[12px] bg-[#0d1612] flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-10 border-none">
               <div className="relative w-[150px] h-[150px] md:w-[170px] md:h-[170px] rounded-full overflow-hidden shrink-0">
                 <Image 
                   src="/images/mini_avatar.png"
@@ -1375,9 +1376,9 @@ export default function RogoDashboardPage() {
                 />
               </div>
               <div className="flex flex-col gap-4 text-left">
-                <p className="text-[#a3a3a3] font-sans text-base leading-[24px]">{t.reflectionDesc}</p>
-                <p className="text-[#34D399] font-bold font-sans text-base leading-[24px]">{t.reflectionHighlight}</p>
-                <p className="text-[#a3a3a3] font-sans text-base leading-[24px]">{t.reflectionBody}</p>
+                <p className="text-[#a3a3a3] text-b1">{t.reflectionDesc}</p>
+                <p className="text-[#34D399] font-bold text-b1">{t.reflectionHighlight}</p>
+                <p className="text-[#a3a3a3] text-b1">{t.reflectionBody}</p>
               </div>
             </div>
           </section>
@@ -1386,8 +1387,8 @@ export default function RogoDashboardPage() {
           <section className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 w-full pt-12 border-t border-neutral-900">
             {/* Title column */}
             <div className="flex flex-col gap-2 md:w-1/4 shrink-0">
-              <span className="text-[#22C55E] font-sans text-xs font-bold uppercase tracking-wider">{t.exploreTitle}</span>
-              <h2 className="font-serif text-2xl md:text-3xl font-bold text-white">{t.continueExploring}</h2>
+              <span className="text-[#22C55E] text-b3 font-bold uppercase tracking-wider">{t.exploreTitle}</span>
+              <h2 className="text-h5 md:text-h4 font-bold text-white">{t.continueExploring}</h2>
             </div>
 
             {/* Other 2 projects cards */}
@@ -1395,9 +1396,9 @@ export default function RogoDashboardPage() {
               {/* Card 1: RaIO Smart */}
               <Link 
                 href="/pending" 
-                className="flex flex-col gap-4 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-xl cursor-pointer group block"
+                className="flex flex-col gap-4 p-3 border border-transparent hover:border-[#22C55E] transition-all duration-300 rounded-[12px] cursor-pointer group block"
               >
-                <div className="w-full aspect-[3/2] rounded-xl overflow-hidden relative bg-[#0c0d12]">
+                <div className="w-full aspect-[4/3] rounded-[12px] overflow-hidden relative bg-[#0c0d12]">
                   <Image 
                     src="/images/raio.png"
                     alt="RaIO Smart"
@@ -1407,19 +1408,19 @@ export default function RogoDashboardPage() {
                 </div>
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] leading-tight transition-colors duration-300">
+                    <h3 className="text-h5 font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                       RaIO Smart
                     </h3>
                     <ArrowUpRight size={20} className="text-neutral-500 group-hover:text-[#22C55E] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {["Mobile", "IoT", "Smart Home", "Whitelabel"].map((cat) => (
-                      <span key={cat} className="text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300 px-3 py-1 rounded-full">
+                      <span key={cat} className="text-b4 font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300 px-3 py-1 rounded-full">
                         {cat}
                       </span>
                     ))}
                   </div>
-                  <p className="text-neutral-400 text-sm leading-relaxed">
+                  <p className="text-neutral-400 text-b2">
                     {lang === "vi" 
                       ? "Được triển khai và quản lý thông qua Rogo Platform như mọi ứng dụng khác trong hệ sinh thái. Tầng whitelabel phía trên cho phép bất kỳ đối tác nào xuất bản ứng dụng mang thương hiệu riêng của họ – mà không cần xây dựng lại logic cốt lõi bên dưới." 
                       : "Deployed and managed through Rogo Platform like every app in the ecosystem. The whitelabel layer on top lets any partner ship their own branded app – without rebuilding the core logic underneath."}
@@ -1430,9 +1431,9 @@ export default function RogoDashboardPage() {
               {/* Card 2: Austfly IoT App */}
               <Link 
                 href="/pending" 
-                className="flex flex-col gap-4 p-3 border border-transparent hover:border-[#2ECC8A] transition-all duration-300 rounded-xl cursor-pointer group block"
+                className="flex flex-col gap-4 p-3 border border-transparent hover:border-[#2ECC8A] transition-all duration-300 rounded-[12px] cursor-pointer group block"
               >
-                <div className="w-full aspect-[3/2] rounded-xl overflow-hidden relative bg-[#0c0d12]">
+                <div className="w-full aspect-[4/3] rounded-[12px] overflow-hidden relative bg-[#0c0d12]">
                   <Image 
                     src="/images/austfly.png"
                     alt="Austfly IoT App"
@@ -1442,19 +1443,19 @@ export default function RogoDashboardPage() {
                 </div>
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#E8C468] leading-tight transition-colors duration-300">
+                    <h3 className="text-h5 font-bold text-white group-hover:text-[#E8C468] transition-colors duration-300">
                       Austfly IoT App
                     </h3>
                     <ArrowUpRight size={20} className="text-neutral-500 group-hover:text-[#2ECC8A] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {["Mobile", "IoT", "Smart Home", "Redesign"].map((cat) => (
-                      <span key={cat} className="text-[10px] font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300 px-3 py-1 rounded-full">
+                      <span key={cat} className="text-b4 font-sans bg-neutral-900 text-neutral-400 border border-neutral-800 tracking-wider group-hover:text-neutral-100 transition-colors duration-300 px-3 py-1 rounded-full">
                         {cat}
                       </span>
                     ))}
                   </div>
-                  <p className="text-neutral-400 text-sm leading-relaxed">
+                  <p className="text-neutral-400 text-b2">
                     {lang === "vi" 
                       ? "Thương hiệu cửa cuốn hàng đầu Việt Nam, đối tác đầu tiên áp dụng framework RaIO ngoài Rạng Đông. Đã được audit UX đầu cuối, xây dựng lại hệ thống phân cấp trực quan – hệ thống thiết kế và thư viện component sẵn sàng sản xuất, đang chờ triển khai." 
                       : "Vietnam's leading roller shutter brand, and the first partner to adopt the RaIO framework outside Rạng Đông. UX audited end-to-end, visual hierarchy rebuilt – design system and component library production-ready, pending implementation."}
@@ -1465,6 +1466,12 @@ export default function RogoDashboardPage() {
           </section>
 
         </main>
+
+        {/* UNIFIED FOOTER SECTION */}
+        <FooterSection
+          lang={lang}
+          onOpenContact={() => setContactModalOpen(true)}
+        />
 
         {/* LIGHTBOX OVERLAY */}
         {lightboxImg && (
@@ -1503,10 +1510,10 @@ export default function RogoDashboardPage() {
         {/* CONTACT MODAL CONTAINER */}
         {contactModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 transition-opacity duration-300 animate-fadeIn">
-            <div className="contact-dialog-panel w-full max-w-lg rounded-2xl border border-neutral-800 bg-[#161617] p-8 shadow-2xl relative animate-zoomIn">
+            <div className="contact-dialog-panel w-full max-w-lg rounded-[12px] border border-neutral-800 bg-[#161617] p-8 shadow-2xl relative animate-zoomIn">
               <button 
                 onClick={() => setContactModalOpen(false)}
-                className="absolute top-4 right-4 p-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                className="absolute top-4 right-4 p-2 rounded-[12px] bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-white transition-colors cursor-pointer"
               >
                 <X size={16} />
               </button>
@@ -1524,12 +1531,12 @@ export default function RogoDashboardPage() {
                       value={contactMessage}
                       onChange={(e) => setContactMessage(e.target.value)}
                       placeholder={t.contactModalPlaceholder}
-                      className="w-full h-32 px-4 py-3 rounded-lg border border-neutral-800 bg-neutral-950 text-white placeholder-neutral-600 focus:outline-none focus:border-primary-400 focus:ring-1 focus:ring-primary-400 text-sm resize-none font-sans"
+                      className="w-full h-32 px-4 py-3 rounded-[12px] border border-neutral-800 bg-neutral-950 text-white placeholder-neutral-600 focus:outline-none focus:border-primary-400 focus:ring-1 focus:ring-primary-400 text-sm resize-none font-sans"
                     />
                   </div>
                   <button 
                     type="submit" 
-                    className="w-full py-3 rounded-lg bg-primary-400 hover:bg-primary-300 text-neutral-1000 font-bold transition-colors cursor-pointer text-sm shadow-md"
+                    className="w-full py-3 rounded-[12px] bg-primary-400 hover:bg-primary-300 text-neutral-1000 font-bold transition-colors cursor-pointer text-sm shadow-md"
                   >
                     {t.contactModalSubmit}
                   </button>

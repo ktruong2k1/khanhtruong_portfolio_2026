@@ -190,22 +190,22 @@ export default function AdminPage() {
             <div className="w-12 h-12 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-500">
               <Lock size={22} />
             </div>
-            <h1 className="text-xl font-bold font-serif tracking-tight text-center">ĐĂNG NHẬP ADMIN</h1>
-            <p className="text-xs text-slate-400 text-center">Truy cập giao diện quản lý cơ sở dữ liệu dự án</p>
+            <h1 className="text-h6 font-bold tracking-tight text-center">ĐĂNG NHẬP ADMIN</h1>
+            <p className="text-b3 text-slate-400 text-center">Truy cập giao diện quản lý cơ sở dữ liệu dự án</p>
           </div>
 
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
             <div>
-              <label className="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Mật khẩu</label>
+              <label className="text-b4 uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Mật khẩu</label>
               <input
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="Nhập mật khẩu quản trị..."
-                className="w-full bg-[#111c30] border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-500 text-white font-mono"
+                className="w-full bg-[#111c30] border border-slate-800 rounded-xl px-4 py-3 text-b2 focus:outline-none focus:border-brand-500 text-white font-mono"
               />
             </div>
-            {error && <p className="text-xs text-red-400 font-mono">{error}</p>}
+            {error && <p className="text-b3 text-red-400 font-mono">{error}</p>}
             <button
               type="submit"
               className="bg-brand-500 hover:bg-brand-600 text-white font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg shadow-brand-500/20 hover:shadow-brand-500/30"
@@ -232,8 +232,8 @@ export default function AdminPage() {
             T
           </div>
           <div>
-            <span className="font-bold text-sm tracking-tight block">PORTFOLIO CMS</span>
-            <span className="text-[10px] text-brand-400 block -mt-1 font-mono uppercase tracking-wider">Database Manager</span>
+            <span className="font-bold text-b2 tracking-tight block">PORTFOLIO CMS</span>
+            <span className="text-b4 text-brand-400 block -mt-1 font-mono uppercase tracking-wider">Database Manager</span>
           </div>
         </div>
 
@@ -299,7 +299,7 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-[9px] font-mono text-slate-400">
+                <div className="flex items-center justify-between text-b4 font-mono text-slate-400">
                   <span className="bg-slate-800 px-1.5 py-0.5 rounded uppercase">Tier {proj.tier}</span>
                   <div className="flex items-center gap-1">
                     <button
@@ -343,30 +343,30 @@ export default function AdminPage() {
               {/* Basic configuration */}
               <div className="grid md:grid-cols-3 gap-6">
                 <div>
-                  <label className="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Tiêu đề dự án</label>
+                  <label className="text-b4 uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Tiêu đề dự án</label>
                   <input
                     type="text"
                     value={activeProject.title}
                     onChange={e => updateActiveProjectField("title", e.target.value)}
-                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-500"
+                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-b2 focus:outline-none focus:border-brand-500"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Thời gian (Period)</label>
+                  <label className="text-b4 uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Thời gian (Period)</label>
                   <input
                     type="text"
                     value={activeProject.period}
                     onChange={e => updateActiveProjectField("period", e.target.value)}
                     placeholder="e.g. 2025 – nay"
-                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-500"
+                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-b2 focus:outline-none focus:border-brand-500"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Ảnh bìa (SVG mockup name)</label>
+                  <label className="text-b4 uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Ảnh bìa (SVG mockup name)</label>
                   <select
                     value={activeProject.coverImage}
                     onChange={e => updateActiveProjectField("coverImage", e.target.value)}
-                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-500"
+                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-b2 focus:outline-none focus:border-brand-500"
                   >
                     <option value="dashboard">Dashboard (Dark gray widget grid)</option>
                     <option value="smarthome">Smart Home (Mobile layout control)</option>
@@ -381,22 +381,22 @@ export default function AdminPage() {
               {/* Tier & Layout config */}
               <div className="grid md:grid-cols-3 gap-6">
                 <div>
-                  <label className="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Phân loại (Tier)</label>
+                  <label className="text-b4 uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Phân loại (Tier)</label>
                   <select
                     value={activeProject.tier}
                     onChange={e => updateActiveProjectField("tier", parseInt(e.target.value))}
-                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-500"
+                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-b2 focus:outline-none focus:border-brand-500"
                   >
                     <option value={1}>Featured Projects (Tier 1)</option>
                     <option value={2}>More Projects (Tier 2)</option>
                   </select>
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Bố cục hiển thị (Layout)</label>
+                  <label className="text-b4 uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Bố cục hiển thị (Layout)</label>
                   <select
                     value={activeProject.layout}
                     onChange={e => updateActiveProjectField("layout", e.target.value)}
-                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-500"
+                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-b2 focus:outline-none focus:border-brand-500"
                   >
                     <option value="full">Chiều rộng 100% (full-width)</option>
                     <option value="half">Chiều rộng 50% (half-width)</option>
@@ -419,37 +419,37 @@ export default function AdminPage() {
               {/* Tags & Skills */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">
+                  <label className="text-b4 uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">
                     Tags (Phân cách bằng dấu phẩy)
                   </label>
                   <input
                     type="text"
                     value={activeProject.tags.join(", ")}
                     onChange={e => updateActiveProjectField("tags", e.target.value.split(",").map(s => s.trim()))}
-                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-500 font-mono text-xs"
+                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-b2 focus:outline-none focus:border-brand-500 font-mono text-b3"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">
+                  <label className="text-b4 uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">
                     Skills Pills (Phân cách bằng dấu phẩy)
                   </label>
                   <input
                     type="text"
                     value={activeProject.skills.join(", ")}
                     onChange={e => updateActiveProjectField("skills", e.target.value.split(",").map(s => s.trim()))}
-                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-500 font-mono text-xs"
+                    className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2.5 text-b2 focus:outline-none focus:border-brand-500 font-mono text-b3"
                   />
                 </div>
               </div>
 
               {/* Summary description */}
               <div>
-                <label className="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Mô tả tóm tắt (2-3 dòng)</label>
+                <label className="text-b4 uppercase font-mono font-bold tracking-wider text-slate-400 block mb-2">Mô tả tóm tắt (2-3 dòng)</label>
                 <textarea
                   rows={3}
                   value={activeProject.summary}
                   onChange={e => updateActiveProjectField("summary", e.target.value)}
-                  className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-500 leading-relaxed"
+                  className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-3 text-b2 focus:outline-none focus:border-brand-500 leading-relaxed"
                 />
               </div>
 
@@ -458,33 +458,33 @@ export default function AdminPage() {
                 <h3 className="text-xs font-bold uppercase tracking-wider font-mono text-slate-400 mb-4">Đường liên kết</h3>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div>
-                    <label className="text-[10px] uppercase font-mono font-bold text-slate-500 block mb-1">Live demo url</label>
+                    <label className="text-b4 uppercase font-mono font-bold text-slate-500 block mb-1">Live demo url</label>
                     <input
                       type="text"
                       value={activeProject.links.liveUrl || ""}
                       onChange={e => updateActiveProjectNested("links", "liveUrl", e.target.value)}
                       placeholder="https://..."
-                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-xs font-mono text-slate-300"
+                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-b3 font-mono text-slate-300"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase font-mono font-bold text-slate-500 block mb-1">Figma spec url</label>
+                    <label className="text-b4 uppercase font-mono font-bold text-slate-500 block mb-1">Figma spec url</label>
                     <input
                       type="text"
                       value={activeProject.links.figmaUrl || ""}
                       onChange={e => updateActiveProjectNested("links", "figmaUrl", e.target.value)}
                       placeholder="https://..."
-                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-xs font-mono text-slate-300"
+                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-b3 font-mono text-slate-300"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase font-mono font-bold text-slate-500 block mb-1">Behance CS url</label>
+                    <label className="text-b4 uppercase font-mono font-bold text-slate-500 block mb-1">Behance CS url</label>
                     <input
                       type="text"
                       value={activeProject.links.behanceUrl || ""}
                       onChange={e => updateActiveProjectNested("links", "behanceUrl", e.target.value)}
                       placeholder="https://..."
-                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-xs font-mono text-slate-300"
+                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-b3 font-mono text-slate-300"
                     />
                   </div>
                 </div>
@@ -495,30 +495,30 @@ export default function AdminPage() {
                 <h3 className="text-xs font-bold uppercase tracking-wider font-mono text-slate-400 mb-4">Thông tin kỹ thuật (Handoff Redline Tokens)</h3>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div>
-                    <label className="text-[10px] uppercase font-mono font-bold text-slate-500 block mb-1">Components mapped</label>
+                    <label className="text-b4 uppercase font-mono font-bold text-slate-500 block mb-1">Components mapped</label>
                     <input
                       type="text"
                       value={activeProject.specInfo?.components || ""}
                       onChange={e => updateActiveProjectNested("specInfo", "components", e.target.value)}
-                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-xs font-mono text-slate-300"
+                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-b3 font-mono text-slate-300"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase font-mono font-bold text-slate-500 block mb-1">Whitelabel Config variables</label>
+                    <label className="text-b4 uppercase font-mono font-bold text-slate-500 block mb-1">Whitelabel Config variables</label>
                     <input
                       type="text"
                       value={activeProject.specInfo?.whitelabelConfig || ""}
                       onChange={e => updateActiveProjectNested("specInfo", "whitelabelConfig", e.target.value)}
-                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-xs font-mono text-slate-300"
+                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-b3 font-mono text-slate-300"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase font-mono font-bold text-slate-500 block mb-1">Logic state states</label>
+                    <label className="text-b4 uppercase font-mono font-bold text-slate-500 block mb-1">Logic state states</label>
                     <input
                       type="text"
                       value={activeProject.specInfo?.states || ""}
                       onChange={e => updateActiveProjectNested("specInfo", "states", e.target.value)}
-                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-xs font-mono text-slate-300"
+                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-b3 font-mono text-slate-300"
                     />
                   </div>
                 </div>
@@ -529,39 +529,39 @@ export default function AdminPage() {
                 <h3 className="text-xs font-bold uppercase tracking-wider font-mono text-slate-400 mb-4">Nội dung Case Study</h3>
                 <div className="flex flex-col gap-4">
                   <div>
-                    <label className="text-[10px] uppercase font-mono font-bold text-slate-500 block mb-1">Tổng quan (Overview)</label>
+                    <label className="text-b4 uppercase font-mono font-bold text-slate-500 block mb-1">Tổng quan (Overview)</label>
                     <textarea
                       rows={3}
                       value={activeProject.caseStudyContent?.overview || ""}
                       onChange={e => updateActiveProjectNested("caseStudyContent", "overview", e.target.value)}
-                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-xs leading-relaxed"
+                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-b3 leading-relaxed"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase font-mono font-bold text-slate-500 block mb-1">Vấn đề đặt ra (Problem)</label>
+                    <label className="text-b4 uppercase font-mono font-bold text-slate-500 block mb-1">Vấn đề đặt ra (Problem)</label>
                     <textarea
                       rows={3}
                       value={activeProject.caseStudyContent?.problem || ""}
                       onChange={e => updateActiveProjectNested("caseStudyContent", "problem", e.target.value)}
-                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-xs leading-relaxed"
+                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-b3 leading-relaxed"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase font-mono font-bold text-slate-500 block mb-1">Giải pháp thiết kế (Solution)</label>
+                    <label className="text-b4 uppercase font-mono font-bold text-slate-500 block mb-1">Giải pháp thiết kế (Solution)</label>
                     <textarea
                       rows={3}
                       value={activeProject.caseStudyContent?.solution || ""}
                       onChange={e => updateActiveProjectNested("caseStudyContent", "solution", e.target.value)}
-                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-xs leading-relaxed"
+                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-b3 leading-relaxed"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase font-mono font-bold text-slate-500 block mb-1">Kết quả đạt được (Result)</label>
+                    <label className="text-b4 uppercase font-mono font-bold text-slate-500 block mb-1">Kết quả đạt được (Result)</label>
                     <textarea
                       rows={3}
                       value={activeProject.caseStudyContent?.result || ""}
                       onChange={e => updateActiveProjectNested("caseStudyContent", "result", e.target.value)}
-                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-xs leading-relaxed"
+                      className="w-full bg-[#0d1425] border border-slate-800 rounded-xl px-4 py-2 text-b3 leading-relaxed"
                     />
                   </div>
                 </div>

@@ -16,7 +16,7 @@ export default function Home() {
   const [contactOpen, setContactOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black overflow-x-clip">
+    <main className="min-h-screen bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black overflow-x-clip snap-y snap-proximity">
       {/* Dynamic Top Navigation Bar (Floating Hero Pill -> Minimal Fixed Topnav) */}
       <Navbar
         lang={lang}
@@ -30,7 +30,7 @@ export default function Home() {
         onOpenContact={() => setContactOpen(true)}
       />
 
-      {/* Section 2: Top Client logos & Featured Projects Scroll-Snap Flow */}
+      {/* Section 2: Top Client logos & Featured Projects Scroll-Snap Flow (ROGO + Rạng Đông) */}
       <TopClientSection
         lang={lang}
         onOpenContact={() => setContactOpen(true)}

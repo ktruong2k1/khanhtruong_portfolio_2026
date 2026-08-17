@@ -25,74 +25,83 @@ const clientLogos = [
 
 export default function TopClientSection({
   lang = "en",
-  onOpenContact,
 }: TopClientSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Track scroll progress within tall pinned container (450vh)
+  // Unified Scroll Timeline across pinned height (650vh)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  // Header "Top Client" Opacity: Fixed 100% visible throughout entire section, ONLY fades out when scrolling past the last project card (0.90 -> 0.98)
-  const headerOpacity = useTransform(scrollYProgress, [0.0, 0.90, 0.98], [1, 1, 0]);
+  // =========================================================================
+  // 1. STEP 1: Centered 3x2 Grid Overview View (0.00 -> 0.12)
+  // =========================================================================
+  const logoGridOpacity = useTransform(scrollYProgress, [0.0, 0.08, 0.13], [1, 1, 0]);
+  const logoGridScale = useTransform(scrollYProgress, [0.08, 0.13], [1, 0.94]);
+  const logoGridDisplay = useTransform(scrollYProgress, (v) => (v >= 0.14 ? "none" : "flex"));
 
-  // Container Opacity & Scale & Display for logos
-  const logoGroupOpacity = useTransform(
+  // =========================================================================
+  // 2. CLIENT 1: ROGO SOLUTIONS (0.12 -> 0.54)
+  // =========================================================================
+  const rogoFlowOpacity = useTransform(scrollYProgress, [0.11, 0.15, 0.49, 0.53], [0, 1, 1, 0]);
+  const rogoFlowDisplay = useTransform(scrollYProgress, (v) => (v < 0.09 || v > 0.55 ? "none" : "block"));
+
+  // ROGO Photo Layer (State A Contained -> State B Full-Bleed 8%)
+  const rogoPhotoTop = useTransform(scrollYProgress, [0.28, 0.40], ["220px", "0px"]);
+  const rogoPhotoLeft = useTransform(scrollYProgress, [0.28, 0.40], ["max(24px, 10vh)", "0px"]);
+  const rogoPhotoRight = useTransform(scrollYProgress, [0.28, 0.40], ["max(24px, 10vh)", "0px"]);
+  const rogoPhotoHeight = useTransform(
     scrollYProgress,
-    [0.0, 0.35, 0.42],
-    [1, 1, 0]
+    [0.28, 0.40],
+    ["calc(100vh - 270px)", "100vh"]
   );
-  const logoGroupScale = useTransform(
+  const rogoPhotoRadius = useTransform(scrollYProgress, [0.28, 0.40], ["20px", "0px"]);
+  const rogoPhotoOpacity = useTransform(
     scrollYProgress,
-    [0.35, 0.42],
-    [1, 0.92]
+    [0.11, 0.15, 0.28, 0.40, 0.49, 0.53],
+    [0, 1.0, 1.0, 0.08, 0.08, 0]
   );
-  const logoDisplay = useTransform(scrollYProgress, (v) => (v >= 0.42 ? "none" : "block"));
 
-  // Smart Animate Motion Transforms: 6 logos starting from Horizontally Centered single row -> morph into 3x2 grid
-  // Row 1 Target Grid Slots (ROGO, FPT, Rạng Đông)
-  const logo0_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "210px"]);
-  const logo0_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "32vh"]);
+  // ROGO State B Foreground Content Reveal
+  const rogoStateBOpacity = useTransform(scrollYProgress, [0.36, 0.43, 0.49, 0.53], [0, 1, 1, 0]);
+  const rogoStateBY = useTransform(scrollYProgress, [0.36, 0.43], [30, 0]);
+  const rogoStateBPointerEvents = useTransform(scrollYProgress, (v) => (v >= 0.36 && v <= 0.53 ? "auto" : "none"));
 
-  const logo1_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "270px"]);
-  const logo1_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "32vh"]);
+  // =========================================================================
+  // 3. CLIENT 2: RẠNG ĐÔNG (0.50 -> 0.98 - Zero Black Gap Transition!)
+  // =========================================================================
+  const rangDongFlowOpacity = useTransform(scrollYProgress, [0.49, 0.54, 0.94, 0.98], [0, 1, 1, 0]);
+  const rangDongFlowDisplay = useTransform(scrollYProgress, (v) => (v < 0.48 || v > 0.99 ? "none" : "block"));
 
-  const logo2_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "330px"]);
-  const logo2_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "32vh"]);
+  // Rạng Đông Photo Layer (State A Contained -> State B Full-Bleed 8%)
+  const rangDongPhotoTop = useTransform(scrollYProgress, [0.68, 0.80], ["220px", "0px"]);
+  const rangDongPhotoLeft = useTransform(scrollYProgress, [0.68, 0.80], ["max(24px, 10vh)", "0px"]);
+  const rangDongPhotoRight = useTransform(scrollYProgress, [0.68, 0.80], ["max(24px, 10vh)", "0px"]);
+  const rangDongPhotoHeight = useTransform(
+    scrollYProgress,
+    [0.68, 0.80],
+    ["calc(100vh - 270px)", "100vh"]
+  );
+  const rangDongPhotoRadius = useTransform(scrollYProgress, [0.68, 0.80], ["20px", "0px"]);
+  const rangDongPhotoOpacity = useTransform(
+    scrollYProgress,
+    [0.49, 0.54, 0.68, 0.80, 0.94, 0.98],
+    [0, 1.0, 1.0, 0.08, 0.08, 0]
+  );
 
-  // Row 2 Target Grid Slots (VietinBank, VCBS, Think & Action)
-  const logo3_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "-330px"]);
-  const logo3_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "46vh"]);
-
-  const logo4_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "-270px"]);
-  const logo4_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "46vh"]);
-
-  const logo5_X = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "-210px"]);
-  const logo5_Y = useTransform(scrollYProgress, [0.10, 0.28], ["0px", "46vh"]);
-
-  const logoTransforms = [
-    { x: logo0_X, y: logo0_Y },
-    { x: logo1_X, y: logo1_Y },
-    { x: logo2_X, y: logo2_Y },
-    { x: logo3_X, y: logo3_Y },
-    { x: logo4_X, y: logo4_Y },
-    { x: logo5_X, y: logo5_Y },
-  ];
-
-  // Step 3: Expanded Detail View - Remains 100% SOLID OPAQUE (opacity: 1) continuously throughout the entire scroll
-  const expandedOpacity = useTransform(scrollYProgress, [0.42, 0.48, 0.95, 1.0], [0, 1, 1, 1]);
-  const expandedDisplay = useTransform(scrollYProgress, (v) => (v < 0.40 ? "none" : "block"));
-  const contentY = useTransform(scrollYProgress, [0.44, 0.90], ["0%", "-62%"]);
+  // Rạng Đông State B Foreground Content Reveal
+  const rangDongStateBOpacity = useTransform(scrollYProgress, [0.76, 0.83, 0.94, 0.98], [0, 1, 1, 0]);
+  const rangDongStateBY = useTransform(scrollYProgress, [0.76, 0.83], [30, 0]);
+  const rangDongStateBPointerEvents = useTransform(scrollYProgress, (v) => (v >= 0.76 && v <= 0.98 ? "auto" : "none"));
 
   // Fallback for Reduced Motion
   if (shouldReduceMotion) {
     return (
       <section
         id="top-clients"
-        className="w-full bg-[#121212] text-white py-24 px-6 md:px-12 lg:px-[80px] border-t border-b border-white/5 relative overflow-hidden"
+        className="w-full bg-[#121212] text-white py-24 px-6 md:px-12 lg:px-[10vh] border-t border-b border-white/5 relative overflow-hidden snap-start scroll-mt-0"
       >
         <div className="max-w-[1440px] mx-auto w-full space-y-24">
           <div className="w-full space-y-8 pb-12 border-b border-white/5">
@@ -102,7 +111,7 @@ export default function TopClientSection({
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center py-4">
               {clientLogos.map((client) => (
                 <div key={client.name} className="w-full flex items-center justify-center p-2">
-                  <div className="relative h-10 md:h-12 w-full max-w-[140px] opacity-80">
+                  <div className="relative h-[36px] w-full max-w-[140px] opacity-80">
                     <Image src={client.src} alt={client.name} fill className="object-contain filter brightness-0 invert" />
                   </div>
                 </div>
@@ -110,31 +119,53 @@ export default function TopClientSection({
             </div>
           </div>
 
-          {/* Rogo Solutions */}
+          {/* Client 1: Rogo Solutions */}
           <div className="space-y-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-5 space-y-6">
-                <div className="relative w-48 h-16">
-                  <Image src="/images/Rogo_color.svg" alt="Rogo" fill className="object-contain object-left filter brightness-0 invert" />
-                </div>
-                <h2 className="font-mono text-3xl font-bold text-white">Top innovation brand in Vietnam 2023</h2>
-                <p className="text-white/70">Partnered to engineer enterprise IoT control planes and whitelabel SaaS ecosystems.</p>
+            <div className="flex items-center gap-[24px]">
+              <div className="relative w-[99px] h-[36px] shrink-0">
+                <Image src="/images/Rogo_color.svg" alt="Rogo" fill className="object-contain object-left filter brightness-0 invert" />
               </div>
-              <div className="lg:col-span-7">
-                <div className="relative w-full aspect-[3/2] rounded-3xl overflow-hidden border border-white/10">
-                  <Image src="/images/Thing_AI_VN.png" alt="Award" fill className="object-cover" />
-                </div>
-              </div>
+              <h2 className="font-mono text-xl font-normal text-white leading-tight">
+                Top innovation<br />brand in Vietnam<br />2023
+              </h2>
             </div>
-
-            <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#181818] p-8 md:p-12 rounded-3xl border border-white/10">
-              <div className="lg:col-span-5">
-                <div className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden border border-white/10 p-2">
+            <div className="relative w-full aspect-[2302/1052] rounded-[20px] overflow-hidden border border-white/10">
+              <Image src="/images/rogo_award_ceremony.png" alt="Award" fill className="object-cover" />
+            </div>
+            <div className="w-full flex flex-col lg:flex-row items-start gap-[40px] bg-[#181818] p-8 md:p-12 rounded-[20px] border border-white/10">
+              <div className="w-full lg:w-[640px] shrink-0">
+                <div className="relative w-full aspect-[4/3] max-h-[480px] rounded-[20px] overflow-hidden border border-white/10">
                   <Image src="/images/Rogo_Platform_large.png" alt="Rogo Platform" fill className="object-cover" />
                 </div>
               </div>
-              <div className="lg:col-span-7 space-y-6">
+              <div className="flex-1 space-y-6">
                 <h3 className="font-mono text-4xl font-bold text-white">Rogo IoT Platform v2</h3>
+                <p className="text-white/80">Rogo Solutions builds and operates the core — whitelabelable multi-tenant SaaS architecture.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Client 2: Rạng Đông */}
+          <div className="space-y-12 pt-12 border-t border-white/10">
+            <div className="flex items-center gap-[24px]">
+              <div className="relative w-[156px] h-[36px] shrink-0">
+                <Image src="/images/RangDong_color.svg" alt="Rạng Đông" fill className="object-contain object-left filter brightness-0 invert" />
+              </div>
+              <h2 className="font-mono text-xl font-normal text-white leading-tight">
+                Top innovation<br />brand in Vietnam<br />2023
+              </h2>
+            </div>
+            <div className="relative w-full aspect-[2302/1052] rounded-[20px] overflow-hidden border border-white/10">
+              <Image src="/images/rogo_award_ceremony.png" alt="Award" fill className="object-cover" />
+            </div>
+            <div className="w-full flex flex-col lg:flex-row items-start gap-[40px] bg-[#181818] p-8 md:p-12 rounded-[20px] border border-white/10">
+              <div className="w-full lg:w-[640px] shrink-0">
+                <div className="relative w-full aspect-[4/3] max-h-[480px] rounded-[20px] overflow-hidden border border-white/10">
+                  <Image src="/images/Rogo_Platform_large.png" alt="Platform" fill className="object-cover" />
+                </div>
+              </div>
+              <div className="flex-1 space-y-6">
+                <h3 className="font-mono text-4xl font-bold text-white">Rogo IoT Platform V2</h3>
                 <p className="text-white/80">Rogo Solutions builds and operates the core — whitelabelable multi-tenant SaaS architecture.</p>
               </div>
             </div>
@@ -148,242 +179,317 @@ export default function TopClientSection({
     <section
       ref={sectionRef}
       id="top-clients"
-      className="relative w-full h-[450vh] bg-[#121212] text-white border-t border-b border-white/5"
+      className="relative w-full h-[650vh] bg-[#121212] text-white border-t border-b border-white/5 snap-start scroll-mt-0"
     >
-      {/* Sticky 100vh Viewport Container (Locks scroll inside section, top padding 130px for 60px gap below topnav) */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden pt-[130px] pb-12 px-6 md:px-12 lg:px-[80px]">
+      {/* Sticky 100vh Viewport Container */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
         
-        {/* Fixed Header Bar: "Top Client" text fixed 60px below topnav, ONLY fades out when scrolling past last project card */}
-        <motion.div
-          style={{ opacity: headerOpacity }}
-          className="w-full max-w-[1440px] mx-auto flex items-center justify-between z-30 relative pt-1"
-        >
-          <h3 className="font-mono text-2xl md:text-3xl font-bold text-white tracking-tight">
-            Top Client
-          </h3>
-        </motion.div>
-
-        {/* SMART ANIMATE LOGO CONTAINER: Horizontally Centered (justify-center) */}
+        {/* ======================================================== */}
+        {/* 1. STEP 1: Centered 3x2 Grid Overview View (0.00 -> 0.12) */}
+        {/* ======================================================== */}
         <motion.div
           style={{
-            opacity: logoGroupOpacity,
-            scale: logoGroupScale,
-            display: logoDisplay,
+            opacity: logoGridOpacity,
+            scale: logoGridScale,
+            display: logoGridDisplay,
           }}
-          className="absolute top-[138px] left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[80px] z-20 pointer-events-none"
+          className="absolute inset-0 w-full h-full flex flex-col justify-between pt-[90px] md:pt-[100px] pb-8 md:pb-12 px-6 md:px-12 lg:px-[10vh] z-30 pointer-events-auto"
         >
-          <div className="relative w-full flex items-center justify-center">
-            <div className="flex items-center gap-6 md:gap-12 py-1">
-              {clientLogos.map((client, idx) => (
-                <motion.div
+          {/* Top Header Bar: "Top Client" */}
+          <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between shrink-0">
+            <h3 className="text-h5 md:text-h4 font-bold text-white tracking-tight">
+              Top Client
+            </h3>
+          </div>
+
+          {/* Centered 3x2 Grid */}
+          <div className="w-full max-w-[1440px] mx-auto flex-1 flex items-center justify-center">
+            <div className="w-full max-w-[1040px] grid grid-cols-2 md:grid-cols-3 gap-x-12 sm:gap-x-16 md:gap-x-24 gap-y-12 sm:gap-y-16 md:gap-y-20 items-center justify-items-center px-4">
+              {clientLogos.map((client) => (
+                <div
                   key={client.name}
-                  style={{
-                    x: logoTransforms[idx].x,
-                    y: logoTransforms[idx].y,
-                  }}
-                  className="shrink-0 relative h-8 md:h-10 w-28 md:w-36 opacity-85"
+                  className="relative h-[36px] w-32 sm:w-40 md:w-48 lg:w-56 flex items-center justify-center group"
                 >
                   <Image
                     src={client.src}
                     alt={client.name}
                     fill
-                    className="object-contain filter brightness-0 invert"
+                    className="object-contain filter brightness-0 invert opacity-85 group-hover:opacity-100 transition-opacity"
                   />
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
         </motion.div>
 
-        {/* EXPANDED DETAIL VIEW: Remains 100% SOLID OPAQUE (opacity: 1) continuously throughout the entire scroll */}
+        {/* ========================================================================= */}
+        {/* 2. CLIENT 1: ROGO SOLUTIONS (Single Expanding Photo + Foreground Flow)   */}
+        {/* ========================================================================= */}
+        {/* ROGO Photo Layer */}
         <motion.div
           style={{
-            opacity: expandedOpacity,
-            display: expandedDisplay,
+            top: rogoPhotoTop,
+            left: rogoPhotoLeft,
+            right: rogoPhotoRight,
+            height: rogoPhotoHeight,
+            borderRadius: rogoPhotoRadius,
+            opacity: rogoPhotoOpacity,
+            display: rogoFlowDisplay,
           }}
-          className="w-full max-w-[1440px] mx-auto h-full pt-12 flex-1 overflow-hidden z-0"
+          className="absolute overflow-hidden shadow-2xl z-10 origin-center pointer-events-none"
         >
-          <motion.div
-            style={{ y: contentY }}
-            className="w-full space-y-24 pb-32"
-          >
-            
-            {/* PARTNER BLOCK 1: Rogo Solutions & Rogo IoT Platform v2 */}
-            <div className="w-full space-y-16">
-              {/* Partner Highlight Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                {/* Left Column: Logo + Caption */}
-                <div className="lg:col-span-5 flex flex-col justify-center space-y-6">
-                  <div className="relative w-48 h-16">
-                    <Image
-                      src="/images/Rogo_color.svg"
-                      alt="Rogo Solutions"
-                      fill
-                      className="object-contain object-left filter brightness-0 invert"
-                    />
-                  </div>
-
-                  <div className="space-y-4">
-                    <h2 className="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
-                      Top innovation brand in Vietnam 2023
-                    </h2>
-                    <p className="font-sans text-white/70 text-base leading-relaxed">
-                      {lang === "vi"
-                        ? "Đối tác chiến lược phát triển hệ điều hành IoT doanh nghiệp và kiến trúc nền tảng Whitelabel SaaS multi-tenant hàng đầu."
-                        : "Partnered to engineer enterprise IoT control planes and whitelabel SaaS ecosystems for high-scale multi-tenant deployments."}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right Column: Supporting Award Photo */}
-                <div className="lg:col-span-7">
-                  <div className="relative w-full aspect-[3/2] rounded-3xl overflow-hidden shadow-2xl">
-                    <Image
-                      src="/images/Thing_AI_VN.png"
-                      alt="Rogo Solutions Award Ceremony"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Related Featured Project Card 1: Rogo IoT Platform v2 */}
-              <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#181818] p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
-                {/* Left Column: Laptop Stand Screen Mockup */}
-                <div className="lg:col-span-5">
-                  <div className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden shadow-2xl group">
-                    <div className="relative w-full h-full rounded-xl overflow-hidden">
-                      <Image
-                        src="/images/Rogo_Platform_large.png"
-                        alt="Rogo IoT Platform Interface"
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Column: Card Details */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <span className="font-mono text-[11px] font-bold tracking-widest text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
-                      FEATURED
-                    </span>
-                    <span className="font-mono text-[11px] font-bold tracking-widest text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase">
-                      PAAS • B2B
-                    </span>
-                    <div className="ml-auto flex items-center gap-3 opacity-70">
-                      <div className="relative w-5 h-5">
-                        <Image src="/images/Rogo_color.svg" alt="Rogo" fill className="object-contain filter brightness-0 invert" />
-                      </div>
-                      <div className="relative w-5 h-5">
-                        <Image src="/images/RangDong_color.svg" alt="Rang Dong" fill className="object-contain filter brightness-0 invert" />
-                      </div>
-                      <div className="relative w-5 h-5">
-                        <Image src="/images/FPTSmartHome_color.svg" alt="FPT" fill className="object-contain filter brightness-0 invert" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <h3 className="font-mono text-3xl md:text-5xl font-bold text-white tracking-tight">
-                    Rogo IoT Platform v2
-                  </h3>
-
-                  <p className="font-sans text-white/80 text-base leading-relaxed">
-                    {lang === "vi"
-                      ? "Rogo Solutions xây dựng và vận hành core nền tảng có khả năng whitelabel toàn diện. Mỗi thương hiệu đối tác sở hữu instance riêng: cùng kiến trúc, cùng control plane, nhưng thể hiện bản sắc thương hiệu độc lập."
-                      : "Rogo Solutions builds and operates the core — and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity."}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* PARTNER BLOCK 2: Rạng Đông & RaIO Smart */}
-            <div className="w-full space-y-16 pt-16 border-t border-white/10">
-              {/* Partner Highlight Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                {/* Left Column: Logo + Caption */}
-                <div className="lg:col-span-5 flex flex-col justify-center space-y-6">
-                  <div className="relative w-48 h-16">
-                    <Image
-                      src="/images/RangDong_color.svg"
-                      alt="Rạng Đông"
-                      fill
-                      className="object-contain object-left filter brightness-0 invert"
-                    />
-                  </div>
-
-                  <div className="space-y-4">
-                    <h2 className="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
-                      Top 1 IoT manufacturer brand in Vietnam
-                    </h2>
-                    <p className="font-sans text-white/70 text-base leading-relaxed">
-                      {lang === "vi"
-                        ? "Đồng hành thiết kế hệ sinh thái chiếu sáng thông minh và giao diện quản lý phần cứng IoT cho hàng triệu thiết bị kết nối."
-                        : "Co-designing smart lighting ecosystems and industrial IoT hardware integration interfaces for millions of connected devices."}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right Column: Supporting Showroom Photo */}
-                <div className="lg:col-span-7">
-                  <div className="relative w-full aspect-[3/2] rounded-3xl overflow-hidden shadow-2xl">
-                    <Image
-                      src="/images/thing_partner.png"
-                      alt="Rạng Đông Showroom Display"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Related Featured Project Card 2: RaIO Smart */}
-              <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#181818] p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
-                {/* Left Column: RaIO White Card Preview */}
-                <div className="lg:col-span-5 space-y-4">
-                  <div className="font-mono text-sm font-bold text-white/70">
-                    Featured project
-                  </div>
-                  <div className="bg-[#FFFFFF] p-10 rounded-2xl shadow-xl flex items-center justify-center w-full aspect-[3/2]">
-                    <div className="relative w-44 h-16">
-                      <Image
-                        src="/images/raio.png"
-                        alt="RaIO Smart Logo"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Column: Content */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-[11px] font-bold tracking-widest text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
-                      FEATURED
-                    </span>
-                    <span className="font-mono text-[11px] font-bold tracking-widest text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase">
-                      IoT • Mobile
-                    </span>
-                  </div>
-
-                  <h3 className="font-mono text-3xl md:text-5xl font-bold text-white tracking-tight">
-                    RaIO Smart
-                  </h3>
-
-                  <p className="font-sans text-white/80 text-base md:text-lg leading-relaxed">
-                    {lang === "vi"
-                      ? "Ứng dụng nhà thông minh Whitelabel — Giao diện thích ứng linh hoạt theo thương hiệu đối tác, tối ưu quy trình kết nối & onboarding thiết bị phần cứng IoT phức tạp."
-                      : "Whitelabel smart home app — partner-adaptive UI, complex device onboarding."}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </motion.div>
+          <Image
+            src="/images/rogo_award_ceremony.png"
+            alt="Rogo Solutions Award Ceremony Make In Vietnam 2023"
+            fill
+            priority
+            className="object-cover object-center"
+          />
         </motion.div>
+
+        {/* ROGO Foreground Content */}
+        <motion.div
+          style={{
+            opacity: rogoFlowOpacity,
+            display: rogoFlowDisplay,
+          }}
+          className="absolute inset-0 w-full h-full z-20 pointer-events-none pt-[90px] md:pt-[100px] pb-8 md:pb-12 px-6 md:px-12 lg:px-[10vh]"
+        >
+          <div className="max-w-[1440px] mx-auto w-full h-full flex flex-col justify-between relative">
+            
+            {/* Top-Left: Logo (99px) + 24px gap + Caption */}
+            <div className="flex items-center gap-[24px] pointer-events-auto shrink-0 z-30">
+              <div className="relative w-[99px] h-[36px] shrink-0">
+                <Image
+                  src="/images/Rogo_color.svg"
+                  alt="Rogo Solutions"
+                  fill
+                  className="object-contain object-left filter brightness-0 invert"
+                />
+              </div>
+              <h2 className="text-h7 sm:text-h6 font-mono font-normal text-white leading-tight tracking-tight whitespace-pre-line">
+                Top innovation{"\n"}brand in Vietnam{"\n"}2023
+              </h2>
+            </div>
+
+            {/* State B Content Reveal */}
+            <motion.div
+              style={{
+                opacity: rogoStateBOpacity,
+                y: rogoStateBY,
+                pointerEvents: rogoStateBPointerEvents as any,
+              }}
+              className="w-full my-auto pt-6 pb-2 pointer-events-auto z-30"
+            >
+              <div className="w-full flex flex-col lg:flex-row items-start gap-[40px]">
+                {/* Left: Device Mockup Card 640x480 */}
+                <div className="w-full lg:w-[640px] shrink-0">
+                  <div className="relative w-full aspect-[4/3] max-w-[640px] max-h-[480px] rounded-[20px] overflow-hidden shadow-2xl border border-white/15 bg-[#141414] group">
+                    <Image
+                      src="/images/Rogo_Platform_large.png"
+                      alt="Rogo IoT Platform Interface"
+                      fill
+                      className="object-cover group-hover:scale-102 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Right Side */}
+                <div className="flex-1 w-full space-y-6 flex flex-col justify-start">
+                  <div>
+                    <div className="flex items-center gap-2.5 mb-2.5">
+                      <span className="text-b4 font-mono font-bold text-[#00DC6C] bg-[#00DC6C]/15 border border-[#00DC6C]/40 px-3.5 py-1 rounded-full uppercase tracking-wider">
+                        FEATURED
+                      </span>
+                      <span className="text-b4 font-mono font-bold text-white/90 bg-white/10 border border-white/20 px-3.5 py-1 rounded-full uppercase tracking-wider">
+                        PAAS • B2B
+                      </span>
+                    </div>
+                    <h3 className="text-h4 sm:text-h3 lg:text-h2 font-mono font-bold text-white tracking-tight">
+                      Rogo IoT Platform V2
+                    </h3>
+                  </div>
+
+                  <div className="space-y-2">
+                    <span className="text-b3 font-mono font-medium text-white/60 uppercase tracking-wider block">
+                      Clients
+                    </span>
+                    <div className="flex items-center gap-6 flex-wrap">
+                      <div className="relative w-28 h-[24px]">
+                        <Image src="/images/Rogo_color.svg" alt="Rogo Solutions" fill className="object-contain object-left filter brightness-0 invert opacity-90" />
+                      </div>
+                      <div className="relative w-28 h-[24px]">
+                        <Image src="/images/RangDong_color.svg" alt="Rạng Đông" fill className="object-contain object-left filter brightness-0 invert opacity-90" />
+                      </div>
+                      <div className="relative w-28 h-[24px]">
+                        <Image src="/images/FPTSmartHome_color.svg" alt="FPT Smart Home" fill className="object-contain object-left filter brightness-0 invert opacity-90" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <span className="text-b3 font-mono font-medium text-white/60 uppercase tracking-wider block">
+                      Description
+                    </span>
+                    <p className="text-b2 lg:text-b1 text-white/80 leading-relaxed w-full">
+                      {lang === "vi"
+                        ? "Rogo Solutions xây dựng và vận hành core nền tảng có khả năng whitelabel toàn diện. Mỗi thương hiệu đối tác sở hữu instance riêng: cùng kiến trúc, cùng control plane, nhưng thể hiện bản sắc thương hiệu độc lập. Logic whitelabel bắt đầu ngay từ tầng kiến trúc này."
+                        : "Rogo Solutions builds and operates the core — and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity. The whitelabel logic doesn't start at the app layer — it starts here."}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <span className="text-b3 font-mono font-medium text-white/60 uppercase tracking-wider block">
+                      Tools
+                    </span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
+                        <span key={tool} className="bg-white/10 text-white/90 text-b3 font-medium px-3.5 py-1 rounded-full border border-white/15 backdrop-blur-md">
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* ========================================================================= */}
+        {/* 3. CLIENT 2: RẠNG ĐÔNG (Seamless Direct Transition with ZERO Black Gap)  */}
+        {/* ========================================================================= */}
+        {/* Rạng Đông Photo Layer */}
+        <motion.div
+          style={{
+            top: rangDongPhotoTop,
+            left: rangDongPhotoLeft,
+            right: rangDongPhotoRight,
+            height: rangDongPhotoHeight,
+            borderRadius: rangDongPhotoRadius,
+            opacity: rangDongPhotoOpacity,
+            display: rangDongFlowDisplay,
+          }}
+          className="absolute overflow-hidden shadow-2xl z-10 origin-center pointer-events-none"
+        >
+          <Image
+            src="/images/rogo_award_ceremony.png"
+            alt="Rang Dong Award Ceremony Make In Vietnam 2023"
+            fill
+            priority
+            className="object-cover object-center"
+          />
+        </motion.div>
+
+        {/* Rạng Đông Foreground Content */}
+        <motion.div
+          style={{
+            opacity: rangDongFlowOpacity,
+            display: rangDongFlowDisplay,
+          }}
+          className="absolute inset-0 w-full h-full z-20 pointer-events-none pt-[90px] md:pt-[100px] pb-8 md:pb-12 px-6 md:px-12 lg:px-[10vh]"
+        >
+          <div className="max-w-[1440px] mx-auto w-full h-full flex flex-col justify-between relative">
+            
+            {/* Top-Left: Logo Rạng Đông (156px) + 24px gap + Caption */}
+            <div className="flex items-center gap-[24px] pointer-events-auto shrink-0 z-30">
+              <div className="relative w-[156px] h-[36px] shrink-0">
+                <Image
+                  src="/images/RangDong_color.svg"
+                  alt="Rạng Đông"
+                  fill
+                  className="object-contain object-left filter brightness-0 invert"
+                />
+              </div>
+              <h2 className="text-h7 sm:text-h6 font-mono font-normal text-white leading-tight tracking-tight whitespace-pre-line">
+                Top innovation{"\n"}brand in Vietnam{"\n"}2023
+              </h2>
+            </div>
+
+            {/* State B Content Reveal */}
+            <motion.div
+              style={{
+                opacity: rangDongStateBOpacity,
+                y: rangDongStateBY,
+                pointerEvents: rangDongStateBPointerEvents as any,
+              }}
+              className="w-full my-auto pt-6 pb-2 pointer-events-auto z-30"
+            >
+              <div className="w-full flex flex-col lg:flex-row items-start gap-[40px]">
+                {/* Left: Device Mockup Card 640x480 */}
+                <div className="w-full lg:w-[640px] shrink-0">
+                  <div className="relative w-full aspect-[4/3] max-h-[480px] rounded-[20px] overflow-hidden shadow-2xl border border-white/15 bg-[#141414] group">
+                    <Image
+                      src="/images/Rogo_Platform_large.png"
+                      alt="Rogo IoT Platform Interface"
+                      fill
+                      className="object-cover group-hover:scale-102 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Right Side */}
+                <div className="flex-1 w-full space-y-6 flex flex-col justify-start">
+                  <div>
+                    <div className="flex items-center gap-2.5 mb-2.5">
+                      <span className="text-b4 font-mono font-bold text-[#00DC6C] bg-[#00DC6C]/15 border border-[#00DC6C]/40 px-3.5 py-1 rounded-full uppercase tracking-wider">
+                        FEATURED
+                      </span>
+                      <span className="text-b4 font-mono font-bold text-white/90 bg-white/10 border border-white/20 px-3.5 py-1 rounded-full uppercase tracking-wider">
+                        PAAS • B2B
+                      </span>
+                    </div>
+                    <h3 className="text-h4 sm:text-h3 lg:text-h2 font-mono font-bold text-white tracking-tight">
+                      Rogo IoT Platform V2
+                    </h3>
+                  </div>
+
+                  <div className="space-y-2">
+                    <span className="text-b3 font-mono font-medium text-white/60 uppercase tracking-wider block">
+                      Clients
+                    </span>
+                    <div className="flex items-center gap-6 flex-wrap">
+                      <div className="relative w-28 h-[24px]">
+                        <Image src="/images/Rogo_color.svg" alt="Rogo Solutions" fill className="object-contain object-left filter brightness-0 invert opacity-90" />
+                      </div>
+                      <div className="relative w-28 h-[24px]">
+                        <Image src="/images/RangDong_color.svg" alt="Rạng Đông" fill className="object-contain object-left filter brightness-0 invert opacity-90" />
+                      </div>
+                      <div className="relative w-28 h-[24px]">
+                        <Image src="/images/FPTSmartHome_color.svg" alt="FPT Smart Home" fill className="object-contain object-left filter brightness-0 invert opacity-90" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <span className="text-b3 font-mono font-medium text-white/60 uppercase tracking-wider block">
+                      Description
+                    </span>
+                    <p className="text-b2 lg:text-b1 text-white/80 leading-relaxed w-full">
+                      {lang === "vi"
+                        ? "Rogo Solutions xây dựng và vận hành core nền tảng có khả năng whitelabel toàn diện. Mỗi thương hiệu đối tác sở hữu instance riêng: cùng kiến trúc, cùng control plane, nhưng thể hiện bản sắc thương hiệu độc lập. Logic whitelabel bắt đầu ngay từ tầng kiến trúc này."
+                        : "Rogo Solutions builds and operates the core — and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity. The whitelabel logic doesn't start at the app layer — it starts here."}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <span className="text-b3 font-mono font-medium text-white/60 uppercase tracking-wider block">
+                      Tools
+                    </span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
+                        <span key={tool} className="bg-white/10 text-white/90 text-b3 font-medium px-3.5 py-1 rounded-full border border-white/15 backdrop-blur-md">
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );

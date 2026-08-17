@@ -48,7 +48,7 @@ export default function ContactModal({ isOpen, onClose, lang }: ContactModalProp
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-lg bg-[#181818] border border-white/10 rounded-3xl p-8 shadow-2xl z-10 text-white"
+            className="relative w-full max-w-lg bg-[#181818] border border-white/10 rounded-[12px] p-8 shadow-2xl z-10 text-white"
           >
             {/* Close Button */}
             <button
@@ -60,14 +60,14 @@ export default function ContactModal({ isOpen, onClose, lang }: ContactModalProp
 
             {/* Header */}
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-[#00DC6C]/10 text-[#00DC6C] rounded-2xl border border-[#00DC6C]/20">
+              <div className="p-3 bg-[#00DC6C]/10 text-[#00DC6C] rounded-[12px] border border-[#00DC6C]/20">
                 <Mail className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-mono text-2xl font-bold">
+                <h3 className="text-h5 font-bold">
                   {lang === "vi" ? "Kết nối với tôi" : "Get in touch"}
                 </h3>
-                <p className="font-sans text-xs text-white/60">
+                <p className="text-b3 text-white/60">
                   {lang === "vi" ? "Gửi email trực tiếp tới" : "Send direct email to"}{" "}
                   <span className="font-mono text-[#00DC6C]">{email}</span>
                 </p>
@@ -75,11 +75,11 @@ export default function ContactModal({ isOpen, onClose, lang }: ContactModalProp
             </div>
 
             {/* Quick Email Copy Row */}
-            <div className="flex items-center justify-between bg-black/40 border border-white/10 rounded-2xl p-3 mb-6">
-              <span className="font-mono text-sm text-white/80 px-2">{email}</span>
+            <div className="flex items-center justify-between bg-black/40 border border-white/10 rounded-[12px] p-3 mb-6">
+              <span className="text-b2 font-mono text-white/80 px-2">{email}</span>
               <button
                 onClick={handleCopy}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-mono text-white transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-[12px] text-b3 font-mono text-white transition-colors cursor-pointer"
               >
                 {copied ? (
                   <>
@@ -98,7 +98,7 @@ export default function ContactModal({ isOpen, onClose, lang }: ContactModalProp
             {/* Message Form */}
             <form onSubmit={handleSend} className="space-y-4">
               <div>
-                <label className="block font-mono text-xs text-white/70 mb-2">
+                <label className="block text-b3 font-mono text-white/70 mb-2">
                   {lang === "vi" ? "Nội dung tin nhắn" : "Your Message"}
                 </label>
                 <textarea
@@ -110,14 +110,14 @@ export default function ContactModal({ isOpen, onClose, lang }: ContactModalProp
                       ? "Chào Trường, tôi muốn trao đổi về dự án..."
                       : "Hi Khanhtruong, I'd like to discuss a project..."
                   }
-                  className="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#00DC6C] transition-colors resize-none font-sans"
+                  className="w-full bg-black/40 border border-white/10 rounded-[12px] p-4 text-b2 text-white placeholder-white/40 focus:outline-none focus:border-[#00DC6C] transition-colors resize-none"
                   required
                 />
               </div>
 
               <button
                 type="submit"
-                className="cta-btn h-[56px] min-h-[56px] rounded-[8px] w-full bg-[#00DC6C] hover:bg-[#00c560] text-black font-semibold text-base flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg active:scale-95"
+                className="cta-btn h-[56px] min-h-[56px] rounded-[12px] w-full bg-[#00DC6C] hover:bg-[#00c560] text-black text-b1 font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg active:scale-95"
               >
                 <Send className="w-4 h-4" />
                 <span>{lang === "vi" ? "Tạo thư nháp & Gửi" : "Send Email"}</span>

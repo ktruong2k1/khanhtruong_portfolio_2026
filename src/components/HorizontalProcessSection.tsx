@@ -72,7 +72,7 @@ function TypingProcessParagraph({ fullText }: { fullText: string }) {
   return (
     <p
       ref={ref}
-      className="font-mono text-xl sm:text-[24px] font-normal leading-relaxed text-white/90 w-full block whitespace-normal min-h-[140px]"
+      className="text-h6 sm:text-h5 font-normal text-white/90 w-full block whitespace-normal min-h-[140px]"
     >
       <span>{displayedText}</span>
       {isTyping && isInView && (
@@ -89,12 +89,13 @@ export default function HorizontalProcessSection({
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
+    offset: ["start start", "end end"],
   });
 
   // Magnetic Snap scroll transform mapping for the 4 step cards (01, 02, 03, 04)
   const rawX = useTransform(
     scrollYProgress,
-    [0, 0.05, 0.28, 0.36, 0.60, 0.68, 0.92, 1.0],
+    [0, 0.08, 0.28, 0.36, 0.60, 0.68, 0.92, 1.0],
     ["0%", "0%", "-26%", "-26%", "-52%", "-52%", "-76%", "-76%"]
   );
   
@@ -110,10 +111,10 @@ export default function HorizontalProcessSection({
     <section
       id="process-section"
       ref={targetRef}
-      className="relative h-[350vh] bg-[#121212] text-white"
+      className="relative h-[350vh] bg-[#121212] text-white snap-start scroll-mt-0"
     >
       {/* Sticky full screen viewport wrapper */}
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center px-6 md:px-12 lg:px-[80px]">
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center px-6 md:px-12 lg:px-[10vh]">
         <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch h-full pt-24 pb-16">
           {/* Fixed Left Sidebar Info: Top Aligned with typing paragraph, Bottom Aligned CTA buttons */}
           <div className="lg:col-span-4 flex flex-col justify-between h-full max-w-md z-10 pr-6 min-w-0 pt-2 pb-2">
@@ -122,7 +123,7 @@ export default function HorizontalProcessSection({
               <TypingProcessParagraph fullText={processParagraphText} />
 
               {/* Subtitle in 24px IBM Plex Mono typeface */}
-              <p className="font-mono text-xl sm:text-[24px] font-normal leading-relaxed text-white/70 w-full block whitespace-normal">
+              <p className="text-h6 sm:text-h5 font-normal text-white/70 w-full block whitespace-normal">
                 {lang === "vi"
                   ? "Bốn bước dưới đây luôn diễn ra. Thứ tự và trọng số sẽ thay đổi tùy thuộc vào bối cảnh."
                   : "The four things below always happen. The order and weight shift depending on context."}
@@ -133,13 +134,13 @@ export default function HorizontalProcessSection({
             <div className="flex items-center gap-3 mt-auto mb-2 flex-shrink-0">
               <button
                 onClick={onOpenContact}
-                className="cta-btn h-[56px] min-h-[56px] rounded-[8px] bg-[#00DC6C] hover:bg-[#00c560] text-black font-semibold px-8 text-base transition-all duration-200 cursor-pointer shadow-lg active:scale-95"
+                className="cta-btn h-[56px] min-h-[56px] rounded-[12px] bg-[#00DC6C] hover:bg-[#00c560] text-black text-h7 font-semibold px-8 transition-all duration-200 cursor-pointer shadow-lg active:scale-95"
               >
                 Contact
               </button>
               <button
                 onClick={onOpenContact}
-                className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[8px] bg-white hover:bg-gray-100 text-black transition-all duration-200 cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
+                className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[12px] bg-white hover:bg-gray-100 text-black transition-all duration-200 cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
               >
                 <ArrowRight className="w-5 h-5 text-black" />
               </button>
@@ -152,7 +153,7 @@ export default function HorizontalProcessSection({
               {processSteps.map((step) => (
                 <div
                   key={step.number}
-                  className={`w-[85vw] sm:w-[480px] md:w-[540px] flex-shrink-0 rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col justify-between space-y-6 transition-all ${
+                  className={`w-[85vw] sm:w-[480px] md:w-[540px] flex-shrink-0 rounded-[12px] p-8 md:p-10 shadow-2xl flex flex-col justify-between space-y-6 transition-all ${
                     step.isWhite
                       ? "bg-white text-black"
                       : "bg-[#1A1A1A] text-white border border-white/10"
@@ -160,16 +161,16 @@ export default function HorizontalProcessSection({
                 >
                   {/* Top Header & Title */}
                   <div className="space-y-4 w-full">
-                    <div className="font-mono text-4xl md:text-5xl font-bold tracking-tight">
+                    <div className="text-h3 md:text-h2 font-bold tracking-tight">
                       {step.number}
                     </div>
-                    <h3 className="font-mono text-2xl md:text-4xl font-bold leading-tight whitespace-normal">
+                    <h3 className="text-h5 md:text-h3 font-bold leading-tight whitespace-normal">
                       {step.title}
                     </h3>
                   </div>
 
                   {/* Step Image Photo */}
-                  <div className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden">
+                  <div className="relative w-full aspect-[3/2] rounded-[12px] overflow-hidden">
                     <Image
                       src={step.image}
                       alt={step.title}
@@ -180,7 +181,7 @@ export default function HorizontalProcessSection({
 
                   {/* Description Paragraph */}
                   <p
-                    className={`font-sans text-xs md:text-sm leading-relaxed whitespace-normal ${
+                    className={`text-b3 md:text-b2 whitespace-normal ${
                       step.isWhite ? "text-neutral-700" : "text-neutral-300"
                     }`}
                   >

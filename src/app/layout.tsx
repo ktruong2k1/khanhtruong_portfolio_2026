@@ -3,15 +3,17 @@ import { Be_Vietnam_Pro, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
 const beVietnam = Be_Vietnam_Pro({
-  variable: "--font-sans",
+  variable: "--font-body",
   subsets: ["latin", "vietnamese"],
   weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 const ibmPlexMono = IBM_Plex_Mono({
-  variable: "--font-mono",
+  variable: "--font-heading",
   subsets: ["latin", "vietnamese"],
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +32,7 @@ export default function RootLayout({
       className={`${beVietnam.variable} ${ibmPlexMono.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full font-sans transition-colors duration-300 bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black">
+      <body className="min-h-full transition-colors duration-300 bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black">
         {children}
       </body>
     </html>

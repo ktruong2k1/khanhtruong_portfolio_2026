@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 interface HeroSectionProps {
   lang: "vi" | "en";
@@ -11,6 +12,31 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  // Ultra-smooth, buttery spring physics for fluid organic cursor trailing
+  const springX = useSpring(mouseX, { stiffness: 180, damping: 24, mass: 0.5 });
+  const springY = useSpring(mouseY, { stiffness: 180, damping: 24, mass: 0.5 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  };
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   const scrollToAbout = () => {
     const el = document.getElementById("why-me");
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -19,15 +45,41 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
   return (
     <section
       id="hero"
-      className="min-h-screen flex flex-col justify-center bg-[#121212] relative overflow-hidden px-6 md:px-12 lg:px-[80px] pt-32 pb-16"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="min-h-screen flex flex-col justify-center bg-[#121212] relative overflow-hidden px-6 md:px-12 lg:px-[10vh] pt-32 pb-16 snap-start scroll-mt-0 cursor-default"
     >
-      <div className="max-w-[1440px] mx-auto w-full my-auto flex flex-col justify-center">
+      {/* Mouse Follower "Scroll Down" circle: 100x100px, Neutral-700, sitting below hero content */}
+      <motion.div
+        className="pointer-events-none absolute top-0 left-0 w-[100px] h-[100px] rounded-full bg-[#656565] flex flex-col items-center justify-center font-mono font-bold text-[#181818] text-[15px] leading-tight select-none z-0 shadow-lg"
+        style={{
+          x: springX,
+          y: springY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{
+          opacity: isHovered ? 1 : 0,
+          scale: isHovered ? 1 : 0,
+        }}
+        transition={{
+          opacity: { duration: 0.15 },
+          scale: { duration: 0.2, ease: "easeOut" },
+        }}
+      >
+        <span>Scroll</span>
+        <span>Down</span>
+      </motion.div>
+
+      <div className="max-w-[1440px] mx-auto w-full my-auto flex flex-col justify-center relative z-10">
         {/* Gold Portfolio tag */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="font-mono text-[#C6A85B] text-lg md:text-xl font-bold tracking-wide mb-6"
+          className="text-[#C6A85B] text-h6 font-bold tracking-wide mb-6"
         >
           Portfolio
         </motion.div>
@@ -41,7 +93,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             transition={{ duration: 0.6 }}
             className="lg:col-span-7 flex flex-col items-start min-w-0"
           >
-            <h1 className="font-mono text-5xl sm:text-7xl lg:text-[96px] font-normal text-white leading-[1.0] tracking-tight whitespace-normal">
+            <h1 className="text-h0 font-normal text-white tracking-tight whitespace-normal">
               Khanhtruong
               <br />
               Nguyen
@@ -56,14 +108,14 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             className="lg:col-span-5 flex items-start gap-6 pt-2"
           >
             <div className="flex flex-col items-start text-left">
-              <h2 className="font-mono text-3xl sm:text-4xl lg:text-[44px] font-bold text-white mb-3 tracking-tight whitespace-nowrap">
+              <h2 className="text-h4 sm:text-h3 font-bold text-white mb-3 tracking-tight whitespace-nowrap">
                 Product Designer
               </h2>
               <div className="flex items-center gap-3 flex-wrap justify-start">
-                <span className="font-mono text-[#00DC6C] font-bold text-lg sm:text-xl whitespace-nowrap">
+                <span className="text-[#00DC6C] font-bold text-h6 whitespace-nowrap">
                   3,5 years exp
                 </span>
-                <span className="border border-white/20 rounded-full px-3 py-1 text-xs font-sans text-white/80 flex items-center gap-1.5 bg-white/5 whitespace-nowrap">
+                <span className="border border-white/20 rounded-full px-3 py-1 text-b3 text-white/80 flex items-center gap-1.5 bg-white/5 whitespace-nowrap">
                   <span className="w-2 h-2 rounded-full bg-[#00DC6C] animate-pulse" />
                   Available for Remote
                 </span>
@@ -89,29 +141,29 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-7 flex flex-col items-start min-w-0"
           >
-            <p className="font-sans text-white/80 text-[16px] leading-relaxed font-light w-full max-w-[635px] block whitespace-normal">
+            <p className="text-b1 text-white/80 font-light w-full max-w-[635px] block whitespace-normal">
               {lang === "vi"
                 ? "Thu hẹp khoảng cách giữa tầm nhìn thẩm mỹ độ trung thực cao và việc thực thi kỹ thuật nghiêm ngặt — dành cho các sản phẩm SaaS, từ nền tảng multi-tenant đến hệ sinh thái IoT."
                 : "Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution — for SaaS products, from multi-tenant platforms to IoT ecosystems."}
             </p>
           </motion.div>
 
-          {/* Bottom-Right: CTA Buttons (56px height & 8px radius) */}
+          {/* Bottom-Right: CTA Buttons (56px height & 12px radius) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             className="lg:col-span-5 flex items-center gap-3"
           >
-            <button
-              onClick={scrollToAbout}
-              className="cta-btn h-[56px] min-h-[56px] rounded-[8px] bg-[#00DC6C] hover:bg-[#00c560] text-black font-sans font-semibold px-8 text-base transition-all duration-200 cursor-pointer shadow-lg hover:shadow-[#00DC6C]/20 hover:scale-[1.02] active:scale-95"
+            <Link
+              href="/about"
+              className="cta-btn h-[56px] min-h-[56px] rounded-[12px] bg-[#00DC6C] hover:bg-[#00c560] text-black text-b1 font-semibold px-8 transition-all duration-200 cursor-pointer shadow-lg hover:shadow-[#00DC6C]/20 hover:scale-[1.02] active:scale-95 flex items-center justify-center"
             >
               {lang === "vi" ? "Về tôi" : "About me"}
-            </button>
+            </Link>
             <button
               onClick={onOpenContact}
-              className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[8px] bg-white hover:bg-gray-100 text-black transition-all duration-200 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-95 flex items-center justify-center"
+              className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[12px] bg-white hover:bg-gray-100 text-black transition-all duration-200 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-95 flex items-center justify-center"
               aria-label="Contact"
             >
               <ArrowRight className="w-5 h-5 text-black" />

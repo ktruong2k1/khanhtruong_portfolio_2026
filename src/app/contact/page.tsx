@@ -76,7 +76,7 @@ export default function ContactPage() {
 
   return (
     <div 
-      className="page-wrapper min-h-screen bg-[#0B0B0C] text-neutral-300 flex flex-col font-sans"
+      className="page-wrapper min-h-screen bg-[#0B0B0C] text-neutral-300 flex flex-col"
       style={{
         opacity: fadeOpacity,
         transform: `translateY(${(1 - fadeOpacity) * 12}px)`,
@@ -100,7 +100,7 @@ export default function ContactPage() {
         }}
         className="w-full sticky top-0 z-40"
       >
-        <Link href="/" className="flex items-center gap-2 text-white font-serif font-bold text-[20px] tracking-tight">
+        <Link href="/" className="flex items-center gap-2 text-white text-h6 font-bold tracking-tight">
           <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="header-logo-mask-contact">
               <rect width="28" height="28" fill="white" />
@@ -122,7 +122,7 @@ export default function ContactPage() {
             left: '50%',
             transform: 'translateX(-50%)'
           }}
-          className="hidden md:flex text-sm font-semibold"
+          className="hidden md:flex text-b2 font-semibold"
         >
           <Link href="/works" className="text-neutral-400 hover:text-white transition-colors">{t.navWork}</Link>
           <Link href="/about" className="text-neutral-400 hover:text-white transition-colors">{t.navAbout}</Link>
@@ -193,7 +193,7 @@ export default function ContactPage() {
             </button>
           </div>
 
-          <Link href="/contact" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-xs text-[#E5E5E5] font-semibold transition-colors duration-150">
+          <Link href="/contact" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-b3 text-[#E5E5E5] font-semibold transition-colors duration-150">
             <span className="w-2 h-2 bg-status-200 rounded-full animate-pulse"></span>
             {t.availableRemote}
           </Link>
@@ -218,19 +218,19 @@ export default function ContactPage() {
         <div className="w-16 h-16 rounded-full bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent mb-6 animate-pulse">
           <Mail size={26} />
         </div>
-        <h1 className="text-4xl font-extrabold font-serif text-white tracking-tight mb-3">
+        <h1 className="text-h3 font-extrabold text-white tracking-tight mb-3">
           {t.title}
         </h1>
-        <span className="text-xs font-mono uppercase tracking-widest text-[#E8C468] font-bold mb-6 block">
+        <span className="text-b3 font-mono uppercase tracking-widest text-[#E8C468] font-bold mb-6 block">
           {t.subtitle}
         </span>
-        <p className="text-neutral-400 text-sm md:text-base leading-relaxed mb-10">
+        <p className="text-neutral-400 text-b2 md:text-b1 leading-relaxed mb-10">
           {t.desc}
         </p>
         <div style={{ maxWidth: '388px', width: '100%' }} className="flex justify-center mx-auto">
           <Link 
             href="/"
-            className="bg-[#22C55E] hover:bg-[#1f9e4e] text-[#17211B] font-bold rounded-full shadow-lg transition-all duration-150 active:scale-95 text-sm cursor-pointer cta-btn w-full"
+            className="bg-[#22C55E] hover:bg-[#1f9e4e] text-[#17211B] font-bold rounded-full shadow-lg transition-all duration-150 active:scale-95 text-b2 cursor-pointer cta-btn w-full"
           >
             <ArrowLeft size={16} />
             {t.backHome}
