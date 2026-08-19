@@ -2,20 +2,75 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { useInView } from "framer-motion";
+import InteractiveCTA from "@/components/InteractiveCTA";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface FooterSectionProps {
   lang?: "vi" | "en";
-  onOpenContact: () => void;
+  onOpenContact?: () => void;
 }
 
-export default function FooterSection({ lang = "en", onOpenContact }: FooterSectionProps) {
+// Simultaneous Typing Menu Item for Footer (64px)
+function FooterTypingMenuItem({
+  fullText,
+  onClick,
+  trigger,
+}: {
+  fullText: string;
+  onClick: () => void;
+  trigger: boolean;
+}) {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  useEffect(() => {
+    if (!trigger) {
+      setDisplayedText("");
+      setIsTyping(true);
+      return;
+    }
+
+    setDisplayedText("");
+    setIsTyping(true);
+    let index = 0;
+    const interval = setInterval(() => {
+      index++;
+      if (index <= fullText.length) {
+        setDisplayedText(fullText.slice(0, index));
+      } else {
+        setIsTyping(false);
+        clearInterval(interval);
+      }
+    }, 45); // 45ms simultaneous typing speed
+
+    return () => clearInterval(interval);
+  }, [fullText, trigger]);
+
+  return (
+    <button
+      onClick={onClick}
+      className="text-left text-h1 text-[44px] sm:text-[54px] lg:text-[60px] xl:text-[64px] leading-[1.1] font-bold uppercase tracking-wider text-white hover:text-black transition-colors cursor-pointer w-fit flex items-center group outline-none"
+    >
+      <span>{displayedText}</span>
+      {isTyping && trigger && (
+        <span className="inline-block w-[8px] lg:w-[10px] h-[36px] lg:h-[48px] bg-black ml-2 lg:ml-3 animate-pulse align-middle" />
+      )}
+    </button>
+  );
+}
+
+export default function FooterSection({ lang, onOpenContact }: FooterSectionProps) {
+  const { lang: globalLang } = useLanguage();
+  const currentLang = lang || globalLang;
   const footerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(footerRef, { amount: 0.25 });
+  const router = useRouter();
 
-  const line1Text = "Start something";
-  const line2Text = "great together";
+  const line1Text = currentLang === "vi" ? "Bắt đầu những điều" : "Start something";
+  const line2Text = currentLang === "vi" ? "tuyệt vời cùng nhau" : "great together";
   const totalChars = line1Text.length + line2Text.length;
 
   const [charCount, setCharCount] = useState(0);
@@ -44,6 +99,24 @@ export default function FooterSection({ lang = "en", onOpenContact }: FooterSect
       ? line2Text.slice(0, charCount - line1Text.length)
       : "";
 
+  const handleNavigate = (path: string) => {
+    if (typeof window !== "undefined") {
+      if (window.location.pathname === path) {
+        const scrollContainers = document.querySelectorAll(".overflow-y-scroll, main, body, html");
+        scrollContainers.forEach((el) => {
+          el.scrollTo({ top: 0, behavior: "smooth" });
+        });
+        const firstSection = document.querySelector("section") || document.getElementById("hero");
+        if (firstSection) {
+          firstSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        router.push(path);
+      }
+    }
+  };
+
   return (
     <footer
       ref={footerRef}
@@ -55,7 +128,7 @@ export default function FooterSection({ lang = "en", onOpenContact }: FooterSect
         <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 items-stretch h-full">
           
           {/* Left Column (lg:col-span-7): 96px Typing Headline + Contact Buttons */}
-          <div className="lg:col-span-7 flex flex-col justify-between pr-0 lg:pr-12 pb-6 lg:pb-0">
+          <div className="lg:col-span-7 flex flex-col justify-start pr-0 lg:pr-12 pb-6 lg:pb-0">
             <div>
               <h2 className="text-h1 font-normal text-black tracking-tight select-none">
                 <div>
@@ -69,80 +142,78 @@ export default function FooterSection({ lang = "en", onOpenContact }: FooterSect
                   {charCount >= line1Text.length && charCount < totalChars && (
                     <span className="inline-block w-2 lg:w-3 h-6 lg:h-12 bg-black ml-1.5 align-middle animate-pulse" />
                   )}
-                  {charCount === 0 && <span className="opacity-0">great together</span>}
+                  {charCount === 0 && <span className="opacity-0">{line2Text}</span>}
                 </div>
               </h2>
             </div>
 
-            {/* Contact Action Buttons (Bottom Aligned) */}
-            <div className="flex items-center gap-3 pt-6 lg:pt-8">
-              <button
-                onClick={onOpenContact}
-                className="cta-btn h-[56px] min-h-[56px] rounded-[12px] bg-black hover:bg-neutral-900 text-[#00DC6C] text-h7 font-bold px-8 transition-all cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
-              >
-                Contact
-              </button>
-              <button
-                onClick={onOpenContact}
-                className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[12px] bg-white hover:bg-neutral-100 text-black transition-all cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
-                aria-label="Contact"
-              >
-                <ArrowRight className="w-5 h-5 text-black" />
-              </button>
+            {/* Contact Action Buttons with Hover Swap Animation */}
+            <div className="mt-[48px]">
+              <InteractiveCTA
+                text={currentLang === "vi" ? "Liên hệ" : "Contact"}
+                variant="black"
+                onClick={() => handleNavigate("/contact")}
+              />
             </div>
           </div>
 
-          {/* Right Column (lg:col-span-5): 64px Mini Menu + Follow me Links */}
-          <div className="lg:col-span-5 flex flex-col justify-between pl-0 lg:pl-12 lg:border-l border-black pt-4 lg:pt-0">
-            {/* 64px Mini Menu */}
-            <div className="flex flex-col gap-3 lg:gap-6 text-h4 sm:text-h2 lg:text-h1 font-bold text-white uppercase tracking-wider">
-              <Link
-                href="/works"
-                className="hover:text-black transition-colors"
-              >
-                MY WORKS
-              </Link>
-              <Link
-                href="/about"
-                className="hover:text-black transition-colors"
-              >
-                ABOUT ME
-              </Link>
-              <button
-                onClick={onOpenContact}
-                className="text-left hover:text-black transition-colors cursor-pointer"
-              >
-                CONTACT
-              </button>
+          {/* Right Column (lg:col-span-5): 64px Typing Mini Menu + Follow me Links */}
+          <div className="lg:col-span-5 flex flex-col justify-between pl-0 lg:pl-12 lg:border-l-2 border-black pt-4 lg:pt-0">
+            {/* 64px Mini Menu with Synchronized Typing Effect (4 Tabs: HOME, ABOUT ME, MY WORKS, CONTACT) */}
+            <div className="flex flex-col gap-2.5 lg:gap-3">
+              <FooterTypingMenuItem
+                fullText={currentLang === "vi" ? "TRANG CHỦ" : "HOME"}
+                onClick={() => handleNavigate("/")}
+                trigger={isInView}
+              />
+              <FooterTypingMenuItem
+                fullText={currentLang === "vi" ? "GIỚI THIỆU" : "ABOUT ME"}
+                onClick={() => handleNavigate("/about")}
+                trigger={isInView}
+              />
+              <FooterTypingMenuItem
+                fullText={currentLang === "vi" ? "DỰ ÁN" : "MY WORKS"}
+                onClick={() => handleNavigate("/works")}
+                trigger={isInView}
+              />
+              <FooterTypingMenuItem
+                fullText={currentLang === "vi" ? "LIÊN HỆ" : "CONTACT"}
+                onClick={() => handleNavigate("/contact")}
+                trigger={isInView}
+              />
             </div>
 
-            {/* Follow me Links (Bottom Right) */}
-            <div className="flex items-center gap-6 pt-8 text-b3 sm:text-b2 font-bold text-black">
-              <span>Follow me</span>
-              <a
-                href="https://tiktok.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:underline"
-              >
-                Tiktok
-              </a>
-              <a
-                href="https://behance.net"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:underline"
-              >
-                Behance
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:underline"
-              >
-                Linkedin
-              </a>
+            {/* Follow me Links (Bottom Right) with style H5 for links and Body 2 Neutral 100 for title */}
+            <div className="flex items-center gap-6 sm:gap-8 pt-8 flex-wrap">
+              <span className="text-b2 text-white font-mono select-none">
+                {currentLang === "vi" ? "Theo dõi tôi" : "Follow me"}
+              </span>
+              <div className="flex items-center gap-6 sm:gap-8 text-h5 font-bold font-heading text-black">
+                <a
+                  href="https://tiktok.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:underline transition-all"
+                >
+                  Tiktok
+                </a>
+                <a
+                  href="https://www.behance.net/nguyenkhanhtr"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:underline transition-all"
+                >
+                  Behance
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/nguyen-khanh-truong-designer/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:underline transition-all"
+                >
+                  Linkedin
+                </a>
+              </div>
             </div>
           </div>
 
@@ -150,7 +221,7 @@ export default function FooterSection({ lang = "en", onOpenContact }: FooterSect
       </div>
 
       {/* Middle Banner: Giant "KhanhTruong Nguyen" on Green */}
-      <div className="w-full border-t border-black px-6 md:px-12 lg:px-[10vh] py-3 lg:py-4 bg-[#00DC6C]">
+      <div className="w-full border-t-2 border-black px-6 md:px-12 lg:px-[10vh] py-3 lg:py-4 bg-[#00DC6C]">
         <div className="max-w-[1440px] mx-auto">
           <h1 className="text-h3 sm:text-h1 lg:text-h0 font-bold text-[#147a3e] select-none tracking-tight">
             KhanhTruong Nguyen
@@ -161,7 +232,7 @@ export default function FooterSection({ lang = "en", onOpenContact }: FooterSect
       {/* Bottom Bar: Vietnam 2026 (Black Background) */}
       <div className="w-full bg-[#121212] py-3 lg:py-3.5 px-6 md:px-12 lg:px-[10vh]">
         <div className="max-w-[1440px] mx-auto text-h7 sm:text-h6 font-bold text-white">
-          Vietnam 2026
+          {currentLang === "vi" ? "Việt Nam 2026" : "Vietnam 2026"}
         </div>
       </div>
     </footer>

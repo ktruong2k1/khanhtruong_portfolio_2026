@@ -45,7 +45,7 @@ export default function PendingPage() {
           href="/"
           style={{
             color: 'var(--Colors-Primary-400, #22C55E)',
-            fontFamily: '"Be Vietnam Pro", sans-serif',
+            fontFamily: '"IBM Plex Mono", monospace',
             fontSize: '14px',
             fontStyle: 'normal',
             fontWeight: 700,

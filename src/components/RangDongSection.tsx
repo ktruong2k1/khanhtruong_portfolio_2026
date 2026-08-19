@@ -156,7 +156,7 @@ export default function RangDongSection({
               </div>
 
               <h2 className="text-h7 sm:text-h6 font-mono font-normal text-white leading-tight tracking-tight whitespace-pre-line">
-                Top innovation{"\n"}brand in Vietnam{"\n"}2023
+                Top 1 IoT manufacturer{"\n"}brand in Vietnam
               </h2>
             </div>
 
@@ -192,10 +192,10 @@ export default function RangDongSection({
                   {/* Badges + Big Project Title */}
                   <div>
                     <div className="flex items-center gap-2.5 mb-2.5">
-                      <span className="text-b4 font-mono font-bold text-[#00DC6C] bg-[#00DC6C]/15 border border-[#00DC6C]/40 px-3.5 py-1 rounded-full uppercase tracking-wider">
+                      <span className="text-[12px] font-mono font-bold text-[#00DC6C] bg-[#00DC6C]/15 border border-[#00DC6C]/40 px-3.5 py-1 rounded-full uppercase tracking-wider">
                         FEATURED
                       </span>
-                      <span className="text-b4 font-mono font-bold text-white/90 bg-white/10 border border-white/20 px-3.5 py-1 rounded-full uppercase tracking-wider">
+                      <span className="text-[12px] font-mono font-bold text-white/90 bg-white/10 border border-white/20 px-3.5 py-1 rounded-full uppercase tracking-wider">
                         PAAS • B2B
                       </span>
                     </div>

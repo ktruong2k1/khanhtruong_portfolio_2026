@@ -1,91 +1,85 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import { useInView } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
-export default function TypingTitleSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Track scroll progress within tall pinned container (200vh)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+interface TypingTitleSectionProps {
+  lang?: "vi" | "en";
+}
 
-  const textLine1 = "How I design a product";
-  const textLine2 = "from end to end";
+export default function TypingTitleSection({ lang }: TypingTitleSectionProps = {}) {
+  const { lang: globalLang } = useLanguage();
+  const currentLang = lang || globalLang;
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-50px" });
 
-  // Map scroll progress to total character count (textLine1 + textLine2)
-  const totalChars = textLine1.length + textLine2.length;
-  
-  // Character count typed out: starts at 0.06 and reaches 100% (totalChars) at 0.72 progress
-  const typedCountMotion = useTransform(scrollYProgress, [0.06, 0.72], [0, totalChars]);
+  const line1Full = currentLang === "vi" ? "Tôi thiết kế sản phẩm" : "I design the product";
+  const line2Full = currentLang === "vi" ? "Rồi đưa vào thực tế" : "Then I ship it";
+  const totalChars = line1Full.length + line2Full.length;
 
-  const [typedCount, setTypedCount] = useState(0);
+  const [charCount, setCharCount] = useState(0);
+  const hasAutoScrolledRef = useRef(false);
 
-  useMotionValueEvent(typedCountMotion, "change", (latest) => {
-    setTypedCount(Math.min(totalChars, Math.max(0, Math.floor(latest))));
-  });
+  useEffect(() => {
+    setCharCount(0);
+  }, [currentLang]);
 
-  // Calculate slice lengths for line 1 and line 2
-  const line1Chars = Math.min(typedCount, textLine1.length);
-  const line2Chars = Math.max(0, typedCount - textLine1.length);
+  useEffect(() => {
+    if (!isInView || hasAutoScrolledRef.current) return;
 
-  const line1Typed = textLine1.slice(0, line1Chars);
-  const line2Typed = textLine2.slice(0, line2Chars);
+    let current = 0;
+    const timer = setInterval(() => {
+      current++;
+      setCharCount(current);
+      if (current >= totalChars) {
+        clearInterval(timer);
+        setTimeout(() => {
+          if (!hasAutoScrolledRef.current && sectionRef.current) {
+            hasAutoScrolledRef.current = true;
+            const nextElement = sectionRef.current.nextElementSibling;
+            if (nextElement) {
+              nextElement.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }
+        }, 700); // 700ms pause after typing finishes before auto-scrolling to next section
+      }
+    }, 45); // Smooth 45ms typing speed
 
-  // Baseline border opacity animations:
-  // 0% opacity when approaching the section (0.0 to 0.05), fades in only as Line 1 and Line 2 start typing
-  const line1BorderOpacity = useTransform(scrollYProgress, [0.05, 0.08], [0, 1]);
-  const line2BorderOpacity = useTransform(scrollYProgress, [0.35, 0.40], [0, 1]);
+    return () => clearInterval(timer);
+  }, [isInView, totalChars, currentLang]);
+
+  const line1Typed = line1Full.slice(0, Math.min(charCount, line1Full.length));
+  const line2Typed =
+    charCount > line1Full.length
+      ? line2Full.slice(0, charCount - line1Full.length)
+      : "";
 
   return (
     <section
-      ref={containerRef}
-      className="relative w-full h-[200vh] bg-[#121212] border-b border-white/5 snap-start scroll-mt-0"
+      ref={sectionRef}
+      id="typing-title"
+      className="w-full min-h-screen snap-start snap-always flex flex-col items-center justify-center px-6 md:px-12 lg:px-[10vh] border-b border-white/5 bg-[#121212] relative z-10"
     >
-      {/* Sticky 100vh Viewport Wrapper: Pins screen right at center when scrolling from featured project section */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center px-6 md:px-12 lg:px-[10vh] overflow-hidden">
-        <div className="max-w-[1440px] w-full flex flex-col items-start text-h1 font-normal">
-          
-          {/* Line 1 with horizontal baseline line (Left aligned, 64px font size) */}
-          <div className="w-full relative pb-4 mb-6 flex items-center justify-start min-h-[70px] lg:min-h-[85px]">
-            <span className="text-[#00DC6C] whitespace-pre text-left">
-              {line1Typed}
-            </span>
-            {typedCount > 0 && typedCount < textLine1.length && (
-              <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-                className="inline-block w-[10px] h-[52px] lg:h-[60px] bg-[#00DC6C] ml-1 align-middle"
-              />
+      <div className="max-w-[1440px] mx-auto w-full flex flex-col items-center justify-center text-center">
+        <div className="w-fit mx-auto font-heading text-3xl sm:text-5xl md:text-[54px] lg:text-[64px] font-extrabold leading-tight text-[#00DC6C] text-center tracking-tight">
+          {/* Line 1 */}
+          <div className="border-b border-white/20 pb-3 mb-6 w-fit mx-auto min-h-[1.25em] flex items-center justify-center">
+            <span>{line1Typed}</span>
+            {charCount > 0 && charCount < line1Full.length && (
+              <span className="inline-block w-2 sm:w-3 h-8 sm:h-12 bg-[#00DC6C] ml-2 animate-pulse align-middle" />
             )}
-            {/* Animated baseline border: Hidden when approaching section (opacity: 0), reveals when Line 1 starts */}
-            <motion.div
-              style={{ opacity: line1BorderOpacity }}
-              className="absolute bottom-0 left-0 right-0 h-[1px] bg-white/20"
-            />
+            {charCount === 0 && <span className="opacity-0">{line1Full}</span>}
           </div>
 
-          {/* Line 2 with horizontal baseline line (Left aligned, typed character by character) */}
-          <div className="w-full relative pb-4 flex items-center justify-start min-h-[70px] lg:min-h-[85px]">
-            <span className="text-[#00DC6C] whitespace-pre text-left">
-              {line2Typed}
-            </span>
-            {typedCount >= textLine1.length && typedCount <= totalChars && (
-              <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-                className="inline-block w-[10px] h-[52px] lg:h-[60px] bg-[#00DC6C] ml-1 align-middle"
-              />
+          {/* Line 2 */}
+          <div className="border-b border-white/20 pb-3 w-fit mx-auto min-h-[1.25em] flex items-center justify-center">
+            <span>{line2Typed}</span>
+            {charCount >= line1Full.length && charCount < totalChars && (
+              <span className="inline-block w-2 sm:w-3 h-8 sm:h-12 bg-[#00DC6C] ml-2 animate-pulse align-middle" />
             )}
-            {/* Animated baseline border: Hidden until Line 2 begins typing */}
-            <motion.div
-              style={{ opacity: line2BorderOpacity }}
-              className="absolute bottom-0 left-0 right-0 h-[1px] bg-white/20"
-            />
+            {charCount === 0 && <span className="opacity-0">{line2Full}</span>}
           </div>
-
         </div>
       </div>
     </section>

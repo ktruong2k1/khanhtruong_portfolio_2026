@@ -2,193 +2,217 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import InteractiveCTA from "@/components/InteractiveCTA";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface HorizontalProcessSectionProps {
-  lang: "vi" | "en";
-  onOpenContact: () => void;
+  lang?: "vi" | "en";
+  onOpenContact?: () => void;
 }
 
 const processSteps = [
   {
     number: "01",
-    title: "Align the room before the work begins",
+    titleVi: "Thống nhất mục tiêu trước khi bắt đầu",
+    titleEn: "Align the room before the work begins",
     image: "/images/process_step_1.jpg",
-    description:
+    descriptionVi:
+      "Trước khi vẽ bất cứ điều gì, mọi người trong phòng cần nhìn thấy cùng một sản phẩm. Điều đó có nghĩa là ngồi lại với các bên liên quan, đọc tài liệu BA, ánh xạ các luồng API — và đặt đủ câu hỏi cho đến khi không còn sự mơ hồ nào. Thiết kế dựa trên giả định tốn kém chi phí sửa chữa hơn nhiều so với thời gian để thống nhất ngay từ đầu.",
+    descriptionEn:
       "Before anything gets drawn, everyone in the room needs to see the same product. That means sitting with stakeholders, reading BA docs, mapping API flows — and asking enough questions until the ambiguity runs out. Design built on assumptions costs more to fix than the time it takes to align.",
     isWhite: true,
   },
   {
     number: "02",
-    title: "Decide the product before designing it",
+    titleVi: "Định hình sản phẩm trước khi thiết kế",
+    titleEn: "Decide the product before designing it",
     image: "/images/process_step_2.jpg",
-    description:
+    descriptionVi:
+      "Bản mô tả yêu cầu hiếm khi đầy đủ ngay từ đầu. Nền tảng, bối cảnh người dùng và các luồng cốt lõi cần được xác định chặt chẽ trước khi lên wireframe — và các quyết định đó sẽ khác nhau trên mỗi dự án. Ứng dụng mobile trên sàn nhà máy là một sản phẩm hoàn toàn khác so với bản desktop ở văn phòng, dù tính năng tương tự. Xác định rõ bản chất sản phẩm là ưu tiên hàng đầu.",
+    descriptionEn:
       "The brief rarely arrives complete. Platform, user context, and core flows need to be locked before wireframes exist — and those decisions look different on every project. Mobile on a factory floor is a different product than desktop in a back office, even with identical features. Figuring out which one this actually is comes first.",
     isWhite: false,
   },
   {
     number: "03",
-    title: "Execute in parallel, hand off clean",
+    titleVi: "Thực thi song song, bàn giao chuẩn chỉnh",
+    titleEn: "Execute in parallel, hand off clean",
     image: "/images/process_step_3.jpg",
-    description:
+    descriptionVi:
+      "Bàn giao thiết kế không chỉ là ném file qua rào cản. Đó là một cuộc đối thoại liên tục với đội ngũ kỹ thuật — thiết lập hệ thống token rõ ràng, đặc tả linh kiện, các trạng thái và trường hợp biên ngay từ sớm để việc phát triển diễn ra nhanh chóng, chính xác và không phải phỏng đoán.",
+    descriptionEn:
       "Design handoff isn't throwing files over a fence. It's a continuous conversation with engineering — establishing clear token systems, component specs, states, and edge cases early so development builds with speed and precision without guesswork.",
     isWhite: true,
   },
   {
     number: "04",
-    title: "Keep moving after handoff",
+    titleVi: "Tiếp tục cải tiến sau khi ra mắt",
+    titleEn: "Keep moving after handoff",
     image: "/images/process_step_4.jpg",
-    description:
+    descriptionVi:
+      "Ra mắt sản phẩm mới chỉ là vạch xuất phát. Khi người dùng thực tương tác với sản phẩm, dữ liệu thực tế sẽ đổ về — làm lộ ra các điểm nghẽn và trường hợp ngoài dự tính. Việc liên tục thử nghiệm, đánh giá QA và tối ưu UX sẽ giúp sản phẩm không ngừng phát triển thành một hệ sinh thái dẫn đầu thị trường.",
+    descriptionEn:
       "Shipped is just the starting line. Once real users interact with the product, real data flows in — revealing telemetry, edge cases, and friction points. Continuous iteration, QA reviews, and UX refinements ensure the product evolves into a market-leading ecosystem.",
     isWhite: false,
   },
 ];
 
-function TypingProcessParagraph({ fullText }: { fullText: string }) {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [displayedText, setDisplayedText] = useState("");
-  const [isTyping, setIsTyping] = useState(true);
-
-  useEffect(() => {
-    if (!isInView) return;
-    setDisplayedText("");
-    setIsTyping(true);
-    let index = 0;
-    const interval = setInterval(() => {
-      index++;
-      if (index <= fullText.length) {
-        setDisplayedText(fullText.slice(0, index));
-      } else {
-        setIsTyping(false);
-        clearInterval(interval);
-      }
-    }, 25); // 25ms per character
-
-    return () => clearInterval(interval);
-  }, [isInView, fullText]);
-
-  return (
-    <p
-      ref={ref}
-      className="text-h6 sm:text-h5 font-normal text-white/90 w-full block whitespace-normal min-h-[140px]"
-    >
-      <span>{displayedText}</span>
-      {isTyping && isInView && (
-        <span className="inline-block w-[10px] h-[24px] bg-[#00DC6C] ml-1 animate-pulse align-middle" />
-      )}
-    </p>
-  );
-}
-
 export default function HorizontalProcessSection({
   lang,
-  onOpenContact,
 }: HorizontalProcessSectionProps) {
+  const { lang: globalLang } = useLanguage();
+  const currentLang = lang || globalLang;
   const targetRef = useRef<HTMLDivElement>(null);
+  const trackContainerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(880);
+
+  // ResizeObserver to calculate dynamic exact 2-card container width & pixel-perfect shifts
+  useEffect(() => {
+    const updateWidth = () => {
+      if (trackContainerRef.current) {
+        setContainerWidth(trackContainerRef.current.clientWidth);
+      }
+    };
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    const observer = new ResizeObserver(updateWidth);
+    if (trackContainerRef.current) {
+      observer.observe(trackContainerRef.current);
+    }
+    return () => {
+      window.removeEventListener("resize", updateWidth);
+      observer.disconnect();
+    };
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end end"],
   });
 
-  // Magnetic Snap scroll transform mapping for the 4 step cards (01, 02, 03, 04)
+  // Calculate pixel-perfect 2-card lock positions:
+  // Step 1: 0px (Cards 1 & 2 locked)
+  // Step 2: -1 * (CardWidth + Gap) = -(containerWidth + 32) / 2 (Cards 2 & 3 locked)
+  // Step 3: -2 * (CardWidth + Gap) = -(containerWidth + 32) (Cards 3 & 4 locked)
+  const step1Shift = 0;
+  const step2Shift = -((containerWidth + 32) / 2);
+  const step3Shift = -(containerWidth + 32);
+
+  // Magnetic Snap scroll timeline: 3 distinct locked stops with light, sensitive activation
   const rawX = useTransform(
     scrollYProgress,
-    [0, 0.08, 0.28, 0.36, 0.60, 0.68, 0.92, 1.0],
-    ["0%", "0%", "-26%", "-26%", "-52%", "-52%", "-76%", "-76%"]
+    [0, 0.08, 0.35, 0.55, 0.82, 1.0],
+    [step1Shift, step1Shift, step2Shift, step2Shift, step3Shift, step3Shift]
   );
   
-  // Smooth spring physics for magnetic snap transitions
-  const x = useSpring(rawX, { stiffness: 240, damping: 28 });
+  // Highly responsive, snappy spring physics for lightweight scroll interactions
+  const x = useSpring(rawX, { stiffness: 280, damping: 24, mass: 0.6 });
 
-  const processParagraphText =
-    lang === "vi"
-      ? "Quy trình của tôi không phải là checklist. Đó là bộ nguyên tắc thích ứng với mọi nhu cầu thực tế của dự án — từ startup sprint đến triển khai doanh nghiệp lớn, làm việc độc lập hay phối hợp đa chức năng."
-      : "My process isn't a checklist. It's a set of principles that adapt to whatever the project actually needs — startup sprint or enterprise rollout, solo or cross-functional team, Figma-first or API-first.";
+  const headingText =
+    currentLang === "vi"
+      ? "Cách một sản phẩm thực sự được tạo ra"
+      : "How a product actually gets made";
+
+  const subtitleText =
+    currentLang === "vi"
+      ? "Bốn bước dưới đây luôn diễn ra. Thứ tự và trọng số sẽ thay đổi tùy thuộc vào bối cảnh."
+      : "The four things below always happen. The order and weight shift depending on context.";
+
+  const ctaText = currentLang === "vi" ? "Khám phá dự án" : "Explore my work";
+
+  const singleCardWidth = containerWidth > 0 ? (containerWidth - 32) / 2 : 420;
 
   return (
     <section
       id="process-section"
       ref={targetRef}
-      className="relative h-[350vh] bg-[#121212] text-white snap-start scroll-mt-0"
+      className="relative h-[250vh] bg-[#121212] text-white snap-start scroll-mt-0"
     >
-      {/* Sticky full screen viewport wrapper */}
+      {/* Sticky full screen viewport wrapper: Left aligned with navbar logo */}
       <div className="sticky top-0 h-screen overflow-hidden flex items-center px-6 md:px-12 lg:px-[10vh]">
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch h-full pt-24 pb-16">
-          {/* Fixed Left Sidebar Info: Top Aligned with typing paragraph, Bottom Aligned CTA buttons */}
-          <div className="lg:col-span-4 flex flex-col justify-between h-full max-w-md z-10 pr-6 min-w-0 pt-2 pb-2">
-            <div className="space-y-8 w-full">
-              {/* 24px IBM Plex Mono Typing Paragraph on scroll */}
-              <TypingProcessParagraph fullText={processParagraphText} />
+        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch h-full pt-24 pb-16">
+          
+          {/* Fixed Left Sidebar Info: Directly aligned with top navbar logo */}
+          <div className="lg:col-span-4 flex flex-col justify-center h-full z-10 pr-4 min-w-0 pt-2 pb-2">
+            <div className="w-full">
+              {/* Heading H2 in Bricolage Grotesque */}
+              <h2 className="text-h2 font-bold text-white tracking-tight leading-tight whitespace-normal">
+                {headingText}
+              </h2>
 
-              {/* Subtitle in 24px IBM Plex Mono typeface */}
-              <p className="text-h6 sm:text-h5 font-normal text-white/70 w-full block whitespace-normal">
-                {lang === "vi"
-                  ? "Bốn bước dưới đây luôn diễn ra. Thứ tự và trọng số sẽ thay đổi tùy thuộc vào bối cảnh."
-                  : "The four things below always happen. The order and weight shift depending on context."}
+              {/* Subtitle paragraph */}
+              <p className="text-b2 md:text-b1 text-white/70 leading-relaxed w-full block whitespace-normal mt-6">
+                {subtitleText}
               </p>
-            </div>
 
-            {/* CTA Buttons: Aligned flush with the BOTTOM of the 4 steps cards track */}
-            <div className="flex items-center gap-3 mt-auto mb-2 flex-shrink-0">
-              <button
-                onClick={onOpenContact}
-                className="cta-btn h-[56px] min-h-[56px] rounded-[12px] bg-[#00DC6C] hover:bg-[#00c560] text-black text-h7 font-semibold px-8 transition-all duration-200 cursor-pointer shadow-lg active:scale-95"
-              >
-                Contact
-              </button>
-              <button
-                onClick={onOpenContact}
-                className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[12px] bg-white hover:bg-gray-100 text-black transition-all duration-200 cursor-pointer shadow-lg active:scale-95 flex items-center justify-center"
-              >
-                <ArrowRight className="w-5 h-5 text-black" />
-              </button>
+              {/* CTA Button: Exactly 48px below the text block */}
+              <div className="mt-[48px] flex-shrink-0">
+                <InteractiveCTA
+                  text={ctaText}
+                  href="/works"
+                />
+              </div>
             </div>
           </div>
 
-          {/* Sliding Horizontal Cards Track with Snap Scroll Physics */}
-          <div className="lg:col-span-8 overflow-hidden h-full flex items-stretch min-w-0 pt-2 pb-2">
-            <motion.div style={{ x }} className="flex gap-8 items-stretch py-2">
-              {processSteps.map((step) => (
-                <div
-                  key={step.number}
-                  className={`w-[85vw] sm:w-[480px] md:w-[540px] flex-shrink-0 rounded-[12px] p-8 md:p-10 shadow-2xl flex flex-col justify-between space-y-6 transition-all ${
-                    step.isWhite
-                      ? "bg-white text-black"
-                      : "bg-[#1A1A1A] text-white border border-white/10"
-                  }`}
-                >
-                  {/* Top Header & Title */}
-                  <div className="space-y-4 w-full">
-                    <div className="text-h3 md:text-h2 font-bold tracking-tight">
-                      {step.number}
-                    </div>
-                    <h3 className="text-h5 md:text-h3 font-bold leading-tight whitespace-normal">
-                      {step.title}
-                    </h3>
-                  </div>
-
-                  {/* Step Image Photo */}
-                  <div className="relative w-full aspect-[3/2] rounded-[12px] overflow-hidden">
-                    <Image
-                      src={step.image}
-                      alt={step.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-
-                  {/* Description Paragraph */}
-                  <p
-                    className={`text-b3 md:text-b2 whitespace-normal ${
-                      step.isWhite ? "text-neutral-700" : "text-neutral-300"
+          {/* Sliding Horizontal Cards Track: Exact 2-card lock viewport */}
+          <div
+            ref={trackContainerRef}
+            className="lg:col-span-8 overflow-hidden h-full flex items-stretch min-w-0 pt-2 pb-2"
+          >
+            <motion.div
+              style={{ x }}
+              className="flex gap-8 items-stretch py-2 w-max h-full"
+            >
+              {processSteps.map((step) => {
+                const title = currentLang === "vi" ? step.titleVi : step.titleEn;
+                const description = currentLang === "vi" ? step.descriptionVi : step.descriptionEn;
+                return (
+                  <div
+                    key={step.number}
+                    style={{
+                      width: `${singleCardWidth}px`,
+                    }}
+                    className={`flex-shrink-0 rounded-[12px] p-6 md:p-8 xl:p-10 shadow-2xl flex flex-col justify-between space-y-6 transition-all ${
+                      step.isWhite
+                        ? "bg-white text-black"
+                        : "bg-[#1A1A1A] text-white border border-white/10"
                     }`}
                   >
-                    {step.description}
-                  </p>
-                </div>
-              ))}
+                    {/* Top Header & Title */}
+                    <div className="space-y-4 w-full">
+                      <div className="text-h3 md:text-h2 font-bold tracking-tight">
+                        {step.number}
+                      </div>
+                      <h3 className="text-h5 md:text-h4 font-bold leading-tight whitespace-normal">
+                        {title}
+                      </h3>
+                    </div>
+
+                    {/* Step Image Photo */}
+                    <div className="relative w-full aspect-[3/2] rounded-[12px] overflow-hidden">
+                      <Image
+                        src={step.image}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+
+                    {/* Description Paragraph: 14px size */}
+                    <p
+                      className={`text-[14px] whitespace-normal leading-relaxed ${
+                        step.isWhite ? "text-neutral-700" : "text-neutral-300"
+                      }`}
+                    >
+                      {description}
+                    </p>
+                  </div>
+                );
+              })}
             </motion.div>
           </div>
         </div>

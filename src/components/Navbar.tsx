@@ -3,21 +3,55 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface NavbarProps {
-  lang: "vi" | "en";
-  setLang: (lang: "vi" | "en") => void;
-  onOpenContact: () => void;
+  lang?: "vi" | "en";
+  setLang?: (lang: "vi" | "en") => void;
+  onOpenContact?: () => void;
+}
+
+// Clean SVG for Vietnam Flag
+function VietnamFlagIcon() {
+  return (
+    <svg viewBox="0 0 512 512" className="w-4 h-4 rounded-full overflow-hidden shrink-0 block">
+      <rect width="512" height="512" fill="#DA251D" />
+      <polygon
+        points="256,80 305,215 448,215 332,298 376,432 256,348 136,432 180,298 64,215 207,215"
+        fill="#FFFF00"
+      />
+    </svg>
+  );
+}
+
+// Clean SVG for UK Flag (Union Jack expanding 100% inside circle)
+function UKFlagIcon() {
+  return (
+    <svg viewBox="0 0 60 60" className="w-4 h-4 rounded-full overflow-hidden shrink-0 block">
+      <clipPath id="uk-flag-clip">
+        <circle cx="30" cy="30" r="30" />
+      </clipPath>
+      <g clipPath="url(#uk-flag-clip)">
+        <rect width="60" height="60" fill="#012169" />
+        <path d="M0,0 L60,60 M60,0 L0,60" stroke="#FFFFFF" strokeWidth="12" />
+        <path d="M0,0 L30,30 M60,0 L30,30 M60,60 L30,30 M0,60 L30,30" stroke="#C8102E" strokeWidth="6" />
+        <path d="M30,0 v60 M0,30 h60" stroke="#FFFFFF" strokeWidth="20" />
+        <path d="M30,0 v60 M0,30 h60" stroke="#C8102E" strokeWidth="12" />
+      </g>
+    </svg>
+  );
 }
 
 // Simultaneous Typing Menu Tab Component
 function TypingMenuItem({
   fullText,
   onClick,
+  isActive = false,
 }: {
   fullText: string;
   onClick: () => void;
+  isActive?: boolean;
 }) {
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
@@ -42,20 +76,37 @@ function TypingMenuItem({
   return (
     <button
       onClick={onClick}
-      className="text-left text-h4 sm:text-h2 md:text-h1 font-bold uppercase tracking-wider text-white/75 hover:text-white transition-colors cursor-pointer w-fit flex items-center group outline-none"
+      className={`text-left text-h1 text-[64px] leading-[72px] font-bold uppercase tracking-wider transition-colors cursor-pointer w-fit flex items-center group outline-none ${
+        isActive ? "text-[#00DC6C]" : "text-white/75 hover:text-white"
+      }`}
     >
-      <span className="group-hover:text-[#00DC6C] transition-colors">{displayedText}</span>
+      <span className={isActive ? "text-[#00DC6C]" : "group-hover:text-[#00DC6C] transition-colors"}>
+        {displayedText}
+      </span>
       {isTyping && (
-        <span className="inline-block w-[8px] md:w-[12px] h-[36px] md:h-[56px] bg-[#00DC6C] ml-2 animate-pulse align-middle" />
+        <span className="inline-block w-[10px] md:w-[12px] h-[48px] md:h-[56px] bg-[#00DC6C] ml-3 animate-pulse align-middle" />
       )}
     </button>
   );
 }
 
 export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
+  const { lang: globalLang, setLang: globalSetLang } = useLanguage();
+  const currentLang = lang || globalLang;
+  const handleSetLang = (newLang: "vi" | "en") => {
+    globalSetLang(newLang);
+    if (setLang) setLang(newLang);
+  };
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isHome = pathname === "/";
+  const isAbout = pathname === "/about";
+  const isWorks = pathname.startsWith("/works");
+  const isContact = pathname === "/contact";
 
   useEffect(() => {
     const handleScroll = (e?: Event) => {
@@ -78,20 +129,34 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll, true);
   }, []);
 
-  const goToHome = () => {
+  const navigateOrScrollTop = (targetPath: string) => {
     setMobileMenuOpen(false);
-    router.push("/");
+    if (typeof window !== "undefined") {
+      const isCurrentPage =
+        targetPath === "/"
+          ? pathname === "/"
+          : pathname === targetPath || pathname.startsWith(targetPath + "/");
+
+      if (isCurrentPage) {
+        const scrollContainers = document.querySelectorAll(".overflow-y-scroll, main, body, html");
+        scrollContainers.forEach((el) => {
+          el.scrollTo({ top: 0, behavior: "smooth" });
+        });
+        const firstSection = document.querySelector("section") || document.getElementById("hero");
+        if (firstSection) {
+          firstSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        router.push(targetPath);
+      }
+    }
   };
 
-  const goToAbout = () => {
-    setMobileMenuOpen(false);
-    router.push("/about");
-  };
-
-  const goToWorks = () => {
-    setMobileMenuOpen(false);
-    router.push("/works");
-  };
+  const scrollToHero = () => navigateOrScrollTop("/");
+  const goToAbout = () => navigateOrScrollTop("/about");
+  const goToWorks = () => navigateOrScrollTop("/works");
+  const goToContact = () => navigateOrScrollTop("/contact");
 
   return (
     <>
@@ -116,66 +181,45 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                 className="flex items-center justify-between"
               >
                 <div className="pointer-events-auto bg-[#242424]/90 backdrop-blur-md rounded-[12px] px-5 py-3 shadow-2xl flex items-center justify-between gap-6 md:gap-10 border-0 outline-none">
-                  <div className="flex items-center gap-6 md:gap-8 text-b2 font-medium text-white/90">
+                  {/* Nav Links with Primary Green (#00DC6C) Selected State */}
+                  <div className="flex items-center gap-6 md:gap-8 text-[16px] font-sans font-medium">
                     <button
-                      onClick={goToHome}
-                      className="hover:text-[#00DC6C] transition-colors cursor-pointer outline-none"
+                      onClick={scrollToHero}
+                      className={`transition-colors cursor-pointer outline-none ${
+                        isHome ? "text-[#00DC6C] font-semibold" : "text-white/80 hover:text-white"
+                      }`}
                     >
-                      {lang === "vi" ? "Trang chủ" : "Home"}
+                      {currentLang === "vi" ? "Trang chủ" : "Home"}
                     </button>
                     <button
                       onClick={goToAbout}
-                      className="hover:text-[#00DC6C] transition-colors cursor-pointer outline-none"
+                      className={`transition-colors cursor-pointer outline-none ${
+                        isAbout ? "text-[#00DC6C] font-semibold" : "text-white/80 hover:text-white"
+                      }`}
                     >
-                      {lang === "vi" ? "Giới thiệu" : "About me"}
+                      {currentLang === "vi" ? "Giới thiệu" : "About me"}
                     </button>
                     <button
                       onClick={goToWorks}
-                      className="hover:text-[#00DC6C] transition-colors cursor-pointer outline-none"
-                    >
-                      {lang === "vi" ? "Dự án" : "My Work"}
-                    </button>
-                    <button
-                      onClick={onOpenContact}
-                      className="hover:text-[#00DC6C] transition-colors cursor-pointer outline-none"
-                    >
-                      {lang === "vi" ? "Liên hệ" : "Contact"}
-                    </button>
-                  </div>
-
-                  {/* Language Switcher Pill */}
-                  <div className="bg-black/60 rounded-full p-1 flex items-center gap-1 border-0 outline-none">
-                    <button
-                      onClick={() => setLang("vi")}
-                      className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-b3 font-semibold transition-all cursor-pointer outline-none ${
-                        lang === "vi"
-                          ? "bg-[#2A2A2A] text-white shadow-inner"
-                          : "text-white/60 hover:text-white"
+                      className={`transition-colors cursor-pointer outline-none ${
+                        isWorks ? "text-[#00DC6C] font-semibold" : "text-white/80 hover:text-white"
                       }`}
                     >
-                      <span className="w-4 h-4 rounded-full overflow-hidden inline-flex items-center justify-center bg-red-600 text-b4 leading-none text-yellow-300 font-bold border-0">
-                        ★
-                      </span>
-                      <span>VIE</span>
+                      {currentLang === "vi" ? "Dự án" : "My Work"}
                     </button>
                     <button
-                      onClick={() => setLang("en")}
-                      className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-b3 font-semibold transition-all cursor-pointer outline-none ${
-                        lang === "en"
-                          ? "bg-[#383838] text-white shadow-inner"
-                          : "text-white/60 hover:text-white"
+                      onClick={goToContact}
+                      className={`transition-colors cursor-pointer outline-none ${
+                        isContact ? "text-[#00DC6C] font-semibold" : "text-white/80 hover:text-white"
                       }`}
                     >
-                      <span className="w-4 h-4 rounded-full overflow-hidden inline-flex items-center justify-center text-b4 leading-none bg-blue-900 text-white font-bold border-0">
-                        🇬🇧
-                      </span>
-                      <span>ENG</span>
+                      {currentLang === "vi" ? "Liên hệ" : "Contact"}
                     </button>
                   </div>
                 </div>
               </motion.div>
             ) : (
-              /* State 2: Full-Width Topbar with Brand Logo & Menu Pill (No Outlines) */
+              /* State 2: Full-Width Topbar with Brand Logo, Let's chat & Transparent Hamburger Menu */
               <motion.div
                 key="minimal-nav"
                 initial={{ opacity: 0, y: -20, scale: 0.98 }}
@@ -184,62 +228,36 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 className="w-full flex items-center justify-between"
               >
-                {/* 32px Height Portfolio Brand Logo */}
+                {/* 40px Height Portfolio Brand Logo */}
                 <div
-                  onClick={() => router.push("/")}
-                  className="cursor-pointer flex flex-col justify-center select-none group h-[32px]"
+                  onClick={scrollToHero}
+                  className="cursor-pointer flex flex-col justify-center select-none group h-[40px]"
                 >
-                  <span className="text-b3 md:text-b2 font-bold text-white leading-tight group-hover:text-white/90 transition-colors">
+                  <span className="text-b1 text-[16px] font-bold text-white leading-[20px] group-hover:text-white/90 transition-colors">
                     Khanhtruong
                   </span>
-                  <span className="text-b3 md:text-b2 font-bold text-white leading-tight group-hover:text-white/90 transition-colors">
+                  <span className="text-b1 text-[16px] font-bold text-white leading-[20px] group-hover:text-white/90 transition-colors">
                     Nguyen <span className="font-mono text-[#C6A85B]">Portfolio</span>
                   </span>
                 </div>
 
-                {/* Right Header Controls: Language Switcher Pill + Menu Button (No Outlines) */}
-                <div className="flex items-center gap-3 md:gap-4">
-                  {/* Language Switcher Pill (Border & Outline Removed) */}
-                  <div className="bg-[#242424]/90 backdrop-blur-md rounded-full p-1 flex items-center gap-1 shadow-lg border-0 outline-none">
-                    <button
-                      onClick={() => setLang("vi")}
-                      className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-b3 font-semibold transition-all cursor-pointer outline-none border-0 ${
-                        lang === "vi"
-                          ? "bg-[#383838] text-white shadow-inner"
-                          : "text-white/60 hover:text-white"
-                      }`}
-                    >
-                      <span className="w-4 h-4 rounded-full overflow-hidden inline-flex items-center justify-center bg-red-600 text-b4 leading-none text-yellow-300 font-bold border-0">
-                        ★
-                      </span>
-                      <span>VIE</span>
-                    </button>
-                    <button
-                      onClick={() => setLang("en")}
-                      className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-b3 font-semibold transition-all cursor-pointer outline-none border-0 ${
-                        lang === "en"
-                          ? "bg-[#383838] text-white shadow-inner"
-                          : "text-white/60 hover:text-white"
-                      }`}
-                    >
-                      <span className="w-4 h-4 rounded-full overflow-hidden inline-flex items-center justify-center text-b4 leading-none bg-blue-900 text-white font-bold border-0">
-                        🇬🇧
-                      </span>
-                      <span>ENG</span>
-                    </button>
-                  </div>
-
-                  {/* Clean Menu Button Pill (Double Border & Outline Removed) */}
+                {/* Right Header Controls: "Let's chat" Button + Transparent Hamburger Menu */}
+                <div className="flex items-center gap-4 md:gap-6">
+                  {/* Let's chat Button leading to Contact */}
                   <button
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="p-3 bg-[#242424]/90 hover:bg-[#333] backdrop-blur-md rounded-[12px] text-white transition-colors cursor-pointer flex items-center justify-center shadow-xl border-0 outline-none active:scale-95"
-                    aria-label="Toggle menu"
+                    onClick={goToContact}
+                    className="h-10 px-5 bg-transparent border border-white/20 hover:border-[#00DC6C] text-white hover:text-[#00DC6C] rounded-full flex items-center justify-center text-[16px] font-sans font-semibold transition-all cursor-pointer shadow-sm active:scale-95 outline-none"
                   >
-                    {mobileMenuOpen ? (
-                      <X className="w-5 h-5 text-white" />
-                    ) : (
-                      <Menu className="w-5 h-5 text-white" />
-                    )}
+                    {currentLang === "vi" ? "Liên hệ ngay" : "Let's chat"}
+                  </button>
+
+                  {/* Transparent Hamburger Menu Button (No background box, icon only) */}
+                  <button
+                    onClick={() => setMobileMenuOpen(true)}
+                    className="w-10 h-10 bg-transparent text-white hover:text-[#00DC6C] flex items-center justify-center transition-colors cursor-pointer active:scale-95 border-0 outline-none p-0"
+                    aria-label="Open Navigation Menu"
+                  >
+                    <Menu className="w-6 h-6" />
                   </button>
                 </div>
               </motion.div>
@@ -259,18 +277,15 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
           >
             {/* Top Modal Header */}
             <div className="flex justify-between items-center max-w-[1440px] mx-auto w-full">
-              {/* 32px Height Logo */}
+              {/* 40px Height Logo */}
               <div
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  router.push("/");
-                }}
-                className="cursor-pointer flex flex-col justify-center select-none group h-[32px]"
+                onClick={scrollToHero}
+                className="cursor-pointer flex flex-col justify-center select-none group h-[40px]"
               >
-                <span className="text-b3 md:text-b2 font-bold text-white leading-tight">
+                <span className="text-b1 text-[16px] font-bold text-white leading-[20px]">
                   Khanhtruong
                 </span>
-                <span className="text-b3 md:text-b2 font-bold text-white leading-tight">
+                <span className="text-b1 text-[16px] font-bold text-white leading-[20px]">
                   Nguyen <span className="font-mono text-[#C6A85B]">Portfolio</span>
                 </span>
               </div>
@@ -278,39 +293,66 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
               {/* Close Button Top Right */}
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors cursor-pointer flex items-center justify-center border-0 outline-none active:scale-95"
+                className="w-12 h-12 bg-transparent hover:bg-white/10 rounded-full text-white transition-colors cursor-pointer flex items-center justify-center border-0 outline-none active:scale-95"
                 aria-label="Close menu"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
-            {/* Main Menu Items Container: HOME, MY WORKS, ABOUT ME, CONTACT with Simultaneous Typing Effect */}
-            <div className="max-w-[1440px] mx-auto w-full my-auto py-12 flex flex-col items-center justify-center gap-6 md:gap-10">
+            {/* Main Menu Items Container: Language Switcher on top, then HOME, MY WORKS, ABOUT ME, CONTACT */}
+            <div className="max-w-[1440px] mx-auto w-full my-auto py-8 flex flex-col items-center justify-center gap-6 md:gap-8">
+              {/* Language Switcher: Placed above menu tabs, no outer background or border */}
+              <div className="flex items-center gap-1.5 mb-2">
+                <button
+                  onClick={() => handleSetLang("vi")}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-[16px] font-sans font-semibold transition-all cursor-pointer outline-none border-0 ${
+                    currentLang === "vi"
+                      ? "bg-[#383838] text-white shadow-inner"
+                      : "text-white/60 hover:text-white bg-transparent"
+                  }`}
+                >
+                  <VietnamFlagIcon />
+                  <span>VIE</span>
+                </button>
+                <button
+                  onClick={() => handleSetLang("en")}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-[16px] font-sans font-semibold transition-all cursor-pointer outline-none border-0 ${
+                    currentLang === "en"
+                      ? "bg-[#383838] text-white shadow-inner"
+                      : "text-white/60 hover:text-white bg-transparent"
+                  }`}
+                >
+                  <UKFlagIcon />
+                  <span>ENG</span>
+                </button>
+              </div>
+
               <TypingMenuItem
-                fullText="HOME"
-                onClick={goToHome}
+                fullText={currentLang === "vi" ? "TRANG CHỦ" : "HOME"}
+                onClick={scrollToHero}
+                isActive={isHome}
               />
               <TypingMenuItem
-                fullText="MY WORKS"
-                onClick={goToWorks}
-              />
-              <TypingMenuItem
-                fullText="ABOUT ME"
+                fullText={currentLang === "vi" ? "GIỚI THIỆU" : "ABOUT ME"}
                 onClick={goToAbout}
+                isActive={isAbout}
               />
               <TypingMenuItem
-                fullText="CONTACT"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenContact();
-                }}
+                fullText={currentLang === "vi" ? "DỰ ÁN" : "MY WORKS"}
+                onClick={goToWorks}
+                isActive={isWorks}
+              />
+              <TypingMenuItem
+                fullText={currentLang === "vi" ? "LIÊN HỆ" : "CONTACT"}
+                onClick={goToContact}
+                isActive={isContact}
               />
             </div>
 
-            {/* Modal Bottom Footer */}
-            <div className="flex justify-between items-center max-w-[1440px] mx-auto w-full text-b3 md:text-b2 font-mono text-white/50 border-t border-white/10 pt-6">
-              <div className="flex items-center gap-6">
+            {/* Modal Bottom Footer with style H5 */}
+            <div className="flex justify-between items-center max-w-[1440px] mx-auto w-full text-h5 font-bold font-heading text-white/70 border-t-2 border-white/10 pt-6 flex-wrap gap-4">
+              <div className="flex items-center gap-6 sm:gap-8">
                 <a
                   href="https://tiktok.com"
                   target="_blank"
@@ -320,7 +362,7 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                   Tiktok
                 </a>
                 <a
-                  href="https://behance.net"
+                  href="https://www.behance.net/nguyenkhanhtr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#00DC6C] transition-colors"
@@ -328,7 +370,7 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                   Behance
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/nguyen-khanh-truong-designer/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#00DC6C] transition-colors"
@@ -336,7 +378,7 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                   Linkedin
                 </a>
               </div>
-              <div>Vietnam 2026</div>
+              <div className="text-h6 font-bold text-white/50">Vietnam 2026</div>
             </div>
           </motion.div>
         )}

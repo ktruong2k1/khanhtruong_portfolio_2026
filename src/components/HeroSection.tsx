@@ -5,13 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import InteractiveCTA from "@/components/InteractiveCTA";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface HeroSectionProps {
-  lang: "vi" | "en";
-  onOpenContact: () => void;
+  lang?: "vi" | "en";
+  onOpenContact?: () => void;
 }
 
 export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
+  const { lang: globalLang } = useLanguage();
+  const currentLang = lang || globalLang;
   const [isHovered, setIsHovered] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -52,7 +56,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
     >
       {/* Mouse Follower "Scroll Down" circle: 100x100px, Neutral-700, sitting below hero content */}
       <motion.div
-        className="pointer-events-none absolute top-0 left-0 w-[100px] h-[100px] rounded-full bg-[#656565] flex flex-col items-center justify-center font-mono font-bold text-[#181818] text-[15px] leading-tight select-none z-0 shadow-lg"
+        className="pointer-events-none absolute top-0 left-0 w-[100px] h-[100px] rounded-full bg-[#656565] flex flex-col items-center justify-center font-mono font-bold text-[#181818] text-[15px] leading-tight select-none z-0 shadow-lg text-center px-2"
         style={{
           x: springX,
           y: springY,
@@ -69,8 +73,17 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
           scale: { duration: 0.2, ease: "easeOut" },
         }}
       >
-        <span>Scroll</span>
-        <span>Down</span>
+        {currentLang === "vi" ? (
+          <>
+            <span>Cuộn</span>
+            <span>xuống</span>
+          </>
+        ) : (
+          <>
+            <span>Scroll</span>
+            <span>Down</span>
+          </>
+        )}
       </motion.div>
 
       <div className="max-w-[1440px] mx-auto w-full my-auto flex flex-col justify-center relative z-10">
@@ -113,11 +126,11 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
               </h2>
               <div className="flex items-center gap-3 flex-wrap justify-start">
                 <span className="text-[#00DC6C] font-bold text-h6 whitespace-nowrap">
-                  3,5 years exp
+                  {currentLang === "vi" ? "3,5 năm KN" : "3,5 years exp"}
                 </span>
                 <span className="border border-white/20 rounded-full px-3 py-1 text-b3 text-white/80 flex items-center gap-1.5 bg-white/5 whitespace-nowrap">
                   <span className="w-2 h-2 rounded-full bg-[#00DC6C] animate-pulse" />
-                  Available for Remote
+                  {currentLang === "vi" ? "Sẵn sàng Remote" : "Available for Remote"}
                 </span>
               </div>
             </div>
@@ -141,33 +154,24 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-7 flex flex-col items-start min-w-0"
           >
-            <p className="text-b1 text-white/80 font-light w-full max-w-[635px] block whitespace-normal">
-              {lang === "vi"
-                ? "Thu hẹp khoảng cách giữa tầm nhìn thẩm mỹ độ trung thực cao và việc thực thi kỹ thuật nghiêm ngặt — dành cho các sản phẩm SaaS, từ nền tảng multi-tenant đến hệ sinh thái IoT."
-                : "Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution — for SaaS products, from multi-tenant platforms to IoT ecosystems."}
+            <p className="text-b1 text-white/80 font-light w-full max-w-[635px] block whitespace-normal leading-relaxed">
+              {currentLang === "vi"
+                ? "UX/UI designer với 3.5 năm kinh nghiệm phát triển các sản phẩm B2B phức tạp — hệ sinh thái IoT, SaaS dashboard và các nền tảng whitelabel có khả năng mở rộng cho nhiều đối tác. Tôi sử dụng các công cụ AI để rút ngắn khoảng cách giữa thiết kế và lập trình. Hiện đang sẵn sàng cho các cơ hội làm việc từ xa."
+                : "UX/UI designer with 3.5 years shipping complex B2B products — IoT ecosystems, SaaS dashboards, and whitelabel platforms built to scale across partners. I use AI tools to close the gap between design and production. Currently open to remote roles."}
             </p>
           </motion.div>
 
-          {/* Bottom-Right: CTA Buttons (56px height & 12px radius) */}
+          {/* Bottom-Right: Interactive CTA Button with Hover Swap Animation */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="lg:col-span-5 flex items-center gap-3"
+            className="lg:col-span-5 flex items-center"
           >
-            <Link
+            <InteractiveCTA
+              text={currentLang === "vi" ? "Về tôi" : "About me"}
               href="/about"
-              className="cta-btn h-[56px] min-h-[56px] rounded-[12px] bg-[#00DC6C] hover:bg-[#00c560] text-black text-b1 font-semibold px-8 transition-all duration-200 cursor-pointer shadow-lg hover:shadow-[#00DC6C]/20 hover:scale-[1.02] active:scale-95 flex items-center justify-center"
-            >
-              {lang === "vi" ? "Về tôi" : "About me"}
-            </Link>
-            <button
-              onClick={onOpenContact}
-              className="cta-btn h-[56px] w-[56px] min-h-[56px] min-w-[56px] rounded-[12px] bg-white hover:bg-gray-100 text-black transition-all duration-200 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-95 flex items-center justify-center"
-              aria-label="Contact"
-            >
-              <ArrowRight className="w-5 h-5 text-black" />
-            </button>
+            />
           </motion.div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro, IBM_Plex_Mono } from "next/font/google";
+import { Be_Vietnam_Pro, Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
+import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
 
 const beVietnam = Be_Vietnam_Pro({
@@ -9,8 +10,15 @@ const beVietnam = Be_Vietnam_Pro({
   display: "swap",
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
+const bricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-heading",
+  subsets: ["latin", "vietnamese"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-mono",
   subsets: ["latin", "vietnamese"],
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
@@ -29,11 +37,11 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${beVietnam.variable} ${ibmPlexMono.variable} h-full scroll-smooth antialiased`}
+      className={`${beVietnam.variable} ${bricolageGrotesque.variable} ${ibmPlexMono.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full transition-colors duration-300 bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black">
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

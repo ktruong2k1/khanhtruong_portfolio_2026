@@ -1,12 +1,56 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Download } from "lucide-react";
+import { motion, useInView } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import ContactModal from "@/components/ContactModal";
 import FooterSection from "@/components/FooterSection";
+import InteractiveCTA from "@/components/InteractiveCTA";
+import { useLanguage } from "@/context/LanguageContext";
+
+function TypingHeroText({ text }: { text: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const isInView = useInView(ref, { once: false, margin: "-50px" });
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    if (!isInView) {
+      setDisplayedText("");
+      setIsTyping(false);
+      return;
+    }
+    setDisplayedText("");
+    setIsTyping(true);
+    let index = 0;
+    const interval = setInterval(() => {
+      index++;
+      if (index <= text.length) {
+        setDisplayedText(text.slice(0, index));
+      } else {
+        setIsTyping(false);
+        clearInterval(interval);
+      }
+    }, 10); // 10ms per character (50% faster snappy typing)
+
+    return () => clearInterval(interval);
+  }, [isInView, text]);
+
+  return (
+    <p
+      ref={ref}
+      className="text-b0 font-normal leading-relaxed text-white/90 min-h-[140px]"
+    >
+      <span>{displayedText}</span>
+      {isTyping && (
+        <span className="inline-block w-[3px] h-[20px] bg-[#00DC6C] ml-1 animate-pulse align-middle" />
+      )}
+    </p>
+  );
+}
 
 const trustedPartners = [
   { name: "ROGO Solutions", src: "/images/Rogo_color.svg" },
@@ -19,8 +63,13 @@ const trustedPartners = [
 ];
 
 export default function AboutPage() {
-  const [lang, setLang] = useState<"vi" | "en">("en");
+  const { lang, setLang } = useLanguage();
   const [contactModalOpen, setContactModalOpen] = useState(false);
+
+  const heroStatement =
+    lang === "vi"
+      ? "Tôi phát triển các sản phẩm B2B phức tạp — hệ sinh thái IoT, SaaS dashboard và các nền tảng whitelabel có khả năng mở rộng cho nhiều đối tác. Tôi sử dụng các công cụ AI để rút ngắn khoảng cách giữa thiết kế và lập trình. Hiện đang sẵn sàng cho các cơ hội làm việc từ xa."
+      : "I'm shipping complex B2B products — IoT ecosystems, SaaS dashboards, and whitelabel platforms built to scale across partners. I use AI tools to close the gap between design and production. Currently open to remote roles.";
 
   return (
     <div className="h-screen w-full overflow-y-scroll snap-y snap-mandatory bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black overflow-x-hidden scroll-smooth">
@@ -33,15 +82,15 @@ export default function AboutPage() {
 
       <main className="w-full">
         
-        {/* SECTION 1: HERO SECTION (Profile Photo + Mission + Skills) */}
-        <section className="w-full min-h-screen lg:h-screen snap-start snap-always flex flex-col justify-center px-6 md:px-12 lg:px-[10vh] pt-[80px] pb-8 border-b border-white/5 bg-[#121212] relative overflow-hidden">
+        {/* SECTION 1: HERO SECTION (Profile Photo + Name + 3,5 years exp + Mission + Skills) */}
+        <section className="w-full min-h-screen lg:h-screen snap-start snap-always flex flex-col justify-center px-6 md:px-12 lg:px-[10vh] pt-[80px] pb-8 border-b-2 border-white/5 bg-[#121212] relative overflow-hidden">
           <div className="max-w-[1440px] mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Left Image: Full Cutout Photo of KhanhTruong */}
+            {/* Left Image: KT_profilie_fading 480x640 (3:4) - Pure clean seamless blending */}
             <div className="lg:col-span-5 flex justify-center lg:justify-start">
-              <div className="relative w-full max-w-[360px] lg:max-w-[400px] aspect-[3/4] rounded-[12px] overflow-hidden shadow-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/10">
+              <div className="relative w-full max-w-[480px] aspect-[3/4] max-h-[640px] rounded-[12px] overflow-hidden shrink-0">
                 <Image
-                  src="/images/KT_profilie.png"
+                  src="/images/KT_profilie_fading.png"
                   alt="KhanhTruong Nguyen"
                   fill
                   className="object-cover object-top"
@@ -50,19 +99,27 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Right Content: Mission Statement & Skills Table */}
-            <div className="lg:col-span-7 space-y-8 lg:space-y-10">
-              {/* Main Headline */}
-              <h1 className="text-h4 sm:text-h3 font-bold leading-tight text-white tracking-tight">
-                Bridging the gap between high-fidelity aesthetic vision and rigorous technical execution for enterprise and IoT platforms.
-              </h1>
+            {/* Right Content: Name H2-64 + 3,5 years exp + Mission Statement with 50% Faster Typing & Skills Table */}
+            <div className="lg:col-span-7 space-y-5 lg:space-y-6">
+              {/* Name H2-64 */}
+              <h2 className="text-4xl sm:text-5xl lg:text-[64px] font-bold text-white tracking-tight leading-tight">
+                KhanhTruong Nguyen
+              </h2>
+
+              {/* 3,5 years exp - Product Designer tag */}
+              <div className="text-[#00DC6C] font-mono font-bold text-lg sm:text-xl lg:text-[22px] tracking-wide">
+                {lang === "vi" ? "3,5 năm KN - Product Designer" : "3,5 years exp - Product Designer"}
+              </div>
+
+              {/* Main Headline with Typing Effect */}
+              <TypingHeroText text={heroStatement} />
 
               {/* Skills Sub-table (What I Do & Expertise) */}
-              <div className="grid grid-cols-2 gap-8 pt-6 border-t border-white/10">
+              <div className="grid grid-cols-2 gap-8 pt-6 border-t-2 border-white/10">
                 {/* What I Do Column */}
                 <div className="space-y-3">
                   <div className="text-b3 font-bold uppercase tracking-widest text-white/50">
-                    What I Do
+                    {lang === "vi" ? "Lĩnh vực làm việc" : "What I Do"}
                   </div>
                   <ul className="space-y-2 text-h7 md:text-h6 font-medium text-[#E8C468]">
                     <li>UX Research</li>
@@ -75,7 +132,7 @@ export default function AboutPage() {
                 {/* Expertise Column */}
                 <div className="space-y-3">
                   <div className="text-b3 font-bold uppercase tracking-widest text-white/50">
-                    Expertise
+                    {lang === "vi" ? "Chuyên môn" : "Expertise"}
                   </div>
                   <ul className="space-y-2 text-h7 md:text-h6 font-medium text-[#E8C468]">
                     <li>Saas</li>
@@ -91,18 +148,27 @@ export default function AboutPage() {
         </section>
 
         {/* SECTION 2: EXPERIENCE / MY JOURNEY */}
-        <section className="w-full min-h-screen lg:h-screen snap-start snap-always flex flex-col justify-center px-6 md:px-12 lg:px-[10vh] pt-[80px] pb-8 border-b border-white/5 bg-[#121212] relative overflow-hidden">
+        <section className="w-full min-h-screen lg:h-screen snap-start snap-always flex flex-col justify-center px-6 md:px-12 lg:px-[10vh] pt-[80px] pb-8 border-b-2 border-white/5 bg-[#121212] relative overflow-hidden">
           <div className="max-w-[1440px] mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Experience Tag, Big Title & CV Downloads */}
             <div className="lg:col-span-4 space-y-6 pr-4">
               <div className="text-h5 uppercase tracking-widest text-[#00DC6C] font-bold">
-                Experience
+                {lang === "vi" ? "Kinh nghiệm" : "Experience"}
               </div>
 
               <h2 className="text-h2 sm:text-h1 font-bold text-white tracking-tight">
-                <div>My</div>
-                <div>journey</div>
+                {lang === "vi" ? (
+                  <>
+                    <div>Hành trình</div>
+                    <div>của tôi</div>
+                  </>
+                ) : (
+                  <>
+                    <div>My</div>
+                    <div>journey</div>
+                  </>
+                )}
               </h2>
 
               {/* Download CV Buttons */}
@@ -141,7 +207,7 @@ export default function AboutPage() {
                     UI/UX Product Designer
                   </h3>
                   <span className="text-b3 text-[#E8C468] uppercase tracking-wider font-semibold">
-                    Jul 2024 – Jul 2026
+                    {lang === "vi" ? "T7/2024 – T7/2026" : "Jul 2024 – Jul 2026"}
                   </span>
                 </div>
 
@@ -150,7 +216,9 @@ export default function AboutPage() {
                 </div>
 
                 <p className="text-b2 md:text-b1 text-white/70 pt-0.5">
-                  A whitelabel IoT & SaaS ecosystem — powering multi-tenant platforms for enterprise partners across Vietnam.
+                  {lang === "vi"
+                    ? "Hệ sinh thái IoT & SaaS whitelabel — vận hành các nền tảng đa người dùng cho các đối tác doanh nghiệp trên khắp Việt Nam."
+                    : "A whitelabel IoT & SaaS ecosystem — powering multi-tenant platforms for enterprise partners across Vietnam."}
                 </p>
               </div>
 
@@ -163,7 +231,7 @@ export default function AboutPage() {
                     Web & Graphic Designer
                   </h3>
                   <span className="text-b3 text-[#E8C468] uppercase tracking-wider font-semibold">
-                    Aug 2023 – Oct 2024
+                    {lang === "vi" ? "T8/2023 – T10/2024" : "Aug 2023 – Oct 2024"}
                   </span>
                 </div>
 
@@ -172,7 +240,9 @@ export default function AboutPage() {
                 </div>
 
                 <p className="text-b2 md:text-b1 text-white/70 pt-0.5">
-                  A leading branding & marketing agency in Hanoi, helping thousands of Vietnamese businesses build their brand identity.
+                  {lang === "vi"
+                    ? "Agency xây dựng thương hiệu & tiếp thị hàng đầu tại Hà Nội, hỗ trợ hàng ngàn doanh nghiệp Việt Nam định hình bộ nhận diện thương hiệu."
+                    : "A leading branding & marketing agency in Hanoi, helping thousands of Vietnamese businesses build their brand identity."}
                 </p>
               </div>
 
@@ -194,7 +264,9 @@ export default function AboutPage() {
                 </div>
 
                 <p className="text-b2 md:text-b1 text-white/70 pt-0.5">
-                  Vietnam's largest software company, delivering IT & digital transformation services to enterprises across 30+ countries.
+                  {lang === "vi"
+                    ? "Tập đoàn công nghệ phần mềm hàng đầu Việt Nam, cung cấp dịch vụ CNTT & chuyển đổi số cho các doanh nghiệp trên 30+ quốc gia."
+                    : "Vietnam's largest software company, delivering IT & digital transformation services to enterprises across 30+ countries."}
                 </p>
               </div>
 
@@ -203,41 +275,16 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* SECTION 3: TRUSTED BY LOGOS */}
-        <section className="w-full min-h-screen lg:h-screen snap-start snap-always flex flex-col justify-center px-6 md:px-12 lg:px-[10vh] pt-[80px] pb-8 border-b border-white/5 bg-[#121212] overflow-hidden">
-          <div className="max-w-[1440px] mx-auto w-full my-auto text-center space-y-12">
-            <div className="text-b3 font-mono uppercase tracking-widest text-white/60 font-bold">
-              TRUSTED BY
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-10 md:gap-14 lg:gap-16">
-              {trustedPartners.map((partner) => (
-                <div
-                  key={partner.name}
-                  className="relative h-[36px] w-[130px] sm:w-[150px] md:w-[160px] flex items-center justify-center group"
-                >
-                  <Image
-                    src={partner.src}
-                    alt={partner.name}
-                    fill
-                    className="object-contain filter brightness-0 invert opacity-75 group-hover:opacity-100 transition-opacity duration-300"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 4: EDUCATION & CERTIFICATIONS */}
-        <section className="w-full min-h-screen lg:h-screen snap-start snap-always flex flex-col justify-center px-6 md:px-12 lg:px-[10vh] pt-[80px] pb-8 border-b border-white/5 bg-[#121212] relative overflow-hidden">
+        {/* SECTION 3: EDUCATION & CERTIFICATIONS */}
+        <section className="w-full min-h-screen lg:h-screen snap-start snap-always flex flex-col justify-center px-6 md:px-12 lg:px-[10vh] pt-[80px] pb-8 border-b-2 border-white/5 bg-[#121212] relative overflow-hidden">
           <div className="max-w-[1440px] mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Vertical Title: Education & Certifications */}
             <div className="lg:col-span-3 flex lg:justify-start">
-              <div className="text-h4 lg:text-h3 font-bold uppercase tracking-wider text-[#E8C468]">
-                <div className="text-white">Education &</div>
-                <div>Certifications</div>
-              </div>
+              <h2 className="text-h4 lg:text-h3 font-bold tracking-tight">
+                <span className="text-white block">{lang === "vi" ? "Học vấn &" : "Education &"}</span>
+                <span className="text-[#E8C468] block">{lang === "vi" ? "Chứng chỉ" : "Certifications"}</span>
+              </h2>
             </div>
 
             {/* Right Cards Grid */}
@@ -251,21 +298,25 @@ export default function AboutPage() {
                   <h3 className="text-h5 font-bold text-[#E8C468]">
                     FPT Arena Multimedia ADIM Certificate • 2022–2024
                   </h3>
-                  <p className="text-b3 md:text-b2 text-white/70">
-                    Formal visual design training — graphic design, layout, typography, and digital media production.
+                  <p className="text-b2 text-white/70 leading-relaxed">
+                    {lang === "vi"
+                      ? "Đào tạo thiết kế mỹ thuật đa phương tiện chính quy — đồ họa, dàn trang, typography và sản xuất nội dung số."
+                      : "Formal visual design training — graphic design, layout, typography, and digital media production."}
                   </p>
                 </div>
 
                 {/* Block B: UX & AI Practice */}
-                <div className="space-y-4 pt-4 border-t border-white/10">
+                <div className="space-y-4 pt-4 border-t-2 border-white/10">
                   <div className="text-b3 font-mono font-bold text-[#E8C468] uppercase">UX & AI Practice</div>
                   
                   <div className="space-y-1.5">
                     <h4 className="text-h7 font-bold text-white">
                       Google UX Design Professional Certificate • 2024
                     </h4>
-                    <p className="text-b3 md:text-b2 text-white/70">
-                      End-to-end UX methodology — research, wireframing, prototyping, and usability testing.
+                    <p className="text-b2 text-white/70 leading-relaxed">
+                      {lang === "vi"
+                        ? "Phương pháp luận UX toàn diện — nghiên cứu người dùng, xây dựng wireframe, prototype và kiểm thử khả năng sử dụng."
+                        : "End-to-end UX methodology — research, wireframing, prototyping, and usability testing."}
                     </p>
                   </div>
 
@@ -273,8 +324,10 @@ export default function AboutPage() {
                     <h4 className="text-h7 font-bold text-white">
                       Google AI Essentials Certificate • 2025
                     </h4>
-                    <p className="text-b3 md:text-b2 text-white/70">
-                      Applied AI in real workflows — directly maps to Claude AI and Gemini CLI usage in current projects.
+                    <p className="text-b2 text-white/70 leading-relaxed">
+                      {lang === "vi"
+                        ? "Ứng dụng AI vào quy trình làm việc thực tế — liên kết trực tiếp với Claude AI và Gemini CLI trong các dự án hiện tại."
+                        : "Applied AI in real workflows — directly maps to Claude AI and Gemini CLI usage in current projects."}
                     </p>
                   </div>
                 </div>
@@ -287,10 +340,12 @@ export default function AboutPage() {
                 <div className="bg-[#161D19] border border-[#00DC6C]/20 p-6 lg:p-8 rounded-[12px] space-y-3 flex-1">
                   <div className="text-b3 font-mono font-bold text-[#00DC6C] uppercase">Technical Foundation</div>
                   <h3 className="text-h5 font-bold text-[#E8C468]">
-                    Hanoi University of Industry • Electrical Engineering • 2019–2023
+                    {lang === "vi" ? "Đại học Công nghiệp Hà Nội • Kỹ thuật Điện • 2019–2023" : "Hanoi University of Industry • Electrical Engineering • 2019–2023"}
                   </h3>
-                  <p className="text-b3 md:text-b2 text-white/70">
-                    Electrical engineering background — directly relevant to IoT system design
+                  <p className="text-b2 text-white/70 leading-relaxed">
+                    {lang === "vi"
+                      ? "Nền tảng kỹ thuật điện — bổ trợ trực tiếp cho tư duy thiết kế hệ thống IoT và phần cứng."
+                      : "Electrical engineering background — directly relevant to IoT system design"}
                   </p>
                 </div>
 
@@ -300,8 +355,10 @@ export default function AboutPage() {
                   <h3 className="text-h5 font-bold text-[#E8C468]">
                     English • TOEIC 850 (B2)
                   </h3>
-                  <p className="text-b3 md:text-b2 text-white/70">
-                    Comfortable working with English-speaking clients and remote teams.
+                  <p className="text-b2 text-white/70 leading-relaxed">
+                    {lang === "vi"
+                      ? "Giao tiếp và làm việc hiệu quả với các đối tác nước ngoài và đội nhóm làm việc từ xa."
+                      : "Comfortable working with English-speaking clients and remote teams."}
                   </p>
                 </div>
 
@@ -312,41 +369,159 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* SECTION 5: FEATURED PRODUCT / VISIT MY FEATURED WORK */}
-        <section className="w-full min-h-screen lg:h-screen snap-start snap-always flex flex-col justify-center px-6 md:px-12 lg:px-[10vh] border-b border-white/5 bg-[#121212] relative overflow-hidden">
-          <div className="max-w-[1440px] mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        {/* SECTION 4: FEATURED PROJECT (3-Card Grid + Bottom Trusted By Carousel) */}
+        <section className="w-full min-h-screen lg:h-screen snap-start snap-always flex flex-col justify-center items-center px-6 md:px-12 lg:px-[10vh] pt-[80px] pb-8 border-b-2 border-white/5 bg-[#121212] relative overflow-hidden">
+          <div className="max-w-[1440px] mx-auto w-full my-auto flex flex-col justify-center gap-[48px]">
             
-            {/* Left Headline */}
-            <div className="lg:col-span-5 space-y-6">
-              <h2 className="text-h3 sm:text-h2 font-bold text-white tracking-tight">
-                <div className="border-b border-white/20 pb-4 mb-4">Visit my</div>
-                <div>featured work</div>
+            {/* Header: Left Title + Right Interactive CTA */}
+            <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <h2 className="text-h4 font-bold text-white tracking-tight">
+                {lang === "vi" ? "Dự án tiêu biểu" : "Featured project"}
               </h2>
 
-              <div className="pt-2">
-                <Link
-                  href="/works"
-                  className="inline-flex items-center gap-3 bg-[#00DC6C] text-black text-h7 font-bold px-8 py-4 rounded-[12px] hover:bg-[#00c560] transition-colors shadow-2xl active:scale-95"
-                >
-                  <span>Explore Portfolio</span>
-                  <ArrowUpRight className="w-5 h-5" />
-                </Link>
-              </div>
+              <InteractiveCTA text={lang === "vi" ? "Xem thêm" : "Explore more"} href="/works" />
             </div>
 
-            {/* Right Large Monitor Mockup */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="text-b3 font-mono uppercase tracking-widest text-white/60 font-bold text-right">
-                Featured product
+            {/* 3 Featured Projects Cards Grid (Clean borderless layout) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full">
+              
+              {/* Card 1: RaIO Smart */}
+              <Link
+                href="/works"
+                className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="space-y-4">
+                  {/* Mockup Thumbnail */}
+                  <div className="relative w-full aspect-[16/10] rounded-[12px] overflow-hidden bg-[#E8E8E8] border border-white/10 flex items-center justify-center p-6 shadow-md">
+                    <Image
+                      src="/images/raio.png"
+                      alt="RaIO Smart"
+                      fill
+                      className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+
+                  {/* Tag */}
+                  <div>
+                    <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
+                      WHITELABEL FRAMEWORK
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-h5 sm:text-h4 font-bold text-white group-hover:text-[#00DC6C] transition-colors">
+                    RaIO Smart
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-[13px] sm:text-[14px] text-white/70 leading-relaxed">
+                    {lang === "vi"
+                      ? "Bộ khung ứng dụng nhà thông minh whitelabel có thể tái sử dụng cho nhiều thương hiệu triển khai nhanh chóng."
+                      : "Reusable whitelabel smart home framework built for rapid multi-brand deployment."}
+                  </p>
+                </div>
+              </Link>
+
+              {/* Card 2: Thing Base & Build */}
+              <Link
+                href="/works"
+                className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="space-y-4">
+                  {/* Mockup Thumbnail */}
+                  <div className="relative w-full aspect-[16/10] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                    <Image
+                      src="/images/thing_partner.png"
+                      alt="Thing Base & Build"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+
+                  {/* Tag */}
+                  <div>
+                    <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
+                      IOT DEVELOPER TOOLS
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-h5 sm:text-h4 font-bold text-white group-hover:text-[#00DC6C] transition-colors">
+                    Thing Base & Build
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-[13px] sm:text-[14px] text-white/70 leading-relaxed">
+                    {lang === "vi"
+                      ? "Nền tảng cấu hình IoT và xây dựng kịch bản trực quan đạt giải Top 10 Make In Vietnam 2023."
+                      : "Visual IoT configuration & logic builder awarded Top 10 Make In Vietnam 2023."}
+                  </p>
+                </div>
+              </Link>
+
+              {/* Card 3: Thing AI VN */}
+              <Link
+                href="/works"
+                className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="space-y-4">
+                  {/* Mockup Thumbnail */}
+                  <div className="relative w-full aspect-[16/10] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                    <Image
+                      src="/images/Thing_AI_VN.png"
+                      alt="Thing AI VN"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+
+                  {/* Tag */}
+                  <div>
+                    <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
+                      AI PLATFORM
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-h5 sm:text-h4 font-bold text-white group-hover:text-[#00DC6C] transition-colors">
+                    Thing AI VN
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-[13px] sm:text-[14px] text-white/70 leading-relaxed">
+                    {lang === "vi"
+                      ? "Nền tảng cộng đồng chia sẻ câu lệnh AI & tự động hóa quy trình làm việc cho các chuyên gia công nghệ."
+                      : "Community AI prompt sharing & workflow automation platform for tech leaders."}
+                  </p>
+                </div>
+              </Link>
+
+            </div>
+
+            {/* Bottom Trusted By Marquee Carousel (Screenshot IBhWzM) */}
+            <div className="w-full flex items-center">
+              {/* Static Label (Does NOT move or touch the marquee) */}
+              <div className="text-b3 font-mono font-bold uppercase tracking-widest text-white/70 shrink-0 mr-8 md:mr-12 select-none">
+                {lang === "vi" ? "ĐỐI TÁC TIN CẬY" : "TRUSTED BY"}
               </div>
 
-              <div className="relative w-full aspect-[16/10] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818]">
-                <Image
-                  src="/images/Rogo_Platform_large.png"
-                  alt="Featured product"
-                  fill
-                  className="object-cover"
-                />
+              {/* Infinite Horizontal Running Carousel: Pauses on hover, reveals full-color logo */}
+              <div className="flex-1 overflow-hidden relative group/marquee [mask-image:linear-gradient(to_right,transparent,white_8%,white_92%,transparent)]">
+                <div className="flex items-center gap-12 sm:gap-16 w-max animate-marquee group-hover/marquee:[animation-play-state:paused]">
+                  {[...trustedPartners, ...trustedPartners].map((partner, idx) => (
+                    <div
+                      key={`${partner.name}-${idx}`}
+                      className="relative h-[30px] w-[120px] sm:w-[140px] shrink-0 flex items-center justify-center cursor-pointer transition-transform duration-300 hover:scale-110 group/item"
+                    >
+                      <Image
+                        src={partner.src}
+                        alt={partner.name}
+                        fill
+                        className="object-contain filter brightness-0 invert opacity-60 group-hover/item:filter-none group-hover/item:opacity-100 transition-all duration-300"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 

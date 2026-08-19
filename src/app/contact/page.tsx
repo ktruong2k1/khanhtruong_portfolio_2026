@@ -1,271 +1,162 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Mail } from "lucide-react";
+import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
-const translations = {
-  vi: {
-    title: "Liên hệ",
-    subtitle: "Thông tin đang được cập nhật",
-    desc: "Bạn có nhu cầu hợp tác thiết kế sản phẩm hoặc tuyển dụng từ xa? Vui lòng liên hệ trực tiếp qua email ktruong2k1@gmail.com. Cổng liên hệ trực tuyến đang được xây dựng.",
-    backHome: "Quay lại Trang chủ",
-    navWork: "Dự án",
-    navAbout: "Giới thiệu về tôi",
-    navContact: "Kết nối với tôi",
-    availableRemote: "Làm việc từ xa",
-  },
-  en: {
-    title: "Contact",
-    subtitle: "Content is being updated",
-    desc: "Looking to collaborate on product design or remote hiring? Please reach out directly to ktruong2k1@gmail.com. The online inquiry system is currently under construction.",
-    backHome: "Back to Home",
-    navWork: "Work",
-    navAbout: "About me",
-    navContact: "Connect with me",
-    availableRemote: "Available for Remote",
-  }
-};
+import Navbar from "@/components/Navbar";
+import FooterSection from "@/components/FooterSection";
+import ContactModal from "@/components/ContactModal";
+import { motion } from "framer-motion";
+import { Copy, Check } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ContactPage() {
-  const [lang, setLang] = useState<"vi" | "en">(() => {
-    if (typeof window !== "undefined") {
-      const savedLang = localStorage.getItem("portfolio_lang") as "vi" | "en" | null;
-      if (savedLang === "vi" || savedLang === "en") return savedLang;
-    }
-    return "vi";
-  });
-  const isInitialMount = useRef(true);
-  const [pendingLang, setPendingLang] = useState<"vi" | "en" | null>(null);
-  const [transitionStage, setTransitionStage] = useState<"idle" | "fading-in" | "fading-out">("idle");
-  const [fadeOpacity] = useState(1);
+  const { lang, setLang } = useLanguage();
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const handleLangChange = (newLang: "vi" | "en") => {
-    if (newLang === lang || transitionStage !== "idle") return;
-    setPendingLang(newLang);
-    setTransitionStage("fading-in");
-    
-    setTimeout(() => {
-      setLang(newLang);
-    }, 150);
+  const email = "ktruong2k1@gmail.com";
 
-    setTimeout(() => {
-      setTransitionStage("fading-out");
-    }, 600);
-
-    setTimeout(() => {
-      setTransitionStage("idle");
-      setPendingLang(null);
-    }, 750);
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-
-
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("portfolio_lang", lang);
-    }
-  }, [lang]);
-
-  const t = translations[lang];
-
   return (
-    <div 
-      className="page-wrapper min-h-screen bg-[#0B0B0C] text-neutral-300 flex flex-col"
-      style={{
-        opacity: fadeOpacity,
-        transform: `translateY(${(1 - fadeOpacity) * 12}px)`,
-        transition: 'opacity 450ms cubic-bezier(0.215, 0.61, 0.355, 1), transform 450ms cubic-bezier(0.215, 0.61, 0.355, 1)'
-      }}
-    >
-      
-      {/* HEADER */}
-      <header 
-        style={{
-          display: 'flex',
-          height: '76px',
-          padding: '16px 100px',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          alignSelf: 'stretch',
-          borderBottom: '1px solid var(--Colors-Neutral-800, #4B4B4B)',
-          background: 'var(--Colors-Neutral-1000, #181818)',
-          width: '100%',
-          position: 'relative'
-        }}
-        className="w-full sticky top-0 z-40"
-      >
-        <Link href="/" className="flex items-center gap-2 text-white text-h6 font-bold tracking-tight">
-          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <mask id="header-logo-mask-contact">
-              <rect width="28" height="28" fill="white" />
-              <path d="M12 0C6 8 6 20 12 28" stroke="black" strokeWidth="2.5" fill="none" />
-              <path d="M20 0C14 8 14 20 20 28" stroke="black" strokeWidth="2.5" fill="none" />
-            </mask>
-            <circle cx="14" cy="14" r="14" fill="#22C55E" mask="url(#header-logo-mask-contact)" />
-          </svg>
-          khanhtruong_nguyen
-        </Link>
+    <div className="h-screen w-full overflow-y-scroll snap-y snap-mandatory bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black overflow-x-hidden scroll-smooth">
+      {/* Dynamic Top Navbar */}
+      <Navbar
+        lang={lang}
+        setLang={setLang}
+        onOpenContact={() => setContactModalOpen(true)}
+      />
 
-        <nav 
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '32px',
-            height: '100%',
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)'
-          }}
-          className="hidden md:flex text-b2 font-semibold"
-        >
-          <Link href="/works" className="text-neutral-400 hover:text-white transition-colors">{t.navWork}</Link>
-          <Link href="/about" className="text-neutral-400 hover:text-white transition-colors">{t.navAbout}</Link>
-          <Link 
-            href="/contact" 
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              color: '#22C55E'
-            }}
-            className="font-bold transition-colors"
-          >
-            {t.navContact}
-            <span style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '2px', backgroundColor: '#22C55E' }}></span>
-          </Link>
-        </nav>
+      <main className="w-full">
+        {/* UPPER HERO CONTACT SECTION */}
+        <section className="w-full min-h-screen lg:h-screen snap-start snap-always bg-[#121212] text-white border-b-2 border-white/5 relative overflow-hidden flex flex-col justify-center px-6 md:px-12 lg:px-[10vh] pt-[80px] pb-8">
+          <div className="max-w-[1440px] mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative">
+            
+            {/* Left Column: Email & Social Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7 flex flex-col justify-center py-6 lg:py-12 z-10 space-y-8 lg:space-y-10"
+            >
+              {/* Email Section */}
+              <div className="space-y-3">
+                <div className="text-b1 font-mono text-white/50 uppercase tracking-widest">
+                  {lang === "vi" ? "Gửi email cho tôi" : "Email me"}
+                </div>
+                <div className="flex items-center gap-3 group/email">
+                  <span className="text-[#00DC6C] font-heading text-3xl sm:text-4xl lg:text-[48px] font-bold select-none leading-none">•</span>
+                  <a
+                    href={`mailto:${email}`}
+                    className="font-heading text-3xl sm:text-4xl lg:text-[48px] font-bold text-white hover:text-[#00DC6C] transition-colors break-all cursor-pointer leading-tight tracking-tight"
+                  >
+                    {email}
+                  </a>
+                  <button
+                    onClick={handleCopyEmail}
+                    className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-colors cursor-pointer ml-2 shrink-0"
+                    title="Copy Email"
+                  >
+                    {copied ? (
+                      <Check className="w-5 h-5 text-[#00DC6C]" />
+                    ) : (
+                      <Copy className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
 
-        <div className="hidden md:flex items-center gap-4">
-          <div 
-            style={{ height: '32px' }}
-            className="flex items-center rounded-full p-0.5 bg-neutral-950/80 select-none"
-          >
-            <button 
-              onClick={() => handleLangChange("vi")} 
-              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "vi" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
-              style={{
-                fontFamily: '"Be Vietnam Pro", sans-serif',
-                fontSize: '12px',
-                fontStyle: 'normal',
-                fontWeight: 500,
-                lineHeight: '15px',
-                color: lang === "vi" ? 'var(--Colors-Neutral-100, #FFF)' : undefined
-              }}
+                {/* 2px Divider line below Email */}
+                <div className="w-full max-w-[580px] h-[2px] bg-white/20 mt-8 lg:mt-10" />
+              </div>
+
+              {/* Social Section */}
+              <div className="space-y-3">
+                <div className="text-b1 font-mono text-white/50 uppercase tracking-widest">
+                  {lang === "vi" ? "Mạng xã hội" : "Social"}
+                </div>
+                <div className="flex items-center gap-4 sm:gap-6 font-heading text-3xl sm:text-4xl lg:text-[48px] font-bold text-white flex-wrap leading-tight tracking-tight">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#00DC6C] leading-none">•</span>
+                    <a
+                      href="https://www.linkedin.com/in/nguyen-khanh-truong-designer/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-[#00DC6C] transition-colors cursor-pointer"
+                    >
+                      Linkedin
+                    </a>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#00DC6C] leading-none">•</span>
+                    <a
+                      href="https://www.behance.net/nguyenkhanhtr"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-[#00DC6C] transition-colors cursor-pointer"
+                    >
+                      Behance
+                    </a>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-white/30 leading-none">•</span>
+                    <a
+                      href="https://www.tiktok.com/@khanhtruong.design"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/30 hover:text-[#00DC6C] transition-colors cursor-pointer"
+                    >
+                      Tiktok
+                    </a>
+                  </div>
+                </div>
+
+                {/* 2px Divider line below Social */}
+                <div className="w-full max-w-[580px] h-[2px] bg-white/20 mt-8 lg:mt-10" />
+              </div>
+
+            </motion.div>
+
+            {/* Right Column: Khanh Truong Portrait Cutout */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 40 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5 flex justify-center lg:justify-end items-center h-full relative"
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-                <circle cx="10" cy="10" r="10" fill="#DA251D"/>
-                <path d="M10 6.5L11.1 9.8H14.5L11.7 11.8L12.8 15.1L10 13.1L7.2 15.1L8.3 11.8L5.5 9.8H8.9L10 6.5Z" fill="#FFFF00"/>
-              </svg>
-              <span>Vie</span>
-            </button>
-            <button 
-              onClick={() => handleLangChange("en")} 
-              className={`px-2.5 h-full rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${lang === "en" ? "bg-neutral-800 text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"}`}
-              style={{
-                fontFamily: '"Be Vietnam Pro", sans-serif',
-                fontSize: '12px',
-                fontStyle: 'normal',
-                fontWeight: 500,
-                lineHeight: '15px',
-                color: lang === "en" ? 'var(--Colors-Neutral-100, #FFF)' : undefined
-              }}
-            >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-                <clipPath id="uk-clip-contact">
-                  <circle cx="10" cy="10" r="10" />
-                </clipPath>
-                <g clipPath="url(#uk-clip-contact)">
-                  <circle cx="10" cy="10" r="10" fill="#012169" />
-                  <path d="M0 0 L20 20 M20 0 L0 20" stroke="#FFFFFF" strokeWidth="2.5" />
-                  <path d="M0 0 L20 20 M20 0 L0 20" stroke="#C8102E" strokeWidth="1.2" />
-                  <path d="M10 0 V20 M0 10 H20" stroke="#FFFFFF" strokeWidth="4.5" />
-                  <path d="M10 0 V20 M0 10 H20" stroke="#C8102E" strokeWidth="2.5" />
-                </g>
-              </svg>
-              <span>Eng</span>
-            </button>
+              <div className="relative w-full max-w-[420px] lg:max-w-[480px] aspect-[3/4] max-h-[75vh] shrink-0">
+                <Image
+                  src="/images/KT_profilie_fading_reverse.png"
+                  alt="Khanhtruong Nguyen"
+                  fill
+                  priority
+                  className="object-contain object-bottom drop-shadow-2xl"
+                />
+              </div>
+            </motion.div>
+
           </div>
+        </section>
 
-          <Link href="/contact" className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-status-200/50 hover:bg-status-200/10 text-b3 text-[#E5E5E5] font-semibold transition-colors duration-150">
-            <span className="w-2 h-2 bg-status-200 rounded-full animate-pulse"></span>
-            {t.availableRemote}
-          </Link>
-        </div>
-      </header>
-
-      {/* Main Content Area */}
-      <main 
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-          maxWidth: '672px',
-          margin: '0 auto',
-          padding: '80px 24px',
-          textAlign: 'center',
-          flex: '1 1 0%'
-        }}
-      >
-        <div className="w-16 h-16 rounded-full bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent mb-6 animate-pulse">
-          <Mail size={26} />
-        </div>
-        <h1 className="text-h3 font-extrabold text-white tracking-tight mb-3">
-          {t.title}
-        </h1>
-        <span className="text-b3 font-mono uppercase tracking-widest text-[#E8C468] font-bold mb-6 block">
-          {t.subtitle}
-        </span>
-        <p className="text-neutral-400 text-b2 md:text-b1 leading-relaxed mb-10">
-          {t.desc}
-        </p>
-        <div style={{ maxWidth: '388px', width: '100%' }} className="flex justify-center mx-auto">
-          <Link 
-            href="/"
-            className="bg-[#22C55E] hover:bg-[#1f9e4e] text-[#17211B] font-bold rounded-full shadow-lg transition-all duration-150 active:scale-95 text-b2 cursor-pointer cta-btn w-full"
-          >
-            <ArrowLeft size={16} />
-            {t.backHome}
-          </Link>
-        </div>
+        {/* LOWER SECTION: Synchronized Full Green Footer */}
+        <FooterSection
+          lang={lang}
+          onOpenContact={() => setContactModalOpen(true)}
+        />
       </main>
-      {/* Language Transition Overlay */}
-      <div 
-        className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B0B0C]/70 transition-all duration-150 ease-out"
-        style={{
-          opacity: transitionStage === "fading-in" ? 1 : 0,
-          backdropFilter: transitionStage === "fading-in" ? "blur(12px)" : "blur(0px)",
-          WebkitBackdropFilter: transitionStage === "fading-in" ? "blur(12px)" : "blur(0px)",
-          pointerEvents: transitionStage === "fading-in" ? "all" : "none",
-        }}
-      >
-        <div className="text-center max-w-md px-6">
-          <p 
-            style={{
-              color: 'var(--Colors-Secondary-300, #E8C468)',
-              fontFamily: 'var(--font-serif), sans-serif',
-              fontSize: '24px',
-              fontStyle: 'normal',
-              fontWeight: 700,
-              lineHeight: '36px',
-              textAlign: 'center'
-            }}
-          >
-            {pendingLang === "vi" 
-              ? "Đang chuyển sang Tiếng Việt, vui lòng đợi" 
-              : "Changing to English, please wait"}
-          </p>
-        </div>
-      </div>
 
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={contactModalOpen}
+        onClose={() => setContactModalOpen(false)}
+        lang={lang}
+      />
     </div>
   );
 }

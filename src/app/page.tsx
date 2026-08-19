@@ -4,15 +4,15 @@ import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import TopClientSection from "@/components/TopClientSection";
-import FeaturedProjectsSection from "@/components/FeaturedProjectsSection";
 import TypingTitleSection from "@/components/TypingTitleSection";
 import HorizontalProcessSection from "@/components/HorizontalProcessSection";
 import WhyMeSection from "@/components/WhyMeSection";
 import FooterSection from "@/components/FooterSection";
 import ContactModal from "@/components/ContactModal";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
-  const [lang, setLang] = useState<"vi" | "en">("en");
+  const { lang, setLang } = useLanguage();
   const [contactOpen, setContactOpen] = useState(false);
 
   return (
@@ -30,28 +30,28 @@ export default function Home() {
         onOpenContact={() => setContactOpen(true)}
       />
 
-      {/* Section 2: Top Client logos & Featured Projects Scroll-Snap Flow (ROGO + Rạng Đông) */}
-      <TopClientSection
-        lang={lang}
-        onOpenContact={() => setContactOpen(true)}
-      />
-
-      {/* Section 3: Typing Title 100vh Scroll Animation ("How I design a product, from end to end") */}
+      {/* Section 2: Typing Title 100vh Scroll Animation ("I design the product / Then I ship it") */}
       <TypingTitleSection />
 
-      {/* Section 5: Horizontal Scroll Process Cards (01, 02, 03, 04) */}
+      {/* Section 3: Horizontal Scroll Process Cards ("How a product actually gets made") */}
       <HorizontalProcessSection
         lang={lang}
         onOpenContact={() => setContactOpen(true)}
       />
 
-      {/* Section 6: Why me & Top-to-Bottom Appear Animation + Running Marquee Ticker */}
+      {/* Section 4: Top Client logos & Featured Projects Scroll-Snap Flow (ROGO + Rạng Đông) */}
+      <TopClientSection
+        lang={lang}
+        onOpenContact={() => setContactOpen(true)}
+      />
+
+      {/* Section 5: Why me & Top-to-Bottom Appear Animation + Running Marquee Ticker */}
       <WhyMeSection
         lang={lang}
         onOpenContact={() => setContactOpen(true)}
       />
 
-      {/* Section 7: Footer (Top green banner + Bottom dark branding block) */}
+      {/* Section 6: Footer (Top green banner + Bottom dark branding block) */}
       <FooterSection
         lang={lang}
         onOpenContact={() => setContactOpen(true)}

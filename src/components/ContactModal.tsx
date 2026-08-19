@@ -3,14 +3,17 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Copy, Check, Mail } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
-  lang: "vi" | "en";
+  lang?: "vi" | "en";
 }
 
 export default function ContactModal({ isOpen, onClose, lang }: ContactModalProps) {
+  const { lang: globalLang } = useLanguage();
+  const currentLang = lang || globalLang;
   const [copied, setCopied] = useState(false);
   const [message, setMessage] = useState("");
   const email = "ktruong2k1@gmail.com";
@@ -65,10 +68,10 @@ export default function ContactModal({ isOpen, onClose, lang }: ContactModalProp
               </div>
               <div>
                 <h3 className="text-h5 font-bold">
-                  {lang === "vi" ? "Kết nối với tôi" : "Get in touch"}
+                  {currentLang === "vi" ? "Kết nối với tôi" : "Get in touch"}
                 </h3>
                 <p className="text-b3 text-white/60">
-                  {lang === "vi" ? "Gửi email trực tiếp tới" : "Send direct email to"}{" "}
+                  {currentLang === "vi" ? "Gửi email trực tiếp tới" : "Send direct email to"}{" "}
                   <span className="font-mono text-[#00DC6C]">{email}</span>
                 </p>
               </div>
@@ -79,7 +82,7 @@ export default function ContactModal({ isOpen, onClose, lang }: ContactModalProp
               <span className="text-b2 font-mono text-white/80 px-2">{email}</span>
               <button
                 onClick={handleCopy}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-[12px] text-b3 font-mono text-white transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-[12px] text-[16px] font-sans font-semibold text-white transition-colors cursor-pointer"
               >
                 {copied ? (
                   <>
@@ -99,14 +102,14 @@ export default function ContactModal({ isOpen, onClose, lang }: ContactModalProp
             <form onSubmit={handleSend} className="space-y-4">
               <div>
                 <label className="block text-b3 font-mono text-white/70 mb-2">
-                  {lang === "vi" ? "Nội dung tin nhắn" : "Your Message"}
+                  {currentLang === "vi" ? "Nội dung tin nhắn" : "Your Message"}
                 </label>
                 <textarea
                   rows={4}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={
-                    lang === "vi"
+                    currentLang === "vi"
                       ? "Chào Trường, tôi muốn trao đổi về dự án..."
                       : "Hi Khanhtruong, I'd like to discuss a project..."
                   }
@@ -117,10 +120,10 @@ export default function ContactModal({ isOpen, onClose, lang }: ContactModalProp
 
               <button
                 type="submit"
-                className="cta-btn h-[56px] min-h-[56px] rounded-[12px] w-full bg-[#00DC6C] hover:bg-[#00c560] text-black text-b1 font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg active:scale-95"
+                className="cta-btn h-[56px] min-h-[56px] rounded-[12px] w-full bg-[#00DC6C] hover:bg-[#00c560] text-black text-[16px] font-sans font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg active:scale-95"
               >
                 <Send className="w-4 h-4" />
-                <span>{lang === "vi" ? "Tạo thư nháp & Gửi" : "Send Email"}</span>
+                <span>{currentLang === "vi" ? "Tạo thư nháp & Gửi" : "Send Email"}</span>
               </button>
             </form>
           </motion.div>

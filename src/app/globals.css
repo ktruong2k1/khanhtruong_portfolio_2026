@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-heading: "IBM Plex Mono", var(--font-heading), monospace;
-  --font-body: "Be Vietnam Pro", var(--font-body), sans-serif;
-  --font-sans: "Be Vietnam Pro", var(--font-body), sans-serif;
-  --font-serif: "IBM Plex Mono", var(--font-heading), monospace;
-  --font-mono: "IBM Plex Mono", var(--font-heading), monospace;
+  --font-heading: "Bricolage Grotesque", var(--font-heading), sans-serif;
+  --font-body: "IBM Plex Mono", var(--font-mono), monospace;
+  --font-sans: "IBM Plex Mono", var(--font-mono), monospace;
+  --font-serif: "Bricolage Grotesque", var(--font-heading), sans-serif;
+  --font-mono: "IBM Plex Mono", var(--font-mono), monospace;
 
   /* Style Guide Colors */
   --color-brand-100: #CAF3E2;
@@ -91,14 +91,18 @@
   --spacing-no-spacing: 0px;
 }
 
-/* Heading Font Default (IBM Plex Mono) */
-h1, h2, h3, h4, h5, h6, .font-heading, .font-serif, .font-mono {
-  font-family: "IBM Plex Mono", var(--font-heading), monospace !important;
+/* Heading Font Default (Bricolage Grotesque) */
+h1, h2, h3, h4, h5, h6, .font-heading, .font-serif {
+  font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
 }
 
-/* Body Font Default (Be Vietnam Pro) */
+.font-mono {
+  font-family: "IBM Plex Mono", var(--font-mono), monospace !important;
+}
+
+/* Body & Text Content <= 16px Default (IBM Plex Mono) */
 body, p, .font-body, .font-sans {
-  font-family: "Be Vietnam Pro", var(--font-body), sans-serif;
+  font-family: "IBM Plex Mono", var(--font-mono), monospace;
 }
 
 html {
@@ -123,8 +127,10 @@ html {
   --text-h6: 20px;
   --text-h6-line: 30px;
   --text-h7: 16px;
-  --text-h7-line: 24px;
+  --text-h7-line: 30px;
 
+  --text-b0: 20px;
+  --text-b0-line: 28px;
   --text-b1: 16px;
   --text-b1-line: 21px;
   --text-b2: 14px;
@@ -154,78 +160,110 @@ html {
 
 /* ==========================================================================
    GLOBAL TYPOGRAPHY UTILITIES
-   Headings (H-0 to H-7): IBM Plex Mono
-   Body (B-1 to B-4): Be Vietnam Pro
+   Headings (H-0 to H-6): Bricolage Grotesque
+   <=16px Text & Body 0 (H-7, B-0 to B-4): IBM Plex Mono
    ========================================================================== */
 
 .text-h0 {
-  font-family: "IBM Plex Mono", var(--font-heading), monospace !important;
+  font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
   font-size: 96px !important;
   line-height: 100px !important;
 }
 
 .text-h1 {
-  font-family: "IBM Plex Mono", var(--font-heading), monospace !important;
+  font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
   font-size: 64px !important;
   line-height: 72px !important;
 }
 
 .text-h2 {
-  font-family: "IBM Plex Mono", var(--font-heading), monospace !important;
+  font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
   font-size: 48px !important;
   line-height: 56px !important;
 }
 
 .text-h3 {
-  font-family: "IBM Plex Mono", var(--font-heading), monospace !important;
+  font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
   font-size: 40px !important;
   line-height: 51px !important;
 }
 
 .text-h4 {
-  font-family: "IBM Plex Mono", var(--font-heading), monospace !important;
+  font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
   font-size: 36px !important;
   line-height: 42px !important;
 }
 
 .text-h5 {
-  font-family: "IBM Plex Mono", var(--font-heading), monospace !important;
+  font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
   font-size: 24px !important;
   line-height: 36px !important;
 }
 
 .text-h6 {
-  font-family: "IBM Plex Mono", var(--font-heading), monospace !important;
+  font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
   font-size: 20px !important;
   line-height: 30px !important;
 }
 
 .text-h7 {
-  font-family: "IBM Plex Mono", var(--font-heading), monospace !important;
+  font-family: "IBM Plex Mono", var(--font-mono), monospace !important;
   font-size: 16px !important;
-  line-height: 24px !important;
+  line-height: 30px !important; /* +25% from 24px */
+}
+
+/* Headings <= 16px +25% line-height */
+.font-heading.text-base,
+.font-heading.text-\[16px\],
+.font-heading.text-h7 {
+  line-height: 30px !important;
+}
+
+.font-heading.text-sm,
+.font-heading.text-\[14px\] {
+  line-height: 23px !important;
+}
+
+.font-heading.text-xs,
+.font-heading.text-\[12px\] {
+  line-height: 19px !important;
+}
+
+.text-subhead {
+  font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 400 !important;
+  text-transform: uppercase !important;
+  line-height: 32px !important;
+  letter-spacing: 0.02em;
+}
+
+.text-b0 {
+  font-family: "IBM Plex Mono", var(--font-mono), monospace !important;
+  font-size: 20px !important;
+  line-height: 28px !important;
 }
 
 .text-b1 {
-  font-family: "Be Vietnam Pro", var(--font-body), sans-serif !important;
+  font-family: "IBM Plex Mono", var(--font-mono), monospace !important;
   font-size: 16px !important;
   line-height: 21px !important;
 }
 
 .text-b2 {
-  font-family: "Be Vietnam Pro", var(--font-body), sans-serif !important;
+  font-family: "IBM Plex Mono", var(--font-mono), monospace !important;
   font-size: 14px !important;
   line-height: 18px !important;
 }
 
 .text-b3 {
-  font-family: "Be Vietnam Pro", var(--font-body), sans-serif !important;
+  font-family: "IBM Plex Mono", var(--font-mono), monospace !important;
   font-size: 12px !important;
   line-height: 15px !important;
 }
 
 .text-b4 {
-  font-family: "Be Vietnam Pro", var(--font-body), sans-serif !important;
+  font-family: "IBM Plex Mono", var(--font-mono), monospace !important;
   font-size: 10px !important;
   line-height: 12px !important;
 }
@@ -275,7 +313,7 @@ header {
   background: var(--Colors-Green-Alpha-10, rgba(31, 193, 107, 0.10)) !important;
   border: none !important;
   color: var(--Colors-Neutral-100, #FFF) !important;
-  font-family: "Be Vietnam Pro", sans-serif !important;
+  font-family: "IBM Plex Mono", var(--font-mono), monospace !important;
   font-size: 12px !important;
   font-style: normal !important;
   font-weight: 500 !important;
@@ -368,16 +406,20 @@ header {
   }
 }
 
-/* Global CTA Button Styling Rule: Exactly 56px Height & 8px Radius */
+/* Global Button Typography: Exactly 16px & IBM Plex Mono */
+button, .btn, .cta-btn {
+  font-family: var(--font-mono), "IBM Plex Mono", monospace;
+  font-size: 16px;
+}
+
+/* Global CTA Button Styling Rule: Exactly 56px Height */
 .cta-btn, button.cta-btn, a.cta-btn, .btn-cta {
   display: flex !important;
   height: 56px !important;
   min-height: 56px !important;
   max-height: 56px !important;
-  border-radius: 8px !important;
   justify-content: center !important;
   align-items: center !important;
-  gap: var(--Spacing-Gap-XS, 8px) !important;
   box-sizing: border-box !important;
 }
 
@@ -807,4 +849,24 @@ header {
 
 .animation-delay-200 {
   animation-delay: 260ms;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover,
+.animate-marquee-paused {
+  animation-play-state: paused;
 }
