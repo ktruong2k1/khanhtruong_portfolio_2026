@@ -392,12 +392,12 @@ export default function AboutPage() {
               >
                 <div className="space-y-4">
                   {/* Mockup Thumbnail */}
-                  <div className="relative w-full aspect-[16/10] rounded-[12px] overflow-hidden bg-[#E8E8E8] border border-white/10 flex items-center justify-center p-6 shadow-md">
+                  <div className="relative w-full aspect-[16/10] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
                     <Image
                       src="/images/raio.png"
                       alt="RaIO Smart"
                       fill
-                      className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
 

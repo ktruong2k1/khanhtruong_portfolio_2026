@@ -2,6 +2,12 @@
 @import "tailwindcss";
 
 @theme {
+  /* Breakpoint Screens */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
+
   --font-heading: "Bricolage Grotesque", var(--font-heading), sans-serif;
   --font-body: "IBM Plex Mono", var(--font-mono), monospace;
   --font-sans: "IBM Plex Mono", var(--font-mono), monospace;
@@ -111,6 +117,15 @@ html {
 }
 
 :root {
+  /* ==========================================================================
+     GLOBAL RESPONSIVE BREAKPOINTS, CONTAINER PADDING & GUTTER
+     Mobile (< 640px) Defaults
+     ========================================================================== */
+  --container-padding: 20px;
+  --content-max-width: 100%;
+  --gutter: 16px;
+  --grid-gap: 16px;
+
   /* TYPE SCALE CSS CUSTOM PROPERTIES */
   --text-h0: 96px;
   --text-h0-line: 100px;
@@ -156,6 +171,89 @@ html {
   --font-size-project-title: 24px;
   --font-size-sidebar-title: 18px;
   --font-size-body: 14px;
+}
+
+/* Breakpoint: Tablet (640px – 1023px) */
+@media (min-width: 640px) {
+  :root {
+    --container-padding: 40px;
+    --content-max-width: 100%;
+    --gutter: 24px;
+    --grid-gap: 24px;
+  }
+}
+
+/* Breakpoint: Desktop (1024px – 1439px) */
+@media (min-width: 1024px) {
+  :root {
+    --container-padding: 64px;
+    --content-max-width: 1200px;
+    --gutter: 32px;
+    --grid-gap: 32px;
+  }
+}
+
+/* Breakpoint: Large Desktop (≥ 1440px) */
+@media (min-width: 1440px) {
+  :root {
+    --container-padding: 80px;
+    --content-max-width: 1400px;
+    --gutter: 32px;
+    --grid-gap: 32px;
+  }
+}
+
+/* ==========================================================================
+   REUSABLE CONTAINER & RESPONSIVE COMPONENT CLASSES
+   ========================================================================== */
+
+/* Full container with horizontal padding and centered max-width */
+.container,
+.content-container,
+.site-container,
+.container-responsive {
+  width: 100%;
+  max-width: var(--content-max-width);
+  padding-inline: var(--container-padding);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+/* Horizontal container padding only (for full-bleed section wrappers) */
+.section-padding,
+.container-padding {
+  padding-inline: var(--container-padding);
+  box-sizing: border-box;
+}
+
+/* Responsive Grid / Flex Gutter Utility */
+.responsive-gutter,
+.grid-gutter,
+.gap-responsive {
+  gap: var(--gutter);
+}
+
+/* Header Responsive Split Utilities */
+.mobile-only-header {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+.desktop-only-header {
+  display: none !important;
+  width: 100% !important;
+}
+
+@media (min-width: 768px) {
+  .mobile-only-header {
+    display: none !important;
+  }
+  .desktop-only-header {
+    display: block !important;
+  }
 }
 
 /* ==========================================================================
@@ -204,6 +302,30 @@ html {
   font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
   font-size: 20px !important;
   line-height: 30px !important;
+}
+
+/* Mobile & Tablet Only (< 1024px): Responsive heading scaling */
+@media (max-width: 1023px) {
+  .text-h0 {
+    font-size: clamp(38px, 9vw, 72px) !important;
+    line-height: 1.05 !important;
+  }
+  .text-h1 {
+    font-size: clamp(32px, 7vw, 52px) !important;
+    line-height: 1.1 !important;
+  }
+  .text-h2 {
+    font-size: clamp(26px, 5.5vw, 40px) !important;
+    line-height: 1.15 !important;
+  }
+  .text-h3 {
+    font-size: clamp(22px, 4.5vw, 34px) !important;
+    line-height: 1.2 !important;
+  }
+  .text-h4 {
+    font-size: clamp(18px, 3.8vw, 30px) !important;
+    line-height: 1.25 !important;
+  }
 }
 
 .text-h7 {
@@ -539,230 +661,7 @@ button, .btn, .cta-btn {
   }
 }
 
-/* Global Responsive Layout System scoped under max-width: 1279px */
-@media (max-width: 1279px) {
-  :root {
-    --side-padding: clamp(20px, 5vw, 48px);
-    
-    /* Fluid typography scaling (15% down on mobile, scaling between mobile and tablet values only) */
-    --font-size-hero-title: clamp(29px, calc(29px + (34 - 29) * ((100vw - 320px) / (1279 - 320))), 34px);
-    --font-size-hero-subhead: clamp(17px, calc(17px + (20 - 17) * ((100vw - 320px) / (1279 - 320))), 20px);
-    --font-size-project-title: clamp(20px, calc(20px + (24 - 20) * ((100vw - 320px) / (1279 - 320))), 24px);
-    --font-size-sidebar-title: clamp(15.5px, calc(15.5px + (18 - 15.5) * ((100vw - 320px) / (1279 - 320))), 18px);
-    --font-size-body: clamp(12px, calc(12px + (14 - 12) * ((100vw - 320px) / (1279 - 320))), 14px);
-  }
 
-  /* Content Wrapper padding overrides */
-  .page-wrapper {
-    padding-top: 76px !important;
-  }
-  @media (min-width: 768px) {
-    .page-wrapper {
-      padding-left: 48px !important;
-      padding-right: 48px !important;
-    }
-  }
-  @media (max-width: 767px) {
-    .page-wrapper {
-      padding-left: 20px !important;
-      padding-right: 20px !important;
-    }
-  }
-  /* Clear inner elements padding-left/right to prevent double padding */
-  .page-wrapper section, .page-wrapper footer {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  /* Fixed Header for Mobile/Tablet View */
-  .page-wrapper header {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 50 !important;
-    padding-left: 48px !important;
-    padding-right: 48px !important;
-    box-sizing: border-box !important;
-  }
-  @media (max-width: 767px) {
-    .page-wrapper header {
-      padding-left: 20px !important;
-      padding-right: 20px !important;
-    }
-  }
-
-  /* Centered Layout Wrapper limit */
-  section > div {
-    max-width: 1440px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    width: 100% !important;
-  }
-
-  /* Navigation: Collapse desktop navigation and show hamburger menu */
-  header nav {
-    display: none !important;
-  }
-  header .md\:hidden {
-    display: block !important;
-  }
-  /* Ensure mobile menu works correctly and increase text size to 16px */
-  header .absolute.top-\[76px\] {
-    display: flex !important;
-  }
-  header .absolute.top-\[76px\] a, header .absolute.top-\[76px\] button {
-    font-size: 16px !important;
-  }
-  /* Staggered entry animation for mobile menu items */
-  header .absolute.top-\[76px\] > * {
-    opacity: 0;
-    animation: mobileMenuSlideIn 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-  }
-  header .absolute.top-\[76px\] > *:nth-child(1) {
-    animation-delay: 80ms !important;
-  }
-  header .absolute.top-\[76px\] > *:nth-child(2) {
-    animation-delay: 200ms !important;
-  }
-  header .absolute.top-\[76px\] > *:nth-child(3) {
-    animation-delay: 320ms !important;
-  }
-
-  /* Tablet-specific overrides (768px - 1279px) */
-  @media (min-width: 768px) {
-    /* Hero section grid: 60/40 split */
-    #hero > div {
-      grid-template-columns: 3fr 2fr !important;
-    }
-    /* Work section grid: 60/40 split */
-    #work > div {
-      grid-template-columns: 3fr 2fr !important;
-    }
-  }
-
-  /* Mobile-specific overrides (< 768px) */
-  @media (max-width: 767px) {
-    /* Full-screen navigation overlay */
-    header .absolute.top-\[76px\] {
-      position: fixed !important;
-      top: 76px !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      height: calc(100vh - 76px) !important;
-      z-index: 50 !important;
-      overflow-y: auto !important;
-    }
-
-    /* Stack all multi-column layouts to single column */
-    #hero > div {
-      grid-template-columns: 1fr !important;
-      gap: 32px !important;
-    }
-    #work > div {
-      grid-template-columns: 1fr !important;
-      gap: 32px !important;
-    }
-
-    /* Hero: Image stacks above text */
-    #hero > div > div:first-child {
-      flex-direction: column !important;
-      text-align: center !important;
-      gap: 24px !important;
-    }
-
-    /* Hero: Portrait crops to circle 96px centered */
-    #hero > div > div:first-child > div:first-child {
-      width: 96px !important;
-      height: 96px !important;
-      border-radius: 9999px !important;
-      overflow: hidden !important;
-      margin: 0 auto !important;
-      aspect-ratio: 1/1 !important;
-    }
-    #hero > div > div:first-child > div:first-child img {
-      object-fit: cover !important;
-    }
-
-    /* Hero text centering */
-    #hero > div > div:first-child > div:last-child {
-      text-align: center !important;
-      align-items: center !important;
-    }
-
-    /* Stack featured projects row layout (RaIO & Austfly) */
-    #work > div > div:first-child > div:last-child {
-      flex-direction: column !important;
-      gap: 16px !important;
-    }
-    #work > div > div:first-child > div:last-child > a {
-      width: 100% !important;
-      flex: 1 1 auto !important;
-    }
-
-    /* CTA buttons: Full width on mobile */
-    #hero > div > div:first-child > div:last-child > div:last-child {
-      flex-direction: column !important;
-      align-items: stretch !important;
-      width: 100% !important;
-      gap: 12px !important;
-    }
-    #hero > div > div:first-child > div:last-child > div:last-child > button,
-    #hero > div > div:first-child > div:last-child > div:last-child > a {
-      width: 100% !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-    }
-
-    .cta-btn, button.cta-btn, a.cta-btn {
-      width: 100% !important;
-    }
-
-    .projects-badge {
-      font-size: 16px !important;
-      line-height: 24px !important;
-    }
-
-    /* Contact Dialog Mobile adjustments */
-    .contact-dialog-container {
-      height: 100vh !important;
-      height: 100dvh !important;
-      overflow: hidden !important;
-    }
-    .contact-dialog-backdrop {
-      height: 100vh !important;
-      height: 100dvh !important;
-    }
-    .contact-dialog-panel {
-      padding: 24px !important;
-      max-height: calc(100vh - 48px) !important;
-      max-height: calc(100dvh - 48px) !important;
-      overflow-y: auto !important;
-    }
-    .contact-dialog-panel > div > div {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-
-    /* Fluid typography scaling */
-    h1, .text-3xl, .text-\[34px\] {
-      font-size: var(--font-size-hero-title) !important;
-      line-height: 1.3 !important;
-    }
-    h2, .text-2xl, .text-\[20px\] {
-      font-size: var(--font-size-hero-subhead) !important;
-      line-height: 1.4 !important;
-    }
-    h3, h4, .text-xl, .text-\[24px\] {
-      font-size: var(--font-size-project-title) !important;
-    }
-    p, .text-sm, .text-base {
-      font-size: var(--font-size-body) !important;
-    }
-  }
-}
 
 /* Responsive border-radius for about-process-card cluster */
 @media (max-width: 767px) {

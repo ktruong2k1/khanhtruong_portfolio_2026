@@ -52,11 +52,11 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="min-h-screen flex flex-col justify-center bg-[#121212] relative overflow-hidden px-6 md:px-12 lg:px-[10vh] pt-32 pb-16 snap-start scroll-mt-0 cursor-default"
+      className="min-h-screen flex flex-col justify-center bg-[#121212] relative overflow-hidden px-5 sm:px-6 md:px-12 lg:px-[10vh] pt-20 sm:pt-28 md:pt-32 pb-12 sm:pb-16 snap-start scroll-mt-0 cursor-default"
     >
       {/* Mouse Follower "Scroll Down" circle: 100x100px, Neutral-700, sitting below hero content */}
       <motion.div
-        className="pointer-events-none absolute top-0 left-0 w-[100px] h-[100px] rounded-full bg-[#656565] flex flex-col items-center justify-center font-mono font-bold text-[#181818] text-[15px] leading-tight select-none z-0 shadow-lg text-center px-2"
+        className="pointer-events-none hidden md:flex absolute top-0 left-0 w-[100px] h-[100px] rounded-full bg-[#656565] flex-col items-center justify-center font-mono font-bold text-[#181818] text-[15px] leading-tight select-none z-0 shadow-lg text-center px-2"
         style={{
           x: springX,
           y: springY,
@@ -92,21 +92,21 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-[#C6A85B] text-h6 font-bold tracking-wide mb-6"
+          className="text-[#C6A85B] text-h7 sm:text-h6 font-bold tracking-wide mb-4 sm:mb-6"
         >
           Portfolio
         </motion.div>
 
         {/* 2-Column Alignment Grid: Top-Left (Name), Top-Right (Role+Avatar), Bottom-Left (Sub Content), Bottom-Right (CTA Buttons) */}
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-x-12 lg:gap-x-16 gap-y-[60px] items-start">
-          {/* Top-Left: Name Heading (96px font size) */}
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-x-12 lg:gap-x-16 gap-y-6 sm:gap-y-10 lg:gap-y-[60px] items-start">
+          {/* Top-Left: Name Heading */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="lg:col-span-7 flex flex-col items-start min-w-0"
           >
-            <h1 className="text-h0 font-normal text-white tracking-tight whitespace-normal">
+            <h1 className="text-h0 font-normal text-white tracking-tight whitespace-normal break-words">
               Khanhtruong
               <br />
               Nguyen
@@ -118,17 +118,17 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="lg:col-span-5 flex items-start gap-6 pt-2"
+            className="lg:col-span-5 flex items-start justify-between sm:justify-start gap-4 sm:gap-6 pt-0 lg:pt-2"
           >
-            <div className="flex flex-col items-start text-left">
-              <h2 className="text-h4 sm:text-h3 font-bold text-white mb-3 tracking-tight whitespace-nowrap">
+            <div className="flex flex-col items-start text-left min-w-0">
+              <h2 className="text-h5 sm:text-h4 lg:text-h3 font-bold text-white mb-2 sm:mb-3 tracking-tight whitespace-nowrap">
                 Product Designer
               </h2>
-              <div className="flex items-center gap-3 flex-wrap justify-start">
-                <span className="text-[#00DC6C] font-bold text-h6 whitespace-nowrap">
+              <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-start">
+                <span className="text-[#00DC6C] font-bold text-[14px] sm:text-h6 whitespace-nowrap">
                   {currentLang === "vi" ? "3,5 năm KN" : "3,5 years exp"}
                 </span>
-                <span className="border border-white/20 rounded-full px-3 py-1 text-b3 text-white/80 flex items-center gap-1.5 bg-white/5 whitespace-nowrap">
+                <span className="border border-white/20 rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1 text-[11px] sm:text-b3 text-white/80 flex items-center gap-1.5 bg-white/5 whitespace-nowrap">
                   <span className="w-2 h-2 rounded-full bg-[#00DC6C] animate-pulse" />
                   {currentLang === "vi" ? "Sẵn sàng Remote" : "Available for Remote"}
                 </span>
@@ -136,7 +136,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             </div>
 
             {/* Profile Avatar */}
-            <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-[104px] lg:h-[104px] rounded-full bg-[#00DC6C] flex-shrink-0 overflow-hidden shadow-2xl border-2 border-[#00DC6C]">
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-[104px] lg:h-[104px] rounded-full bg-[#00DC6C] flex-shrink-0 overflow-hidden shadow-2xl border-2 border-[#00DC6C]">
               <Image
                 src="/images/KT_profilie.png"
                 alt="Khanhtruong Nguyen"
@@ -154,7 +154,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-7 flex flex-col items-start min-w-0"
           >
-            <p className="text-b1 text-white/80 font-light w-full max-w-[635px] block whitespace-normal leading-relaxed">
+            <p className="text-[14px] sm:text-b1 text-white/80 font-light w-full max-w-[635px] block whitespace-normal leading-relaxed">
               {currentLang === "vi"
                 ? "UX/UI designer với 3.5 năm kinh nghiệm phát triển các sản phẩm B2B phức tạp — hệ sinh thái IoT, SaaS dashboard và các nền tảng whitelabel có khả năng mở rộng cho nhiều đối tác. Tôi sử dụng các công cụ AI để rút ngắn khoảng cách giữa thiết kế và lập trình. Hiện đang sẵn sàng cho các cơ hội làm việc từ xa."
                 : "UX/UI designer with 3.5 years shipping complex B2B products — IoT ecosystems, SaaS dashboards, and whitelabel platforms built to scale across partners. I use AI tools to close the gap between design and production. Currently open to remote roles."}
@@ -166,7 +166,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="lg:col-span-5 flex items-center"
+            className="lg:col-span-5 flex items-center pt-2 sm:pt-0"
           >
             <InteractiveCTA
               text={currentLang === "vi" ? "Về tôi" : "About me"}

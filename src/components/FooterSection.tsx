@@ -52,11 +52,11 @@ function FooterTypingMenuItem({
   return (
     <button
       onClick={onClick}
-      className="text-left text-h1 text-[44px] sm:text-[54px] lg:text-[60px] xl:text-[64px] leading-[1.1] font-bold uppercase tracking-wider text-white hover:text-black transition-colors cursor-pointer w-fit flex items-center group outline-none"
+      className="text-left font-heading text-h1 text-[28px] sm:text-[36px] md:text-[48px] lg:text-[64px] leading-[1.1] font-bold uppercase tracking-wider text-white hover:text-black transition-colors cursor-pointer w-fit flex items-center group outline-none"
     >
       <span>{displayedText}</span>
       {isTyping && trigger && (
-        <span className="inline-block w-[8px] lg:w-[10px] h-[36px] lg:h-[48px] bg-black ml-2 lg:ml-3 animate-pulse align-middle" />
+        <span className="inline-block w-[6px] sm:w-[8px] lg:w-[10px] h-[24px] sm:h-[32px] lg:h-[48px] bg-black ml-2 lg:ml-3 animate-pulse align-middle" />
       )}
     </button>
   );
@@ -124,13 +124,13 @@ export default function FooterSection({ lang, onOpenContact }: FooterSectionProp
       className="w-full min-h-screen lg:h-screen snap-start snap-always bg-[#00DC6C] flex flex-col justify-between overflow-hidden"
     >
       {/* Upper Half: 2-Column Grid with Topnav Height Clearance */}
-      <div className="flex-1 w-full px-6 md:px-12 lg:px-[10vh] pt-[96px] md:pt-[110px] lg:pt-[120px] pb-6 flex flex-col justify-between">
+      <div className="flex-1 w-full px-5 sm:px-6 md:px-12 lg:px-[10vh] pt-[80px] sm:pt-[100px] md:pt-[110px] lg:pt-[120px] pb-6 flex flex-col justify-between">
         <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 items-stretch h-full">
           
           {/* Left Column (lg:col-span-7): 96px Typing Headline + Contact Buttons */}
           <div className="lg:col-span-7 flex flex-col justify-start pr-0 lg:pr-12 pb-6 lg:pb-0">
             <div>
-              <h2 className="text-h1 font-normal text-black tracking-tight select-none">
+              <h2 className="text-h2 sm:text-h1 font-normal text-black tracking-tight select-none">
                 <div>
                   {line1Typed}
                   {charCount > 0 && charCount < line1Text.length && (
@@ -148,7 +148,7 @@ export default function FooterSection({ lang, onOpenContact }: FooterSectionProp
             </div>
 
             {/* Contact Action Buttons with Hover Swap Animation */}
-            <div className="mt-[48px]">
+            <div className="mt-8 sm:mt-[48px]">
               <InteractiveCTA
                 text={currentLang === "vi" ? "Liên hệ" : "Contact"}
                 variant="black"
@@ -184,11 +184,11 @@ export default function FooterSection({ lang, onOpenContact }: FooterSectionProp
             </div>
 
             {/* Follow me Links (Bottom Right) with style H5 for links and Body 2 Neutral 100 for title */}
-            <div className="flex items-center gap-6 sm:gap-8 pt-8 flex-wrap">
+            <div className="flex items-center gap-4 sm:gap-8 pt-6 sm:pt-8 flex-wrap">
               <span className="text-b2 text-white font-mono select-none">
                 {currentLang === "vi" ? "Theo dõi tôi" : "Follow me"}
               </span>
-              <div className="flex items-center gap-6 sm:gap-8 text-h5 font-bold font-heading text-black">
+              <div className="flex items-center gap-4 sm:gap-8 text-h6 sm:text-h5 font-bold font-heading text-black">
                 <a
                   href="https://tiktok.com"
                   target="_blank"
@@ -221,16 +221,14 @@ export default function FooterSection({ lang, onOpenContact }: FooterSectionProp
       </div>
 
       {/* Middle Banner: Giant "KhanhTruong Nguyen" on Green */}
-      <div className="w-full border-t-2 border-black px-6 md:px-12 lg:px-[10vh] py-3 lg:py-4 bg-[#00DC6C]">
-        <div className="max-w-[1440px] mx-auto">
-          <h1 className="text-h3 sm:text-h1 lg:text-h0 font-bold text-[#147a3e] select-none tracking-tight">
-            KhanhTruong Nguyen
-          </h1>
-        </div>
+      <div className="w-full border-t-2 border-black py-4 lg:py-6 bg-[#00DC6C] flex items-center justify-center overflow-hidden">
+        <h1 className="text-h0 font-bold text-black/15 select-none tracking-tight text-center whitespace-nowrap w-full">
+          KhanhTruong Nguyen
+        </h1>
       </div>
 
       {/* Bottom Bar: Vietnam 2026 (Black Background) */}
-      <div className="w-full bg-[#121212] py-3 lg:py-3.5 px-6 md:px-12 lg:px-[10vh]">
+      <div className="w-full bg-[#121212] py-3 lg:py-3.5 px-5 sm:px-6 md:px-12 lg:px-[10vh]">
         <div className="max-w-[1440px] mx-auto text-h7 sm:text-h6 font-bold text-white">
           {currentLang === "vi" ? "Việt Nam 2026" : "Vietnam 2026"}
         </div>

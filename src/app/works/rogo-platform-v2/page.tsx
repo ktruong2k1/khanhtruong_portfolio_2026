@@ -79,28 +79,28 @@ export default function RogoDashboardPage() {
                   {lang === "vi" ? "Khách hàng" : "Clients"}
                 </span>
                 <div className="flex items-center gap-6 sm:gap-8 flex-wrap">
-                  <div className="relative w-[100px] h-[32px]">
+                  <div className="relative w-[100px] h-[32px] group cursor-pointer">
                     <Image
                       src="/images/Rogo_color.svg"
                       alt="ROGO Solutions"
                       fill
-                      className="object-contain object-left filter brightness-0 invert"
+                      className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                     />
                   </div>
-                  <div className="relative w-[120px] h-[32px]">
+                  <div className="relative w-[120px] h-[32px] group cursor-pointer">
                     <Image
                       src="/images/RangDong_color.svg"
                       alt="Rạng Đông"
                       fill
-                      className="object-contain object-left filter brightness-0 invert"
+                      className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                     />
                   </div>
-                  <div className="relative w-[120px] h-[32px]">
+                  <div className="relative w-[120px] h-[32px] group cursor-pointer">
                     <Image
                       src="/images/FPTSmartHome_color.svg"
                       alt="FPT Smart Home"
                       fill
-                      className="object-contain object-left filter brightness-0 invert"
+                      className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                     />
                   </div>
                 </div>
@@ -176,12 +176,12 @@ export default function RogoDashboardPage() {
               >
                 <div className="space-y-4">
                   {/* Mockup Thumbnail */}
-                  <div className="relative w-full aspect-[16/10] rounded-[12px] overflow-hidden bg-[#E8E8E8] border border-white/10 flex items-center justify-center p-6 shadow-md">
+                  <div className="relative w-full aspect-[16/10] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
                     <Image
                       src="/images/raio.png"
                       alt="RaIO Smart"
                       fill
-                      className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
 

@@ -173,6 +173,42 @@ export default function WorksPage() {
 
   const activeLayer = step <= 1 ? 0 : step === 2 ? 1 : 2;
 
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const tab0Ref = useRef<HTMLButtonElement>(null);
+  const tab1Ref = useRef<HTMLButtonElement>(null);
+  const tab2Ref = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isDesktop) {
+      const tabs = [tab0Ref, tab1Ref, tab2Ref];
+      tabs[activeLayer]?.current?.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  }, [activeLayer, isDesktop]);
+
+  const scrollToLayer = (layerIndex: number) => {
+    if (section1Ref.current && containerRef.current) {
+      const sectionTop = section1Ref.current.offsetTop;
+      const sectionHeight = section1Ref.current.offsetHeight;
+      const targetY = sectionTop + (layerIndex + 1) * (sectionHeight / 4);
+      containerRef.current.scrollTo({ top: targetY, behavior: "smooth" });
+    }
+    setStep(layerIndex + 1);
+  };
+
   // Section 2 scroll tracking for 300vh step snap scroll sequence (IoT tools: Intro, Thing Partner, Thing Flow)
   const section2Ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress: section2Progress } = useScroll({
@@ -245,9 +281,9 @@ export default function WorksPage() {
           </div>
 
           {/* Sticky 100vh Viewport */}
-          <div className="sticky top-0 h-screen w-full overflow-hidden px-6 md:px-12 lg:px-[10vh] flex flex-col justify-center items-center z-10 pt-16">
+          <div className="sticky top-0 h-screen w-full overflow-hidden px-4 sm:px-6 md:px-12 lg:px-[10vh] flex flex-col justify-start lg:justify-center items-center z-10 pt-[72px] sm:pt-[80px] lg:pt-16">
             
-            <div className="max-w-[1440px] mx-auto w-full relative overflow-hidden flex items-center min-h-[520px]">
+            <div className="max-w-[1440px] mx-auto w-full relative overflow-hidden flex flex-col lg:flex-row items-start lg:items-center min-h-0 lg:min-h-[520px]">
               
               {/* STAGE 1: Step 0 - Intro Layout (Wide container with top-left subheadline in regular weight) */}
               <motion.div
@@ -260,14 +296,14 @@ export default function WorksPage() {
                   step !== 0 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
                 }`}
               >
-                <div className="w-full lg:w-[65vw] max-w-[1100px] mx-auto space-y-12 sm:space-y-16">
+                <div className="w-full lg:w-[65vw] max-w-[1100px] mx-auto space-y-8 sm:space-y-12 lg:space-y-16">
                   {/* Subheadline placed at top-left in 24px regular all-caps Bricolage Grotesque */}
                   <div className="text-subhead text-white">
                     {lang === "vi" ? "Tư duy hệ thống" : "System Thinking"}
                   </div>
 
                   {/* 2-Column Content: Left Title with typing animation & lines matching text width + Right Flexible Description */}
-                  <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start w-full">
+                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-16 items-start w-full">
                     {/* Left Column: Heading with typing effect and underlines matching text length */}
                     <TypingGreenHeadline
                       lines={
@@ -278,7 +314,7 @@ export default function WorksPage() {
                     />
 
                     {/* Right Column: Description Body 0 */}
-                    <div className="flex-1 min-w-0 pt-2">
+                    <div className="flex-1 min-w-0 pt-1 lg:pt-2">
                       <p className="text-b0 font-normal text-white/90 leading-relaxed">
                         {lang === "vi"
                           ? "Rogo IoT Platform là cốt lõi quản lý. RaIO Smart biến cốt lõi đó thành một whitelabel framework tái sử dụng – cùng logic sản phẩm, tùy biến thương hiệu linh hoạt. Mỗi đối tác cắm vào framework để sở hữu instance riêng biệt mà không cần xây dựng lại hệ thống từ đầu."
@@ -296,59 +332,82 @@ export default function WorksPage() {
                   y: step >= 1 ? "0%" : "100%",
                 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-start h-full w-full ${
+                className={`w-full flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 items-start ${
                   step < 1 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
                 }`}
               >
-                {/* Left Column (lg:col-span-3): 3-Layer Indicator Menu with Bricolage Grotesque 24px text */}
-                <div className="lg:col-span-3 flex flex-col justify-start space-y-6 font-heading text-[24px] font-bold pr-4 pt-1 shrink-0 whitespace-nowrap">
+                {/* Top / Left Menu: Horizontal Tab Menu on Mobile/Tablet (< lg), 3-Layer Indicator Column on Desktop (>= lg) */}
+                <div className="w-full lg:w-auto lg:col-span-3 flex flex-row items-center gap-4 sm:gap-6 md:gap-8 overflow-x-auto scrollbar-none pb-2 sm:pb-3 border-b border-white/10 lg:border-none lg:flex-col lg:items-start lg:space-y-6 lg:gap-0 lg:pb-0 font-heading text-[14px] sm:text-[17px] md:text-[20px] lg:text-[24px] font-bold shrink-0 whitespace-nowrap">
                   {/* Platform layer */}
-                  <div className="flex items-center gap-3 transition-colors">
+                  <button
+                    ref={tab0Ref}
+                    onClick={() => scrollToLayer(0)}
+                    className="flex items-center gap-2 sm:gap-3 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 shrink-0"
+                  >
                     {activeLayer === 0 && (
-                      <span className="w-1.5 h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
+                      <span className="w-1.5 h-[16px] sm:h-[20px] lg:h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
                     )}
-                    <span className={activeLayer === 0 ? "text-[#00DC6C]" : "text-white/30"}>
+                    <span className={activeLayer === 0 ? "text-[#00DC6C]" : "text-white/30 hover:text-white/70"}>
                       {lang === "vi" ? "Tầng Nền tảng (Platform)" : "Platform layer"}
                     </span>
-                  </div>
+                  </button>
 
                   {/* Framework layer */}
-                  <div className="flex items-center gap-3 transition-colors">
+                  <button
+                    ref={tab1Ref}
+                    onClick={() => scrollToLayer(1)}
+                    className="flex items-center gap-2 sm:gap-3 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 shrink-0"
+                  >
                     {activeLayer === 1 && (
-                      <span className="w-1.5 h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
+                      <span className="w-1.5 h-[16px] sm:h-[20px] lg:h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
                     )}
-                    <span className={activeLayer === 1 ? "text-[#00DC6C]" : "text-white/30"}>
+                    <span className={activeLayer === 1 ? "text-[#00DC6C]" : "text-white/30 hover:text-white/70"}>
                       {lang === "vi" ? "Tầng Khung (Framework)" : "Framework layer"}
                     </span>
-                  </div>
+                  </button>
 
                   {/* Instance layer */}
-                  <div className="flex items-center gap-3 transition-colors">
+                  <button
+                    ref={tab2Ref}
+                    onClick={() => scrollToLayer(2)}
+                    className="flex items-center gap-2 sm:gap-3 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 shrink-0"
+                  >
                     {activeLayer === 2 && (
-                      <span className="w-1.5 h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
+                      <span className="w-1.5 h-[16px] sm:h-[20px] lg:h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
                     )}
-                    <span className={activeLayer === 2 ? "text-[#00DC6C]" : "text-white/30"}>
+                    <span className={activeLayer === 2 ? "text-[#00DC6C]" : "text-white/30 hover:text-white/70"}>
                       {lang === "vi" ? "Tầng Phiên bản (Instance)" : "Instance layer"}
                     </span>
-                  </div>
+                  </button>
                 </div>
 
-                {/* Center & Right Columns (lg:col-span-9): Dynamic Layer Content with Vertical (Y-Axis) Transitions */}
-                <div className="lg:col-span-9 relative h-full flex items-start overflow-hidden min-h-[480px]">
+                {/* Center & Right Columns (lg:col-span-9): Dynamic Layer Content with Horizontal Carousel Transitions on Mobile */}
+                <div className="w-full lg:col-span-9 relative flex-1 min-h-[480px] lg:min-h-[520px]">
                   
                   {/* LAYER 1: Platform Layer Content */}
                   <motion.div
-                    animate={{
-                      opacity: activeLayer === 0 ? 1 : 0,
-                      y: activeLayer === 0 ? "0%" : "-80%",
-                    }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute inset-0 flex flex-col lg:flex-row gap-8 items-start w-full"
+                    animate={
+                      isDesktop
+                        ? {
+                            opacity: activeLayer === 0 ? 1 : 0,
+                            y: activeLayer === 0 ? "0%" : "-80%",
+                            x: "0%",
+                          }
+                        : {
+                            opacity: activeLayer === 0 ? 1 : 0,
+                            x: activeLayer === 0 ? "0%" : "-100%",
+                            y: "0%",
+                          }
+                    }
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className={`w-full flex flex-col lg:flex-row gap-5 sm:gap-6 lg:gap-8 items-start ${
+                      activeLayer !== 0 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
+                    }`}
                   >
-                    {/* Center Image Mockup Card: 640x480 (4:3) & rounded-[12px] */}
+                    {/* Thumbnail Card on Top for Mobile/Tablet (< lg), Left for Desktop (>= lg) */}
                     <Link
                       href="/works/rogo-platform-v2"
-                      className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
+                      className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
                     >
                       <Image
                         src="/images/Rogo_Platform_large.png"
@@ -359,66 +418,74 @@ export default function WorksPage() {
                       <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/10 transition-colors pointer-events-none" />
                     </Link>
 
-                    {/* Right Details (Align top, no inner scrollbar) */}
-                    <div className="flex-1 space-y-4 pt-0">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
+                    {/* Right / Bottom Content Details */}
+                    <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
+                      <div className="flex items-center gap-2.5 sm:gap-3">
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                           FEATURED
                         </span>
-                        <span className="text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase">
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                           PAAS • B2B
                         </span>
                       </div>
 
                       <Link href="/works/rogo-platform-v2" className="block group/title">
-                        <h3 className="font-mono text-h4 md:text-h3 font-bold text-white group-hover/title:text-[#00DC6C] transition-colors flex items-center gap-2 cursor-pointer leading-tight">
-                          <span>Rogo IoT Platform<br />V2</span>
+                        <h3 className="font-mono text-h5 sm:text-h4 md:text-h3 font-bold text-white group-hover/title:text-[#00DC6C] transition-colors flex items-center gap-2 cursor-pointer leading-tight">
+                          <span>Rogo IoT Platform<br className="hidden sm:block" /> V2</span>
                           <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
                         </h3>
                       </Link>
 
-                      <div className="space-y-2">
-                        <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Clients</div>
-                        <div className="flex items-center gap-6 sm:gap-8 flex-wrap">
-                          <div className="relative w-[90px] h-[28px]">
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
+                          {lang === "vi" ? "Khách hàng" : "Clients"}
+                        </div>
+                        <div className="flex items-center gap-4 sm:gap-8 flex-wrap">
+                          <div className="relative w-[70px] sm:w-[90px] h-[20px] sm:h-[28px] group cursor-pointer">
                             <Image
                               src="/images/Rogo_color.svg"
                               alt="ROGO Solutions"
                               fill
-                              className="object-contain object-left filter brightness-0 invert"
+                              className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                             />
                           </div>
-                          <div className="relative w-[100px] h-[28px]">
+                          <div className="relative w-[80px] sm:w-[100px] h-[20px] sm:h-[28px] group cursor-pointer">
                             <Image
                               src="/images/RangDong_color.svg"
                               alt="Rạng Đông"
                               fill
-                              className="object-contain object-left filter brightness-0 invert"
+                              className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                             />
                           </div>
-                          <div className="relative w-[100px] h-[28px]">
+                          <div className="relative w-[80px] sm:w-[100px] h-[20px] sm:h-[28px] group cursor-pointer">
                             <Image
                               src="/images/FPTSmartHome_color.svg"
                               alt="FPT Smart Home"
                               fill
-                              className="object-contain object-left filter brightness-0 invert"
+                              className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                             />
                           </div>
                         </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Description</div>
-                        <p className="font-mono text-[14px] text-white/80 leading-relaxed">
-                          Rogo Solutions builds and operates the core — and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity. The whitelabel logic doesn't start at the app layer — it starts here.
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
+                          {lang === "vi" ? "Mô tả" : "Description"}
+                        </div>
+                        <p className="font-mono text-[12px] sm:text-[13px] lg:text-[14px] text-white/80 leading-relaxed">
+                          {lang === "vi"
+                            ? "Rogo Solutions xây dựng và vận hành lõi nền tảng – hỗ trợ mô hình whitelabel linh hoạt. Mỗi thương hiệu đối tác sở hữu một instance độc lập: chung kiến trúc, chung lớp điều khiển, nhưng mang trọn vẹn nhận diện thương hiệu riêng."
+                            : "Rogo Solutions builds and operates the core — and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity. The whitelabel logic doesn't start at the app layer — it starts here."}
                         </p>
                       </div>
 
-                      <div className="space-y-2">
-                        <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Tools</div>
-                        <div className="flex flex-wrap gap-2">
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
+                          {lang === "vi" ? "Công cụ" : "Tools"}
+                        </div>
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
                           {["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
-                            <span key={tool} className="text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
+                            <span key={tool} className="text-[10px] sm:text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full">
                               {tool}
                             </span>
                           ))}
@@ -429,55 +496,77 @@ export default function WorksPage() {
 
                   {/* LAYER 2: Framework Layer Content */}
                   <motion.div
-                    animate={{
-                      opacity: activeLayer === 1 ? 1 : 0,
-                      y: activeLayer === 1 ? "0%" : activeLayer < 1 ? "80%" : "-80%",
-                    }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute inset-0 flex flex-col lg:flex-row gap-8 items-start w-full"
+                    animate={
+                      isDesktop
+                        ? {
+                            opacity: activeLayer === 1 ? 1 : 0,
+                            y: activeLayer === 1 ? "0%" : activeLayer < 1 ? "80%" : "-80%",
+                            x: "0%",
+                          }
+                        : {
+                            opacity: activeLayer === 1 ? 1 : 0,
+                            x: activeLayer === 1 ? "0%" : activeLayer < 1 ? "100%" : "-100%",
+                            y: "0%",
+                          }
+                    }
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className={`w-full flex flex-col lg:flex-row gap-5 sm:gap-6 lg:gap-8 items-start ${
+                      activeLayer !== 1 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
+                    }`}
                   >
-                    {/* Center Image: 640x480 (4:3) & rounded-[12px] */}
-                    <div className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-white p-8 flex items-center justify-center relative shrink-0">
-                      <div className="relative w-48 h-[36px]">
-                        <Image src="/images/raio.png" alt="RaIO Smart Framework" fill className="object-contain" />
-                      </div>
+                    {/* Thumbnail Card on Top for Mobile/Tablet (< lg), Left for Desktop (>= lg) */}
+                    <div className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
+                      <Image
+                        src="/images/raio.png"
+                        alt="RaIO Smart Framework"
+                        fill
+                        className="object-cover object-center"
+                      />
                     </div>
 
-                    {/* Right Details (Align top, no inner scrollbar) */}
-                    <div className="flex-1 space-y-4 pt-0">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
+                    {/* Right / Bottom Content Details */}
+                    <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
+                      <div className="flex items-center gap-2.5 sm:gap-3">
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                           FRAMEWORK
                         </span>
-                        <span className="text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase">
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                           IOT • MOBILE
                         </span>
                       </div>
 
-                      <h3 className="font-mono text-h4 md:text-h3 font-bold text-white leading-tight">
-                        RaIO Smart<br />Framework
+                      <h3 className="font-mono text-h5 sm:text-h4 md:text-h3 font-bold text-white leading-tight">
+                        RaIO Smart<br className="hidden sm:block" /> Framework
                       </h3>
 
-                      <div className="space-y-2">
-                        <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Clients</div>
-                        <div className="flex flex-wrap gap-2 text-[12px] font-mono font-bold text-white/80">
-                          <span className="bg-white/5 border border-white/10 px-2.5 py-1 rounded">Austfly</span>
-                          <span className="bg-white/5 border border-white/10 px-2.5 py-1 rounded">Kangaroo</span>
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
+                          {lang === "vi" ? "Khách hàng" : "Clients"}
+                        </div>
+                        <div className="flex flex-wrap gap-2 text-[11px] sm:text-[12px] font-mono font-bold text-white/80">
+                          <span className="bg-white/5 border border-white/10 px-2.5 py-0.5 sm:py-1 rounded">Austfly</span>
+                          <span className="bg-white/5 border border-white/10 px-2.5 py-0.5 sm:py-1 rounded">Kangaroo</span>
                         </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Description</div>
-                        <p className="font-mono text-[14px] text-white/70 leading-relaxed">
-                          Whitelabel Smart Home App framework – partner-adaptive UI, complex device onboarding, same core logic, customizable brand identity.
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
+                          {lang === "vi" ? "Mô tả" : "Description"}
+                        </div>
+                        <p className="font-mono text-[12px] sm:text-[13px] lg:text-[14px] text-white/70 leading-relaxed">
+                          {lang === "vi"
+                            ? "Khung ứng dụng nhà thông minh Whitelabel – giao diện thích ứng theo đối tác, quy trình thêm thiết bị thông minh, đồng nhất logic sản phẩm, tùy biến thương hiệu nhanh chóng."
+                            : "Whitelabel Smart Home App framework – partner-adaptive UI, complex device onboarding, same core logic, customizable brand identity."}
                         </p>
                       </div>
 
-                      <div className="space-y-2">
-                        <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Tools</div>
-                        <div className="flex flex-wrap gap-2">
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
+                          {lang === "vi" ? "Công cụ" : "Tools"}
+                        </div>
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
                           {["React Native", "Figma", "TypeScript", "Vercel"].map((tool) => (
-                            <span key={tool} className="text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
+                            <span key={tool} className="text-[10px] sm:text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full">
                               {tool}
                             </span>
                           ))}
@@ -488,15 +577,26 @@ export default function WorksPage() {
 
                   {/* LAYER 3: Instance Layer Content (Austfly only) */}
                   <motion.div
-                    animate={{
-                      opacity: activeLayer === 2 ? 1 : 0,
-                      y: activeLayer === 2 ? "0%" : "80%",
-                    }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute inset-0 flex flex-col lg:flex-row gap-8 items-start w-full"
+                    animate={
+                      isDesktop
+                        ? {
+                            opacity: activeLayer === 2 ? 1 : 0,
+                            y: activeLayer === 2 ? "0%" : "80%",
+                            x: "0%",
+                          }
+                        : {
+                            opacity: activeLayer === 2 ? 1 : 0,
+                            x: activeLayer === 2 ? "0%" : "100%",
+                            y: "0%",
+                          }
+                    }
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className={`w-full flex flex-col lg:flex-row gap-5 sm:gap-6 lg:gap-8 items-start ${
+                      activeLayer !== 2 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
+                    }`}
                   >
-                    {/* Center Image: 640x480 (4:3) & rounded-[12px] */}
-                    <div className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
+                    {/* Thumbnail Card on Top for Mobile/Tablet (< lg), Left for Desktop (>= lg) */}
+                    <div className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
                       <Image
                         src="/images/austfly.png"
                         alt="Austfly App Instance"
@@ -505,42 +605,48 @@ export default function WorksPage() {
                       />
                     </div>
 
-                    {/* Right Details (Align top, no inner scrollbar) */}
-                    <div className="flex-1 space-y-4 pt-0">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
+                    {/* Right / Bottom Content Details */}
+                    <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
+                      <div className="flex items-center gap-2.5 sm:gap-3">
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                           INSTANCE
                         </span>
-                        <span className="text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase">
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                           LIVE APP
                         </span>
                       </div>
 
-                      <h3 className="font-mono text-h4 md:text-h3 font-bold text-white leading-tight">
+                      <h3 className="font-mono text-h5 sm:text-h4 md:text-h3 font-bold text-white leading-tight">
                         Austfly
                       </h3>
 
-                      <div className="space-y-2">
-                        <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Clients</div>
-                        <div className="flex flex-wrap gap-2 text-[12px] font-mono font-bold text-white/80">
-                          <span className="bg-white/5 border border-white/10 px-2.5 py-1 rounded">Austdoor Group</span>
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
+                          {lang === "vi" ? "Khách hàng" : "Clients"}
+                        </div>
+                        <div className="flex flex-wrap gap-2 text-[11px] sm:text-[12px] font-mono font-bold text-white/80">
+                          <span className="bg-white/5 border border-white/10 px-2.5 py-0.5 sm:py-1 rounded">Austdoor Group</span>
                         </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Description</div>
-                        <p className="font-mono text-[14px] text-white/70 leading-relaxed">
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
+                          {lang === "vi" ? "Mô tả" : "Description"}
+                        </div>
+                        <p className="font-mono text-[12px] sm:text-[13px] lg:text-[14px] text-white/70 leading-relaxed">
                           {lang === "vi"
                             ? "Ứng dụng điều khiển cửa cuốn và hệ sinh thái nhà thông minh Austfly — instance tùy biến hoàn chỉnh vận hành trên nền tảng RaIO Smart Framework."
                             : "Smart roller shutter & IoT control app Austfly — a fully customized instance powered by the RaIO Smart Framework."}
                         </p>
                       </div>
 
-                      <div className="space-y-2">
-                        <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Tools</div>
-                        <div className="flex flex-wrap gap-2">
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
+                          {lang === "vi" ? "Công cụ" : "Tools"}
+                        </div>
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
                           {["RaIO Framework", "Rogo IoT Platform", "Figma", "React Native"].map((tool) => (
-                            <span key={tool} className="text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
+                            <span key={tool} className="text-[10px] sm:text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full">
                               {tool}
                             </span>
                           ))}
@@ -571,8 +677,8 @@ export default function WorksPage() {
           </div>
 
           {/* Sticky 100vh Viewport */}
-          <div className="sticky top-0 h-screen w-full overflow-hidden px-6 md:px-12 lg:px-[10vh] flex flex-col justify-center items-center z-10 pt-16">
-            <div className="max-w-[1440px] mx-auto w-full relative overflow-hidden flex items-center min-h-[520px]">
+          <div className="sticky top-0 h-screen w-full overflow-hidden px-4 sm:px-6 md:px-12 lg:px-[10vh] flex flex-col justify-start lg:justify-center items-center z-10 pt-[72px] sm:pt-[80px] lg:pt-16">
+            <div className="max-w-[1440px] mx-auto w-full relative overflow-hidden flex flex-col lg:flex-row items-start lg:items-center min-h-0 lg:min-h-[520px]">
               
               {/* STAGE 1: Step 0 - Intro Layout (Wide container with top-left subheadline in regular weight) */}
               <motion.div
@@ -585,14 +691,14 @@ export default function WorksPage() {
                   section2Step !== 0 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
                 }`}
               >
-                <div className="w-full lg:w-[65vw] max-w-[1100px] mx-auto space-y-12 sm:space-y-16">
+                <div className="w-full lg:w-[65vw] max-w-[1100px] mx-auto space-y-8 sm:space-y-12 lg:space-y-16">
                   {/* Subheadline placed at top-left in 24px regular all-caps Bricolage Grotesque */}
                   <div className="text-subhead text-white">
                     {lang === "vi" ? "Công cụ IoT" : "IoT tools"}
                   </div>
 
                   {/* 2-Column Content: Left Title with typing animation in Bricolage Grotesque + Right Flexible Description */}
-                  <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start w-full">
+                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-16 items-start w-full">
                     {/* Left Column: Heading with typing effect and underlines matching text length */}
                     <TypingGreenHeadline
                       lines={
@@ -603,7 +709,7 @@ export default function WorksPage() {
                     />
 
                     {/* Right Column: Description Body 0 */}
-                    <div className="flex-1 min-w-0 pt-2">
+                    <div className="flex-1 min-w-0 pt-1 lg:pt-2">
                       <p className="text-b0 font-normal text-white/90 leading-relaxed">
                         {lang === "vi"
                           ? "Khi mô hình whitelabel không đủ — giải pháp là các công cụ chuyên biệt giải quyết chính xác các bài toán vận hành."
@@ -616,17 +722,26 @@ export default function WorksPage() {
 
               {/* STAGE 2: Step 1 - Project View (Thing Partner) */}
               <motion.div
-                animate={{
-                  opacity: section2Step === 1 ? 1 : 0,
-                  y: section2Step === 1 ? "0%" : section2Step < 1 ? "100%" : "-80%",
-                }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className={`w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10 items-start h-full ${
+                animate={
+                  isDesktop
+                    ? {
+                        opacity: section2Step === 1 ? 1 : 0,
+                        y: section2Step === 1 ? "0%" : section2Step < 1 ? "100%" : "-80%",
+                        x: "0%",
+                      }
+                    : {
+                        opacity: section2Step === 1 ? 1 : 0,
+                        x: section2Step === 1 ? "0%" : section2Step < 1 ? "100%" : "-100%",
+                        y: "0%",
+                      }
+                }
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className={`w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-10 items-start ${
                   section2Step !== 1 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
                 }`}
               >
                 {/* Left Thumbnail Mockup Card: 4:3 & rounded-[12px] */}
-                <div className="w-full lg:w-[560px] lg:min-w-[560px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
+                <div className="w-full max-w-full lg:w-[560px] lg:min-w-[560px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
                   <Image
                     src="/images/Rogo_IoT_Platform_Dashboard_Interface.png"
                     alt="Thing Partner"
@@ -636,70 +751,70 @@ export default function WorksPage() {
                 </div>
 
                 {/* Right Project Details (Align top, no inner scrollbar) */}
-                <div className="flex-1 space-y-4 pt-0">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
+                <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
+                  <div className="flex items-center gap-2.5 sm:gap-3">
+                    <span className="text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                       FEATURED
                     </span>
-                    <span className="text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase">
+                    <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                       PAAS • B2B
                     </span>
                   </div>
 
-                  <h3 className="font-mono text-h4 md:text-h3 font-bold text-white leading-tight">
+                  <h3 className="font-mono text-h5 sm:text-h4 md:text-h3 font-bold text-white leading-tight">
                     Thing Partner
                   </h3>
 
-                  <div className="space-y-2">
-                    <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
                       {lang === "vi" ? "Khách hàng" : "Clients"}
                     </div>
-                    <div className="flex items-center gap-6 sm:gap-8 flex-wrap">
-                      <div className="relative w-[90px] h-[28px]">
+                    <div className="flex items-center gap-4 sm:gap-8 flex-wrap">
+                      <div className="relative w-[70px] sm:w-[90px] h-[20px] sm:h-[28px] group cursor-pointer">
                         <Image
                           src="/images/Rogo_color.svg"
                           alt="ROGO Solutions"
                           fill
-                          className="object-contain object-left filter brightness-0 invert"
+                          className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                         />
                       </div>
-                      <div className="relative w-[100px] h-[28px]">
+                      <div className="relative w-[80px] sm:w-[100px] h-[20px] sm:h-[28px] group cursor-pointer">
                         <Image
                           src="/images/RangDong_color.svg"
                           alt="Rạng Đông"
                           fill
-                          className="object-contain object-left filter brightness-0 invert"
+                          className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                         />
                       </div>
-                      <div className="relative w-[100px] h-[28px]">
+                      <div className="relative w-[80px] sm:w-[100px] h-[20px] sm:h-[28px] group cursor-pointer">
                         <Image
                           src="/images/FPTSmartHome_color.svg"
                           alt="FPT Smart Home"
                           fill
-                          className="object-contain object-left filter brightness-0 invert"
+                          className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                         />
                       </div>
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
                       {lang === "vi" ? "Mô tả" : "Description"}
                     </div>
-                    <p className="font-mono text-[14px] text-white/80 leading-relaxed">
+                    <p className="font-mono text-[12px] sm:text-[13px] lg:text-[14px] text-white/80 leading-relaxed">
                       {lang === "vi"
                         ? "Dành cho đội ngũ trực tiếp sản xuất và quản lý thiết bị. Được nghiên cứu thực địa trực tiếp, bao quát từ firmware đến bảo hành qua 6 giai đoạn vòng đời."
                         : "Rogo Solutions builds and operates the core — and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity."}
                     </p>
                   </div>
 
-                  <div className="space-y-2">
-                    <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
                       {lang === "vi" ? "Công cụ" : "Tools"}
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
                       {["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
-                        <span key={tool} className="text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
+                        <span key={tool} className="text-[10px] sm:text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full">
                           {tool}
                         </span>
                       ))}
@@ -710,17 +825,26 @@ export default function WorksPage() {
 
               {/* STAGE 3: Step 2 - Project View (Thing Flow) */}
               <motion.div
-                animate={{
-                  opacity: section2Step === 2 ? 1 : 0,
-                  y: section2Step === 2 ? "0%" : "100%",
-                }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className={`w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10 items-start h-full ${
+                animate={
+                  isDesktop
+                    ? {
+                        opacity: section2Step === 2 ? 1 : 0,
+                        y: section2Step === 2 ? "0%" : "100%",
+                        x: "0%",
+                      }
+                    : {
+                        opacity: section2Step === 2 ? 1 : 0,
+                        x: section2Step === 2 ? "0%" : "100%",
+                        y: "0%",
+                      }
+                }
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className={`w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-10 items-start ${
                   section2Step !== 2 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
                 }`}
               >
                 {/* Left Thumbnail Mockup Card: 4:3 & rounded-[12px] */}
-                <div className="w-full lg:w-[560px] lg:min-w-[560px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
+                <div className="w-full max-w-full lg:w-[560px] lg:min-w-[560px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
                   <Image
                     src="/images/rogo_project/Diagram 10.png"
                     alt="Thing Flow"
@@ -730,17 +854,17 @@ export default function WorksPage() {
                 </div>
 
                 {/* Right Project Details (Align top, no inner scrollbar) */}
-                <div className="flex-1 space-y-4 pt-0">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
+                <div className="flex-1 space-y-1.5 sm:space-y-2.5 lg:space-y-4 pt-0 w-full">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <span className="text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                       FEATURED
                     </span>
-                    <span className="text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase">
+                    <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                       IOT AUTOMATION • B2B
                     </span>
                   </div>
 
-                  <h3 className="font-mono text-h4 md:text-h3 font-bold text-white leading-tight">
+                  <h3 className="font-mono text-h5 sm:text-h4 md:text-h3 font-bold text-white leading-tight">
                     Thing Flow
                   </h3>
 
@@ -749,20 +873,20 @@ export default function WorksPage() {
                       {lang === "vi" ? "Khách hàng" : "Clients"}
                     </div>
                     <div className="flex items-center gap-6 sm:gap-8 flex-wrap">
-                      <div className="relative w-[90px] h-[28px]">
+                      <div className="relative w-[90px] h-[28px] group cursor-pointer">
                         <Image
                           src="/images/Rogo_color.svg"
                           alt="ROGO Solutions"
                           fill
-                          className="object-contain object-left filter brightness-0 invert"
+                          className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                         />
                       </div>
-                      <div className="relative w-[100px] h-[28px]">
+                      <div className="relative w-[100px] h-[28px] group cursor-pointer">
                         <Image
                           src="/images/FPTSmartHome_color.svg"
                           alt="FPT Smart Home"
                           fill
-                          className="object-contain object-left filter brightness-0 invert"
+                          className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                         />
                       </div>
                     </div>

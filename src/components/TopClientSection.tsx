@@ -179,9 +179,14 @@ export default function TopClientSection({
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center py-4">
               {allClientLogos.map((client) => (
-                <div key={client.name} className="w-full flex items-center justify-center p-2">
-                  <div className="relative h-[40px] w-full max-w-[140px] opacity-80">
-                    <Image src={client.src} alt={client.name} fill className="object-contain filter brightness-0 invert" />
+                <div key={client.name} className="w-full flex items-center justify-center p-2 group cursor-pointer">
+                  <div className="relative h-[40px] w-full max-w-[140px] opacity-75 group-hover:opacity-100 transition-all duration-300">
+                    <Image
+                      src={client.src}
+                      alt={client.name}
+                      fill
+                      className="object-contain filter brightness-0 invert group-hover:filter-none transition-all duration-300"
+                    />
                   </div>
                 </div>
               ))}
@@ -191,11 +196,18 @@ export default function TopClientSection({
           {/* Client 1: Rogo Solutions */}
           <div className="space-y-12">
             <div className="flex items-center gap-[24px]">
-              <div className="relative w-[99px] h-[36px] shrink-0">
-                <Image src="/images/Rogo_color.svg" alt="Rogo" fill className="object-contain object-left filter brightness-0 invert" />
+              <div className="relative w-[99px] h-[36px] shrink-0 group cursor-pointer">
+                <Image
+                  src="/images/Rogo_color.svg"
+                  alt="Rogo"
+                  fill
+                  className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
+                />
               </div>
               <h2 className="font-mono text-xl font-normal text-white leading-tight">
-                Top innovation<br />brand in Vietnam<br />2023
+                {currentLang === "vi"
+                  ? "Thương hiệu Đổi mới Sáng tạo\nHàng đầu Việt Nam 2023"
+                  : "Top innovation brand\nin Vietnam 2023"}
               </h2>
             </div>
             
@@ -238,14 +250,21 @@ export default function TopClientSection({
             </div>
           </div>
 
-          {/* Client 2: Rạng Đông */}
+          {/* Client 2: Rạng Đông -> RaIO Smart Framework */}
           <div className="space-y-12 pt-12 border-t border-white/10">
             <div className="flex items-center gap-[24px]">
-              <div className="relative w-[156px] h-[36px] shrink-0">
-                <Image src="/images/RangDong_color.svg" alt="Rạng Đông" fill className="object-contain object-left filter brightness-0 invert" />
+              <div className="relative w-[156px] h-[36px] shrink-0 group cursor-pointer">
+                <Image
+                  src="/images/RangDong_color.svg"
+                  alt="Rạng Đông"
+                  fill
+                  className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
+                />
               </div>
               <h2 className="font-mono text-xl font-normal text-white leading-tight">
-                Top 1 IoT manufacturer<br />brand in Vietnam
+                {currentLang === "vi"
+                  ? "Thương hiệu Sản xuất IoT\nSố 1 tại Việt Nam"
+                  : "Top 1 IoT manufacturer\nbrand in Vietnam"}
               </h2>
             </div>
             
@@ -254,36 +273,40 @@ export default function TopClientSection({
               <Image src="/images/rangdong_showroom.png" alt="Rạng Đông Showroom" fill className="object-cover" />
             </div>
 
-            {/* State B Project Card */}
+            {/* State B Project Card: RaIO Smart Framework */}
             <div className="w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row items-start gap-8 lg:gap-10">
               <Link
-                href="/works/rogo-platform-v2"
+                href="/works"
                 className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
               >
                 <Image
-                  src="/images/Rogo_Platform_large.png"
-                  alt="Rạng Đông Platform"
+                  src="/images/raio.png"
+                  alt="RaIO Smart Framework"
                   fill
-                  className="object-cover group-hover/thumb:scale-105 transition-transform duration-500"
+                  className="object-cover object-center group-hover/thumb:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/10 transition-colors pointer-events-none" />
               </Link>
               <div className="flex-1 space-y-5">
                 <div className="flex items-center gap-3">
                   <span className="text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
-                    FEATURED
+                    FRAMEWORK
                   </span>
                   <span className="text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase">
-                    PAAS • B2B
+                    IOT • MOBILE
                   </span>
                 </div>
-                <Link href="/works/rogo-platform-v2" className="block group/title">
-                  <h3 className="text-h4 md:text-h3 font-bold text-white group-hover/title:text-[#00DC6C] transition-colors flex items-center gap-2">
-                    <span>Rogo IoT Platform v2</span>
+                <Link href="/works" className="block group/title">
+                  <h3 className="text-h4 md:text-h3 font-bold text-white group-hover/title:text-[#00DC6C] transition-colors flex items-center gap-2 cursor-pointer">
+                    <span>RaIO Smart Framework</span>
                     <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
                   </h3>
                 </Link>
-                <p className="text-[14px] text-white/80 leading-relaxed">{worksDescription}</p>
+                <p className="text-[14px] text-white/80 leading-relaxed">
+                  {currentLang === "vi"
+                    ? "Framework ứng dụng nhà thông minh dạng Whitelabel – giao diện tùy biến cho từng đối tác, quy trình kết nối thiết bị chuyên sâu, cùng logic cốt lõi nhưng dễ dàng cá nhân hóa nhận diện thương hiệu."
+                    : "Whitelabel Smart Home App framework – partner-adaptive UI, complex device onboarding, same core logic, customizable brand identity."}
+                </p>
               </div>
             </div>
           </div>
@@ -329,13 +352,13 @@ export default function TopClientSection({
               {topRowLogos.map((client) => (
                 <div
                   key={client.name}
-                  className="relative h-[40px] w-[140px] sm:w-[160px] md:w-[180px] flex items-center justify-center group"
+                  className="relative h-[40px] w-[140px] sm:w-[160px] md:w-[180px] flex items-center justify-center group cursor-pointer"
                 >
                   <Image
                     src={client.src}
                     alt={client.name}
                     fill
-                    className="object-contain filter brightness-0 invert opacity-85 group-hover:opacity-100 transition-opacity"
+                    className="object-contain filter brightness-0 invert opacity-75 group-hover:filter-none group-hover:opacity-100 transition-all duration-300"
                   />
                 </div>
               ))}
@@ -360,13 +383,13 @@ export default function TopClientSection({
               {bottomRowLogos.map((client) => (
                 <div
                   key={client.name}
-                  className="relative h-[40px] w-[140px] sm:w-[160px] md:w-[180px] flex items-center justify-center group"
+                  className="relative h-[40px] w-[140px] sm:w-[160px] md:w-[180px] flex items-center justify-center group cursor-pointer"
                 >
                   <Image
                     src={client.src}
                     alt={client.name}
                     fill
-                    className="object-contain filter brightness-0 invert opacity-85 group-hover:opacity-100 transition-opacity"
+                    className="object-contain filter brightness-0 invert opacity-75 group-hover:filter-none group-hover:opacity-100 transition-all duration-300"
                   />
                 </div>
               ))}
@@ -414,18 +437,18 @@ export default function TopClientSection({
               
               {/* Top-Left: Logo (99px) + 24px gap + Caption */}
               <div className="w-full flex items-center gap-[24px] pointer-events-auto shrink-0 z-30">
-                <div className="relative w-[99px] h-[36px] shrink-0">
+                <div className="relative w-[99px] h-[36px] shrink-0 group cursor-pointer">
                   <Image
                     src="/images/Rogo_color.svg"
                     alt="Rogo Solutions"
                     fill
-                    className="object-contain object-left filter brightness-0 invert"
+                    className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                   />
                 </div>
                 <h2 className="text-h7 sm:text-h6 font-mono font-normal text-white leading-tight tracking-tight whitespace-pre-line">
                   {currentLang === "vi"
-                    ? "Thương hiệu Đổi mới\nSáng tạo Hàng đầu\nViệt Nam 2023"
-                    : "Top innovation\nbrand in Vietnam\n2023"}
+                    ? "Thương hiệu Đổi mới Sáng tạo\nHàng đầu Việt Nam 2023"
+                    : "Top innovation brand\nin Vietnam 2023"}
                 </h2>
               </div>
 
@@ -520,7 +543,7 @@ export default function TopClientSection({
         </motion.div>
 
         {/* ========================================================================= */}
-        {/* 3. PHASE 3: RẠNG ĐÔNG (Contained Photo -> Expands to BG -> Card)          */}
+        {/* 3. PHASE 3: RẠNG ĐÔNG (Contained Photo -> Expands to BG -> RaIO Smart)    */}
         {/* ========================================================================= */}
         <motion.div
           style={{
@@ -559,12 +582,12 @@ export default function TopClientSection({
               
               {/* Top-Left: Logo (156px) + 24px gap + Caption */}
               <div className="w-full flex items-center gap-[24px] pointer-events-auto shrink-0 z-30">
-                <div className="relative w-[156px] h-[36px] shrink-0">
+                <div className="relative w-[156px] h-[36px] shrink-0 group cursor-pointer">
                   <Image
                     src="/images/RangDong_color.svg"
                     alt="Rạng Đông Smart Home"
                     fill
-                    className="object-contain object-left filter brightness-0 invert"
+                    className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                   />
                 </div>
                 <h2 className="text-h7 sm:text-h6 font-mono font-normal text-white leading-tight tracking-tight whitespace-pre-line">
@@ -574,7 +597,7 @@ export default function TopClientSection({
                 </h2>
               </div>
 
-              {/* Revealed Project Card View (1052px width, items-start, 12px chips, 14px description) */}
+              {/* Revealed Project Card View: RaIO Smart Framework (1052px width, items-start, 12px chips, 14px description) */}
               <motion.div
                 style={{
                   opacity: rangDongCardOpacity,
@@ -586,12 +609,12 @@ export default function TopClientSection({
                 <div className="w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row items-start gap-8 lg:gap-10 pointer-events-auto">
                   {/* Left Mockup Thumbnail: 640x480 (4:3) with 12px radius */}
                   <Link
-                    href="/works/rogo-platform-v2"
+                    href="/works"
                     className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
                   >
                     <Image
-                      src="/images/Rogo_Platform_large.png"
-                      alt="Rạng Đông Platform"
+                      src="/images/raio.png"
+                      alt="RaIO Smart Framework"
                       fill
                       className="object-cover object-center group-hover/thumb:scale-105 transition-transform duration-500"
                     />
@@ -602,52 +625,54 @@ export default function TopClientSection({
                   <div className="flex-1 space-y-4 pt-0">
                     <div className="flex items-center gap-3">
                       <span className="text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
-                        FEATURED
+                        FRAMEWORK
                       </span>
                       <span className="text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase">
-                        PAAS • B2B
+                        IOT • MOBILE
                       </span>
                     </div>
 
-                    <Link href="/works/rogo-platform-v2" className="block group/title">
+                    <Link href="/works" className="block group/title">
                       <h3 className="text-h4 md:text-h3 font-bold text-white group-hover/title:text-[#00DC6C] transition-colors flex items-center gap-2 cursor-pointer">
-                        <span>Rogo IoT Platform v2</span>
+                        <span>RaIO Smart Framework</span>
                         <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
                       </h3>
                     </Link>
 
                     <div className="space-y-2">
                       <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
-                        Clients
+                        {currentLang === "vi" ? "Khách hàng" : "Clients"}
                       </div>
                       <div className="flex flex-wrap gap-2 text-[12px] font-mono font-bold text-white/80">
+                        <span className="bg-white/5 border border-white/10 px-2.5 py-1 rounded">
+                          Austfly
+                        </span>
+                        <span className="bg-white/5 border border-white/10 px-2.5 py-1 rounded">
+                          Kangaroo
+                        </span>
                         <span className="bg-white/5 border border-white/10 px-2.5 py-1 rounded flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-[#00DC6C]" /> ROGO Solutions
-                        </span>
-                        <span className="bg-white/5 border border-white/10 px-2.5 py-1 rounded">
-                          Rạng Đông
-                        </span>
-                        <span className="bg-white/5 border border-white/10 px-2.5 py-1 rounded">
-                          FPT Smart Home
+                          <span className="w-2 h-2 rounded-full bg-[#00DC6C]" /> Rạng Đông
                         </span>
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
-                        Description
+                        {currentLang === "vi" ? "Mô tả" : "Description"}
                       </div>
                       <p className="text-[14px] text-white/80 leading-relaxed">
-                        {worksDescription}
+                        {currentLang === "vi"
+                          ? "Framework ứng dụng nhà thông minh dạng Whitelabel – giao diện tùy biến cho từng đối tác, quy trình kết nối thiết bị chuyên sâu, cùng logic cốt lõi nhưng dễ dàng cá nhân hóa nhận diện thương hiệu."
+                          : "Whitelabel Smart Home App framework – partner-adaptive UI, complex device onboarding, same core logic, customizable brand identity."}
                       </p>
                     </div>
 
                     <div className="space-y-2">
                       <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
-                        Tools
+                        {currentLang === "vi" ? "Công cụ" : "Tools"}
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        {["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
+                        {["React Native", "Figma", "TypeScript", "Vercel"].map((tool) => (
                           <span
                             key={tool}
                             className="text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full"

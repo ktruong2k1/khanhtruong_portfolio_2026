@@ -126,97 +126,165 @@ export default function HorizontalProcessSection({
   const singleCardWidth = containerWidth > 0 ? (containerWidth - 32) / 2 : 420;
 
   return (
-    <section
-      id="process-section"
-      ref={targetRef}
-      className="relative h-[250vh] bg-[#121212] text-white snap-start scroll-mt-0"
-    >
-      {/* Sticky full screen viewport wrapper: Left aligned with navbar logo */}
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center px-6 md:px-12 lg:px-[10vh]">
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch h-full pt-24 pb-16">
-          
-          {/* Fixed Left Sidebar Info: Directly aligned with top navbar logo */}
-          <div className="lg:col-span-4 flex flex-col justify-center h-full z-10 pr-4 min-w-0 pt-2 pb-2">
-            <div className="w-full">
-              {/* Heading H2 in Bricolage Grotesque */}
-              <h2 className="text-h2 font-bold text-white tracking-tight leading-tight whitespace-normal">
-                {headingText}
-              </h2>
-
-              {/* Subtitle paragraph */}
-              <p className="text-b2 md:text-b1 text-white/70 leading-relaxed w-full block whitespace-normal mt-6">
-                {subtitleText}
-              </p>
-
-              {/* CTA Button: Exactly 48px below the text block */}
-              <div className="mt-[48px] flex-shrink-0">
-                <InteractiveCTA
-                  text={ctaText}
-                  href="/works"
-                />
-              </div>
+    <>
+      {/* MOBILE & TABLET LAYOUT (< lg): Natural vertical flow with swipeable process cards */}
+      <section
+        id="process-section-mobile"
+        className="block lg:hidden w-full bg-[#121212] text-white py-16 sm:py-20 px-5 sm:px-6 md:px-12 border-b border-white/5 scroll-mt-0"
+      >
+        <div className="max-w-[1440px] mx-auto w-full space-y-8">
+          {/* Header Info */}
+          <div className="space-y-4">
+            <h2 className="text-h3 sm:text-h2 font-bold text-white tracking-tight leading-tight">
+              {headingText}
+            </h2>
+            <p className="text-b2 text-white/70 leading-relaxed max-w-xl">
+              {subtitleText}
+            </p>
+            <div className="pt-2">
+              <InteractiveCTA text={ctaText} href="/works" />
             </div>
           </div>
 
-          {/* Sliding Horizontal Cards Track: Exact 2-card lock viewport */}
-          <div
-            ref={trackContainerRef}
-            className="lg:col-span-8 overflow-hidden h-full flex items-stretch min-w-0 pt-2 pb-2"
-          >
-            <motion.div
-              style={{ x }}
-              className="flex gap-8 items-stretch py-2 w-max h-full"
-            >
-              {processSteps.map((step) => {
-                const title = currentLang === "vi" ? step.titleVi : step.titleEn;
-                const description = currentLang === "vi" ? step.descriptionVi : step.descriptionEn;
-                return (
-                  <div
-                    key={step.number}
-                    style={{
-                      width: `${singleCardWidth}px`,
-                    }}
-                    className={`flex-shrink-0 rounded-[12px] p-6 md:p-8 xl:p-10 shadow-2xl flex flex-col justify-between space-y-6 transition-all ${
-                      step.isWhite
-                        ? "bg-white text-black"
-                        : "bg-[#1A1A1A] text-white border border-white/10"
+          {/* Swipeable Process Cards with snap points on mobile */}
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 pb-4 pt-2 -mx-5 px-5 sm:-mx-6 sm:px-6">
+            {processSteps.map((step) => {
+              const title = currentLang === "vi" ? step.titleVi : step.titleEn;
+              const description = currentLang === "vi" ? step.descriptionVi : step.descriptionEn;
+              return (
+                <div
+                  key={step.number}
+                  className={`w-[85vw] sm:w-[380px] shrink-0 snap-center rounded-[12px] p-6 sm:p-8 shadow-2xl flex flex-col justify-between space-y-5 ${
+                    step.isWhite
+                      ? "bg-white text-black"
+                      : "bg-[#1A1A1A] text-white border border-white/10"
+                  }`}
+                >
+                  {/* Top Header & Title */}
+                  <div className="space-y-2 w-full">
+                    <div className="text-h3 font-bold tracking-tight">
+                      {step.number}
+                    </div>
+                    <h3 className="text-h5 font-bold leading-tight">
+                      {title}
+                    </h3>
+                  </div>
+
+                  {/* Step Image Photo */}
+                  <div className="relative w-full aspect-[3/2] rounded-[10px] overflow-hidden">
+                    <Image
+                      src={step.image}
+                      alt={title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  {/* Description Paragraph */}
+                  <p
+                    className={`text-[13px] sm:text-[14px] leading-relaxed ${
+                      step.isWhite ? "text-neutral-700" : "text-neutral-300"
                     }`}
                   >
-                    {/* Top Header & Title */}
-                    <div className="space-y-4 w-full">
-                      <div className="text-h3 md:text-h2 font-bold tracking-tight">
-                        {step.number}
-                      </div>
-                      <h3 className="text-h5 md:text-h4 font-bold leading-tight whitespace-normal">
-                        {title}
-                      </h3>
-                    </div>
-
-                    {/* Step Image Photo */}
-                    <div className="relative w-full aspect-[3/2] rounded-[12px] overflow-hidden">
-                      <Image
-                        src={step.image}
-                        alt={title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-
-                    {/* Description Paragraph: 14px size */}
-                    <p
-                      className={`text-[14px] whitespace-normal leading-relaxed ${
-                        step.isWhite ? "text-neutral-700" : "text-neutral-300"
-                      }`}
-                    >
-                      {description}
-                    </p>
-                  </div>
-                );
-              })}
-            </motion.div>
+                    {description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* DESKTOP LAYOUT (>= lg): 250vh Sticky Horizontal Snap Scroll */}
+      <section
+        id="process-section"
+        ref={targetRef}
+        className="hidden lg:block relative h-[250vh] bg-[#121212] text-white snap-start scroll-mt-0"
+      >
+        {/* Sticky full screen viewport wrapper: Left aligned with navbar logo */}
+        <div className="sticky top-0 h-screen overflow-hidden flex items-center px-6 md:px-12 lg:px-[10vh]">
+          <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch h-full pt-24 pb-16">
+            
+            {/* Fixed Left Sidebar Info */}
+            <div className="lg:col-span-4 flex flex-col justify-center h-full z-10 pr-4 min-w-0 pt-2 pb-2">
+              <div className="w-full">
+                <h2 className="text-h2 font-bold text-white tracking-tight leading-tight whitespace-normal">
+                  {headingText}
+                </h2>
+
+                <p className="text-b2 md:text-b1 text-white/70 leading-relaxed w-full block whitespace-normal mt-6">
+                  {subtitleText}
+                </p>
+
+                <div className="mt-[48px] flex-shrink-0">
+                  <InteractiveCTA
+                    text={ctaText}
+                    href="/works"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Sliding Horizontal Cards Track: Exact 2-card lock viewport */}
+            <div
+              ref={trackContainerRef}
+              className="lg:col-span-8 overflow-hidden h-full flex items-stretch min-w-0 pt-2 pb-2"
+            >
+              <motion.div
+                style={{ x }}
+                className="flex gap-8 items-stretch py-2 w-max h-full"
+              >
+                {processSteps.map((step) => {
+                  const title = currentLang === "vi" ? step.titleVi : step.titleEn;
+                  const description = currentLang === "vi" ? step.descriptionVi : step.descriptionEn;
+                  return (
+                    <div
+                      key={step.number}
+                      style={{
+                        width: `${singleCardWidth}px`,
+                      }}
+                      className={`flex-shrink-0 rounded-[12px] p-6 md:p-8 xl:p-10 shadow-2xl flex flex-col justify-between space-y-6 transition-all ${
+                        step.isWhite
+                          ? "bg-white text-black"
+                          : "bg-[#1A1A1A] text-white border border-white/10"
+                      }`}
+                    >
+                      {/* Top Header & Title */}
+                      <div className="space-y-4 w-full">
+                        <div className="text-h3 md:text-h2 font-bold tracking-tight">
+                          {step.number}
+                        </div>
+                        <h3 className="text-h5 md:text-h4 font-bold leading-tight whitespace-normal">
+                          {title}
+                        </h3>
+                      </div>
+
+                      {/* Step Image Photo */}
+                      <div className="relative w-full aspect-[3/2] rounded-[12px] overflow-hidden">
+                        <Image
+                          src={step.image}
+                          alt={title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+
+                      {/* Description Paragraph */}
+                      <p
+                        className={`text-[14px] whitespace-normal leading-relaxed ${
+                          step.isWhite ? "text-neutral-700" : "text-neutral-300"
+                        }`}
+                      >
+                        {description}
+                      </p>
+                    </div>
+                  );
+                })}
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
