@@ -154,14 +154,14 @@ export default function HorizontalProcessSection({
               return (
                 <div
                   key={step.number}
-                  className={`w-[85vw] sm:w-[380px] shrink-0 snap-center rounded-[12px] p-6 sm:p-8 shadow-2xl flex flex-col justify-between space-y-5 ${
+                  className={`w-[85vw] sm:w-[380px] shrink-0 snap-center rounded-[12px] p-6 sm:p-8 shadow-2xl flex flex-col justify-start space-y-4 sm:space-y-5 ${
                     step.isWhite
                       ? "bg-white text-black"
                       : "bg-[#1A1A1A] text-white border border-white/10"
                   }`}
                 >
                   {/* Top Header & Title */}
-                  <div className="space-y-2 w-full">
+                  <div className="space-y-2 w-full min-h-[96px] sm:min-h-[108px] flex flex-col justify-start">
                     <div className="text-h3 font-bold tracking-tight">
                       {step.number}
                     </div>
@@ -171,7 +171,7 @@ export default function HorizontalProcessSection({
                   </div>
 
                   {/* Step Image Photo */}
-                  <div className="relative w-full aspect-[3/2] rounded-[10px] overflow-hidden">
+                  <div className="relative w-full aspect-[3/2] rounded-[10px] overflow-hidden shrink-0">
                     <Image
                       src={step.image}
                       alt={title}
@@ -183,7 +183,7 @@ export default function HorizontalProcessSection({
                   {/* Description Paragraph */}
                   <p
                     className={`text-[13px] sm:text-[14px] leading-relaxed ${
-                      step.isWhite ? "text-neutral-700" : "text-neutral-300"
+                      step.isWhite ? "text-neutral-1000" : "text-neutral-300"
                     }`}
                   >
                     {description}
@@ -243,14 +243,14 @@ export default function HorizontalProcessSection({
                       style={{
                         width: `${singleCardWidth}px`,
                       }}
-                      className={`flex-shrink-0 rounded-[12px] p-6 md:p-8 xl:p-10 shadow-2xl flex flex-col justify-between space-y-6 transition-all ${
+                      className={`flex-shrink-0 rounded-[12px] p-6 md:p-8 xl:p-10 shadow-2xl flex flex-col justify-start space-y-6 transition-all ${
                         step.isWhite
                           ? "bg-white text-black"
                           : "bg-[#1A1A1A] text-white border border-white/10"
                       }`}
                     >
-                      {/* Top Header & Title */}
-                      <div className="space-y-4 w-full">
+                      {/* Top Header & Title (Locked min-h so all images align top perfectly) */}
+                      <div className="space-y-3 xl:space-y-4 w-full min-h-[140px] xl:min-h-[160px] flex flex-col justify-start">
                         <div className="text-h3 md:text-h2 font-bold tracking-tight">
                           {step.number}
                         </div>
@@ -259,8 +259,8 @@ export default function HorizontalProcessSection({
                         </h3>
                       </div>
 
-                      {/* Step Image Photo */}
-                      <div className="relative w-full aspect-[3/2] rounded-[12px] overflow-hidden">
+                      {/* Step Image Photo (Exact same aspect ratio & top aligned) */}
+                      <div className="relative w-full aspect-[3/2] rounded-[12px] overflow-hidden shrink-0">
                         <Image
                           src={step.image}
                           alt={title}
@@ -269,10 +269,10 @@ export default function HorizontalProcessSection({
                         />
                       </div>
 
-                      {/* Description Paragraph */}
+                      {/* Description Paragraph (Top aligned with uniform gap below image) */}
                       <p
                         className={`text-[14px] whitespace-normal leading-relaxed ${
-                          step.isWhite ? "text-neutral-700" : "text-neutral-300"
+                          step.isWhite ? "text-neutral-1000" : "text-neutral-300"
                         }`}
                       >
                         {description}

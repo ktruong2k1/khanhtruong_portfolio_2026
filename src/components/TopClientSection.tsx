@@ -64,12 +64,12 @@ function TypingSplitText({
   }, [isActive, text]);
 
   return (
-    <h3 className="text-[28px] sm:text-[32px] md:text-[36px] leading-[38px] sm:leading-[44px] md:leading-[48px] tracking-[-0.6px] font-extrabold text-[#00DC6C] text-center max-w-[850px] px-4 font-heading">
+    <h2 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[48px] leading-[38px] sm:leading-[46px] md:leading-[52px] lg:leading-[56px] tracking-[-0.8px] font-bold text-[#00DC6C] text-center max-w-[960px] px-4 font-heading whitespace-pre-line">
       <span>{displayedText}</span>
       {isTyping && (
-        <span className="inline-block w-[6px] h-[28px] bg-[#00DC6C] ml-1.5 animate-pulse align-middle" />
+        <span className="inline-block w-[6px] h-[28px] sm:h-[34px] md:h-[40px] lg:h-[44px] bg-[#00DC6C] ml-1.5 animate-pulse align-middle" />
       )}
-    </h3>
+    </h2>
   );
 }
 
@@ -162,8 +162,8 @@ export default function TopClientSection({
 
   const typingHeading =
     currentLang === "vi"
-      ? "Thiết kế được tin tưởng bởi các doanh nghiệp đa lĩnh vực — sản phẩm, thương hiệu và kỹ thuật số."
-      : "Design work trusted by businesses across sectors — product, brand, and digital.";
+      ? "Thiết kế được tin tưởng\nbởi các doanh nghiệp đa lĩnh vực\nsản phẩm, thương hiệu và kỹ thuật số."
+      : "Design work trusted\nby businesses across sectors\nproduct, brand, and digital.";
 
   // Fallback for Reduced Motion
   if (shouldReduceMotion) {

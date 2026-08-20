@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
@@ -171,17 +172,19 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
         <div className="max-w-[1440px] mx-auto w-full">
           {/* MOBILE TOPNAV (< 768px): Always compact horizontal flex row with 24px height logo on left and hamburger button on right */}
           <div className="mobile-only-header pointer-events-auto py-1">
-            {/* 24px Height Logo (Left) */}
+            {/* Mobile Header Logo (Left) */}
             <div
               onClick={scrollToHero}
-              className="cursor-pointer flex flex-col justify-center select-none group h-[24px] shrink-0"
+              className="cursor-pointer flex items-center select-none group shrink-0"
             >
-              <span className="text-[11px] font-bold text-white leading-[12px] group-hover:text-white/90 transition-colors">
-                Khanhtruong
-              </span>
-              <span className="text-[11px] font-bold text-white leading-[12px] group-hover:text-white/90 transition-colors">
-                Nguyen <span className="font-mono text-[#C6A85B]">Portfolio</span>
-              </span>
+              <Image
+                src="/images/Website_logo.svg"
+                alt="Khanhtruong Nguyen Portfolio"
+                width={110}
+                height={28}
+                className="h-[26px] w-auto object-contain"
+                priority
+              />
             </div>
 
             {/* Hamburger Button Only (Right) */}
@@ -255,17 +258,19 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   className="w-full flex items-center justify-between"
                 >
-                  {/* 40px Height Portfolio Brand Logo */}
+                  {/* Portfolio Brand Logo */}
                   <div
                     onClick={scrollToHero}
-                    className="cursor-pointer flex flex-col justify-center select-none group h-[40px]"
+                    className="cursor-pointer flex items-center select-none group h-[40px]"
                   >
-                    <span className="text-b1 text-[16px] font-bold text-white leading-[20px] group-hover:text-white/90 transition-colors">
-                      Khanhtruong
-                    </span>
-                    <span className="text-b1 text-[16px] font-bold text-white leading-[20px] group-hover:text-white/90 transition-colors">
-                      Nguyen <span className="font-mono text-[#C6A85B]">Portfolio</span>
-                    </span>
+                    <Image
+                      src="/images/Website_logo.svg"
+                      alt="Khanhtruong Nguyen Portfolio"
+                      width={158}
+                      height={40}
+                      className="h-[36px] sm:h-[40px] w-auto object-contain hover:opacity-90 transition-opacity"
+                      priority
+                    />
                   </div>
 
                   {/* Right Header Controls: "Let's chat" Button + Transparent Hamburger Menu */}
@@ -303,17 +308,19 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
           >
             {/* Top Modal Header */}
             <div className="flex justify-between items-center max-w-[1440px] mx-auto w-full">
-              {/* Logo (24px mobile / 40px desktop) */}
+              {/* Logo */}
               <div
                 onClick={scrollToHero}
-                className="cursor-pointer flex flex-col justify-center select-none group h-[24px] md:h-[40px]"
+                className="cursor-pointer flex items-center select-none group shrink-0"
               >
-                <span className="text-[11px] md:text-[16px] font-bold text-white leading-[12px] md:leading-[20px]">
-                  Khanhtruong
-                </span>
-                <span className="text-[11px] md:text-[16px] font-bold text-white leading-[12px] md:leading-[20px]">
-                  Nguyen <span className="font-mono text-[#C6A85B]">Portfolio</span>
-                </span>
+                <Image
+                  src="/images/Website_logo.svg"
+                  alt="Khanhtruong Nguyen Portfolio"
+                  width={158}
+                  height={40}
+                  className="h-[26px] md:h-[36px] w-auto object-contain"
+                  priority
+                />
               </div>
 
               {/* Close Button Top Right */}

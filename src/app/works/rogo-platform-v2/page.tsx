@@ -335,7 +335,7 @@ export default function RogoPlatformV2Page() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full">
               {/* Card 1: RaIO Smart */}
               <Link
-                href="/works"
+                href="/works/raio-smart"
                 className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="space-y-4">

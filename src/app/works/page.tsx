@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Mail, Check, X } from "lucide-react";
+import { ArrowLeft, Mail, Check, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import ContactModal from "@/components/ContactModal";
 import FooterSection from "@/components/FooterSection";
@@ -105,7 +105,7 @@ function HeroTypingHeadline({ onComplete, lang = "en" }: { onComplete?: () => vo
       : "";
 
   return (
-    <div className="w-fit mx-auto font-heading text-3xl sm:text-5xl md:text-[54px] lg:text-[64px] font-extrabold leading-tight text-[#00DC6C] text-center tracking-tight">
+    <div className="w-fit mx-auto font-heading text-3xl sm:text-5xl md:text-[54px] lg:text-[64px] font-bold leading-tight text-[#00DC6C] text-center tracking-tight">
       <div className="border-b border-white/20 pb-3 mb-6 w-fit mx-auto min-h-[1.25em] flex items-center justify-center">
         <span>{line1Typed}</span>
         {charCount > 0 && charCount < line1Full.length && (
@@ -337,17 +337,17 @@ export default function WorksPage() {
                 }`}
               >
                 {/* Top / Left Menu: Horizontal Tab Menu on Mobile/Tablet (< lg), 3-Layer Indicator Column on Desktop (>= lg) */}
-                <div className="w-full lg:w-auto lg:col-span-3 flex flex-row items-center gap-4 sm:gap-6 md:gap-8 overflow-x-auto scrollbar-none pb-2 sm:pb-3 border-b border-white/10 lg:border-none lg:flex-col lg:items-start lg:space-y-6 lg:gap-0 lg:pb-0 font-heading text-[14px] sm:text-[17px] md:text-[20px] lg:text-[24px] font-bold shrink-0 whitespace-nowrap">
+                <div className="w-full lg:w-auto lg:col-span-3 flex flex-row items-center gap-4 sm:gap-6 md:gap-8 overflow-x-auto scrollbar-none pb-2 sm:pb-3 border-b border-white/10 lg:border-none lg:flex-col lg:items-start lg:space-y-8 lg:gap-0 lg:pb-0 font-heading shrink-0 whitespace-nowrap">
                   {/* Platform layer */}
                   <button
                     ref={tab0Ref}
                     onClick={() => scrollToLayer(0)}
-                    className="flex items-center gap-2 sm:gap-3 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 shrink-0"
+                    className="flex items-center gap-2.5 sm:gap-3.5 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 shrink-0 text-left"
                   >
                     {activeLayer === 0 && (
-                      <span className="w-1.5 h-[16px] sm:h-[20px] lg:h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
+                      <span className="w-1.5 lg:w-2 h-[18px] sm:h-[22px] lg:h-[26px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
                     )}
-                    <span className={activeLayer === 0 ? "text-[#00DC6C]" : "text-white/30 hover:text-white/70"}>
+                    <span className={`text-[15px] sm:text-[18px] lg:text-[24px] lg:leading-[32px] font-bold ${activeLayer === 0 ? "text-[#00DC6C]" : "text-white/30 hover:text-white/70"}`}>
                       {lang === "vi" ? "Tầng Nền tảng (Platform)" : "Platform layer"}
                     </span>
                   </button>
@@ -356,12 +356,12 @@ export default function WorksPage() {
                   <button
                     ref={tab1Ref}
                     onClick={() => scrollToLayer(1)}
-                    className="flex items-center gap-2 sm:gap-3 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 shrink-0"
+                    className="flex items-center gap-2.5 sm:gap-3.5 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 shrink-0 text-left"
                   >
                     {activeLayer === 1 && (
-                      <span className="w-1.5 h-[16px] sm:h-[20px] lg:h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
+                      <span className="w-1.5 lg:w-2 h-[18px] sm:h-[22px] lg:h-[26px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
                     )}
-                    <span className={activeLayer === 1 ? "text-[#00DC6C]" : "text-white/30 hover:text-white/70"}>
+                    <span className={`text-[15px] sm:text-[18px] lg:text-[24px] lg:leading-[32px] font-bold ${activeLayer === 1 ? "text-[#00DC6C]" : "text-white/30 hover:text-white/70"}`}>
                       {lang === "vi" ? "Tầng Khung (Framework)" : "Framework layer"}
                     </span>
                   </button>
@@ -370,12 +370,12 @@ export default function WorksPage() {
                   <button
                     ref={tab2Ref}
                     onClick={() => scrollToLayer(2)}
-                    className="flex items-center gap-2 sm:gap-3 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 shrink-0"
+                    className="flex items-center gap-2.5 sm:gap-3.5 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 shrink-0 text-left"
                   >
                     {activeLayer === 2 && (
-                      <span className="w-1.5 h-[16px] sm:h-[20px] lg:h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
+                      <span className="w-1.5 lg:w-2 h-[18px] sm:h-[22px] lg:h-[26px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
                     )}
-                    <span className={activeLayer === 2 ? "text-[#00DC6C]" : "text-white/30 hover:text-white/70"}>
+                    <span className={`text-[15px] sm:text-[18px] lg:text-[24px] lg:leading-[32px] font-bold ${activeLayer === 2 ? "text-[#00DC6C]" : "text-white/30 hover:text-white/70"}`}>
                       {lang === "vi" ? "Tầng Phiên bản (Instance)" : "Instance layer"}
                     </span>
                   </button>
@@ -430,9 +430,8 @@ export default function WorksPage() {
                       </div>
 
                       <Link href="/works/rogo-platform-v2" className="block group/title">
-                        <h3 className="font-mono text-h5 sm:text-h4 md:text-h3 font-bold text-white group-hover/title:text-[#00DC6C] transition-colors flex items-center gap-2 cursor-pointer leading-tight">
-                          <span>Rogo IoT Platform<br className="hidden sm:block" /> V2</span>
-                          <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
+                        <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white group-hover/title:text-[#00DC6C] transition-colors leading-tight">
+                          <span>Rogo IoT Platform V2</span>
                         </h3>
                       </Link>
 
@@ -515,14 +514,17 @@ export default function WorksPage() {
                     }`}
                   >
                     {/* Thumbnail Card on Top for Mobile/Tablet (< lg), Left for Desktop (>= lg) */}
-                    <div className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
+                    <Link
+                      href="/works/raio-smart"
+                      className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
+                    >
                       <Image
                         src="/images/raio.png"
                         alt="RaIO Smart Framework"
                         fill
-                        className="object-cover object-center"
+                        className="object-cover object-center group-hover/thumb:scale-105 transition-transform duration-500"
                       />
-                    </div>
+                    </Link>
 
                     {/* Right / Bottom Content Details */}
                     <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
@@ -535,9 +537,11 @@ export default function WorksPage() {
                         </span>
                       </div>
 
-                      <h3 className="font-mono text-h5 sm:text-h4 md:text-h3 font-bold text-white leading-tight">
-                        RaIO Smart<br className="hidden sm:block" /> Framework
-                      </h3>
+                      <Link href="/works/raio-smart" className="group/title block">
+                        <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white group-hover/title:text-[#00DC6C] transition-colors leading-tight">
+                          RaIO Smart Framework
+                        </h3>
+                      </Link>
 
                       <div className="space-y-1.5 sm:space-y-2">
                         <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
@@ -616,7 +620,7 @@ export default function WorksPage() {
                         </span>
                       </div>
 
-                      <h3 className="font-mono text-h5 sm:text-h4 md:text-h3 font-bold text-white leading-tight">
+                      <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white leading-tight">
                         Austfly
                       </h3>
 
@@ -736,12 +740,12 @@ export default function WorksPage() {
                       }
                 }
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className={`w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-10 items-start ${
+                className={`w-full max-w-[1100px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-8 items-start ${
                   section2Step !== 1 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
                 }`}
               >
                 {/* Left Thumbnail Mockup Card: 4:3 & rounded-[12px] */}
-                <div className="w-full max-w-full lg:w-[560px] lg:min-w-[560px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
+                <div className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
                   <Image
                     src="/images/Rogo_IoT_Platform_Dashboard_Interface.png"
                     alt="Thing Partner"
@@ -761,7 +765,7 @@ export default function WorksPage() {
                     </span>
                   </div>
 
-                  <h3 className="font-mono text-h5 sm:text-h4 md:text-h3 font-bold text-white leading-tight">
+                  <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white leading-tight">
                     Thing Partner
                   </h3>
 
@@ -839,12 +843,12 @@ export default function WorksPage() {
                       }
                 }
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className={`w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-10 items-start ${
+                className={`w-full max-w-[1100px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-8 items-start ${
                   section2Step !== 2 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
                 }`}
               >
                 {/* Left Thumbnail Mockup Card: 4:3 & rounded-[12px] */}
-                <div className="w-full max-w-full lg:w-[560px] lg:min-w-[560px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
+                <div className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
                   <Image
                     src="/images/rogo_project/Diagram 10.png"
                     alt="Thing Flow"
@@ -864,7 +868,7 @@ export default function WorksPage() {
                     </span>
                   </div>
 
-                  <h3 className="font-mono text-h5 sm:text-h4 md:text-h3 font-bold text-white leading-tight">
+                  <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white leading-tight">
                     Thing Flow
                   </h3>
 
@@ -977,14 +981,14 @@ export default function WorksPage() {
                 </div>
               </motion.div>
 
-              {/* STAGE 2: Step 1 - Project View (Left Mockup + Right Details) with exact 1052px container width */}
+              {/* STAGE 2: Step 1 - Project View (Left Mockup + Right Details) with exact 1100px container width */}
               <motion.div
                 animate={{
                   opacity: section3Step >= 1 ? 1 : 0,
                   y: section3Step >= 1 ? "0%" : "100%",
                 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className={`w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10 items-start h-full ${
+                className={`w-full max-w-[1100px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-8 items-start h-full ${
                   section3Step < 1 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
                 }`}
               >
@@ -993,7 +997,7 @@ export default function WorksPage() {
                   href="https://thing.ai.vn/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full lg:w-[560px] lg:min-w-[560px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 relative shrink-0 block group"
+                  className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 relative shrink-0 block group"
                 >
                   <Image
                     src="/images/Thing_AI_VN.png"
@@ -1014,16 +1018,8 @@ export default function WorksPage() {
                     </span>
                   </div>
 
-                  <h3 className="font-mono text-h4 md:text-h3 font-bold text-white flex items-center justify-between">
-                    <span>Thing AI VN</span>
-                    <a
-                      href="https://thing.ai.vn/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#00DC6C] hover:text-[#00DC6C]/80"
-                    >
-                      <ArrowUpRight className="w-6 h-6" />
-                    </a>
+                  <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white leading-tight">
+                    Thing AI VN
                   </h3>
 
                   <div className="space-y-2">

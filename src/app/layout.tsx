@@ -6,14 +6,14 @@ import "./globals.css";
 const beVietnam = Be_Vietnam_Pro({
   variable: "--font-body",
   subsets: ["latin", "vietnamese"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
 const bricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-heading",
   subsets: ["latin", "vietnamese"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 

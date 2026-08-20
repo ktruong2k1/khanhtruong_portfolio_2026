@@ -9,14 +9,14 @@ import FooterSection from "@/components/FooterSection";
 import InteractiveCTA from "@/components/InteractiveCTA";
 import { useLanguage } from "@/context/LanguageContext";
 
-export default function RogoDashboardPage() {
+export default function RaIOSmartPage() {
   const { lang, setLang } = useLanguage();
   const [contactModalOpen, setContactModalOpen] = useState(false);
 
   const heroDescription =
     lang === "vi"
-      ? "Rogo Solutions xây dựng và vận hành hệ thống cốt lõi — và bản thân nền tảng có thể whitelabel hoàn toàn. Mỗi đối tác nhận một instance riêng: cùng kiến trúc, cùng control plane, nhưng mang nhận diện thương hiệu riêng. Logic whitelabel không bắt đầu ở tầng ứng dụng — nó bắt đầu ngay tại đây."
-      : "Rogo Solutions builds and operates the core — and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity. The whitelabel logic doesn't start at the app layer — it starts here.";
+      ? "Khung ứng dụng nhà thông minh Whitelabel — cùng kiến trúc và logic sản phẩm cốt lõi, nhưng có thể thích ứng giao diện, quy trình thêm thiết bị và tùy biến nhận diện thương hiệu cho từng đối tác một cách linh hoạt."
+      : "Whitelabel Smart Home App framework — partner-adaptive UI, complex device onboarding, same core product logic, customizable brand identity across partners.";
 
   return (
     <div className="min-h-screen w-full bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black overflow-x-hidden">
@@ -44,7 +44,7 @@ export default function RogoDashboardPage() {
 
             {/* Project Title */}
             <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
-              Rogo Platform V2
+              RaIO Smart
             </h1>
 
             {/* Hero Subtitle */}
@@ -53,11 +53,11 @@ export default function RogoDashboardPage() {
             </p>
           </div>
 
-          {/* SECTION 1: HERO BANNER MOCKUP (Diagram hero.jpg - Aspect 3786/1440) */}
-          <div className="relative w-full aspect-[3786/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+          {/* SECTION 1: HERO BANNER MOCKUP */}
+          <div className="relative w-full aspect-[16/9] sm:aspect-[3786/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
             <Image
-              src="/images/rogo_project/Diagram hero.jpg"
-              alt="Rogo Platform V2 Overview Mockup"
+              src="/images/raio.png"
+              alt="RaIO Smart Overview Mockup"
               fill
               priority
               unoptimized
@@ -77,30 +77,30 @@ export default function RogoDashboardPage() {
                 </span>
                 <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
                   {lang === "vi"
-                    ? "Hệ thống quản lý trước đây được xây dựng như thể chỉ phục vụ một khách hàng duy nhất. Giao diện dùng chung, không tách biệt thương hiệu, không phân quyền chi tiết. Mỗi khi có đối tác mới tham gia, đội ngũ Rogo phải can thiệp thủ công — các đối tác không thể tự quản trị hệ thống của mình."
-                    : "But the existing management system was built as if there were only one customer. A shared interface, no brand separation, no granular access control. Every time a new partner came on board, the Rogo team had to step in manually — there was no way for partners to manage themselves."}
+                    ? "Trước khi có RaIO Smart, mỗi đối tác nhà thông minh cần phát triển một ứng dụng di động riêng biệt từ đầu. Điều này dẫn đến sự phân mảnh mã nguồn, trùng lặp tính năng, khó kiểm soát chất lượng và tiêu tốn hàng tháng trời cho mỗi lần onboarding đối tác mới."
+                    : "Before RaIO Smart, each smart home partner built their own mobile app from scratch. This led to fragmented codebases, duplicated development efforts, inconsistent user experiences, and months of delay for every partner launch."}
                 </p>
                 <p className="text-b2 md:text-b1 text-[#00DC6C] font-semibold leading-relaxed">
                   {lang === "vi"
-                    ? "Nút thắt đó kìm hãm khả năng mở rộng của Rogo. Và đó chính là điểm khởi đầu của dự án này."
-                    : "That bottleneck was holding Rogo back from scaling. And that's where this project started."}
+                    ? "Một giải pháp framework dùng chung toàn diện là chìa khóa để nhân rộng hệ sinh thái IoT nhanh chóng."
+                    : "A unified, reusable framework was essential to scale the entire IoT smart home ecosystem at speed."}
                 </p>
               </div>
 
               {/* One system, many layer */}
               <div className="space-y-3">
                 <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi" ? "Một hệ thống, nhiều tầng kiến trúc" : "One system, many layer"}
+                  {lang === "vi" ? "Một hệ thống, nhiều tầng kiến trúc" : "One system, many layers"}
                 </span>
                 <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
                   {lang === "vi"
-                    ? "Một người dùng có thể thuộc nhiều tổ chức và nhiều dự án với các vai trò khác nhau ở từng nơi. Người quản lý một dự án có thể không được phép xem dự án khác trong cùng tổ chức. Quyền truy cập toàn diện tại Đối tác A không có nghĩa là có quyền tại Đối tác B."
-                    : "A single user can belong to multiple organizations and multiple projects, with different roles in each. Someone who manages one project may not be allowed to see another project in the same organization. Full access at Partner A means nothing at Partner B."}
+                    ? "RaIO Smart phân tách kiến trúc thành các lớp độc lập: tầng kết nối IoT & Bluetooth/Wi-Fi cốt lõi, tầng quy trình thêm thiết bị (device onboarding flow), và tầng nhận diện thương hiệu tùy biến (theme, color token, icons, typography). Mỗi đối tác có thể thay đổi giao diện bên ngoài mà không chạm vào logic bên dưới."
+                    : "RaIO Smart decouples the architecture into modular layers: core IoT & connectivity protocol engine, standard device onboarding flow, and customizable brand layers (tokens, icons, typography). Partners can style their own experience without modifying core logic."}
                 </p>
                 <p className="text-b2 md:text-b1 text-[#00DC6C] font-semibold leading-relaxed">
                   {lang === "vi"
-                    ? "Bảng điều khiển cần phản ánh chính xác cấu trúc đó — không đơn giản hóa quá mức cần thiết, nhưng cũng không phức tạp hơn mức cần có."
-                    : "The dashboard needed to reflect that structure accurately — no simpler than necessary, but no more complex than it needs to be."}
+                    ? "Khung ứng dụng đảm bảo tính linh hoạt tối đa cho thương hiệu nhưng vẫn giữ vững sự ổn định kỹ thuật tuyệt đối."
+                    : "The framework enables maximum branding flexibility while maintaining complete architectural stability."}
                 </p>
               </div>
             </div>
@@ -121,10 +121,10 @@ export default function RogoDashboardPage() {
                       className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                     />
                   </div>
-                  <div className="relative w-[120px] h-[32px] group cursor-pointer">
+                  <div className="relative w-[110px] h-[32px] group cursor-pointer">
                     <Image
-                      src="/images/RangDong_color.svg"
-                      alt="Rạng Đông"
+                      src="/images/Austdoor.svg"
+                      alt="Austdoor & Austfly"
                       fill
                       className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                     />
@@ -146,7 +146,13 @@ export default function RogoDashboardPage() {
                   {lang === "vi" ? "Dịch vụ" : "Service"}
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {["UI/UX research", "BA development", "UI Design", "Frontend Develop", "Vercel"].map((item) => (
+                  {[
+                    "UI/UX Research",
+                    "App Architecture",
+                    "Design System",
+                    "Mobile App UI",
+                    "Whitelabel Engine",
+                  ].map((item) => (
                     <span
                       key={item}
                       className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
@@ -163,14 +169,16 @@ export default function RogoDashboardPage() {
                   {lang === "vi" ? "Công cụ" : "Tools"}
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
-                    <span
-                      key={tool}
-                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
-                    >
-                      {tool}
-                    </span>
-                  ))}
+                  {["Figma", "React Native", "TypeScript", "Claude AI", "Gemini CLI", "Vercel"].map(
+                    (tool) => (
+                      <span
+                        key={tool}
+                        className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
+                      >
+                        {tool}
+                      </span>
+                    )
+                  )}
                 </div>
               </div>
             </div>
@@ -245,10 +253,10 @@ export default function RogoDashboardPage() {
             </div>
           </div>
 
-          {/* SECTION 5: WEBSITE DESIGN (Heading 36px, Diagram 6.jpg, Diagram 7.jpg + 8.jpg, Diagram 9.jpg + 17.jpg) */}
+          {/* SECTION 5: WHITELABEL ADAPTATION (Heading 36px, Kangaroo & Austfly Instances) */}
           <div className="space-y-6 sm:space-y-8 pt-8">
             <h2 className="font-heading text-[28px] sm:text-[36px] font-bold text-white tracking-tight leading-tight">
-              Website Design
+              {lang === "vi" ? "Khả năng tùy biến Whitelabel" : "Whitelabel Customization"}
             </h2>
 
             <div className="space-y-6 sm:space-y-8">
@@ -264,13 +272,13 @@ export default function RogoDashboardPage() {
                 />
               </div>
 
-              {/* Middle 2-Column Grid: Diagram 7.jpg & Diagram 8.jpg (Aspect 1800/1440 each) */}
+              {/* Middle 2-Column Grid: Kangaroo RaIO & Austfly Instances */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
-                {/* Left Card: Diagram 7.jpg (Access Tree) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+                {/* Left Card: Kangaroo RaIO */}
+                <div className="relative w-full aspect-[4/3] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
                   <Image
-                    src="/images/rogo_project/Diagram 7.jpg"
-                    alt="Access Tree & Sidenav Navigation"
+                    src="/images/kangaroo_raio.png"
+                    alt="Kangaroo RaIO Mobile Instance"
                     fill
                     unoptimized
                     sizes="(max-width: 768px) 100vw, 720px"
@@ -278,38 +286,11 @@ export default function RogoDashboardPage() {
                   />
                 </div>
 
-                {/* Right Card: Diagram 8.jpg (Logo Assets) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+                {/* Right Card: Austfly */}
+                <div className="relative w-full aspect-[4/3] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
                   <Image
-                    src="/images/rogo_project/Diagram 8.jpg"
-                    alt="Logo Assets Configuration"
-                    fill
-                    unoptimized
-                    sizes="(max-width: 768px) 100vw, 720px"
-                    className="object-cover object-center"
-                  />
-                </div>
-              </div>
-
-              {/* Bottom 2-Column Grid: Diagram 9.jpg & Diagram 17.jpg (Aspect 1800/1440 each) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
-                {/* Left Card: Diagram 9.jpg (Grant Partner Permission) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
-                  <Image
-                    src="/images/rogo_project/Diagram 9.jpg"
-                    alt="Grant Partner Permission Modal"
-                    fill
-                    unoptimized
-                    sizes="(max-width: 768px) 100vw, 720px"
-                    className="object-cover object-center"
-                  />
-                </div>
-
-                {/* Right Card: Diagram 17.jpg (Grant Project Permission) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
-                  <Image
-                    src="/images/rogo_project/Diagram 17.jpg"
-                    alt="Grant Project Permission Modal"
+                    src="/images/austfly.png"
+                    alt="Austfly Smart Roller Shutter Mobile Instance"
                     fill
                     unoptimized
                     sizes="(max-width: 768px) 100vw, 720px"
@@ -333,17 +314,17 @@ export default function RogoDashboardPage() {
 
             {/* 3 Project Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full">
-              {/* Card 1: RaIO Smart */}
+              {/* Card 1: Rogo Platform V2 */}
               <Link
-                href="/works/raio-smart"
+                href="/works/rogo-platform-v2"
                 className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="space-y-4">
                   {/* Mockup Thumbnail (Aspect 4:3) */}
                   <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
                     <Image
-                      src="/images/raio.png"
-                      alt="RaIO Smart"
+                      src="/images/rogo_platform.png"
+                      alt="Rogo Platform V2"
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
@@ -352,20 +333,20 @@ export default function RogoDashboardPage() {
                   {/* Tag */}
                   <div>
                     <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
-                      WHITELABEL FRAMEWORK
+                      PAAS • B2B
                     </span>
                   </div>
 
                   {/* Title */}
                   <h3 className="text-h5 sm:text-h4 font-bold text-white group-hover:text-[#00DC6C] transition-colors">
-                    RaIO Smart
+                    Rogo Platform V2
                   </h3>
 
                   {/* Description */}
                   <p className="text-b3 text-white/70 leading-relaxed font-mono">
                     {lang === "vi"
-                      ? "Khung ứng dụng nhà thông minh Whitelabel tái sử dụng – cùng logic sản phẩm, tùy biến thương hiệu linh hoạt."
-                      : "Whitelabel Smart Home App framework – same core product logic, flexible partner branding."}
+                      ? "Nền tảng quản trị IoT whitelabel đa tầng — kiến trúc phân quyền đa tổ chức."
+                      : "Whitelabel IoT platform core — multi-tenant ABAC access control plane."}
                   </p>
                 </div>
               </Link>

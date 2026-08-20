@@ -121,11 +121,11 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             className="lg:col-span-5 flex items-start justify-between sm:justify-start gap-4 sm:gap-6 pt-0 lg:pt-2"
           >
             <div className="flex flex-col items-start text-left min-w-0">
-              <h2 className="text-h5 sm:text-h4 lg:text-h3 font-bold text-white mb-2 sm:mb-3 tracking-tight whitespace-nowrap">
+              <h2 className="text-h4 sm:text-h3 lg:text-h2 font-bold text-white mb-2 sm:mb-3 tracking-tight whitespace-nowrap">
                 Product Designer
               </h2>
               <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-start">
-                <span className="text-[#00DC6C] font-bold text-[14px] sm:text-h6 whitespace-nowrap">
+                <span className="text-[#00DC6C] font-bold text-h6 sm:text-h5 whitespace-nowrap">
                   {currentLang === "vi" ? "3,5 năm KN" : "3,5 years exp"}
                 </span>
                 <span className="border border-white/20 rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1 text-[11px] sm:text-b3 text-white/80 flex items-center gap-1.5 bg-white/5 whitespace-nowrap">
@@ -135,10 +135,10 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
               </div>
             </div>
 
-            {/* Profile Avatar */}
-            <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-[104px] lg:h-[104px] rounded-full bg-[#00DC6C] flex-shrink-0 overflow-hidden shadow-2xl border-2 border-[#00DC6C]">
+            {/* Profile Avatar (108x108px, face facing left) */}
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-[108px] lg:h-[108px] rounded-full bg-[#00DC6C] flex-shrink-0 overflow-hidden shadow-2xl border-2 border-[#00DC6C]">
               <Image
-                src="/images/KT_profilie.png"
+                src="/images/KT_profilie_fading_reverse.png"
                 alt="Khanhtruong Nguyen"
                 fill
                 className="object-cover object-top scale-105"
