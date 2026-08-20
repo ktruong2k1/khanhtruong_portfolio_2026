@@ -88,7 +88,7 @@ export default function RangDongSection({
           <div className="w-full flex flex-col lg:flex-row items-start gap-[40px] bg-[#181818] p-8 md:p-12 rounded-[20px] border border-white/10">
             <div className="w-full lg:w-[640px] shrink-0">
               <div className="relative w-full aspect-[4/3] max-h-[480px] rounded-[20px] overflow-hidden border border-white/10">
-                <Image src="/images/Rogo_Platform_large.png" alt="Platform" fill className="object-cover" />
+                <Image src="/images/Rogo_dashboard_thumb.png" alt="Platform" fill className="object-cover" />
               </div>
             </div>
             <div className="flex-1 space-y-6">
@@ -178,7 +178,7 @@ export default function RangDongSection({
                 <div className="w-full lg:w-[640px] shrink-0">
                   <div className="relative w-full aspect-[4/3] max-w-[640px] max-h-[480px] rounded-[20px] overflow-hidden shadow-2xl border border-white/15 bg-[#141414] group">
                     <Image
-                      src="/images/Rogo_Platform_large.png"
+                      src="/images/Rogo_dashboard_thumb.png"
                       alt="Rogo IoT Platform Interface"
                       fill
                       className="object-cover group-hover:scale-102 transition-transform duration-500"

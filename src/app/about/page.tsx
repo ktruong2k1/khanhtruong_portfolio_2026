@@ -387,15 +387,15 @@ export default function AboutPage() {
               
               {/* Card 1: RaIO Smart */}
               <Link
-                href="/works"
+                href="/works/raio-smart"
                 className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="space-y-4">
                   {/* Mockup Thumbnail */}
                   <div className="relative w-full aspect-[16/10] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
                     <Image
-                      src="/images/raio.png"
-                      alt="RaIO Smart"
+                      src="/images/RaIO_smart_thumb.png"
+                      alt="RaIO Smart whitelabel app"
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
@@ -404,13 +404,13 @@ export default function AboutPage() {
                   {/* Tag */}
                   <div>
                     <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
-                      WHITELABEL FRAMEWORK
+                      WHITELABEL APP
                     </span>
                   </div>
 
                   {/* Title */}
                   <h3 className="text-h5 sm:text-h4 font-bold text-white group-hover:text-[#00DC6C] transition-colors">
-                    RaIO Smart
+                    RaIO Smart whitelabel app
                   </h3>
 
                   {/* Description */}

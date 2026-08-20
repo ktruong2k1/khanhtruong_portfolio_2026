@@ -223,7 +223,7 @@ export default function TopClientSection({
                 className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
               >
                 <Image
-                  src="/images/Rogo_Platform_large.png"
+                  src="/images/Rogo_dashboard_thumb.png"
                   alt="Rogo Platform"
                   fill
                   className="object-cover group-hover/thumb:scale-105 transition-transform duration-500"
@@ -276,11 +276,11 @@ export default function TopClientSection({
             {/* State B Project Card: RaIO Smart Framework */}
             <div className="w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row items-start gap-8 lg:gap-10">
               <Link
-                href="/works"
+                href="/works/raio-smart"
                 className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
               >
                 <Image
-                  src="/images/raio.png"
+                  src="/images/RaIO_smart_thumb.png"
                   alt="RaIO Smart Framework"
                   fill
                   className="object-cover object-center group-hover/thumb:scale-105 transition-transform duration-500"
@@ -296,10 +296,9 @@ export default function TopClientSection({
                     IOT • MOBILE
                   </span>
                 </div>
-                <Link href="/works" className="block group/title">
+                <Link href="/works/raio-smart" className="block group/title">
                   <h3 className="text-h4 md:text-h3 font-bold text-white group-hover/title:text-[#00DC6C] transition-colors flex items-center gap-2 cursor-pointer">
-                    <span>RaIO Smart Framework</span>
-                    <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
+                    <span>RaIO Smart whitelabel app</span>
                   </h3>
                 </Link>
                 <p className="text-[14px] text-white/80 leading-relaxed">
@@ -468,7 +467,7 @@ export default function TopClientSection({
                     className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
                   >
                     <Image
-                      src="/images/Rogo_Platform_large.png"
+                      src="/images/Rogo_dashboard_thumb.png"
                       alt="Rogo IoT Platform v2"
                       fill
                       className="object-cover object-center group-hover/thumb:scale-105 transition-transform duration-500"
@@ -609,11 +608,11 @@ export default function TopClientSection({
                 <div className="w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row items-start gap-8 lg:gap-10 pointer-events-auto">
                   {/* Left Mockup Thumbnail: 640x480 (4:3) with 12px radius */}
                   <Link
-                    href="/works"
+                    href="/works/raio-smart"
                     className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
                   >
                     <Image
-                      src="/images/raio.png"
+                      src="/images/RaIO_smart_thumb.png"
                       alt="RaIO Smart Framework"
                       fill
                       className="object-cover object-center group-hover/thumb:scale-105 transition-transform duration-500"
@@ -632,10 +631,9 @@ export default function TopClientSection({
                       </span>
                     </div>
 
-                    <Link href="/works" className="block group/title">
+                    <Link href="/works/raio-smart" className="block group/title">
                       <h3 className="text-h4 md:text-h3 font-bold text-white group-hover/title:text-[#00DC6C] transition-colors flex items-center gap-2 cursor-pointer">
-                        <span>RaIO Smart Framework</span>
-                        <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
+                        <span>RaIO Smart whitelabel app</span>
                       </h3>
                     </Link>
 

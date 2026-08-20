@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -12,6 +12,23 @@ import { useLanguage } from "@/context/LanguageContext";
 export default function RogoDashboardPage() {
   const { lang, setLang } = useLanguage();
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const titleSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Automatically snap / scroll to the Title & Hero Mockup when entering project page
+    const timer = setTimeout(() => {
+      if (titleSectionRef.current) {
+        const navOffset = 88; // Height of fixed navbar + breathing space
+        const elementPosition = titleSectionRef.current.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
+    }, 60);
+    return () => clearTimeout(timer);
+  }, []);
 
   const heroDescription =
     lang === "vi"
@@ -32,7 +49,7 @@ export default function RogoDashboardPage() {
         <div className="max-w-[1440px] mx-auto w-full space-y-12 sm:space-y-16">
           
           {/* Top Header: Back CTA Button + Project Title & Short Description */}
-          <div className="space-y-6 max-w-[900px]">
+          <div className="max-w-[900px] space-y-8 sm:space-y-10 lg:space-y-12">
             {/* Back CTA Button synced with InteractiveCTA design */}
             <div>
               <InteractiveCTA
@@ -42,15 +59,16 @@ export default function RogoDashboardPage() {
               />
             </div>
 
-            {/* Project Title */}
-            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
-              Rogo Platform V2
-            </h1>
+            {/* Project Title & Hero Subtitle */}
+            <div ref={titleSectionRef} className="space-y-4 sm:space-y-6 scroll-mt-24">
+              <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
+                Rogo Platform V2
+              </h1>
 
-            {/* Hero Subtitle */}
-            <p className="text-b2 md:text-b1 text-white/70 leading-relaxed max-w-[760px]">
-              {heroDescription}
-            </p>
+              <p className="text-b2 md:text-b1 text-white/70 leading-relaxed max-w-[760px]">
+                {heroDescription}
+              </p>
+            </div>
           </div>
 
           {/* SECTION 1: HERO BANNER MOCKUP (Diagram hero.jpg - Aspect 3786/1440) */}
@@ -342,7 +360,7 @@ export default function RogoDashboardPage() {
                   {/* Mockup Thumbnail (Aspect 4:3) */}
                   <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
                     <Image
-                      src="/images/raio.png"
+                      src="/images/RaIO_smart_thumb.png"
                       alt="RaIO Smart"
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -358,7 +376,7 @@ export default function RogoDashboardPage() {
 
                   {/* Title */}
                   <h3 className="text-h5 sm:text-h4 font-bold text-white group-hover:text-[#00DC6C] transition-colors">
-                    RaIO Smart
+                    RaIO Smart whitelabel app
                   </h3>
 
                   {/* Description */}
@@ -438,8 +456,8 @@ export default function RogoDashboardPage() {
                   {/* Description */}
                   <p className="text-b3 text-white/70 leading-relaxed font-mono">
                     {lang === "vi"
-                      ? "Ứng dụng điều khiển cửa cuốn và hệ sinh thái nhà thông minh Austfly — instance tùy biến trên RaIO Smart."
-                      : "Smart roller shutter & IoT control app Austfly — a fully customized instance powered by RaIO Smart."}
+                      ? "Ứng dụng điều khiển cửa cuốn và hệ sinh thái nhà thông minh Austfly — instance tùy biến trên RaIO Smart whitelabel app."
+                      : "Smart roller shutter & IoT control app Austfly — a fully customized instance powered by RaIO Smart whitelabel app."}
                   </p>
                 </div>
               </Link>
