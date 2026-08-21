@@ -32,8 +32,8 @@ export default function RaIOSmartPage() {
 
   const heroDescription =
     lang === "vi"
-      ? "Khung ứng dụng nhà thông minh Whitelabel — cùng kiến trúc và logic sản phẩm cốt lõi, nhưng có thể thích ứng giao diện, quy trình thêm thiết bị và tùy biến nhận diện thương hiệu cho từng đối tác một cách linh hoạt."
-      : "Whitelabel Smart Home App framework — partner-adaptive UI, complex device onboarding, same core product logic, customizable brand identity across partners.";
+      ? "RaIO không chỉ là một ứng dụng nhà thông minh thông thường — đây là nỗ lực giải quyết vấn đề cấu trúc cốt lõi trong thị trường IoT Việt Nam: sự phân mảnh thương hiệu. Bằng cách cung cấp cho các thương hiệu một nền tảng dùng chung mà không bắt buộc họ phải từ bỏ nhận diện riêng, RaIO mở ra lộ trình hướng tới trải nghiệm smarthome kết nối liền mạch, xóa bỏ các rào cản phân mảnh cho người dùng Việt."
+      : "RaIO isn't just another smart home app — it's an attempt to solve a structural problem in the Vietnamese IoT market: brand fragmentation. By giving brands a shared foundation without asking them to give up their identity, RaIO opens a path toward a more connected, less siloed smart home experience for Vietnamese consumers.";
 
   return (
     <div className="min-h-screen w-full bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black overflow-x-hidden">
@@ -86,7 +86,7 @@ export default function RaIOSmartPage() {
 
           {/* SECTION 2: 2-COLUMN INFO GRID (The Problem & Architecture vs Clients, Service, Tools) with 2px continuous borders */}
           <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 border-t-2 border-b-2 border-white/10">
-            {/* Left Column: The Problem & One system, many layers */}
+            {/* Left Column: The Problem, The Product & Where RaIO Fits in the Bigger Picture */}
             <div className="lg:col-span-7 py-10 sm:py-12 lg:py-16 space-y-10">
               {/* The problem */}
               <div className="space-y-3">
@@ -95,30 +95,127 @@ export default function RaIOSmartPage() {
                 </span>
                 <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
                   {lang === "vi"
-                    ? "Trước khi có RaIO Smart, mỗi đối tác nhà thông minh cần phát triển một ứng dụng di động riêng biệt từ đầu. Điều này dẫn đến sự phân mảnh mã nguồn, trùng lặp tính năng, khó kiểm soát chất lượng và tiêu tốn hàng tháng trời cho mỗi lần onboarding đối tác mới."
-                    : "Before RaIO Smart, each smart home partner built their own mobile app from scratch. This led to fragmented codebases, duplicated development efforts, inconsistent user experiences, and months of delay for every partner launch."}
-                </p>
-                <p className="text-b2 md:text-b1 text-[#00DC6C] font-semibold leading-relaxed">
-                  {lang === "vi"
-                    ? "Một giải pháp framework dùng chung toàn diện là chìa khóa để nhân rộng hệ sinh thái IoT nhanh chóng."
-                    : "A unified, reusable framework was essential to scale the entire IoT smart home ecosystem at speed."}
+                    ? "Thị trường nhà thông minh Việt Nam bị phân mảnh nghiêm trọng. Mỗi thương hiệu phần cứng đều phát hành ứng dụng riêng, luồng đăng nhập riêng, logic thiết bị riêng — buộc người dùng phải chuyển đổi liên tục giữa nhiều app chỉ để quản lý một ngôi nhà. Chưa từng có nền tảng nào đứng ra thống nhất bức tranh phân mảnh này thành một trải nghiệm nhất quán, linh hoạt theo từng thương hiệu."
+                    : "Vietnam's smart home market is fragmented. Every hardware brand ships its own app, its own login, its own device logic — forcing consumers to juggle multiple apps just to manage a single smart home. No platform had yet stepped up to unify this landscape under one consistent, brand-flexible experience."}
                 </p>
               </div>
 
-              {/* One system, many layer */}
+              {/* The Product */}
               <div className="space-y-3">
                 <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi" ? "Một hệ thống, nhiều tầng kiến trúc" : "One system, many layers"}
+                  {lang === "vi" ? "Sản phẩm" : "The Product"}
                 </span>
                 <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
-                  {lang === "vi"
-                    ? "RaIO Smart phân tách kiến trúc thành các lớp độc lập: tầng kết nối IoT & Bluetooth/Wi-Fi cốt lõi, tầng quy trình thêm thiết bị (device onboarding flow), và tầng nhận diện thương hiệu tùy biến (theme, color token, icons, typography). Mỗi đối tác có thể thay đổi giao diện bên ngoài mà không chạm vào logic bên dưới."
-                    : "RaIO Smart decouples the architecture into modular layers: core IoT & connectivity protocol engine, standard device onboarding flow, and customizable brand layers (tokens, icons, typography). Partners can style their own experience without modifying core logic."}
+                  {lang === "vi" ? (
+                    <>
+                      RaIO là thương hiệu hệ sinh thái được đồng sáng lập bởi{" "}
+                      <span className="text-[#00DC6C] font-semibold">Rogo Solutions</span> và{" "}
+                      <span className="text-[#00DC6C] font-semibold">Rạng Đông</span>, xây dựng nhằm
+                      thu hẹp khoảng cách phân mảnh đó. Vận hành trên nền tảng của Rogo và phát
+                      triển hợp tác cùng Rạng Đông, RaIO Smart là ứng dụng whitelabel kết nối các
+                      thiết bị IoT Wifi từ nhiều thương hiệu vào một hệ sinh thái đồng nhất.
+                    </>
+                  ) : (
+                    <>
+                      RaIO is a Vietnamese ecosystem brand co-founded by{" "}
+                      <span className="text-[#00DC6C] font-semibold">Rogo Solutions</span> and{" "}
+                      <span className="text-[#00DC6C] font-semibold">Rạng Đông</span>, built to close
+                      that gap. Powered by Rogo&apos;s platform and developed in partnership with Rạng
+                      Đông, RaIO Smart is the whitelabel app that brings Wifi IoT devices from
+                      multiple brands into one unified ecosystem.
+                    </>
+                  )}
                 </p>
-                <p className="text-b2 md:text-b1 text-[#00DC6C] font-semibold leading-relaxed">
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
                   {lang === "vi"
-                    ? "Khung ứng dụng đảm bảo tính linh hoạt tối đa cho thương hiệu nhưng vẫn giữ vững sự ổn định kỹ thuật tuyệt đối."
-                    : "The framework enables maximum branding flexibility while maintaining complete architectural stability."}
+                    ? "Mô hình hoạt động ở hai cấp độ: Các thương hiệu lớn có thể whitelabel toàn bộ nền tảng — phát hành ứng dụng mang trọn vẹn nhận diện thương hiệu riêng trong khi vẫn chạy trên hạ tầng cốt lõi của RaIO — trong khi các thương hiệu nhỏ hơn có thể tích hợp trực tiếp vào hệ sinh thái RaIO để thiết bị của họ được điều khiển ngay trong chính ứng dụng RaIO. Dù ở lộ trình nào, logic cốt lõi bên dưới vẫn đồng nhất; chỉ có lớp giao diện hiển thị thay đổi."
+                    : "The model works on two levels: larger brands can whitelabel the platform entirely — shipping an app that carries their own identity while running on RaIO's core infrastructure — while smaller brands can plug directly into the RaIO ecosystem and let their devices be controlled through the RaIO app itself. Either path, the underlying logic stays the same; only the presentation layer changes."}
+                </p>
+              </div>
+
+              {/* Where RaIO Fits in the Bigger Picture */}
+              <div className="space-y-3">
+                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
+                  {lang === "vi"
+                    ? "Vị trí của RaIO trong bức tranh tổng thể"
+                    : "Where RaIO Fits in the Bigger Picture"}
+                </span>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi" ? (
+                    <>
+                      RaIO Smart không vận hành biệt lập — mọi thiết bị, mọi đối tác, mọi phân
+                      quyền người dùng trong RaIO đều được khởi tạo và quản trị thông qua{" "}
+                      <Link
+                        href="/works/rogo-platform-v2"
+                        className="group/link inline-flex items-center gap-1 font-semibold text-[#00DC6C] hover:text-[#33ff8a] underline underline-offset-4 decoration-[#00DC6C]/40 hover:decoration-[#33ff8a] transition-colors"
+                      >
+                        <svg
+                          className="w-3.5 h-3.5 shrink-0 text-[#00DC6C] group-hover/link:text-[#33ff8a] transition-transform duration-200 group-hover/link:-rotate-12 inline align-middle"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                        </svg>
+                        <span>Rogo Platform Dashboard V2</span>
+                      </Link>
+                      , chính là hệ thống quản trị toàn bộ hệ sinh thái đa thương hiệu của Rogo.
+                    </>
+                  ) : (
+                    <>
+                      RaIO Smart doesn&apos;t run in isolation — every device, every partner, every
+                      user permission inside RaIO is provisioned and governed through the{" "}
+                      <Link
+                        href="/works/rogo-platform-v2"
+                        className="group/link inline-flex items-center gap-1 font-semibold text-[#00DC6C] hover:text-[#33ff8a] underline underline-offset-4 decoration-[#00DC6C]/40 hover:decoration-[#33ff8a] transition-colors"
+                      >
+                        <svg
+                          className="w-3.5 h-3.5 shrink-0 text-[#00DC6C] group-hover/link:text-[#33ff8a] transition-transform duration-200 group-hover/link:-rotate-12 inline align-middle"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                        </svg>
+                        <span>Rogo Platform Dashboard V2</span>
+                      </Link>
+                      , the same system that manages Rogo&apos;s entire multi-brand ecosystem.
+                    </>
+                  )}
+                </p>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi"
+                    ? "Sự kết nối đó là yếu tố cốt lõi giúp mô hình whitelabel có thể khả thi ngay từ đầu. Khi một thương hiệu lớn whitelabel RaIO, hoặc một thương hiệu nhỏ gia nhập ứng dụng chung, hệ thống vẫn phải định nghĩa rõ: ai quản lý thiết bị của thương hiệu đó, họ được phép nhìn thấy những gì và ranh giới quyền hạn nằm ở đâu. Dashboard chính là nơi cấu trúc đó tồn tại — tổ chức, dự án, vai trò — và RaIO Smart là một trong những sản phẩm được xây dựng để hỗ trợ cấu trúc phân quyền này."
+                    : "That connection is what made the whitelabel model possible in the first place. When a large brand whitelabels RaIO, or a smaller brand joins the shared app, someone still has to define: who manages that brand's devices, what they're allowed to see, and where their boundary ends. The dashboard is where that structure lives — organizations, projects, roles — and RaIO Smart is one of the products that structure was built to support."}
+                </p>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi" ? (
+                    <>
+                      <span className="text-[#00DC6C] font-semibold">
+                        Thiết kế song hành cả hai hệ thống đảm bảo tính đồng bộ tuyệt đối không bị lệch pha.
+                      </span>{" "}
+                      Mọi quyết định whitelabel ở tầng ứng dụng đều có quyết định phân quyền tương ứng
+                      trên tầng dashboard — ranh giới thương hiệu của đối tác trên RaIO luôn khớp hoàn
+                      hảo với ranh giới phân quyền trên platform, đảm bảo toàn bộ mô hình vận hành bền vững.
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-[#00DC6C] font-semibold">
+                        Designing one alongside the other meant the two could never drift apart.
+                      </span>{" "}
+                      Every whitelabel decision on the app side had a corresponding access decision
+                      on the dashboard side — a partner&apos;s brand boundary in RaIO had to match
+                      their permission boundary in the platform, or the whole model would break.
+                    </>
+                  )}
                 </p>
               </div>
             </div>
@@ -139,18 +236,10 @@ export default function RaIOSmartPage() {
                       className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                     />
                   </div>
-                  <div className="relative w-[110px] h-[32px] group cursor-pointer">
-                    <Image
-                      src="/images/Austdoor.svg"
-                      alt="Austdoor & Austfly"
-                      fill
-                      className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
-                    />
-                  </div>
                   <div className="relative w-[120px] h-[32px] group cursor-pointer">
                     <Image
-                      src="/images/FPTSmartHome_color.svg"
-                      alt="FPT Smart Home"
+                      src="/images/RangDong_color.svg"
+                      alt="Rạng Đông"
                       fill
                       className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                     />
@@ -164,13 +253,7 @@ export default function RaIOSmartPage() {
                   {lang === "vi" ? "Dịch vụ" : "Service"}
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {[
-                    "UI/UX Research",
-                    "App Architecture",
-                    "Design System",
-                    "Mobile App UI",
-                    "Whitelabel Engine",
-                  ].map((item) => (
+                  {["UI/UX research", "BA development", "UI Design"].map((item) => (
                     <span
                       key={item}
                       className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
@@ -187,16 +270,14 @@ export default function RaIOSmartPage() {
                   {lang === "vi" ? "Công cụ" : "Tools"}
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {["Figma", "React Native", "TypeScript", "Claude AI", "Gemini CLI", "Vercel"].map(
-                    (tool) => (
-                      <span
-                        key={tool}
-                        className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
-                      >
-                        {tool}
-                      </span>
-                    )
-                  )}
+                  {["Figma", "Claude AI"].map((tool) => (
+                    <span
+                      key={tool}
+                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
+                    >
+                      {tool}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
