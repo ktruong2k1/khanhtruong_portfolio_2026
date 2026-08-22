@@ -130,17 +130,17 @@ export default function FooterSection({ lang, onOpenContact }: FooterSectionProp
           {/* Left Column (lg:col-span-7): 96px Typing Headline + Contact Buttons */}
           <div className="lg:col-span-7 flex flex-col justify-start pr-0 lg:pr-12 pb-6 lg:pb-0">
             <div>
-              <h2 className="text-h2 sm:text-h1 font-normal text-black tracking-tight select-none">
+              <h2 className="text-h0 text-[44px] sm:text-[64px] lg:text-[96px] lg:leading-[100px] font-normal text-black tracking-tight select-none">
                 <div>
                   {line1Typed}
                   {charCount > 0 && charCount < line1Text.length && (
-                    <span className="inline-block w-2 lg:w-3 h-6 lg:h-12 bg-black ml-1.5 align-middle animate-pulse" />
+                    <span className="inline-block w-2 lg:w-3 h-8 sm:h-12 lg:h-[72px] bg-black ml-1.5 align-middle animate-pulse" />
                   )}
                 </div>
                 <div>
                   {line2Typed}
                   {charCount >= line1Text.length && charCount < totalChars && (
-                    <span className="inline-block w-2 lg:w-3 h-6 lg:h-12 bg-black ml-1.5 align-middle animate-pulse" />
+                    <span className="inline-block w-2 lg:w-3 h-8 sm:h-12 lg:h-[72px] bg-black ml-1.5 align-middle animate-pulse" />
                   )}
                   {charCount === 0 && <span className="opacity-0">{line2Text}</span>}
                 </div>
