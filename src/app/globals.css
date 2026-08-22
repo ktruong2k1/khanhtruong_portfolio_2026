@@ -233,27 +233,13 @@ html {
   gap: var(--gutter);
 }
 
-/* Header Responsive Split Utilities */
+/* Header Responsive Split Utilities (Legacy fallback) */
 .mobile-only-header {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  width: 100% !important;
+  display: none !important;
 }
 
 .desktop-only-header {
-  display: none !important;
-  width: 100% !important;
-}
-
-@media (min-width: 768px) {
-  .mobile-only-header {
-    display: none !important;
-  }
-  .desktop-only-header {
-    display: block !important;
-  }
+  display: block !important;
 }
 
 /* ==========================================================================
@@ -302,30 +288,6 @@ html {
   font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
   font-size: 20px !important;
   line-height: 30px !important;
-}
-
-/* Mobile & Tablet Only (< 1024px): Responsive heading scaling */
-@media (max-width: 1023px) {
-  .text-h0 {
-    font-size: clamp(38px, 9vw, 72px) !important;
-    line-height: 1.05 !important;
-  }
-  .text-h1 {
-    font-size: clamp(32px, 7vw, 52px) !important;
-    line-height: 1.1 !important;
-  }
-  .text-h2 {
-    font-size: clamp(26px, 5.5vw, 40px) !important;
-    line-height: 1.15 !important;
-  }
-  .text-h3 {
-    font-size: clamp(22px, 4.5vw, 34px) !important;
-    line-height: 1.2 !important;
-  }
-  .text-h4 {
-    font-size: clamp(18px, 3.8vw, 30px) !important;
-    line-height: 1.25 !important;
-  }
 }
 
 .text-h7 {

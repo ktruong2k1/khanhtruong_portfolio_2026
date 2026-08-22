@@ -171,7 +171,7 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
       >
         <div className="max-w-[1440px] mx-auto w-full">
           {/* MOBILE TOPNAV (< 768px): Always compact horizontal flex row with 24px height logo on left and hamburger button on right */}
-          <div className="mobile-only-header pointer-events-auto py-1">
+          <div className="flex md:hidden items-center justify-between w-full pointer-events-auto py-1">
             {/* Mobile Header Logo (Left) */}
             <div
               onClick={scrollToHero}
@@ -198,7 +198,7 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
           </div>
 
           {/* DESKTOP & TABLET TOPNAV (>= 768px) */}
-          <div className="desktop-only-header">
+          <div className="hidden md:block w-full">
             <AnimatePresence mode="wait">
               {!isScrolled ? (
                 /* State 1: Floating Centered Pill Topnav (Hero Section) */
