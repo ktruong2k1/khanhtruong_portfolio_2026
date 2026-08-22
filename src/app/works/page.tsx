@@ -762,7 +762,7 @@ export default function WorksPage() {
                 {/* Left Thumbnail Mockup Card: 4:3 & rounded-[12px] */}
                 <div className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
                   <Image
-                    src="/images/Rogo_IoT_Platform_Dashboard_Interface.png"
+                    src="/images/Thing Partner.png"
                     alt="Thing Partner"
                     fill
                     className="object-cover object-left"

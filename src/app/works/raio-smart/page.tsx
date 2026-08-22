@@ -12,7 +12,14 @@ import { useLanguage } from "@/context/LanguageContext";
 export default function RaIOSmartPage() {
   const { lang, setLang } = useLanguage();
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [activeLayer, setActiveLayer] = useState(1);
   const titleSectionRef = useRef<HTMLDivElement>(null);
+
+  const layers = [
+    { id: 0, label: "Platform layer" },
+    { id: 1, label: "Framework layer" },
+    { id: 2, label: "Instance layer" },
+  ];
 
   useEffect(() => {
     // Automatically snap / scroll to the Title & Hero Mockup when entering project page
@@ -72,7 +79,7 @@ export default function RaIOSmartPage() {
           </div>
 
           {/* SECTION 1: HERO BANNER MOCKUP */}
-          <div className="relative w-full aspect-[16/9] sm:aspect-[3786/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+          <div className="relative w-full aspect-[16/9] sm:aspect-[3786/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
             <Image
               src="/images/raio_smart_project/Diagram hero.jpg"
               alt="RaIO Smart Overview Mockup"
@@ -82,6 +89,82 @@ export default function RaIOSmartPage() {
               sizes="(max-width: 768px) 100vw, 1440px"
               className="object-cover object-center"
             />
+          </div>
+
+          {/* SECTION 1.5: 3-LAYER MINI TABS & ARCHITECTURE OVERVIEW (Diagram 0.jpg) */}
+          <div className="space-y-[20px]">
+            {/* Mini Tab for 3 layers: heading-24px with active green bar indicator */}
+            <div className="flex items-center gap-6 sm:gap-8 flex-wrap font-heading text-[20px] sm:text-[24px] font-bold">
+              {layers.map((layer) => {
+                const isActive = activeLayer === layer.id;
+                return (
+                  <button
+                    key={layer.id}
+                    onClick={() => setActiveLayer(layer.id)}
+                    className="flex items-center gap-2.5 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 text-left group"
+                  >
+                    {isActive && (
+                      <span className="w-1.5 h-[20px] sm:h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
+                    )}
+                    <span
+                      className={`transition-colors ${
+                        isActive
+                          ? "text-[#00DC6C]"
+                          : "text-white/40 hover:text-white/80"
+                      }`}
+                    >
+                      {layer.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Diagram 0.jpg White Card Container (Aspect 3720/1440) */}
+            <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+              <Image
+                src="/images/raio_smart_project/Diagram 0.jpg"
+                alt="3-Layer Architecture Diagram (Platform, Framework, Instance)"
+                fill
+                priority
+                unoptimized
+                sizes="(max-width: 768px) 100vw, 1440px"
+                className="object-cover object-center"
+              />
+            </div>
+
+            {/* Contextual navigation link when Platform or Instance layer is selected */}
+            {activeLayer === 0 && (
+              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-xl transition-all">
+                <span className="text-b3 sm:text-b2 text-white/90 font-mono">
+                  {lang === "vi"
+                    ? "Tầng Nền tảng cốt lõi: Rogo Platform Dashboard V2"
+                    : "Core Platform Layer: Rogo Platform Dashboard V2"}
+                </span>
+                <Link
+                  href="/works/rogo-platform-v2"
+                  className="text-b3 sm:text-b2 font-bold text-[#00DC6C] hover:underline inline-flex items-center gap-1 font-mono"
+                >
+                  {lang === "vi" ? "Xem chi tiết dự án Rogo Platform →" : "View Rogo Platform project →"}
+                </Link>
+              </div>
+            )}
+
+            {activeLayer === 2 && (
+              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-xl transition-all">
+                <span className="text-b3 sm:text-b2 text-white/90 font-mono">
+                  {lang === "vi"
+                    ? "Tầng Phiên bản ứng dụng thực tế: Austfly, Kangaroo RaIO"
+                    : "Live App Instance Layer: Austfly, Kangaroo RaIO"}
+                </span>
+                <Link
+                  href="/works"
+                  className="text-b3 sm:text-b2 font-bold text-[#00DC6C] hover:underline inline-flex items-center gap-1 font-mono"
+                >
+                  {lang === "vi" ? "Xem danh sách dự án tại My Works →" : "View all projects in My Works →"}
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* SECTION 2: 2-COLUMN INFO GRID (The Problem & Architecture vs Clients, Service, Tools) with 2px continuous borders */}
@@ -247,10 +330,10 @@ export default function RaIOSmartPage() {
                 </div>
               </div>
 
-              {/* Service */}
-              <div className="space-y-3">
+              {/* My Role */}
+              <div className="space-y-4">
                 <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi" ? "Dịch vụ" : "Service"}
+                  {lang === "vi" ? "Vai trò của tôi" : "My Role"}
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {["UI/UX research", "BA development", "UI Design"].map((item) => (
@@ -262,6 +345,11 @@ export default function RaIOSmartPage() {
                     </span>
                   ))}
                 </div>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi"
+                    ? "Tôi thiết kế RaIO Smart toàn diện từ đầu đến cuối, từ quyết định phân tích nghiệp vụ đầu tiên cho đến giao diện UI/UX cuối cùng — định hình cả định hướng chiến lược của sản phẩm và từng quyết định thiết kế cốt lõi."
+                    : "I designed RaIO Smart end-to-end, starting from the first business analysis decision through to final UI/UX — owning both the strategic direction of the product and every design decision that shaped it."}
+                </p>
               </div>
 
               {/* Tools */}
@@ -283,86 +371,17 @@ export default function RaIOSmartPage() {
             </div>
           </div>
 
-          {/* SECTION 3: PLATFORM ARCHITECTURE OVERVIEW DIAGRAM (Diagram 01.jpg - Aspect 3720/1440) */}
-          <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
-            <Image
-              src="/images/rogo_project/Diagram 01.jpg"
-              alt="Rogo IoT Platform Dashboard Architecture"
-              fill
-              unoptimized
-              sizes="(max-width: 768px) 100vw, 1440px"
-              className="object-cover object-center"
-            />
-          </div>
-
-          {/* SECTION 4: BA DEVELOPMENT (Heading 36px, Diagram 2, 3, 4, 5 - Aspect 3720/1440 each) */}
-          <div className="space-y-6 sm:space-y-8 pt-8">
+          {/* SECTION 3: APP DESIGN (Full Layout from Screenshots with 20px spacing) */}
+          <div className="space-y-[20px] pt-4">
             <h2 className="font-heading text-[28px] sm:text-[36px] font-bold text-white tracking-tight leading-tight">
-              BA Development
+              App Design
             </h2>
 
-            <div className="space-y-6 sm:space-y-8">
-              {/* Diagram 2: Platform layers */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+            <div className="space-y-[20px]">
+              {/* Block 1: Design system follow brand guideline (Diagram 2.jpg - Aspect 3720/1440) */}
+              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                 <Image
-                  src="/images/rogo_project/Diagram 2.jpg"
-                  alt="Platform layers data structure"
-                  fill
-                  unoptimized
-                  sizes="(max-width: 768px) 100vw, 1440px"
-                  className="object-cover object-center"
-                />
-              </div>
-
-              {/* Diagram 3: 01 — Authentication */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
-                <Image
-                  src="/images/rogo_project/Diagram 3.jpg"
-                  alt="01 — Authentication flow"
-                  fill
-                  unoptimized
-                  sizes="(max-width: 768px) 100vw, 1440px"
-                  className="object-cover object-center"
-                />
-              </div>
-
-              {/* Diagram 4: 02 — Organizations */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
-                <Image
-                  src="/images/rogo_project/Diagram 4.jpg"
-                  alt="02 — Organizations management"
-                  fill
-                  unoptimized
-                  sizes="(max-width: 768px) 100vw, 1440px"
-                  className="object-cover object-center"
-                />
-              </div>
-
-              {/* Diagram 5: 03 — Permissions (ABAC) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
-                <Image
-                  src="/images/rogo_project/Diagram 5.jpg"
-                  alt="03 — Permissions (ABAC) matrix"
-                  fill
-                  unoptimized
-                  sizes="(max-width: 768px) 100vw, 1440px"
-                  className="object-cover object-center"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* SECTION 5: WHITELABEL ADAPTATION (Heading 36px, Kangaroo & Austfly Instances) */}
-          <div className="space-y-6 sm:space-y-8 pt-8">
-            <h2 className="font-heading text-[28px] sm:text-[36px] font-bold text-white tracking-tight leading-tight">
-              {lang === "vi" ? "Khả năng tùy biến Whitelabel" : "Whitelabel Customization"}
-            </h2>
-
-            <div className="space-y-6 sm:space-y-8">
-              {/* Full-width Top Card: Diagram 6.jpg (Aspect 3720/1440) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
-                <Image
-                  src="/images/rogo_project/Diagram 6.jpg"
+                  src="/images/raio_smart_project/Diagram 2.jpg"
                   alt="Design system follow brand guideline"
                   fill
                   unoptimized
@@ -371,31 +390,100 @@ export default function RaIOSmartPage() {
                 />
               </div>
 
-              {/* Middle 2-Column Grid: Kangaroo RaIO & Austfly Instances */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
-                {/* Left Card: Kangaroo RaIO */}
-                <div className="relative w-full aspect-[4/3] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+              {/* Block 2: 2-Column Grid (gap-20px) - Logo (Diagram 3.jpg) & Color Palette (Diagram 4.jpg) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
+                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                   <Image
-                    src="/images/kangaroo_raio.png"
-                    alt="Kangaroo RaIO Mobile Instance"
+                    src="/images/raio_smart_project/Diagram 3.jpg"
+                    alt="RaIO Brand Logo"
                     fill
                     unoptimized
                     sizes="(max-width: 768px) 100vw, 720px"
                     className="object-cover object-center"
                   />
                 </div>
+                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                  <Image
+                    src="/images/raio_smart_project/Diagram 4.jpg"
+                    alt="Brand Color Palette: Primary, Gradient, Secondary, Neutral"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 768px) 100vw, 720px"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
 
-                {/* Right Card: Austfly */}
-                <div className="relative w-full aspect-[4/3] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+              {/* Block 3: 2-Column Grid (gap-20px) - Iconography (Diagram 5.jpg) & Abstract Graphic (Diagram 6.jpg) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
+                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                   <Image
-                    src="/images/austfly.png"
-                    alt="Austfly Smart Roller Shutter Mobile Instance"
+                    src="/images/raio_smart_project/Diagram 5.jpg"
+                    alt="RaIO Iconography System"
                     fill
                     unoptimized
                     sizes="(max-width: 768px) 100vw, 720px"
                     className="object-cover object-center"
                   />
                 </div>
+                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                  <Image
+                    src="/images/raio_smart_project/Diagram 6.jpg"
+                    alt="RaIO Abstract Brand Motif"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 768px) 100vw, 720px"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
+
+              {/* Block 4: Countdown Settings & Control Buttons (Diagram 10-1.jpg - Aspect 3720/1440) */}
+              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <Image
+                  src="/images/raio_smart_project/Diagram 10-1.jpg"
+                  alt="Countdown settings and device control buttons"
+                  fill
+                  unoptimized
+                  sizes="(max-width: 768px) 100vw, 1440px"
+                  className="object-cover object-center"
+                />
+              </div>
+
+              {/* Block 5: 2-Column Grid (gap-20px) - Scanning Device (Diagram 7.jpg) & Live App Home (Diagram 8.jpg) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
+                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                  <Image
+                    src="/images/raio_smart_project/Diagram 7.jpg"
+                    alt="Scanning Device Mobile Mockup"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 768px) 100vw, 720px"
+                    className="object-cover object-center"
+                  />
+                </div>
+                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                  <Image
+                    src="/images/raio_smart_project/Diagram 8.jpg"
+                    alt="RaIO Smart Mobile Home Screen Mockup"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 768px) 100vw, 720px"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
+
+              {/* Block 6: CRM Dashboard Login Screen (Diagram 10.jpg - Aspect 3720/1440) */}
+              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <Image
+                  src="/images/raio_smart_project/Diagram 10.jpg"
+                  alt="CRM Dashboard & Login Portal"
+                  fill
+                  unoptimized
+                  sizes="(max-width: 768px) 100vw, 1440px"
+                  className="object-cover object-center"
+                />
               </div>
             </div>
           </div>
@@ -459,7 +547,7 @@ export default function RaIOSmartPage() {
                   {/* Mockup Thumbnail (Aspect 4:3) */}
                   <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
                     <Image
-                      src="/images/Rogo_IoT_Platform_Dashboard_Interface.png"
+                      src="/images/Thing Partner.png"
                       alt="Thing Partner"
                       fill
                       className="object-cover object-left group-hover:scale-105 transition-transform duration-500"

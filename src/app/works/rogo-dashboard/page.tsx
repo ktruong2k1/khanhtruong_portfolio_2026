@@ -12,7 +12,14 @@ import { useLanguage } from "@/context/LanguageContext";
 export default function RogoDashboardPage() {
   const { lang, setLang } = useLanguage();
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [activeLayer, setActiveLayer] = useState(0);
   const titleSectionRef = useRef<HTMLDivElement>(null);
+
+  const layers = [
+    { id: 0, label: "Platform layer" },
+    { id: 1, label: "Framework layer" },
+    { id: 2, label: "Instance layer" },
+  ];
 
   useEffect(() => {
     // Automatically snap / scroll to the Title & Hero Mockup when entering project page
@@ -72,7 +79,7 @@ export default function RogoDashboardPage() {
           </div>
 
           {/* SECTION 1: HERO BANNER MOCKUP (Diagram hero.jpg - Aspect 3786/1440) */}
-          <div className="relative w-full aspect-[3786/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+          <div className="relative w-full aspect-[3786/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
             <Image
               src="/images/rogo_project/Diagram hero.jpg"
               alt="Rogo Platform V2 Overview Mockup"
@@ -82,6 +89,82 @@ export default function RogoDashboardPage() {
               sizes="(max-width: 768px) 100vw, 1440px"
               className="object-cover object-center"
             />
+          </div>
+
+          {/* SECTION 1.5: 3-LAYER MINI TABS & ARCHITECTURE OVERVIEW (Diagram 0.jpg) */}
+          <div className="space-y-[20px]">
+            {/* Mini Tab for 3 layers: heading-24px with active green bar indicator */}
+            <div className="flex items-center gap-6 sm:gap-8 flex-wrap font-heading text-[20px] sm:text-[24px] font-bold">
+              {layers.map((layer) => {
+                const isActive = activeLayer === layer.id;
+                return (
+                  <button
+                    key={layer.id}
+                    onClick={() => setActiveLayer(layer.id)}
+                    className="flex items-center gap-2.5 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 text-left group"
+                  >
+                    {isActive && (
+                      <span className="w-1.5 h-[20px] sm:h-[24px] bg-[#00DC6C] rounded-full inline-block shrink-0" />
+                    )}
+                    <span
+                      className={`transition-colors ${
+                        isActive
+                          ? "text-[#00DC6C]"
+                          : "text-white/40 hover:text-white/80"
+                      }`}
+                    >
+                      {layer.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Diagram 0.jpg White Card Container (Aspect 3720/1440) */}
+            <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+              <Image
+                src="/images/rogo_project/Diagram 0.jpg"
+                alt="3-Layer Architecture Diagram (Platform, Framework, Instance)"
+                fill
+                priority
+                unoptimized
+                sizes="(max-width: 768px) 100vw, 1440px"
+                className="object-cover object-center"
+              />
+            </div>
+
+            {/* Contextual navigation link when Framework or Instance layer is selected */}
+            {activeLayer === 1 && (
+              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-xl transition-all">
+                <span className="text-b3 sm:text-b2 text-white/90 font-mono">
+                  {lang === "vi"
+                    ? "Tầng Khung ứng dụng Whitelabel: RaIO Smart"
+                    : "Whitelabel Framework Layer: RaIO Smart"}
+                </span>
+                <Link
+                  href="/works/raio-smart"
+                  className="text-b3 sm:text-b2 font-bold text-[#00DC6C] hover:underline inline-flex items-center gap-1 font-mono"
+                >
+                  {lang === "vi" ? "Xem chi tiết dự án RaIO Smart →" : "View RaIO Smart project →"}
+                </Link>
+              </div>
+            )}
+
+            {activeLayer === 2 && (
+              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-xl transition-all">
+                <span className="text-b3 sm:text-b2 text-white/90 font-mono">
+                  {lang === "vi"
+                    ? "Tầng Phiên bản ứng dụng thực tế: Austfly, Kangaroo RaIO"
+                    : "Live App Instance Layer: Austfly, Kangaroo RaIO"}
+                </span>
+                <Link
+                  href="/works"
+                  className="text-b3 sm:text-b2 font-bold text-[#00DC6C] hover:underline inline-flex items-center gap-1 font-mono"
+                >
+                  {lang === "vi" ? "Xem danh sách dự án tại My Works →" : "View all projects in My Works →"}
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* SECTION 2: 2-COLUMN INFO GRID (The Problem & Architecture vs Clients, Service, Tools) with 2px continuous borders */}
@@ -195,7 +278,7 @@ export default function RogoDashboardPage() {
           </div>
 
           {/* SECTION 3: PLATFORM ARCHITECTURE OVERVIEW DIAGRAM (Diagram 01.jpg - Aspect 3720/1440) */}
-          <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+          <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
             <Image
               src="/images/rogo_project/Diagram 01.jpg"
               alt="Rogo IoT Platform Dashboard Architecture"
@@ -207,14 +290,14 @@ export default function RogoDashboardPage() {
           </div>
 
           {/* SECTION 4: BA DEVELOPMENT (Heading 36px, Diagram 2, 3, 4, 5 - Aspect 3720/1440 each) */}
-          <div className="space-y-6 sm:space-y-8 pt-8">
+          <div className="space-y-[20px] pt-4">
             <h2 className="font-heading text-[28px] sm:text-[36px] font-bold text-white tracking-tight leading-tight">
               BA Development
             </h2>
 
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-[20px]">
               {/* Diagram 2: Platform layers */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/rogo_project/Diagram 2.jpg"
                   alt="Platform layers data structure"
@@ -226,7 +309,7 @@ export default function RogoDashboardPage() {
               </div>
 
               {/* Diagram 3: 01 — Authentication */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/rogo_project/Diagram 3.jpg"
                   alt="01 — Authentication flow"
@@ -238,7 +321,7 @@ export default function RogoDashboardPage() {
               </div>
 
               {/* Diagram 4: 02 — Organizations */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/rogo_project/Diagram 4.jpg"
                   alt="02 — Organizations management"
@@ -250,7 +333,7 @@ export default function RogoDashboardPage() {
               </div>
 
               {/* Diagram 5: 03 — Permissions (ABAC) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/rogo_project/Diagram 5.jpg"
                   alt="03 — Permissions (ABAC) matrix"
@@ -264,14 +347,14 @@ export default function RogoDashboardPage() {
           </div>
 
           {/* SECTION 5: WEBSITE DESIGN (Heading 36px, Diagram 6.jpg, Diagram 7.jpg + 8.jpg, Diagram 9.jpg + 17.jpg) */}
-          <div className="space-y-6 sm:space-y-8 pt-8">
+          <div className="space-y-[20px] pt-4">
             <h2 className="font-heading text-[28px] sm:text-[36px] font-bold text-white tracking-tight leading-tight">
               Website Design
             </h2>
 
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-[20px]">
               {/* Full-width Top Card: Diagram 6.jpg (Aspect 3720/1440) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/rogo_project/Diagram 6.jpg"
                   alt="Design system follow brand guideline"
@@ -282,10 +365,10 @@ export default function RogoDashboardPage() {
                 />
               </div>
 
-              {/* Middle 2-Column Grid: Diagram 7.jpg & Diagram 8.jpg (Aspect 1800/1440 each) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
+              {/* Middle 2-Column Grid (gap-20px): Diagram 7.jpg & Diagram 8.jpg (Aspect 1800/1440 each) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
                 {/* Left Card: Diagram 7.jpg (Access Tree) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/rogo_project/Diagram 7.jpg"
                     alt="Access Tree & Sidenav Navigation"
@@ -297,7 +380,7 @@ export default function RogoDashboardPage() {
                 </div>
 
                 {/* Right Card: Diagram 8.jpg (Logo Assets) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/rogo_project/Diagram 8.jpg"
                     alt="Logo Assets Configuration"
@@ -309,10 +392,10 @@ export default function RogoDashboardPage() {
                 </div>
               </div>
 
-              {/* Bottom 2-Column Grid: Diagram 9.jpg & Diagram 17.jpg (Aspect 1800/1440 each) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
+              {/* Bottom 2-Column Grid (gap-20px): Diagram 9.jpg & Diagram 17.jpg (Aspect 1800/1440 each) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
                 {/* Left Card: Diagram 9.jpg (Grant Partner Permission) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/rogo_project/Diagram 9.jpg"
                     alt="Grant Partner Permission Modal"
@@ -324,7 +407,7 @@ export default function RogoDashboardPage() {
                 </div>
 
                 {/* Right Card: Diagram 17.jpg (Grant Project Permission) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden border border-white/10 shadow-2xl bg-[#181818]">
+                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/rogo_project/Diagram 17.jpg"
                     alt="Grant Project Permission Modal"
@@ -397,7 +480,7 @@ export default function RogoDashboardPage() {
                   {/* Mockup Thumbnail (Aspect 4:3) */}
                   <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
                     <Image
-                      src="/images/Rogo_IoT_Platform_Dashboard_Interface.png"
+                      src="/images/Thing Partner.png"
                       alt="Thing Partner"
                       fill
                       className="object-cover object-left group-hover:scale-105 transition-transform duration-500"

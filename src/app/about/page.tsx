@@ -422,7 +422,7 @@ export default function AboutPage() {
                 </div>
               </Link>
 
-              {/* Card 2: Thing Base & Build */}
+              {/* Card 2: Thing Partner */}
               <Link
                 href="/works"
                 className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
@@ -432,7 +432,7 @@ export default function AboutPage() {
                   <div className="relative w-full aspect-[16/10] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
                     <Image
                       src="/images/thing_partner.png"
-                      alt="Thing Base & Build"
+                      alt="Thing Partner"
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
@@ -441,20 +441,20 @@ export default function AboutPage() {
                   {/* Tag */}
                   <div>
                     <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
-                      IOT DEVELOPER TOOLS
+                      IOT PLATFORM
                     </span>
                   </div>
 
                   {/* Title */}
                   <h3 className="text-h5 sm:text-h4 font-bold text-white group-hover:text-[#00DC6C] transition-colors">
-                    Thing Base & Build
+                    Thing Partner
                   </h3>
 
                   {/* Description */}
                   <p className="text-[13px] sm:text-[14px] text-white/70 leading-relaxed">
                     {lang === "vi"
-                      ? "Nền tảng cấu hình IoT và xây dựng kịch bản trực quan đạt giải Top 10 Make In Vietnam 2023."
-                      : "Visual IoT configuration & logic builder awarded Top 10 Make In Vietnam 2023."}
+                      ? "Cổng thông tin đối tác và giải pháp nhượng quyền IoT cho các nhà sản xuất phần cứng."
+                      : "Partner portal and IoT whitelabel solution for hardware manufacturers."}
                   </p>
                 </div>
               </Link>
