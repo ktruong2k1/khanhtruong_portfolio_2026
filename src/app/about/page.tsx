@@ -119,26 +119,26 @@ export default function AboutPage() {
                 {/* What I Do Column */}
                 <div className="space-y-3">
                   <div className="text-b3 font-bold uppercase tracking-widest text-white/50">
-                    {lang === "vi" ? "Lĩnh vực làm việc" : "What I Do"}
+                    {lang === "vi" ? "Lĩnh vực làm việc" : "WHAT I DO"}
                   </div>
                   <ul className="space-y-2 text-h7 md:text-h6 font-medium text-[#E8C468]">
-                    <li>UX Research</li>
-                    <li>Wireframing</li>
-                    <li>UI Consulting</li>
-                    <li>Consult DEV</li>
+                    <li>{lang === "vi" ? "Phỏng vấn Stakeholder & BA" : "Stakeholder Interview & BA"}</li>
+                    <li>{lang === "vi" ? "Nghiên cứu người dùng & Wireframe" : "User Research & Wireframing"}</li>
+                    <li>{lang === "vi" ? "Thiết kế UI & Design Systems" : "UI Design & Design Systems"}</li>
+                    <li>{lang === "vi" ? "Bàn giao & Đặc tả Dev" : "Dev Handoff Spec"}</li>
                   </ul>
                 </div>
 
                 {/* Expertise Column */}
                 <div className="space-y-3">
                   <div className="text-b3 font-bold uppercase tracking-widest text-white/50">
-                    {lang === "vi" ? "Chuyên môn" : "Expertise"}
+                    {lang === "vi" ? "Chuyên môn" : "EXPERTISE"}
                   </div>
                   <ul className="space-y-2 text-h7 md:text-h6 font-medium text-[#E8C468]">
-                    <li>Saas</li>
-                    <li>Mobile app</li>
-                    <li>Desktop app</li>
-                    <li>Web app</li>
+                    <li>IoT / Smart Home</li>
+                    <li>SaaS B2B</li>
+                    <li>Management Dashboard</li>
+                    <li>Role-based Access UX</li>
                   </ul>
                 </div>
               </div>
