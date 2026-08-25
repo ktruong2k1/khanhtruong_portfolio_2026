@@ -106,7 +106,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             transition={{ duration: 0.6 }}
             className="lg:col-span-7 flex flex-col items-start min-w-0"
           >
-            <h1 className="text-h0 font-normal text-white tracking-tight whitespace-normal break-words">
+            <h1 className="text-[40px] sm:text-[64px] md:text-[80px] lg:text-[96px] lg:leading-[100px] leading-[1.1] font-normal text-white tracking-tight whitespace-normal break-words">
               Khanhtruong
               <br />
               Nguyen

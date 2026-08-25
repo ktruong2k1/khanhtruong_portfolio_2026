@@ -600,14 +600,18 @@ export default function WorksPage() {
                     }`}
                   >
                     {/* Thumbnail Card on Top for Mobile/Tablet (< lg), Left for Desktop (>= lg) */}
-                    <div className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block">
+                    <Link
+                      href="/pending"
+                      className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block group/thumb cursor-pointer"
+                    >
                       <Image
                         src="/images/austfly.png"
                         alt="Austfly & Kangaroo Instances"
                         fill
-                        className="object-cover object-center"
+                        className="object-cover object-center group-hover/thumb:scale-105 transition-transform duration-500"
                       />
-                    </div>
+                      <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/10 transition-colors pointer-events-none" />
+                    </Link>
 
                     {/* Right / Bottom Content Details */}
                     <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
@@ -620,9 +624,12 @@ export default function WorksPage() {
                         </span>
                       </div>
 
-                      <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white leading-tight">
-                        Austfly
-                      </h3>
+                      <Link href="/pending" className="block group/title">
+                        <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white group-hover/title:text-[#00DC6C] transition-colors leading-tight flex items-center gap-2">
+                          <span>Austfly</span>
+                          <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
+                        </h3>
+                      </Link>
 
                       <div className="space-y-1.5 sm:space-y-2">
                         <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
@@ -760,14 +767,18 @@ export default function WorksPage() {
                 }`}
               >
                 {/* Left Thumbnail Mockup Card: 4:3 & rounded-[12px] */}
-                <div className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
+                <Link
+                  href="/pending"
+                  className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block group/thumb cursor-pointer"
+                >
                   <Image
                     src="/images/Thing Partner.png"
                     alt="Thing Partner"
                     fill
-                    className="object-cover object-left"
+                    className="object-cover object-left group-hover/thumb:scale-105 transition-transform duration-500"
                   />
-                </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/10 transition-colors pointer-events-none" />
+                </Link>
 
                 {/* Right Project Details (Align top, no inner scrollbar) */}
                 <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
@@ -780,9 +791,12 @@ export default function WorksPage() {
                     </span>
                   </div>
 
-                  <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white leading-tight">
-                    Thing Partner
-                  </h3>
+                  <Link href="/pending" className="block group/title">
+                    <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white group-hover/title:text-[#00DC6C] transition-colors leading-tight flex items-center gap-2">
+                      <span>Thing Partner</span>
+                      <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
+                    </h3>
+                  </Link>
 
                   <div className="space-y-1.5 sm:space-y-2">
                     <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
@@ -863,14 +877,18 @@ export default function WorksPage() {
                 }`}
               >
                 {/* Left Thumbnail Mockup Card: 4:3 & rounded-[12px] */}
-                <div className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0">
+                <Link
+                  href="/pending"
+                  className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block group/thumb cursor-pointer"
+                >
                   <Image
                     src="/images/rogo_project/Diagram 10.png"
                     alt="Thing Flow"
                     fill
-                    className="object-cover object-center"
+                    className="object-cover object-center group-hover/thumb:scale-105 transition-transform duration-500"
                   />
-                </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/10 transition-colors pointer-events-none" />
+                </Link>
 
                 {/* Right Project Details (Align top, no inner scrollbar) */}
                 <div className="flex-1 space-y-1.5 sm:space-y-2.5 lg:space-y-4 pt-0 w-full">
@@ -883,9 +901,12 @@ export default function WorksPage() {
                     </span>
                   </div>
 
-                  <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white leading-tight">
-                    Thing Flow
-                  </h3>
+                  <Link href="/pending" className="block group/title">
+                    <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white group-hover/title:text-[#00DC6C] transition-colors leading-tight flex items-center gap-2">
+                      <span>Thing Flow</span>
+                      <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
+                    </h3>
+                  </Link>
 
                   <div className="space-y-2">
                     <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">

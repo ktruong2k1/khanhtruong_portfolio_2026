@@ -130,15 +130,15 @@ export default function HorizontalProcessSection({
       {/* MOBILE & TABLET LAYOUT (< lg): Natural vertical flow with swipeable process cards */}
       <section
         id="process-section-mobile"
-        className="block lg:hidden w-full bg-[#121212] text-white py-16 sm:py-20 px-5 sm:px-6 md:px-12 border-b border-white/5 scroll-mt-0"
+        className="block lg:hidden w-full bg-[#121212] text-white py-12 sm:py-16 px-4 sm:px-6 md:px-12 border-b border-white/5 scroll-mt-0"
       >
-        <div className="max-w-[1440px] mx-auto w-full space-y-8">
+        <div className="max-w-[1440px] mx-auto w-full space-y-6 sm:space-y-8">
           {/* Header Info */}
-          <div className="space-y-4">
-            <h2 className="text-h3 sm:text-h2 font-bold text-white tracking-tight leading-tight">
+          <div className="space-y-3 sm:space-y-4 w-full">
+            <h2 className="text-2xl sm:text-3xl md:text-h2 font-bold text-white tracking-tight leading-tight whitespace-normal">
               {headingText}
             </h2>
-            <p className="text-b2 text-white/70 leading-relaxed max-w-xl">
+            <p className="text-sm sm:text-base text-white/70 leading-relaxed max-w-xl whitespace-normal">
               {subtitleText}
             </p>
             <div className="pt-2">
@@ -147,14 +147,14 @@ export default function HorizontalProcessSection({
           </div>
 
           {/* Swipeable Process Cards with snap points on mobile */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 pb-4 pt-2 -mx-5 px-5 sm:-mx-6 sm:px-6">
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 pb-4 pt-2 -mx-4 px-4 sm:-mx-6 sm:px-6">
             {processSteps.map((step) => {
               const title = currentLang === "vi" ? step.titleVi : step.titleEn;
               const description = currentLang === "vi" ? step.descriptionVi : step.descriptionEn;
               return (
                 <div
                   key={step.number}
-                  className={`w-[85vw] sm:w-[380px] shrink-0 snap-center rounded-[12px] p-6 sm:p-8 shadow-2xl flex flex-col justify-start space-y-4 sm:space-y-5 ${
+                  className={`w-[82vw] max-w-[340px] sm:w-[380px] shrink-0 snap-center rounded-[12px] p-5 sm:p-7 shadow-2xl flex flex-col justify-start space-y-3 sm:space-y-4 ${
                     step.isWhite
                       ? "bg-white text-black"
                       : "bg-[#1A1A1A] text-white border border-white/10"

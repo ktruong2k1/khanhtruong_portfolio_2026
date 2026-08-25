@@ -161,18 +161,15 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
 
   return (
     <>
-      {/* Dynamic Navbar Container */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
           isScrolled
-            ? "w-full bg-[#121212]/80 backdrop-blur-xl border-b border-white/10 py-3 px-5 sm:px-6 md:px-12 lg:px-[10vh] pointer-events-auto shadow-2xl"
-            : "py-3 md:py-0 md:pt-[40px] lg:pt-[60px] px-5 sm:px-6 md:px-12 lg:px-[10vh] pointer-events-auto md:pointer-events-none"
+            ? "w-full bg-[#121212]/80 backdrop-blur-xl border-b border-white/10 py-2 sm:py-2.5 md:py-3 px-4 sm:px-6 md:px-12 lg:px-[10vh] pointer-events-auto shadow-2xl"
+            : "py-2 sm:py-2.5 md:py-0 md:pt-[32px] lg:pt-[60px] px-4 sm:px-6 md:px-12 lg:px-[10vh] pointer-events-auto md:pointer-events-none"
         }`}
       >
         <div className="max-w-[1440px] mx-auto w-full">
-          {/* MOBILE TOPNAV (< 768px): Always compact horizontal flex row with 24px height logo on left and hamburger button on right */}
-          <div className="flex md:hidden items-center justify-between w-full pointer-events-auto py-1">
-            {/* Mobile Header Logo (Left) */}
+          <div className="flex md:hidden items-center justify-between w-full pointer-events-auto py-0.5 sm:py-1">
             <div
               onClick={scrollToHero}
               className="cursor-pointer flex items-center select-none group shrink-0"
@@ -180,14 +177,12 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
               <Image
                 src="/images/Website_logo.svg"
                 alt="Khanhtruong Nguyen Portfolio"
-                width={110}
-                height={28}
-                className="h-[26px] w-auto object-contain"
+                width={100}
+                height={24}
+                className="h-[22px] sm:h-[24px] w-auto object-contain"
                 priority
               />
             </div>
-
-            {/* Hamburger Button Only (Right) */}
             <button
               onClick={() => setMobileMenuOpen(true)}
               className="w-8 h-8 bg-transparent text-white hover:text-[#00DC6C] flex items-center justify-center transition-colors cursor-pointer active:scale-95 border-0 outline-none p-0 shrink-0"
@@ -197,11 +192,9 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
             </button>
           </div>
 
-          {/* DESKTOP & TABLET TOPNAV (>= 768px) */}
           <div className="hidden md:block w-full">
             <AnimatePresence mode="wait">
               {!isScrolled ? (
-                /* State 1: Floating Centered Pill Topnav (Hero Section) */
                 <motion.div
                   key="hero-nav"
                   initial={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -211,7 +204,6 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                   className="flex items-center justify-between"
                 >
                   <div className="pointer-events-auto bg-[#242424]/90 backdrop-blur-md rounded-[12px] px-5 py-3 shadow-2xl flex items-center justify-between gap-6 md:gap-10 border-0 outline-none">
-                    {/* Nav Links with Primary Green (#00DC6C) Selected State */}
                     <div className="flex items-center gap-6 md:gap-8 text-[16px] font-sans font-medium">
                       <button
                         onClick={scrollToHero}
@@ -249,7 +241,6 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                   </div>
                 </motion.div>
               ) : (
-                /* State 2: Full-Width Topbar with Brand Logo, Let's chat & Transparent Hamburger Menu */
                 <motion.div
                   key="minimal-nav"
                   initial={{ opacity: 0, y: -20, scale: 0.98 }}
@@ -258,7 +249,6 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   className="w-full flex items-center justify-between"
                 >
-                  {/* Portfolio Brand Logo */}
                   <div
                     onClick={scrollToHero}
                     className="cursor-pointer flex items-center select-none group h-[40px]"
@@ -273,7 +263,6 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                     />
                   </div>
 
-                  {/* Right Header Controls: "Let's chat" Button + Transparent Hamburger Menu */}
                   <div className="flex items-center gap-4 md:gap-6">
                     <button
                       onClick={goToContact}
@@ -297,7 +286,6 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
         </div>
       </header>
 
-      {/* Fullscreen Navigation Drawer Modal */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -306,9 +294,7 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-[#121212]/95 backdrop-blur-2xl flex flex-col justify-between p-6 sm:p-8 md:p-12 lg:px-[10vh] lg:py-[40px]"
           >
-            {/* Top Modal Header */}
             <div className="flex justify-between items-center max-w-[1440px] mx-auto w-full">
-              {/* Logo */}
               <div
                 onClick={scrollToHero}
                 className="cursor-pointer flex items-center select-none group shrink-0"
@@ -318,12 +304,11 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                   alt="Khanhtruong Nguyen Portfolio"
                   width={158}
                   height={40}
-                  className="h-[26px] md:h-[36px] w-auto object-contain"
+                  className="h-[24px] sm:h-[28px] md:h-[36px] w-auto object-contain"
                   priority
                 />
               </div>
 
-              {/* Close Button Top Right */}
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-10 h-10 md:w-12 md:h-12 bg-transparent hover:bg-white/10 rounded-full text-white transition-colors cursor-pointer flex items-center justify-center border-0 outline-none active:scale-95"
@@ -333,9 +318,7 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
               </button>
             </div>
 
-            {/* Main Menu Items Container: Language Switcher on top, then HOME, MY WORKS, ABOUT ME, CONTACT */}
-            <div className="max-w-[1440px] mx-auto w-full my-auto py-6 flex flex-col items-center justify-center gap-4 sm:gap-6 md:gap-8">
-              {/* Language Switcher */}
+            <div className="max-w-[1440px] mx-auto w-full my-auto py-4 sm:py-6 flex flex-col items-center justify-center gap-3 sm:gap-6 md:gap-8">
               <div className="flex items-center gap-1.5 mb-2">
                 <button
                   onClick={() => handleSetLang("vi")}
@@ -383,9 +366,8 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
               />
             </div>
 
-            {/* Modal Bottom Footer */}
             <div className="flex justify-between items-center max-w-[1440px] mx-auto w-full text-b1 md:text-h5 font-bold font-heading text-white/70 border-t-2 border-white/10 pt-4 md:pt-6 flex-wrap gap-4">
-              <div className="flex items-center gap-5 sm:gap-8 text-sm md:text-base">
+              <div className="flex items-center gap-5 sm:gap-8 text-sm md:text-base mx-auto sm:mx-0">
                 <a
                   href="https://tiktok.com"
                   target="_blank"
@@ -411,7 +393,7 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                   Linkedin
                 </a>
               </div>
-              <div className="text-b2 md:text-h6 font-bold text-white/50">Vietnam 2026</div>
+              <div className="hidden sm:block text-b2 md:text-h6 font-bold text-white/50">Vietnam 2026</div>
             </div>
           </motion.div>
         )}

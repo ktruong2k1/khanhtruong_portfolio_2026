@@ -250,44 +250,44 @@ html {
 
 .text-h0 {
   font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
-  font-size: 96px !important;
-  line-height: 100px !important;
+  font-size: 96px;
+  line-height: 100px;
 }
 
 .text-h1 {
   font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
-  font-size: 64px !important;
-  line-height: 72px !important;
+  font-size: 64px;
+  line-height: 72px;
 }
 
 .text-h2 {
   font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
-  font-size: 48px !important;
-  line-height: 56px !important;
+  font-size: 48px;
+  line-height: 56px;
 }
 
 .text-h3 {
   font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
-  font-size: 40px !important;
-  line-height: 51px !important;
+  font-size: 40px;
+  line-height: 51px;
 }
 
 .text-h4 {
   font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
-  font-size: 36px !important;
-  line-height: 42px !important;
+  font-size: 36px;
+  line-height: 42px;
 }
 
 .text-h5 {
   font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
-  font-size: 24px !important;
-  line-height: 36px !important;
+  font-size: 24px;
+  line-height: 36px;
 }
 
 .text-h6 {
   font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
-  font-size: 20px !important;
-  line-height: 30px !important;
+  font-size: 20px;
+  line-height: 30px;
 }
 
 .text-h7 {

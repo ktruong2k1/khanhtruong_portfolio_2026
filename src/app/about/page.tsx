@@ -424,7 +424,7 @@ export default function AboutPage() {
 
               {/* Card 2: Thing Partner */}
               <Link
-                href="/works"
+                href="/pending"
                 className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="space-y-4">
@@ -461,7 +461,7 @@ export default function AboutPage() {
 
               {/* Card 3: Thing AI VN */}
               <Link
-                href="/works"
+                href="/pending"
                 className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="space-y-4">

@@ -165,22 +165,33 @@ export default function TopClientSection({
       ? "Thiết kế được tin tưởng\nbởi các doanh nghiệp đa lĩnh vực\nsản phẩm, thương hiệu và kỹ thuật số."
       : "Design work trusted\nby businesses across sectors\nproduct, brand, and digital.";
 
-  // Fallback for Reduced Motion
-  if (shouldReduceMotion) {
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    const checkWidth = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    checkWidth();
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
+
+  // Fallback for Mobile (< 1024px) & Reduced Motion
+  if (!isDesktop || shouldReduceMotion) {
     return (
       <section
         id="top-clients"
-        className="w-full bg-[#121212] text-white py-24 px-6 md:px-12 lg:px-[10vh] border-t border-b border-white/5 relative overflow-hidden snap-start scroll-mt-0"
+        className="w-full bg-[#121212] text-white py-12 sm:py-16 px-4 sm:px-6 md:px-12 border-t border-b border-white/5 relative overflow-hidden snap-start scroll-mt-0"
       >
-        <div className="max-w-[1440px] mx-auto w-full space-y-24">
-          <div className="w-full space-y-8 pb-12 border-b border-white/5">
-            <h2 className="text-h4 font-bold text-white tracking-tight">
-              Top Client
+        <div className="max-w-[1440px] mx-auto w-full space-y-12 sm:space-y-16">
+          <div className="w-full space-y-6 pb-8 border-b border-white/10">
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-white tracking-tight">
+              {currentLang === "vi" ? "Khách hàng tiêu biểu" : "Top Client"}
             </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center py-4">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6 items-center justify-items-center py-2">
               {allClientLogos.map((client) => (
-                <div key={client.name} className="w-full flex items-center justify-center p-2 group cursor-pointer">
-                  <div className="relative h-[40px] w-full max-w-[140px] opacity-75 group-hover:opacity-100 transition-all duration-300">
+                <div key={client.name} className="w-full flex items-center justify-center p-1 sm:p-2 group cursor-pointer">
+                  <div className="relative h-[26px] sm:h-[34px] w-full max-w-[100px] sm:max-w-[140px] opacity-75 group-hover:opacity-100 transition-all duration-300">
                     <Image
                       src={client.src}
                       alt={client.name}
@@ -190,6 +201,13 @@ export default function TopClientSection({
                   </div>
                 </div>
               ))}
+            </div>
+            
+            {/* Intro text */}
+            <div className="text-center pt-4">
+              <p className="text-lg sm:text-xl md:text-2xl font-bold font-heading text-[#00DC6C] leading-snug whitespace-pre-line max-w-xl mx-auto">
+                {typingHeading}
+              </p>
             </div>
           </div>
 
