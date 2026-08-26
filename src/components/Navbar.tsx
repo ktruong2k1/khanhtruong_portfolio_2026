@@ -77,7 +77,7 @@ function TypingMenuItem({
   return (
     <button
       onClick={onClick}
-      className={`text-left font-heading text-h1 text-[32px] sm:text-[44px] md:text-[56px] lg:text-[64px] leading-[40px] sm:leading-[52px] md:leading-[64px] lg:leading-[72px] font-bold uppercase tracking-wider transition-colors cursor-pointer w-fit flex items-center group outline-none ${
+      className={`text-left font-heading text-h1 text-[22px] sm:text-[36px] md:text-[56px] lg:text-[64px] leading-[30px] sm:leading-[44px] md:leading-[64px] lg:leading-[72px] font-bold uppercase tracking-wider transition-colors cursor-pointer w-fit flex items-center group outline-none whitespace-nowrap ${
         isActive ? "text-[#00DC6C]" : "text-white/75 hover:text-white"
       }`}
     >
@@ -85,7 +85,7 @@ function TypingMenuItem({
         {displayedText}
       </span>
       {isTyping && (
-        <span className="inline-block w-[8px] md:w-[12px] h-[28px] sm:h-[40px] md:h-[56px] bg-[#00DC6C] ml-2 md:ml-3 animate-pulse align-middle" />
+        <span className="inline-block w-[5px] sm:w-[8px] md:w-[12px] h-[20px] sm:h-[32px] md:h-[56px] bg-[#00DC6C] ml-1.5 sm:ml-2 md:ml-3 animate-pulse align-middle" />
       )}
     </button>
   );

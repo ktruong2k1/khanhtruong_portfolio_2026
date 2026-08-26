@@ -184,27 +184,80 @@ export default function TopClientSection({
         className="w-full bg-[#121212] text-white py-12 sm:py-16 px-4 sm:px-6 md:px-12 border-t border-b border-white/5 relative overflow-hidden snap-start scroll-mt-0"
       >
         <div className="max-w-[1440px] mx-auto w-full space-y-12 sm:space-y-16">
-          <div className="w-full space-y-6 pb-8 border-b border-white/10">
+          <div className="w-full space-y-6 pb-8 border-b border-white/10 snap-start snap-always">
             <h2 className="text-2xl sm:text-3xl font-bold font-heading text-white tracking-tight">
               {currentLang === "vi" ? "Khách hàng tiêu biểu" : "Top Client"}
             </h2>
-            <div className="grid grid-cols-3 gap-3 sm:gap-6 items-center justify-items-center py-2">
-              {allClientLogos.map((client) => (
-                <div key={client.name} className="w-full flex items-center justify-center p-1 sm:p-2 group cursor-pointer">
-                  <div className="relative h-[26px] sm:h-[34px] w-full max-w-[100px] sm:max-w-[140px] opacity-75 group-hover:opacity-100 transition-all duration-300">
-                    <Image
-                      src={client.src}
-                      alt={client.name}
-                      fill
-                      className="object-contain filter brightness-0 invert group-hover:filter-none transition-all duration-300"
-                    />
-                  </div>
+            
+            {/* Top Clients Diamond / Symmetrical Isosceles Triangles (1 - 2 - 2 - 1) */}
+            <div className="flex flex-col items-center justify-center gap-6 sm:gap-8 py-4 w-full">
+              {/* Row 1: ROGO (1 Logo) */}
+              <div className="flex justify-center w-full">
+                <div className="relative h-[34px] sm:h-[40px] w-[140px] sm:w-[160px] opacity-85 hover:opacity-100 transition-opacity">
+                  <Image
+                    src="/images/Rogo_color.svg"
+                    alt="ROGO Solutions"
+                    fill
+                    className="object-contain filter brightness-0 invert"
+                  />
                 </div>
-              ))}
+              </div>
+
+              {/* Row 2: FPT Smart Home + Rạng Đông (2 Logos) */}
+              <div className="flex justify-center items-center gap-8 sm:gap-14 w-full">
+                <div className="relative h-[32px] sm:h-[38px] w-[130px] sm:w-[150px] opacity-85 hover:opacity-100 transition-opacity">
+                  <Image
+                    src="/images/FPTSmartHome_color.svg"
+                    alt="FPT Smart Home"
+                    fill
+                    className="object-contain filter brightness-0 invert"
+                  />
+                </div>
+                <div className="relative h-[32px] sm:h-[38px] w-[130px] sm:w-[150px] opacity-85 hover:opacity-100 transition-opacity">
+                  <Image
+                    src="/images/RangDong_color.svg"
+                    alt="Rạng Đông"
+                    fill
+                    className="object-contain filter brightness-0 invert"
+                  />
+                </div>
+              </div>
+
+              {/* Row 3: VietinBank Securities + VCBS (2 Logos) */}
+              <div className="flex justify-center items-center gap-8 sm:gap-14 w-full">
+                <div className="relative h-[32px] sm:h-[38px] w-[130px] sm:w-[150px] opacity-85 hover:opacity-100 transition-opacity">
+                  <Image
+                    src="/images/VietinBankS_color.svg"
+                    alt="VietinBank Securities"
+                    fill
+                    className="object-contain filter brightness-0 invert"
+                  />
+                </div>
+                <div className="relative h-[32px] sm:h-[38px] w-[120px] sm:w-[140px] opacity-85 hover:opacity-100 transition-opacity">
+                  <Image
+                    src="/images/VCBS_color.svg"
+                    alt="VCBS"
+                    fill
+                    className="object-contain filter brightness-0 invert"
+                  />
+                </div>
+              </div>
+
+              {/* Row 4: Think & Action (1 Logo) */}
+              <div className="flex justify-center w-full">
+                <div className="relative h-[34px] sm:h-[40px] w-[140px] sm:w-[160px] opacity-85 hover:opacity-100 transition-opacity">
+                  <Image
+                    src="/images/Think_Action_color.svg"
+                    alt="Think & Action"
+                    fill
+                    className="object-contain filter brightness-0 invert"
+                  />
+                </div>
+              </div>
             </div>
             
             {/* Intro text */}
-            <div className="text-center pt-4">
+            <div className="text-center pt-2">
               <p className="text-lg sm:text-xl md:text-2xl font-bold font-heading text-[#00DC6C] leading-snug whitespace-pre-line max-w-xl mx-auto">
                 {typingHeading}
               </p>
@@ -212,7 +265,7 @@ export default function TopClientSection({
           </div>
 
           {/* Client 1: Rogo Solutions */}
-          <div className="space-y-12">
+          <div className="space-y-6 sm:space-y-12 snap-start snap-always">
             <div className="flex items-center gap-[24px]">
               <div className="relative w-[99px] h-[36px] shrink-0 group cursor-pointer">
                 <Image
@@ -222,20 +275,20 @@ export default function TopClientSection({
                   className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                 />
               </div>
-              <h2 className="font-mono text-xl font-normal text-white leading-tight">
+              <h2 className="font-mono text-base sm:text-xl font-normal text-white leading-tight">
                 {currentLang === "vi"
                   ? "Thương hiệu Đổi mới Sáng tạo\nHàng đầu Việt Nam 2023"
                   : "Top innovation brand\nin Vietnam 2023"}
               </h2>
             </div>
             
-            {/* State A Contained Photo */}
-            <div className="relative w-full max-w-[1052px] mx-auto aspect-[2302/1052] rounded-[12px] overflow-hidden border border-white/10 shadow-2xl">
-              <Image src="/images/Rogo_solution_bg.png" alt="Rogo Solutions Award" fill className="object-cover" />
+            {/* State A Contained Photo (1:1 on mobile, 2302/1052 on tablet/desktop) */}
+            <div className="relative w-full max-w-[1052px] mx-auto aspect-square sm:aspect-[2302/1052] rounded-[12px] overflow-hidden border border-white/10 shadow-2xl">
+              <Image src="/images/Rogo_solution_bg.png" alt="Rogo Solutions Award" fill className="object-cover object-center" />
             </div>
 
             {/* State B Project Card */}
-            <div className="w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row items-start gap-8 lg:gap-10">
+            <div className="w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row items-start gap-6 lg:gap-10 pt-4">
               <Link
                 href="/works/rogo-platform-v2"
                 className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
@@ -248,7 +301,7 @@ export default function TopClientSection({
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/10 transition-colors pointer-events-none" />
               </Link>
-              <div className="flex-1 space-y-5">
+              <div className="flex-1 space-y-4">
                 <div className="flex items-center gap-3">
                   <span className="text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
                     FEATURED
@@ -263,13 +316,16 @@ export default function TopClientSection({
                     <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
                   </h3>
                 </Link>
-                <p className="text-[14px] text-white/80 leading-relaxed">{worksDescription}</p>
+                {/* Description hidden on mobile, visible on sm+ */}
+                <div className="hidden sm:block">
+                  <p className="text-[14px] text-white/80 leading-relaxed">{worksDescription}</p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Client 2: Rạng Đông -> RaIO Smart Framework */}
-          <div className="space-y-12 pt-12 border-t border-white/10">
+          <div className="space-y-6 sm:space-y-12 pt-10 sm:pt-12 border-t border-white/10 snap-start snap-always">
             <div className="flex items-center gap-[24px]">
               <div className="relative w-[156px] h-[36px] shrink-0 group cursor-pointer">
                 <Image
@@ -279,20 +335,20 @@ export default function TopClientSection({
                   className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                 />
               </div>
-              <h2 className="font-mono text-xl font-normal text-white leading-tight">
+              <h2 className="font-mono text-base sm:text-xl font-normal text-white leading-tight">
                 {currentLang === "vi"
                   ? "Thương hiệu Sản xuất IoT\nSố 1 tại Việt Nam"
                   : "Top 1 IoT manufacturer\nbrand in Vietnam"}
               </h2>
             </div>
             
-            {/* State A Contained Photo */}
-            <div className="relative w-full max-w-[1052px] mx-auto aspect-[2302/1052] rounded-[12px] overflow-hidden border border-white/10 shadow-2xl">
-              <Image src="/images/rangdong_showroom.png" alt="Rạng Đông Showroom" fill className="object-cover" />
+            {/* State A Contained Photo (1:1 on mobile, 2302/1052 on tablet/desktop) */}
+            <div className="relative w-full max-w-[1052px] mx-auto aspect-square sm:aspect-[2302/1052] rounded-[12px] overflow-hidden border border-white/10 shadow-2xl">
+              <Image src="/images/rangdong_showroom.png" alt="Rạng Đông Showroom" fill className="object-cover object-center" />
             </div>
 
             {/* State B Project Card: RaIO Smart Framework */}
-            <div className="w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row items-start gap-8 lg:gap-10">
+            <div className="w-full max-w-[1052px] mx-auto flex flex-col lg:flex-row items-start gap-6 lg:gap-10 pt-4">
               <Link
                 href="/works/raio-smart"
                 className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
@@ -305,7 +361,7 @@ export default function TopClientSection({
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/10 transition-colors pointer-events-none" />
               </Link>
-              <div className="flex-1 space-y-5">
+              <div className="flex-1 space-y-4">
                 <div className="flex items-center gap-3">
                   <span className="text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-1 rounded-full uppercase">
                     FRAMEWORK
@@ -319,11 +375,14 @@ export default function TopClientSection({
                     <span>RaIO Smart whitelabel app</span>
                   </h3>
                 </Link>
-                <p className="text-[14px] text-white/80 leading-relaxed">
-                  {currentLang === "vi"
-                    ? "Framework ứng dụng nhà thông minh dạng Whitelabel – giao diện tùy biến cho từng đối tác, quy trình kết nối thiết bị chuyên sâu, cùng logic cốt lõi nhưng dễ dàng cá nhân hóa nhận diện thương hiệu."
-                    : "Whitelabel Smart Home App framework – partner-adaptive UI, complex device onboarding, same core logic, customizable brand identity."}
-                </p>
+                {/* Description hidden on mobile, visible on sm+ */}
+                <div className="hidden sm:block">
+                  <p className="text-[14px] text-white/80 leading-relaxed">
+                    {currentLang === "vi"
+                      ? "Framework ứng dụng nhà thông minh dạng Whitelabel – giao diện tùy biến cho từng đối tác, quy trình kết nối thiết bị chuyên sâu, cùng logic cốt lõi nhưng dễ dàng cá nhân hóa nhận diện thương hiệu."
+                      : "Whitelabel Smart Home App framework – partner-adaptive UI, complex device onboarding, same core logic, customizable brand identity."}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

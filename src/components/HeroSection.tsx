@@ -106,7 +106,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             transition={{ duration: 0.6 }}
             className="lg:col-span-7 flex flex-col items-start min-w-0"
           >
-            <h1 className="text-[40px] sm:text-[64px] md:text-[80px] lg:text-[96px] lg:leading-[100px] leading-[1.1] font-normal text-white tracking-tight whitespace-normal break-words">
+            <h1 className="text-[32px] sm:text-[52px] md:text-[80px] lg:text-[96px] lg:leading-[100px] leading-[1.1] font-normal text-white tracking-tight whitespace-normal break-words">
               Khanhtruong
               <br />
               Nguyen
@@ -121,7 +121,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             className="lg:col-span-5 flex items-start justify-between sm:justify-start gap-4 sm:gap-6 pt-0 lg:pt-2"
           >
             <div className="flex flex-col items-start text-left min-w-0">
-              <h2 className="text-h4 sm:text-h3 lg:text-h2 font-bold text-white mb-2 sm:mb-3 tracking-tight whitespace-nowrap">
+              <h2 className="text-h5 sm:text-h3 lg:text-h2 font-bold text-white mb-2 sm:mb-3 tracking-tight whitespace-nowrap">
                 Product Designer
               </h2>
               <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-start">

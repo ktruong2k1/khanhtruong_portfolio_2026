@@ -127,18 +127,18 @@ export default function HorizontalProcessSection({
 
   return (
     <>
-      {/* MOBILE & TABLET LAYOUT (< lg): Natural vertical flow with swipeable process cards */}
+      {/* MOBILE & TABLET LAYOUT (< lg): Natural vertical flow with scroll-snap cards */}
       <section
         id="process-section-mobile"
-        className="block lg:hidden w-full bg-[#121212] text-white py-12 sm:py-16 px-4 sm:px-6 md:px-12 border-b border-white/5 scroll-mt-0"
+        className="block lg:hidden w-full bg-[#121212] text-white py-12 sm:py-16 px-5 sm:px-6 md:px-12 border-b border-white/5 scroll-mt-0"
       >
-        <div className="max-w-[1440px] mx-auto w-full space-y-6 sm:space-y-8">
-          {/* Header Info */}
-          <div className="space-y-3 sm:space-y-4 w-full">
-            <h2 className="text-2xl sm:text-3xl md:text-h2 font-bold text-white tracking-tight leading-tight whitespace-normal">
+        <div className="max-w-[1440px] mx-auto w-full space-y-10 sm:space-y-12">
+          {/* Header Info - Full Width, No narrow column */}
+          <div className="w-full space-y-4 snap-start snap-always min-h-[45vh] flex flex-col justify-center">
+            <h2 className="text-[28px] sm:text-3xl md:text-h2 font-bold text-white tracking-tight leading-tight whitespace-normal break-words">
               {headingText}
             </h2>
-            <p className="text-sm sm:text-base text-white/70 leading-relaxed max-w-xl whitespace-normal">
+            <p className="text-[14px] sm:text-base text-white/80 leading-relaxed w-full whitespace-normal break-words">
               {subtitleText}
             </p>
             <div className="pt-2">
@@ -146,26 +146,26 @@ export default function HorizontalProcessSection({
             </div>
           </div>
 
-          {/* Swipeable Process Cards with snap points on mobile */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 sm:gap-6 pb-4 pt-2 -mx-4 px-4 sm:-mx-6 sm:px-6">
+          {/* Vertical 4 Process Cards with Scroll-Snap */}
+          <div className="space-y-8 sm:space-y-12 w-full">
             {processSteps.map((step) => {
               const title = currentLang === "vi" ? step.titleVi : step.titleEn;
               const description = currentLang === "vi" ? step.descriptionVi : step.descriptionEn;
               return (
                 <div
                   key={step.number}
-                  className={`w-[82vw] max-w-[340px] sm:w-[380px] shrink-0 snap-center rounded-[12px] p-5 sm:p-7 shadow-2xl flex flex-col justify-start space-y-3 sm:space-y-4 ${
+                  className={`w-full max-w-[640px] mx-auto min-h-[calc(100vh-100px)] snap-start snap-always rounded-[16px] p-6 sm:p-8 shadow-2xl flex flex-col justify-center space-y-4 ${
                     step.isWhite
                       ? "bg-white text-black"
                       : "bg-[#1A1A1A] text-white border border-white/10"
                   }`}
                 >
                   {/* Top Header & Title */}
-                  <div className="space-y-2 w-full min-h-[96px] sm:min-h-[108px] flex flex-col justify-start">
-                    <div className="text-h3 font-bold tracking-tight">
+                  <div className="space-y-2 w-full flex flex-col justify-start">
+                    <div className="text-[32px] sm:text-h2 font-bold tracking-tight">
                       {step.number}
                     </div>
-                    <h3 className="text-h5 font-bold leading-tight">
+                    <h3 className="text-[20px] sm:text-h4 font-bold leading-tight whitespace-normal">
                       {title}
                     </h3>
                   </div>
@@ -182,8 +182,8 @@ export default function HorizontalProcessSection({
 
                   {/* Description Paragraph */}
                   <p
-                    className={`text-[13px] sm:text-[14px] leading-relaxed ${
-                      step.isWhite ? "text-neutral-1000" : "text-neutral-300"
+                    className={`text-[13px] sm:text-[14px] leading-relaxed whitespace-normal break-words ${
+                      step.isWhite ? "text-neutral-900" : "text-neutral-300"
                     }`}
                   >
                     {description}

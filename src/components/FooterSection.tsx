@@ -52,11 +52,11 @@ function FooterTypingMenuItem({
   return (
     <button
       onClick={onClick}
-      className="text-left font-heading text-h1 text-[28px] sm:text-[36px] md:text-[48px] lg:text-[64px] leading-[1.1] font-bold uppercase tracking-wider text-white hover:text-black transition-colors cursor-pointer w-fit flex items-center group outline-none"
+      className="text-left font-heading text-h1 text-[20px] sm:text-[28px] md:text-[48px] lg:text-[64px] leading-[1.1] font-bold uppercase tracking-wider text-white hover:text-black transition-colors cursor-pointer w-fit flex items-center group outline-none whitespace-nowrap"
     >
       <span>{displayedText}</span>
       {isTyping && trigger && (
-        <span className="inline-block w-[6px] sm:w-[8px] lg:w-[10px] h-[24px] sm:h-[32px] lg:h-[48px] bg-black ml-2 lg:ml-3 animate-pulse align-middle" />
+        <span className="inline-block w-[4px] sm:w-[8px] lg:w-[10px] h-[18px] sm:h-[32px] lg:h-[48px] bg-black ml-1.5 sm:ml-2 lg:ml-3 animate-pulse align-middle" />
       )}
     </button>
   );
@@ -130,7 +130,7 @@ export default function FooterSection({ lang, onOpenContact }: FooterSectionProp
           {/* Left Column (lg:col-span-7): 96px Typing Headline + Contact Buttons */}
           <div className="lg:col-span-7 flex flex-col justify-start pr-0 lg:pr-12 pb-6 lg:pb-0">
             <div>
-              <h2 className="text-[32px] sm:text-[48px] md:text-[64px] lg:text-[96px] lg:leading-[100px] leading-[1.15] font-normal text-black tracking-tight select-none">
+              <h2 className="text-[24px] sm:text-[36px] md:text-[64px] lg:text-[96px] lg:leading-[100px] leading-[1.15] font-normal text-black tracking-tight select-none">
                 <div>
                   {line1Typed}
                   {charCount > 0 && charCount < line1Text.length && (
