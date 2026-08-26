@@ -165,23 +165,12 @@ export default function TopClientSection({
       ? "Thiết kế được tin tưởng\nbởi các doanh nghiệp đa lĩnh vực\nsản phẩm, thương hiệu và kỹ thuật số."
       : "Design work trusted\nby businesses across sectors\nproduct, brand, and digital.";
 
-  const [isDesktop, setIsDesktop] = useState(true);
-
-  useEffect(() => {
-    const checkWidth = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    checkWidth();
-    window.addEventListener("resize", checkWidth);
-    return () => window.removeEventListener("resize", checkWidth);
-  }, []);
-
-  // Fallback for Mobile (< 1024px) & Reduced Motion
-  if (!isDesktop || shouldReduceMotion) {
-    return (
+  return (
+    <>
+      {/* MOBILE & TABLET LAYOUT (< lg) */}
       <section
-        id="top-clients"
-        className="w-full bg-[#121212] text-white py-12 sm:py-16 px-4 sm:px-6 md:px-12 border-t border-b border-white/5 relative overflow-hidden snap-start scroll-mt-0"
+        id="top-clients-mobile"
+        className="block lg:hidden w-full bg-[#121212] text-white py-12 sm:py-16 px-4 sm:px-6 md:px-12 border-t border-b border-white/5 relative overflow-hidden snap-start scroll-mt-0"
       >
         <div className="max-w-[1440px] mx-auto w-full space-y-12 sm:space-y-16">
           <div className="w-full space-y-6 pb-8 border-b border-white/10 snap-start snap-always">
@@ -388,15 +377,13 @@ export default function TopClientSection({
           </div>
         </div>
       </section>
-    );
-  }
 
-  return (
-    <section
-      ref={sectionRef}
-      id="top-clients"
-      className="relative w-full h-[520vh] bg-[#121212] text-white border-t border-b border-white/5 snap-start scroll-mt-0"
-    >
+      {/* DESKTOP LAYOUT (>= lg): 520vh Interactive Runway */}
+      <section
+        ref={sectionRef}
+        id="top-clients"
+        className="hidden lg:block relative w-full h-[520vh] bg-[#121212] text-white border-t border-b border-white/5 snap-start scroll-mt-0"
+      >
       {/* Sticky 100vh Viewport Container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         
@@ -765,5 +752,6 @@ export default function TopClientSection({
         </motion.div>
       </div>
     </section>
+  </>
   );
 }
