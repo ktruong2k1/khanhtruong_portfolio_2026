@@ -7,13 +7,28 @@ import Navbar from "@/components/Navbar";
 import ContactModal from "@/components/ContactModal";
 import FooterSection from "@/components/FooterSection";
 import InteractiveCTA from "@/components/InteractiveCTA";
+import SwitchProjectModal, {
+  LAYER_PROJECTS,
+  TargetProjectInfo,
+} from "@/components/SwitchProjectModal";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function AustflyProjectPage() {
   const { lang, setLang } = useLanguage();
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [activeLayer, setActiveLayer] = useState(2); // Instance layer active by default
+  const [switchModalOpen, setSwitchModalOpen] = useState(false);
+  const [targetProject, setTargetProject] = useState<TargetProjectInfo | null>(null);
   const titleSectionRef = useRef<HTMLDivElement>(null);
+
+  const handleLayerClick = (layerId: number) => {
+    if (layerId === 2) {
+      setActiveLayer(2);
+    } else {
+      setTargetProject(LAYER_PROJECTS[layerId]);
+      setSwitchModalOpen(true);
+    }
+  };
 
   const layers = [
     { id: 0, label: "Platform layer" },
@@ -79,7 +94,7 @@ export default function AustflyProjectPage() {
           </div>
 
           {/* SECTION 1: HERO BANNER MOCKUP */}
-          <div className="relative w-full aspect-[16/9] sm:aspect-[3786/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+          <div className="relative w-full aspect-[16/9] sm:aspect-[3786/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
             <Image
               src="/images/austfly_project/Diagram hero.jpg"
               alt="Austfly Rolling Door Control App Mockup"
@@ -100,7 +115,7 @@ export default function AustflyProjectPage() {
                 return (
                   <button
                     key={layer.id}
-                    onClick={() => setActiveLayer(layer.id)}
+                    onClick={() => handleLayerClick(layer.id)}
                     className="flex items-center gap-2.5 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 text-left group"
                   >
                     {isActive && (
@@ -121,7 +136,7 @@ export default function AustflyProjectPage() {
             </div>
 
             {/* Diagram 0.jpg White Card Container (Aspect 3720/1440) */}
-            <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+            <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
               <Image
                 src="/images/austfly_project/Diagram 0.jpg"
                 alt="3-Layer Architecture Diagram - Instance Layer Highlighted"
@@ -135,7 +150,7 @@ export default function AustflyProjectPage() {
 
             {/* Contextual navigation link when Platform or Framework layer is selected */}
             {activeLayer === 0 && (
-              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-xl transition-all">
+              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-[8px] lg:rounded-xl transition-all">
                 <span className="text-b3 sm:text-b2 text-white/90 font-mono">
                   {lang === "vi"
                     ? "Tầng Nền tảng cốt lõi: Rogo Platform Dashboard V2"
@@ -151,7 +166,7 @@ export default function AustflyProjectPage() {
             )}
 
             {activeLayer === 1 && (
-              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-xl transition-all">
+              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-[8px] lg:rounded-xl transition-all">
                 <span className="text-b3 sm:text-b2 text-white/90 font-mono">
                   {lang === "vi"
                     ? "Tầng Framework ứng dụng: RaIO Smart whitelabel app"
@@ -167,56 +182,10 @@ export default function AustflyProjectPage() {
             )}
           </div>
 
-          {/* SECTION 2: 2-COLUMN INFO GRID (The Problem & Architecture vs Clients, Service, Tools) */}
-          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 border-t-2 border-b-2 border-white/10">
-            {/* Left Column: The Problem, The Product & Where Austfly Fits in the Bigger Picture */}
-            <div className="lg:col-span-7 py-10 sm:py-12 lg:py-16 space-y-10">
-              {/* The problem */}
-              <div className="space-y-3">
-                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi" ? "Vấn đề" : "The problem"}
-                </span>
-                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
-                  {lang === "vi"
-                    ? "Austdoor là thương hiệu cửa cuốn thông minh hàng đầu Việt Nam — thương hiệu đã tiên phong mang tiêu chuẩn Úc vào thị trường trong nước và xây dựng mạng lưới phân phối toàn quốc từ năm 2003. Tuy nhiên, vị thế dẫn đầu về phần cứng đã vượt xa phần mềm điều khiển. Austfly, ứng dụng đại diện cho tuyên ngôn 'thông minh', ban đầu gặp phải luồng camera không mã hóa, quy trình cài đặt tách rời hub Wi-Fi và camera thành hai bước thiếu liên kết, cùng quy trình khôi phục buộc người dùng phải factory reset hoàn toàn khi gặp sự cố. Một thương hiệu định vị là an toàn nhất phân khúc lại đang được đại diện bởi một ứng dụng chưa đáp ứng trọn vẹn lời hứa đó."
-                    : "Austdoor is Vietnam's leading name in smart roller shutters — the brand that introduced Australian-standard shutters to the local market and built a nationwide distribution network since 2003. But market leadership in hardware had outpaced the software meant to carry it into the smart-home era. Austfly, the app powering that 'smart' claim, shipped with camera feeds that had no encryption, a setup flow that treated the Wi-Fi hub and camera as two disconnected steps, and a recovery process where any malfunction meant a full factory reset. A brand positioned as the safest name in the category was being represented by an app that couldn't consistently deliver on that promise."}
-                </p>
-              </div>
-
-              {/* The Product */}
-              <div className="space-y-3">
-                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi" ? "Sản phẩm" : "The Product"}
-                </span>
-                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
-                  {lang === "vi"
-                    ? "Austfly là instance mang thương hiệu riêng của Austdoor trong hệ sinh thái RaIO — tầng nơi phần cứng cửa cuốn hàng đầu Việt Nam hội tụ cùng trải nghiệm điều khiển tương xứng với vị thế dẫn đầu. Ứng dụng đồng bộ bộ điều khiển cửa cuốn với camera an ninh để chủ nhà có thể giám sát lối vào theo thời gian thực ngay cả khi cửa đóng hoàn toàn, biến một sản phẩm cơ khí an ninh thành một giải pháp thông minh thực thụ. Nếu RaIO giải quyết bài toán phân mảnh đa thương hiệu, thì Austfly chính là minh chứng cho năng lực thực thi của hệ sinh thái đối với một thương hiệu dẫn đầu: phần cứng được cả nước tin dùng, nay được song hành cùng phần mềm đạt chuẩn tương đương."
-                    : "Austfly is Austdoor's branded instance within the RaIO ecosystem — the layer where Vietnam's leading roller-shutter hardware meets a control experience built to match its market position. It syncs shutter controllers with cameras so homeowners can monitor their entryway in real time, even with the shutter fully closed, turning a mechanical security product into a genuinely intelligent one. Where RaIO solved fragmentation across brands, Austfly is the proof point for what the ecosystem enables within a category leader: hardware trusted nationwide, finally paired with software built to the same standard."}
-                </p>
-              </div>
-
-              {/* Where Austfly Fits in the Bigger Picture */}
-              <div className="space-y-3">
-                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi"
-                    ? "Vị trí của Austfly trong bức tranh tổng thể"
-                    : "Where Austfly Fits in the Bigger Picture"}
-                </span>
-                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
-                  {lang === "vi"
-                    ? "Austdoor chính là ca kiểm chứng thực tế của RaIO — thương hiệu được lựa chọn để chứng minh rằng một nhà sản xuất lớn, đặt nặng uy tín lâu năm có thể ứng dụng nền tảng mà không làm mờ nhạt nhận diện thương hiệu. Điều này khiến việc ra mắt Austfly mang tính thử thách cao hơn các instance thông thường: bất kỳ điểm nghẽn trải nghiệm nào không chỉ ảnh ảnh hưởng đến Austdoor, mà còn là thước đo đánh giá liệu mô hình whitelabel của RaIO có thực sự đứng vững trước các thương hiệu lớn hay không."
-                    : "Austdoor was RaIO's proof case — the brand chosen to demonstrate that an established, reputation-driven manufacturer could adopt the platform without diluting its own identity. That made Austfly's launch high-stakes in a way most whitelabel instances aren't: any friction users hit wouldn't just reflect on Austdoor, it would reflect on whether RaIO's whitelabel model actually holds up for a brand with something to lose."}
-                </p>
-                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
-                  {lang === "vi"
-                    ? "Một luồng truyền camera không mã hóa không phải là thiếu sót nhỏ đối với một thương hiệu phần cứng an ninh — nó mâu thuẫn trực tiếp với cam kết 'an toàn' cốt lõi của Austdoor. Và trong một phân khúc mà niềm tin là toàn bộ giá trị sản phẩm, lỗ hổng đó là rủi ro uy tín chứ không đơn thuần là lỗi UX. Việc tái cấu trúc Austfly không phải bảo trì phụ; đó là bài kiểm tra thực sự đầu tiên về việc RaIO có thể mở rộng tới những thương hiệu có uy tín lớn cần bảo vệ."
-                    : "A camera feed without encryption isn't a minor gap for a security-hardware brand — it directly contradicts the 'an toàn' (safety) claim at the center of Austdoor's market position, and in a category where trust is the entire product, that gap was reputational risk, not just a UX flaw. Fixing Austfly wasn't optional maintenance; it was the first real test of whether RaIO could scale to brands that had more to protect than to gain."}
-                </p>
-              </div>
-            </div>
-
-            {/* Right Column: Clients, Service, Tools */}
-            <div className="lg:col-span-5 border-t-2 lg:border-t-0 lg:border-l-2 border-white/10 pt-8 pb-10 sm:pb-12 lg:pt-16 lg:pb-16 lg:pl-12 space-y-8 flex flex-col justify-start">
+          {/* SECTION 2: 2-COLUMN INFO GRID (Summary on top on mobile/tablet, right column on desktop) */}
+          <div className="w-full flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-16 border-t-2 border-b-2 border-white/10">
+            {/* Summary Column: Clients, Role, Tools (Top on mobile/tablet, Right on desktop) */}
+            <div className="order-1 lg:order-2 lg:col-span-5 border-b-2 lg:border-b-0 lg:border-l-2 border-white/10 pt-8 pb-8 lg:pt-16 lg:pb-16 lg:pl-12 space-y-8 flex flex-col justify-start">
               {/* Clients */}
               <div className="space-y-3">
                 <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
@@ -251,7 +220,7 @@ export default function AustflyProjectPage() {
                   {["UI/UX research", "BA development", "UI Design"].map((item) => (
                     <span
                       key={item}
-                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
+                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-[8px] lg:rounded-full"
                     >
                       {item}
                     </span>
@@ -273,12 +242,58 @@ export default function AustflyProjectPage() {
                   {["Figma", "Chat GPT"].map((tool) => (
                     <span
                       key={tool}
-                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
+                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-[8px] lg:rounded-full"
                     >
                       {tool}
                     </span>
                   ))}
                 </div>
+              </div>
+            </div>
+
+            {/* Left Column: The Problem, The Product & Where Austfly Fits (Below summary on mobile/tablet, Left on desktop) */}
+            <div className="order-2 lg:order-1 lg:col-span-7 py-8 lg:py-16 space-y-10">
+              {/* The problem */}
+              <div className="space-y-3">
+                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
+                  {lang === "vi" ? "Vấn đề" : "The problem"}
+                </span>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi"
+                    ? "Austdoor là thương hiệu cửa cuốn thông minh hàng đầu Việt Nam — thương hiệu đã tiên phong mang tiêu chuẩn Úc vào thị trường trong nước và xây dựng mạng lưới phân phối toàn quốc từ năm 2003. Tuy nhiên, vị thế dẫn đầu về phần cứng đã vượt xa phần mềm điều khiển. Austfly, ứng dụng đại diện cho tuyên ngôn 'thông minh', ban đầu gặp phải luồng camera không mã hóa, quy trình cài đặt tách rời hub Wi-Fi và camera thành hai bước thiếu liên kết, cùng quy trình khôi phục buộc người dùng phải factory reset hoàn toàn khi gặp sự cố. Một thương hiệu định vị là an toàn nhất phân khúc lại đang được đại diện bởi một ứng dụng chưa đáp ứng trọn vẹn lời hứa đó."
+                    : "Austdoor is Vietnam's leading name in smart roller shutters — the brand that introduced Australian-standard shutters to the local market and built a nationwide distribution network since 2003. But market leadership in hardware had outpaced the software meant to carry it into the smart-home era. Austfly, the app powering that 'smart' claim, shipped with camera feeds that had no encryption, a setup flow that treated the Wi-Fi hub and camera as two disconnected steps, and a recovery process where any malfunction meant a full factory reset. A brand positioned as the safest name in the category was being represented by an app that couldn't consistently deliver on that promise."}
+                </p>
+              </div>
+
+              {/* The Product */}
+              <div className="space-y-3">
+                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
+                  {lang === "vi" ? "Sản phẩm" : "The Product"}
+                </span>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi"
+                    ? "Austfly là instance mang thương hiệu riêng của Austdoor trong hệ sinh thái RaIO — tầng nơi phần cứng cửa cuốn hàng đầu Việt Nam hội tụ cùng trải nghiệm điều khiển tương xứng với vị thế dẫn đầu. Ứng dụng đồng bộ bộ điều khiển cửa cuốn với camera an ninh để chủ nhà có thể giám sát lối vào theo thời gian thực ngay cả khi cửa đóng hoàn toàn, biến một sản phẩm cơ khí an ninh thành một giải pháp thông minh thực thụ. Nếu RaIO giải quyết bài toán phân mảnh đa thương hiệu, thì Austfly chính là minh chứng cho năng lực thực thi của hệ sinh thái đối với một thương hiệu dẫn đầu: phần cứng được cả nước tin dùng, nay được song hành cùng phần mềm đạt chuẩn tương đương."
+                    : "Austfly is Austdoor's branded instance within the RaIO ecosystem — the layer where Vietnam's leading roller-shutter hardware meets a control experience built to match its market position. It syncs shutter controllers with cameras so homeowners can monitor their entryway in real time, even with the shutter fully closed, turning a mechanical security product into a genuinely intelligent one. Where RaIO solved fragmentation across brands, Austfly is the proof point for what the ecosystem enables within a category leader: hardware trusted nationwide, finally paired with software built to the same standard."}
+                </p>
+              </div>
+
+              {/* Where Austfly Fits in the Bigger Picture */}
+              <div className="space-y-3">
+                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
+                  {lang === "vi"
+                    ? "Vị trí của Austfly trong bức tranh tổng thể"
+                    : "Where Austfly Fits in the Bigger Picture"}
+                </span>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi"
+                    ? "Austdoor chính là ca kiểm chứng thực tế của RaIO — thương hiệu được lựa chọn để chứng minh rằng một nhà sản xuất lớn, đặt nặng uy tín lâu năm có thể ứng dụng nền tảng mà không làm mờ nhạt nhận diện thương hiệu. Điều này khiến việc ra mắt Austfly mang tính thử thách cao hơn các instance thông thường: bất kỳ điểm nghẽn trải nghiệm nào không chỉ ảnh hưởng đến Austdoor, mà còn là thước đo đánh giá liệu mô hình whitelabel của RaIO có thực sự đứng vững trước các thương hiệu lớn hay không."
+                    : "Austdoor was RaIO's proof case — the brand chosen to demonstrate that an established, reputation-driven manufacturer could adopt the platform without diluting its own identity. That made Austfly's launch high-stakes in a way most whitelabel instances aren't: any friction users hit wouldn't just reflect on Austdoor, it would reflect on whether RaIO's whitelabel model actually holds up for a brand with something to lose."}
+                </p>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi"
+                    ? "Một luồng truyền camera không mã hóa không phải là thiếu sót nhỏ đối với một thương hiệu phần cứng an ninh — nó mâu thuẫn trực tiếp với cam kết 'an toàn' cốt lõi của Austdoor. Và trong một phân khúc mà niềm tin là toàn bộ giá trị sản phẩm, lỗ hổng đó là rủi ro uy tín chứ không đơn thuần là lỗi UX. Việc tái cấu trúc Austfly không phải bảo trì phụ; đó là bài kiểm tra thực sự đầu tiên về việc RaIO có thể mở rộng tới những thương hiệu có uy tín lớn cần bảo vệ."
+                    : "A camera feed without encryption isn't a minor gap for a security-hardware brand — it directly contradicts the 'an toàn' (safety) claim at the center of Austdoor's market position, and in a category where trust is the entire product, that gap was reputational risk, not just a UX flaw. Fixing Austfly wasn't optional maintenance; it was the first real test of whether RaIO could scale to brands that had more to protect than to gain."}
+                </p>
               </div>
             </div>
           </div>
@@ -291,7 +306,7 @@ export default function AustflyProjectPage() {
 
             <div className="space-y-[20px]">
               {/* Diagram 9: 5-Device overview (1. Austfly app, 2. Hub, 3. Remote, 4. Shutter controller, 4. Camera) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden bg-white shadow-md">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden bg-white shadow-md">
                 <Image
                   src="/images/austfly_project/Diagram 9.jpg"
                   alt="1. Austfly mobile app, 2. Austdoor 5.0 wifi hub, 3. Remote control, 4. Roller shutter controller, 4. Austfly Ezviz Camera"
@@ -303,7 +318,7 @@ export default function AustflyProjectPage() {
               </div>
 
               {/* Diagram 10: System Communication Graph */}
-              <div className="relative w-full aspect-[3720/2880] rounded-[12px] sm:rounded-[16px] overflow-hidden bg-white shadow-md">
+              <div className="relative w-full aspect-[3720/2880] rounded-[8px] lg:rounded-[16px] overflow-hidden bg-white shadow-md">
                 <Image
                   src="/images/austfly_project/Diagram 10.jpg"
                   alt="The graph shows how all the devices and app can work together"
@@ -324,7 +339,7 @@ export default function AustflyProjectPage() {
 
             <div className="space-y-[20px]">
               {/* Block 1: Design system follow brand guideline (Diagram 1.jpg) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden shadow-md">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden shadow-md">
                 <Image
                   src="/images/austfly_project/Diagram 1.jpg"
                   alt="Design system follow brand guideline"
@@ -337,7 +352,7 @@ export default function AustflyProjectPage() {
 
               {/* Block 2: 2-Column Grid - Logo (Diagram 2.jpg) & Color Palette (Diagram 3.jpg) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden shadow-md">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden shadow-md">
                   <Image
                     src="/images/austfly_project/Diagram 2.jpg"
                     alt="AUSTfly Logo"
@@ -347,7 +362,7 @@ export default function AustflyProjectPage() {
                     className="object-cover object-center"
                   />
                 </div>
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden shadow-md">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden shadow-md">
                   <Image
                     src="/images/austfly_project/Diagram 3.jpg"
                     alt="Brand Color Palette: Primary, Neutral light, Secondary, Neutral dark"
@@ -361,7 +376,7 @@ export default function AustflyProjectPage() {
 
               {/* Block 3: 2-Column Grid - Rolling door UI (Diagram 4.jpg) & Icon set (Diagram 5.jpg) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden shadow-md">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden shadow-md">
                   <Image
                     src="/images/austfly_project/Diagram 4.jpg"
                     alt="Rolling door 1 control interface"
@@ -371,7 +386,7 @@ export default function AustflyProjectPage() {
                     className="object-cover object-center"
                   />
                 </div>
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden shadow-md">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden shadow-md">
                   <Image
                     src="/images/austfly_project/Diagram 5.jpg"
                     alt="Austfly Iconography System"
@@ -384,7 +399,7 @@ export default function AustflyProjectPage() {
               </div>
 
               {/* Block 4: Splash Screen Banner (Diagram 16.jpg) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden shadow-md">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden shadow-md">
                 <Image
                   src="/images/austfly_project/Diagram 16.jpg"
                   alt="Austfly Splash Screen"
@@ -397,7 +412,7 @@ export default function AustflyProjectPage() {
 
               {/* Block 5: 2-Column Grid - Remote devices (Diagram 6.jpg) & Add device UI (Diagram 7.jpg) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden shadow-md">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden shadow-md">
                   <Image
                     src="/images/austfly_project/Diagram 6.jpg"
                     alt="Austdoor remote & other remotes on market"
@@ -407,7 +422,7 @@ export default function AustflyProjectPage() {
                     className="object-cover object-center"
                   />
                 </div>
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden shadow-md">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden shadow-md">
                   <Image
                     src="/images/austfly_project/Diagram 7.jpg"
                     alt="Add device - Choose remote control UI"
@@ -420,7 +435,7 @@ export default function AustflyProjectPage() {
               </div>
 
               {/* Block 6: Full-Width Mobile Lifestyle Mockup (Diagram 8.jpg) */}
-              <div className="relative w-full aspect-[3786/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden shadow-md">
+              <div className="relative w-full aspect-[3786/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden shadow-md">
                 <Image
                   src="/images/austfly_project/Diagram 8.jpg"
                   alt="Austfly in real world smart home garage"
@@ -455,7 +470,7 @@ export default function AustflyProjectPage() {
                 className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="space-y-4">
-                  <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                  <div className="relative w-full aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden bg-[#181818]">
                     <Image
                       src="/images/Rogo_dashboard_thumb.png"
                       alt="Rogo Platform V2"
@@ -497,7 +512,7 @@ export default function AustflyProjectPage() {
                 className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="space-y-4">
-                  <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                  <div className="relative w-full aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden bg-[#181818]">
                     <Image
                       src="/images/RaIO_smart_thumb.png"
                       alt="RaIO Smart"
@@ -539,7 +554,7 @@ export default function AustflyProjectPage() {
                 className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="space-y-4">
-                  <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                  <div className="relative w-full aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden bg-[#181818]">
                     <Image
                       src="/images/Thing Partner.png"
                       alt="Thing Partner"
@@ -581,6 +596,14 @@ export default function AustflyProjectPage() {
       <ContactModal
         isOpen={contactModalOpen}
         onClose={() => setContactModalOpen(false)}
+        lang={lang}
+      />
+
+      {/* Switch Project Modal for System Thinking Layers */}
+      <SwitchProjectModal
+        isOpen={switchModalOpen}
+        onClose={() => setSwitchModalOpen(false)}
+        targetProject={targetProject}
         lang={lang}
       />
     </div>

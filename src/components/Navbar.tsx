@@ -77,7 +77,7 @@ function TypingMenuItem({
   return (
     <button
       onClick={onClick}
-      className={`text-left font-heading text-h1 text-[36px] sm:text-[48px] lg:text-[64px] leading-[44px] sm:leading-[56px] lg:leading-[72px] font-bold uppercase tracking-wider transition-colors cursor-pointer w-fit flex items-center group outline-none whitespace-nowrap ${
+      className={`menu-tab-btn menu-tab-text text-left font-heading text-[36px] sm:text-[48px] lg:text-[64px] leading-[44px] sm:leading-[56px] lg:leading-[72px] font-bold uppercase tracking-wider transition-colors cursor-pointer w-fit flex items-center group outline-none whitespace-nowrap ${
         isActive ? "text-[#00DC6C]" : "text-white/75 hover:text-white"
       }`}
     >
@@ -85,7 +85,7 @@ function TypingMenuItem({
         {displayedText}
       </span>
       {isTyping && (
-        <span className="inline-block w-[6px] sm:w-[8px] lg:w-[10px] h-[28px] sm:h-[40px] lg:h-[56px] bg-[#00DC6C] ml-2 md:ml-3 animate-pulse align-middle" />
+        <span className="inline-block w-[5px] sm:w-[8px] lg:w-[10px] h-[30px] sm:h-[40px] lg:h-[56px] bg-[#00DC6C] ml-2 sm:ml-2 md:ml-3 animate-pulse align-middle" />
       )}
     </button>
   );
@@ -319,7 +319,29 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
             </div>
 
             <div className="max-w-[1440px] mx-auto w-full my-auto py-4 sm:py-6 flex flex-col items-center justify-center gap-3 sm:gap-6 md:gap-8">
-              <div className="flex items-center gap-1.5 mb-2">
+              <TypingMenuItem
+                fullText={currentLang === "vi" ? "TRANG CHỦ" : "HOME"}
+                onClick={scrollToHero}
+                isActive={isHome}
+              />
+              <TypingMenuItem
+                fullText={currentLang === "vi" ? "GIỚI THIỆU" : "ABOUT ME"}
+                onClick={goToAbout}
+                isActive={isAbout}
+              />
+              <TypingMenuItem
+                fullText={currentLang === "vi" ? "DỰ ÁN" : "MY WORKS"}
+                onClick={goToWorks}
+                isActive={isWorks}
+              />
+              <TypingMenuItem
+                fullText={currentLang === "vi" ? "LIÊN HỆ" : "CONTACT"}
+                onClick={goToContact}
+                isActive={isContact}
+              />
+
+              {/* Language switcher placed below the 4 tabs */}
+              <div className="flex items-center gap-1.5 mt-3 sm:mt-4">
                 <button
                   onClick={() => handleSetLang("vi")}
                   className={`flex items-center gap-2 px-3.5 py-1.5 md:px-4 md:py-2 rounded-full text-[14px] md:text-[16px] font-sans font-semibold transition-all cursor-pointer outline-none border-0 ${
@@ -343,27 +365,6 @@ export default function Navbar({ lang, setLang, onOpenContact }: NavbarProps) {
                   <span>ENG</span>
                 </button>
               </div>
-
-              <TypingMenuItem
-                fullText={currentLang === "vi" ? "TRANG CHỦ" : "HOME"}
-                onClick={scrollToHero}
-                isActive={isHome}
-              />
-              <TypingMenuItem
-                fullText={currentLang === "vi" ? "GIỚI THIỆU" : "ABOUT ME"}
-                onClick={goToAbout}
-                isActive={isAbout}
-              />
-              <TypingMenuItem
-                fullText={currentLang === "vi" ? "DỰ ÁN" : "MY WORKS"}
-                onClick={goToWorks}
-                isActive={isWorks}
-              />
-              <TypingMenuItem
-                fullText={currentLang === "vi" ? "LIÊN HỆ" : "CONTACT"}
-                onClick={goToContact}
-                isActive={isContact}
-              />
             </div>
 
             <div className="flex justify-between items-center max-w-[1440px] mx-auto w-full text-b1 md:text-h5 font-bold font-heading text-white/70 border-t-2 border-white/10 pt-4 md:pt-6 flex-wrap gap-4">

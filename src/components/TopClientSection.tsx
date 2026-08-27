@@ -349,7 +349,7 @@ export default function TopClientSection({
                   {/* Left Mockup Thumbnail */}
                   <Link
                     href="/works/rogo-platform-v2"
-                    className="w-full max-w-[320px] sm:max-w-[460px] lg:max-w-none lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
+                    className="w-full max-w-full sm:max-w-[460px] lg:max-w-none lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
                   >
                     <Image
                       src="/images/Rogo_dashboard_thumb.png"
@@ -500,7 +500,7 @@ export default function TopClientSection({
                   {/* Left Mockup Thumbnail */}
                   <Link
                     href="/works/raio-smart"
-                    className="w-full max-w-[320px] sm:max-w-[460px] lg:max-w-none lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
+                    className="w-full max-w-full sm:max-w-[460px] lg:max-w-none lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block cursor-pointer group/thumb"
                   >
                     <Image
                       src="/images/RaIO_smart_thumb.png"

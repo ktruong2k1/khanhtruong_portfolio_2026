@@ -52,11 +52,11 @@ function FooterTypingMenuItem({
   return (
     <button
       onClick={onClick}
-      className="text-left font-heading text-h1 text-[36px] sm:text-[48px] lg:text-[64px] leading-[44px] sm:leading-[56px] lg:leading-[72px] font-bold uppercase tracking-wider text-white hover:text-black transition-colors cursor-pointer w-fit flex items-center group outline-none whitespace-nowrap"
+      className="menu-tab-btn menu-tab-text text-left font-heading text-[36px] sm:text-[48px] lg:text-[64px] leading-[44px] sm:leading-[56px] lg:leading-[72px] font-bold uppercase tracking-wider text-white hover:text-black transition-colors cursor-pointer w-fit flex items-center group outline-none whitespace-nowrap"
     >
       <span>{displayedText}</span>
       {isTyping && trigger && (
-        <span className="inline-block w-[6px] sm:w-[8px] lg:w-[10px] h-[28px] sm:h-[40px] lg:h-[56px] bg-black ml-2 sm:ml-2.5 lg:ml-3 animate-pulse align-middle" />
+        <span className="inline-block w-[5px] sm:w-[8px] lg:w-[10px] h-[30px] sm:h-[40px] lg:h-[56px] bg-black ml-2 sm:ml-2.5 lg:ml-3 animate-pulse align-middle" />
       )}
     </button>
   );

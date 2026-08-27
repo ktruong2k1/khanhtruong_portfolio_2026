@@ -123,9 +123,24 @@ function HeroTypingHeadline({ onComplete, lang = "en" }: { onComplete?: () => vo
   );
 }
 
+// Feature flag: Set to true when Thing Flow design is ready to display
+const SHOW_THING_FLOW = false;
+
 export default function WorksPage() {
   const { lang, setLang } = useLanguage();
+  const [activeLayer, setActiveLayer] = useState<number>(0);
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  // Responsive check for vertical vs horizontal slide transitions
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Section 1 scroll tracking for 400vh step snap scroll sequence (System Thinking)
   const section1Ref = useRef<HTMLDivElement>(null);
@@ -134,9 +149,7 @@ export default function WorksPage() {
 
   const handleTypingComplete = useCallback(() => {
     if (hasAutoScrolledRef.current) return;
-    // Check if the user is still at the Hero section (scrollTop is near top)
     if (containerRef.current && containerRef.current.scrollTop > 80) {
-      // User has already scrolled down manually; do not hijack or force-scroll up!
       hasAutoScrolledRef.current = true;
       return;
     }
@@ -152,38 +165,69 @@ export default function WorksPage() {
     offset: ["start start", "end end"],
   });
 
-  // Step state for Section 1 sequential animation sequence:
-  // Step 0 (0.00-0.22): Intro Layout - Tag, Heading & Description (Screenshot klxeqN)
-  // Step 1 (0.22-0.48): Platform Layer - Intro pushes up, Layer 0 Active (Screenshot OsNvHE)
-  // Step 2 (0.48-0.74): Framework Layer - Layer 1 Active (RaIO Smart)
-  // Step 3 (0.74-1.00): Instance Layer - Layer 2 Active (Austfly & Kangaroo)
+  // Step 0 (0.00-0.22): Intro Layout - Tag, Heading & Description
+  // Step 1 (0.22-0.48): Platform Layer - Intro pushes up, Layer 0 Active
+  // Step 2 (0.48-0.74): Framework Layer - Layer 1 Active
+  // Step 3 (0.74-1.00): Instance Layer - Layer 2 Active
   const [step, setStep] = useState<number>(0);
 
+  // Sync scroll progress with visual step
   useMotionValueEvent(section1Progress, "change", (latest) => {
     if (latest < 0.22) {
       setStep(0);
     } else if (latest < 0.48) {
       setStep(1);
+      setActiveLayer(0);
     } else if (latest < 0.74) {
       setStep(2);
+      setActiveLayer(1);
     } else {
       setStep(3);
+      setActiveLayer(2);
     }
   });
 
-  const activeLayer = step <= 1 ? 0 : step === 2 ? 1 : 2;
+  // Layer Content mapping for 3 sub-projects
+  const layers = [
+    {
+      id: 0,
+      title: "Rogo IoT Platform V2",
+      slug: "/works/rogo-platform-v2",
+      tags: ["FEATURED", "PAAS • B2B", "WHITELABEL", "DESKTOP"],
+      description:
+        lang === "vi"
+          ? "Nền tảng quản trị IoT whitelabel đa tầng — kiến trúc phân quyền đa tổ chức, quản lý thiết bị tập trung cho quy mô lớn."
+          : "Enterprise whitelabel IoT platform core – unified device fleet management and multi-tenant control plane.",
+      image: "/images/Rogo_dashboard_thumb.png",
+      alt: "Rogo IoT Platform v2",
+    },
+    {
+      id: 1,
+      title: "RaIO Smart whitelabel app",
+      slug: "/works/raio-smart",
+      tags: ["FEATURED", "WHITELABEL", "MOBILE", "IOT"],
+      description:
+        lang === "vi"
+          ? "Framework ứng dụng nhà thông minh dạng Whitelabel cho phép tùy biến nhận diện đa thương hiệu và tích hợp thiết bị linh hoạt."
+          : "Multi-brand IoT mobile app framework enabling rapid UI customization and complex onboarding workflows.",
+      image: "/images/RaIO_smart_thumb.png",
+      alt: "RaIO Smart whitelabel app",
+    },
+    {
+      id: 2,
+      title: "Austfly",
+      slug: "/works/austfly",
+      tags: ["FEATURED", "INSTANCE", "MOBILE", "IOT", "WHITELABEL"],
+      description:
+        lang === "vi"
+          ? "Ứng dụng điều khiển cửa cuốn và nhà thông minh Austfly — một instance tùy biến cao cấp trên nền tảng RaIO Smart."
+          : "Smart roller shutter & IoT control app Austfly — a customized instance powered by RaIO Smart framework.",
+      image: "/images/austfly.png",
+      alt: "Austfly & Kangaroo Instances",
+    },
+  ];
 
-  const [isDesktop, setIsDesktop] = useState(true);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+  // Auto-scroll the active tab into view horizontally on Mobile/Tablet when step changes
   const tab0Ref = useRef<HTMLButtonElement>(null);
   const tab1Ref = useRef<HTMLButtonElement>(null);
   const tab2Ref = useRef<HTMLButtonElement>(null);
@@ -193,8 +237,8 @@ export default function WorksPage() {
       const tabs = [tab0Ref, tab1Ref, tab2Ref];
       tabs[activeLayer]?.current?.scrollIntoView({
         behavior: "smooth",
-        inline: "center",
         block: "nearest",
+        inline: "center",
       });
     }
   }, [activeLayer, isDesktop]);
@@ -209,7 +253,7 @@ export default function WorksPage() {
     setStep(layerIndex + 1);
   };
 
-  // Section 2 scroll tracking for 300vh step snap scroll sequence (IoT tools: Intro, Thing Partner, Thing Flow)
+  // Section 2 scroll tracking for step snap scroll sequence (IoT tools: Intro, Thing Partner, [optional] Thing Flow)
   const section2Ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress: section2Progress } = useScroll({
     target: section2Ref,
@@ -220,12 +264,20 @@ export default function WorksPage() {
   const [section2Step, setSection2Step] = useState<number>(0);
 
   useMotionValueEvent(section2Progress, "change", (latest) => {
-    if (latest < 0.28) {
-      setSection2Step(0);
-    } else if (latest < 0.68) {
-      setSection2Step(1);
+    if (SHOW_THING_FLOW) {
+      if (latest < 0.28) {
+        setSection2Step(0);
+      } else if (latest < 0.68) {
+        setSection2Step(1);
+      } else {
+        setSection2Step(2);
+      }
     } else {
-      setSection2Step(2);
+      if (latest < 0.45) {
+        setSection2Step(0);
+      } else {
+        setSection2Step(1);
+      }
     }
   });
 
@@ -672,16 +724,16 @@ export default function WorksPage() {
           </div>
         </section>
 
-        {/* SECTION 2: IOT TOOLS (300vh with synchronized Intro + Thing Partner + Thing Flow scroll transitions) */}
+        {/* SECTION 2: IOT TOOLS (Synchronized Intro + Thing Partner + [hidden] Thing Flow scroll transitions) */}
         <section
           ref={section2Ref}
-          className="relative w-full h-[300vh] bg-[#121212] border-b border-white/5 snap-start"
+          className={`relative w-full ${SHOW_THING_FLOW ? "h-[300vh]" : "h-[200vh]"} bg-[#121212] border-b border-white/5 snap-start`}
         >
-          {/* CSS Scroll Snap Step Anchors: 3 Steps (Intro, Thing Partner, Thing Flow) */}
+          {/* CSS Scroll Snap Step Anchors: (Intro, Thing Partner, [optional] Thing Flow) */}
           <div className="absolute inset-0 w-full h-full flex flex-col justify-between pointer-events-none z-0">
             <div className="h-screen w-full snap-start snap-always" />
             <div className="h-screen w-full snap-start snap-always" />
-            <div className="h-screen w-full snap-start snap-always" />
+            {SHOW_THING_FLOW && <div className="h-screen w-full snap-start snap-always" />}
           </div>
 
           {/* Sticky 100vh Viewport */}
@@ -734,12 +786,12 @@ export default function WorksPage() {
                   isDesktop
                     ? {
                         opacity: section2Step === 1 ? 1 : 0,
-                        y: section2Step === 1 ? "0%" : section2Step < 1 ? "100%" : "-80%",
+                        y: section2Step === 1 ? "0%" : SHOW_THING_FLOW && section2Step > 1 ? "-80%" : "100%",
                         x: "0%",
                       }
                     : {
                         opacity: section2Step === 1 ? 1 : 0,
-                        x: section2Step === 1 ? "0%" : section2Step < 1 ? "100%" : "-100%",
+                        x: section2Step === 1 ? "0%" : SHOW_THING_FLOW && section2Step > 1 ? "-100%" : "100%",
                         y: "0%",
                       }
                 }
@@ -748,10 +800,10 @@ export default function WorksPage() {
                   section2Step !== 1 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
                 }`}
               >
-                {/* Left Thumbnail Mockup Card: 4:3 & rounded-[12px] */}
+                {/* Left Thumbnail Mockup Card: 4:3 & rounded-[8px] lg:rounded-[12px] */}
                 <Link
                   href="/pending"
-                  className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block group/thumb cursor-pointer"
+                  className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block group/thumb cursor-pointer"
                 >
                   <Image
                     src="/images/Thing Partner.png"
@@ -822,91 +874,93 @@ export default function WorksPage() {
                 </div>
               </motion.div>
 
-              {/* STAGE 3: Step 2 - Project View (Thing Flow) */}
-              <motion.div
-                animate={
-                  isDesktop
-                    ? {
-                        opacity: section2Step === 2 ? 1 : 0,
-                        y: section2Step === 2 ? "0%" : "100%",
-                        x: "0%",
-                      }
-                    : {
-                        opacity: section2Step === 2 ? 1 : 0,
-                        x: section2Step === 2 ? "0%" : "100%",
-                        y: "0%",
-                      }
-                }
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className={`w-full max-w-[1100px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-8 items-start ${
-                  section2Step !== 2 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
-                }`}
-              >
-                {/* Left Thumbnail Mockup Card: 4:3 & rounded-[12px] */}
-                <Link
-                  href="/pending"
-                  className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block group/thumb cursor-pointer"
+              {/* STAGE 3: Step 2 - Project View (Thing Flow - Temporarily hidden until design is available) */}
+              {SHOW_THING_FLOW && (
+                <motion.div
+                  animate={
+                    isDesktop
+                      ? {
+                          opacity: section2Step === 2 ? 1 : 0,
+                          y: section2Step === 2 ? "0%" : "100%",
+                          x: "0%",
+                        }
+                      : {
+                          opacity: section2Step === 2 ? 1 : 0,
+                          x: section2Step === 2 ? "0%" : "100%",
+                          y: "0%",
+                        }
+                  }
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className={`w-full max-w-[1100px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-8 items-start ${
+                    section2Step !== 2 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
+                  }`}
                 >
-                  <Image
-                    src="/images/rogo_project/Diagram 10.png"
-                    alt="Thing Flow"
-                    fill
-                    className="object-cover object-center group-hover/thumb:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/10 transition-colors pointer-events-none" />
-                </Link>
-
-                {/* Right Project Details (Align top, no inner scrollbar) */}
-                <div className="flex-1 space-y-1.5 sm:space-y-2.5 lg:space-y-4 pt-0 w-full">
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
-                      IOT AUTOMATION • B2B
-                    </span>
-                  </div>
-
-                  <Link href="/pending" className="block group/title">
-                    <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white group-hover/title:text-[#00DC6C] transition-colors leading-tight flex items-center gap-2">
-                      <span>Thing Flow</span>
-                      <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
-                    </h3>
+                  {/* Left Thumbnail Mockup Card: 4:3 & rounded-[8px] lg:rounded-[12px] */}
+                  <Link
+                    href="/pending"
+                    className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block group/thumb cursor-pointer"
+                  >
+                    <Image
+                      src="/images/rogo_project/Diagram 10.png"
+                      alt="Thing Flow"
+                      fill
+                      className="object-cover object-center group-hover/thumb:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/10 transition-colors pointer-events-none" />
                   </Link>
 
-                  <div className="space-y-2">
-                    <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
-                      {lang === "vi" ? "Khách hàng" : "Clients"}
+                  {/* Right Project Details (Align top, no inner scrollbar) */}
+                  <div className="flex-1 space-y-1.5 sm:space-y-2.5 lg:space-y-4 pt-0 w-full">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
+                        IOT AUTOMATION • B2B
+                      </span>
                     </div>
-                    <div className="flex items-center gap-6 sm:gap-8 flex-wrap">
-                      <div className="relative w-[90px] h-[28px] group cursor-pointer">
-                        <Image
-                          src="/images/Rogo_color.svg"
-                          alt="ROGO Solutions"
-                          fill
-                          className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
-                        />
-                      </div>
-                      <div className="relative w-[100px] h-[28px] group cursor-pointer">
-                        <Image
-                          src="/images/FPTSmartHome_color.svg"
-                          alt="FPT Smart Home"
-                          fill
-                          className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
-                      {lang === "vi" ? "Mô tả" : "Description"}
+                    <Link href="/pending" className="block group/title">
+                      <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white group-hover/title:text-[#00DC6C] transition-colors leading-tight flex items-center gap-2">
+                        <span>Thing Flow</span>
+                        <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
+                      </h3>
+                    </Link>
+
+                    <div className="space-y-2">
+                      <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
+                        {lang === "vi" ? "Khách hàng" : "Clients"}
+                      </div>
+                      <div className="flex items-center gap-6 sm:gap-8 flex-wrap">
+                        <div className="relative w-[90px] h-[28px] group cursor-pointer">
+                          <Image
+                            src="/images/Rogo_color.svg"
+                            alt="ROGO Solutions"
+                            fill
+                            className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
+                          />
+                        </div>
+                        <div className="relative w-[100px] h-[28px] group cursor-pointer">
+                          <Image
+                            src="/images/FPTSmartHome_color.svg"
+                            alt="FPT Smart Home"
+                            fill
+                            className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <p className="font-mono text-[14px] text-white/80 leading-relaxed">
-                      {lang === "vi"
-                        ? "Nền tảng tự động hóa luồng điều khiển và kịch bản thông minh cho hệ sinh thái IoT đa thiết bị."
-                        : "Visual automation and smart rule orchestration engine for complex IoT ecosystems."}
-                    </p>
+
+                    <div className="space-y-2">
+                      <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
+                        {lang === "vi" ? "Mô tả" : "Description"}
+                      </div>
+                      <p className="font-mono text-[14px] text-white/80 leading-relaxed">
+                        {lang === "vi"
+                          ? "Nền tảng tự động hóa luồng điều khiển và kịch bản thông minh cho hệ sinh thái IoT đa thiết bị."
+                          : "Visual automation and smart rule orchestration engine for complex IoT ecosystems."}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              )}
 
             </div>
           </div>
@@ -978,12 +1032,10 @@ export default function WorksPage() {
                   section3Step < 1 ? "pointer-events-none absolute inset-0 z-0" : "relative z-10"
                 }`}
               >
-                {/* Left Mockup Card: 4:3 & rounded-[12px] */}
-                <a
-                  href="https://thing.ai.vn/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 relative shrink-0 block group"
+                {/* Left Mockup Card: 4:3 & rounded-[8px] lg:rounded-[12px] */}
+                <Link
+                  href="/works/thing-ai-vn"
+                  className="w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden shadow-2xl border border-white/10 relative shrink-0 block group cursor-pointer"
                 >
                   <Image
                     src="/images/Thing_AI_VN.png"
@@ -991,7 +1043,8 @@ export default function WorksPage() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                </a>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
+                </Link>
 
                 {/* Right Details (Align top, no inner scrollbar) */}
                 <div className="flex-1 space-y-4 pt-0">
@@ -1004,9 +1057,12 @@ export default function WorksPage() {
                     </span>
                   </div>
 
-                  <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white leading-tight">
-                    Thing AI VN
-                  </h3>
+                  <Link href="/works/thing-ai-vn" className="block group/title">
+                    <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white group-hover/title:text-[#00DC6C] transition-colors leading-tight flex items-center gap-2">
+                      <span>Thing AI VN</span>
+                      <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
+                    </h3>
+                  </Link>
 
                   <div className="space-y-2">
                     <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Clients</div>

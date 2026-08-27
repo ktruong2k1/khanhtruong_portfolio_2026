@@ -126,7 +126,11 @@ html {
   --gutter: 16px;
   --grid-gap: 16px;
 
-  /* TYPE SCALE CSS CUSTOM PROPERTIES */
+  /* ==========================================================================
+     OFFICIAL DESIGN SYSTEM TYPE SCALE
+     Headings (Bricolage Grotesque): H0 (96px) -> H6 (20px)
+     Body & Mono (IBM Plex Mono): B0 (20px) -> B4 (10px)
+     ========================================================================== */
   --text-h0: 96px;
   --text-h0-line: 100px;
   --text-h1: 64px;
@@ -137,12 +141,10 @@ html {
   --text-h3-line: 51px;
   --text-h4: 36px;
   --text-h4-line: 42px;
-  --text-h5: 24px;
+  --text-h5: 28px;
   --text-h5-line: 36px;
   --text-h6: 20px;
   --text-h6-line: 30px;
-  --text-h7: 16px;
-  --text-h7-line: 30px;
 
   --text-b0: 20px;
   --text-b0-line: 28px;
@@ -280,7 +282,7 @@ html {
 
 .text-h5 {
   font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
-  font-size: 24px;
+  font-size: 28px;
   line-height: 36px;
 }
 
@@ -290,27 +292,11 @@ html {
   line-height: 30px;
 }
 
+/* Backwards compatibility alias: text-h7 maps to text-b1 (16px) */
 .text-h7 {
   font-family: "IBM Plex Mono", var(--font-mono), monospace !important;
   font-size: 16px !important;
-  line-height: 30px !important; /* +25% from 24px */
-}
-
-/* Headings <= 16px +25% line-height */
-.font-heading.text-base,
-.font-heading.text-\[16px\],
-.font-heading.text-h7 {
-  line-height: 30px !important;
-}
-
-.font-heading.text-sm,
-.font-heading.text-\[14px\] {
-  line-height: 23px !important;
-}
-
-.font-heading.text-xs,
-.font-heading.text-\[12px\] {
-  line-height: 19px !important;
+  line-height: 24px !important;
 }
 
 .text-subhead {
@@ -322,6 +308,49 @@ html {
   letter-spacing: 0.02em;
 }
 
+/* ==========================================================================
+   DEDICATED MENU TABS TYPOGRAPHY (Topnav Overlay & Footer Menu)
+   Desktop (≥ 1024px): H1 - 64px (line: 72px)
+   Tablet (640px - 1023px): H2 - 48px (line: 56px)
+   Mobile (< 640px): H4 - 36px (line: 44px)
+   Font: Bricolage Grotesque (Bold, Uppercase)
+   ========================================================================== */
+.menu-tab-btn,
+button.menu-tab-btn,
+a.menu-tab-btn,
+.menu-tab-text {
+  font-family: "Bricolage Grotesque", var(--font-heading), sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  font-size: 36px !important;
+  line-height: 44px !important;
+}
+
+@media (min-width: 640px) {
+  .menu-tab-btn,
+  button.menu-tab-btn,
+  a.menu-tab-btn,
+  .menu-tab-text {
+    font-size: 48px !important;
+    line-height: 56px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .menu-tab-btn,
+  button.menu-tab-btn,
+  a.menu-tab-btn,
+  .menu-tab-text {
+    font-size: 64px !important;
+    line-height: 72px !important;
+  }
+}
+
+/* ==========================================================================
+   OFFICIAL BODY TYPE SCALE (IBM Plex Mono)
+   B0: 20px | B1: 16px | B2: 14px | B3: 12px | B4: 10px
+   ========================================================================== */
 .text-b0 {
   font-family: "IBM Plex Mono", var(--font-mono), monospace !important;
   font-size: 20px !important;
@@ -490,8 +519,8 @@ header {
   }
 }
 
-/* Global Button Typography: Exactly 16px & IBM Plex Mono */
-button, .btn, .cta-btn {
+/* Global Button Typography: Default to 16px & IBM Plex Mono for UI buttons (excludes menu tabs and heading buttons) */
+button:not(.menu-tab-btn):not([class*="font-heading"]):not([class*="menu-tab-text"]), .btn, .cta-btn {
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
   font-size: 16px;
 }

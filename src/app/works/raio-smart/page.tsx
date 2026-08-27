@@ -7,13 +7,28 @@ import Navbar from "@/components/Navbar";
 import ContactModal from "@/components/ContactModal";
 import FooterSection from "@/components/FooterSection";
 import InteractiveCTA from "@/components/InteractiveCTA";
+import SwitchProjectModal, {
+  LAYER_PROJECTS,
+  TargetProjectInfo,
+} from "@/components/SwitchProjectModal";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function RaIOSmartPage() {
   const { lang, setLang } = useLanguage();
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [activeLayer, setActiveLayer] = useState(1);
+  const [switchModalOpen, setSwitchModalOpen] = useState(false);
+  const [targetProject, setTargetProject] = useState<TargetProjectInfo | null>(null);
   const titleSectionRef = useRef<HTMLDivElement>(null);
+
+  const handleLayerClick = (layerId: number) => {
+    if (layerId === 1) {
+      setActiveLayer(1);
+    } else {
+      setTargetProject(LAYER_PROJECTS[layerId]);
+      setSwitchModalOpen(true);
+    }
+  };
 
   const layers = [
     { id: 0, label: "Platform layer" },
@@ -79,7 +94,7 @@ export default function RaIOSmartPage() {
           </div>
 
           {/* SECTION 1: HERO BANNER MOCKUP */}
-          <div className="relative w-full aspect-[16/9] sm:aspect-[3786/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+          <div className="relative w-full aspect-[16/9] sm:aspect-[3786/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
             <Image
               src="/images/raio_smart_project/Diagram hero.jpg"
               alt="RaIO Smart Overview Mockup"
@@ -100,7 +115,7 @@ export default function RaIOSmartPage() {
                 return (
                   <button
                     key={layer.id}
-                    onClick={() => setActiveLayer(layer.id)}
+                    onClick={() => handleLayerClick(layer.id)}
                     className="flex items-center gap-2.5 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 text-left group"
                   >
                     {isActive && (
@@ -121,7 +136,7 @@ export default function RaIOSmartPage() {
             </div>
 
             {/* Diagram 0.jpg White Card Container (Aspect 3720/1440) */}
-            <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+            <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
               <Image
                 src="/images/raio_smart_project/Diagram 0.jpg"
                 alt="3-Layer Architecture Diagram (Platform, Framework, Instance)"
@@ -135,7 +150,7 @@ export default function RaIOSmartPage() {
 
             {/* Contextual navigation link when Platform or Instance layer is selected */}
             {activeLayer === 0 && (
-              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-xl transition-all">
+              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-[8px] lg:rounded-xl transition-all">
                 <span className="text-b3 sm:text-b2 text-white/90 font-mono">
                   {lang === "vi"
                     ? "Tầng Nền tảng cốt lõi: Rogo Platform Dashboard V2"
@@ -151,7 +166,7 @@ export default function RaIOSmartPage() {
             )}
 
             {activeLayer === 2 && (
-              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-xl transition-all">
+              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-[8px] lg:rounded-xl transition-all">
                 <span className="text-b3 sm:text-b2 text-white/90 font-mono">
                   {lang === "vi"
                     ? "Tầng Phiên bản ứng dụng thực tế: Austfly, Kangaroo RaIO"
@@ -167,10 +182,77 @@ export default function RaIOSmartPage() {
             )}
           </div>
 
-          {/* SECTION 2: 2-COLUMN INFO GRID (The Problem & Architecture vs Clients, Service, Tools) with 2px continuous borders */}
-          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 border-t-2 border-b-2 border-white/10">
-            {/* Left Column: The Problem, The Product & Where RaIO Fits in the Bigger Picture */}
-            <div className="lg:col-span-7 py-10 sm:py-12 lg:py-16 space-y-10">
+          {/* SECTION 2: 2-COLUMN INFO GRID (Summary on top on mobile/tablet, right column on desktop) with 2px continuous borders */}
+          <div className="w-full flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-16 border-t-2 border-b-2 border-white/10">
+            {/* Summary Column: Clients, Role, Tools (Top on mobile/tablet, Right on desktop) */}
+            <div className="order-1 lg:order-2 lg:col-span-5 border-b-2 lg:border-b-0 lg:border-l-2 border-white/10 pt-8 pb-8 lg:pt-16 lg:pb-16 lg:pl-12 space-y-8 flex flex-col justify-start">
+              {/* Clients */}
+              <div className="space-y-3">
+                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
+                  {lang === "vi" ? "Khách hàng" : "Clients"}
+                </span>
+                <div className="flex items-center gap-6 sm:gap-8 flex-wrap">
+                  <div className="relative w-[100px] h-[32px] group cursor-pointer">
+                    <Image
+                      src="/images/Rogo_color.svg"
+                      alt="ROGO Solutions"
+                      fill
+                      className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
+                    />
+                  </div>
+                  <div className="relative w-[120px] h-[32px] group cursor-pointer">
+                    <Image
+                      src="/images/RangDong_color.svg"
+                      alt="Rạng Đông"
+                      fill
+                      className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* My Role */}
+              <div className="space-y-4">
+                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
+                  {lang === "vi" ? "Vai trò của tôi" : "My Role"}
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {["UI/UX research", "BA development", "UI Design"].map((item) => (
+                    <span
+                      key={item}
+                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-[8px] lg:rounded-full"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi"
+                    ? "Tôi thiết kế RaIO Smart toàn diện từ đầu đến cuối, từ quyết định phân tích nghiệp vụ đầu tiên cho đến giao diện UI/UX cuối cùng — định hình cả định hướng chiến lược của sản phẩm và từng quyết định thiết kế cốt lõi."
+                    : "I designed RaIO Smart end-to-end, starting from the first business analysis decision through to final UI/UX — owning both the strategic direction of the product and every design decision that shaped it."}
+                </p>
+              </div>
+
+              {/* Tools */}
+              <div className="space-y-3">
+                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
+                  {lang === "vi" ? "Công cụ" : "Tools"}
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {["Figma", "Claude AI"].map((tool) => (
+                    <span
+                      key={tool}
+                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-[8px] lg:rounded-full"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Left Column: The Problem, The Product & Where RaIO Fits (Below summary on mobile/tablet, Left on desktop) */}
+            <div className="order-2 lg:order-1 lg:col-span-7 py-8 lg:py-16 space-y-10">
               {/* The problem */}
               <div className="space-y-3">
                 <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
@@ -302,73 +384,6 @@ export default function RaIOSmartPage() {
                 </p>
               </div>
             </div>
-
-            {/* Right Column: Clients, Service, Tools (Full-height 2px vertical border line) */}
-            <div className="lg:col-span-5 border-t-2 lg:border-t-0 lg:border-l-2 border-white/10 pt-8 pb-10 sm:pb-12 lg:pt-16 lg:pb-16 lg:pl-12 space-y-8 flex flex-col justify-start">
-              {/* Clients */}
-              <div className="space-y-3">
-                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi" ? "Khách hàng" : "Clients"}
-                </span>
-                <div className="flex items-center gap-6 sm:gap-8 flex-wrap">
-                  <div className="relative w-[100px] h-[32px] group cursor-pointer">
-                    <Image
-                      src="/images/Rogo_color.svg"
-                      alt="ROGO Solutions"
-                      fill
-                      className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
-                    />
-                  </div>
-                  <div className="relative w-[120px] h-[32px] group cursor-pointer">
-                    <Image
-                      src="/images/RangDong_color.svg"
-                      alt="Rạng Đông"
-                      fill
-                      className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* My Role */}
-              <div className="space-y-4">
-                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi" ? "Vai trò của tôi" : "My Role"}
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {["UI/UX research", "BA development", "UI Design"].map((item) => (
-                    <span
-                      key={item}
-                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
-                  {lang === "vi"
-                    ? "Tôi thiết kế RaIO Smart toàn diện từ đầu đến cuối, từ quyết định phân tích nghiệp vụ đầu tiên cho đến giao diện UI/UX cuối cùng — định hình cả định hướng chiến lược của sản phẩm và từng quyết định thiết kế cốt lõi."
-                    : "I designed RaIO Smart end-to-end, starting from the first business analysis decision through to final UI/UX — owning both the strategic direction of the product and every design decision that shaped it."}
-                </p>
-              </div>
-
-              {/* Tools */}
-              <div className="space-y-3">
-                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi" ? "Công cụ" : "Tools"}
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {["Figma", "Claude AI"].map((tool) => (
-                    <span
-                      key={tool}
-                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
-                    >
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* SECTION 3: APP DESIGN (Full Layout from Screenshots with 20px spacing) */}
@@ -379,7 +394,7 @@ export default function RaIOSmartPage() {
 
             <div className="space-y-[20px]">
               {/* Block 1: Design system follow brand guideline (Diagram 2.jpg - Aspect 3720/1440) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/raio_smart_project/Diagram 2.jpg"
                   alt="Design system follow brand guideline"
@@ -392,7 +407,7 @@ export default function RaIOSmartPage() {
 
               {/* Block 2: 2-Column Grid (gap-20px) - Logo (Diagram 3.jpg) & Color Palette (Diagram 4.jpg) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/raio_smart_project/Diagram 3.jpg"
                     alt="RaIO Brand Logo"
@@ -402,7 +417,7 @@ export default function RaIOSmartPage() {
                     className="object-cover object-center"
                   />
                 </div>
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/raio_smart_project/Diagram 4.jpg"
                     alt="Brand Color Palette: Primary, Gradient, Secondary, Neutral"
@@ -416,7 +431,7 @@ export default function RaIOSmartPage() {
 
               {/* Block 3: 2-Column Grid (gap-20px) - Iconography (Diagram 5.jpg) & Abstract Graphic (Diagram 6.jpg) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/raio_smart_project/Diagram 5.jpg"
                     alt="RaIO Iconography System"
@@ -426,7 +441,7 @@ export default function RaIOSmartPage() {
                     className="object-cover object-center"
                   />
                 </div>
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/raio_smart_project/Diagram 6.jpg"
                     alt="RaIO Abstract Brand Motif"
@@ -439,7 +454,7 @@ export default function RaIOSmartPage() {
               </div>
 
               {/* Block 4: Countdown Settings & Control Buttons (Diagram 10-1.jpg - Aspect 3720/1440) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/raio_smart_project/Diagram 10-1.jpg"
                   alt="Countdown settings and device control buttons"
@@ -452,7 +467,7 @@ export default function RaIOSmartPage() {
 
               {/* Block 5: 2-Column Grid (gap-20px) - Scanning Device (Diagram 7.jpg) & Live App Home (Diagram 8.jpg) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/raio_smart_project/Diagram 7.jpg"
                     alt="Scanning Device Mobile Mockup"
@@ -462,7 +477,7 @@ export default function RaIOSmartPage() {
                     className="object-cover object-center"
                   />
                 </div>
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/raio_smart_project/Diagram 8.jpg"
                     alt="RaIO Smart Mobile Home Screen Mockup"
@@ -475,7 +490,7 @@ export default function RaIOSmartPage() {
               </div>
 
               {/* Block 6: CRM Dashboard Login Screen (Diagram 10.jpg - Aspect 3720/1440) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/raio_smart_project/Diagram 10.jpg"
                   alt="CRM Dashboard & Login Portal"
@@ -508,7 +523,7 @@ export default function RaIOSmartPage() {
               >
                 <div className="space-y-4">
                   {/* Mockup Thumbnail (Aspect 4:3) */}
-                  <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                  <div className="relative w-full aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden bg-[#181818]">
                     <Image
                       src="/images/Rogo_dashboard_thumb.png"
                       alt="Rogo Platform V2"
@@ -554,7 +569,7 @@ export default function RaIOSmartPage() {
               >
                 <div className="space-y-4">
                   {/* Mockup Thumbnail (Aspect 4:3) */}
-                  <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                  <div className="relative w-full aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden bg-[#181818]">
                     <Image
                       src="/images/Thing Partner.png"
                       alt="Thing Partner"
@@ -591,7 +606,7 @@ export default function RaIOSmartPage() {
               >
                 <div className="space-y-4">
                   {/* Mockup Thumbnail (Aspect 4:3) */}
-                  <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                  <div className="relative w-full aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden bg-[#181818]">
                     <Image
                       src="/images/austfly.png"
                       alt="Austfly"
@@ -648,6 +663,14 @@ export default function RaIOSmartPage() {
       <ContactModal
         isOpen={contactModalOpen}
         onClose={() => setContactModalOpen(false)}
+        lang={lang}
+      />
+
+      {/* Switch Project Modal for System Thinking Layers */}
+      <SwitchProjectModal
+        isOpen={switchModalOpen}
+        onClose={() => setSwitchModalOpen(false)}
+        targetProject={targetProject}
         lang={lang}
       />
     </div>

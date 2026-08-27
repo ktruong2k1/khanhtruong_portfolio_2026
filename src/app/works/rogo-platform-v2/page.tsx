@@ -7,13 +7,28 @@ import Navbar from "@/components/Navbar";
 import ContactModal from "@/components/ContactModal";
 import FooterSection from "@/components/FooterSection";
 import InteractiveCTA from "@/components/InteractiveCTA";
+import SwitchProjectModal, {
+  LAYER_PROJECTS,
+  TargetProjectInfo,
+} from "@/components/SwitchProjectModal";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function RogoPlatformV2Page() {
   const { lang, setLang } = useLanguage();
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [activeLayer, setActiveLayer] = useState(0);
+  const [switchModalOpen, setSwitchModalOpen] = useState(false);
+  const [targetProject, setTargetProject] = useState<TargetProjectInfo | null>(null);
   const titleSectionRef = useRef<HTMLDivElement>(null);
+
+  const handleLayerClick = (layerId: number) => {
+    if (layerId === 0) {
+      setActiveLayer(0);
+    } else {
+      setTargetProject(LAYER_PROJECTS[layerId]);
+      setSwitchModalOpen(true);
+    }
+  };
 
   const layers = [
     { id: 0, label: "Platform layer" },
@@ -79,7 +94,7 @@ export default function RogoPlatformV2Page() {
           </div>
 
           {/* SECTION 1: HERO BANNER MOCKUP (Diagram hero.jpg - Aspect 3786/1440) */}
-          <div className="relative w-full aspect-[3786/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+          <div className="relative w-full aspect-[3786/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
             <Image
               src="/images/rogo_project/Diagram hero.jpg"
               alt="Rogo Platform V2 Overview Mockup"
@@ -100,7 +115,7 @@ export default function RogoPlatformV2Page() {
                 return (
                   <button
                     key={layer.id}
-                    onClick={() => setActiveLayer(layer.id)}
+                    onClick={() => handleLayerClick(layer.id)}
                     className="flex items-center gap-2.5 transition-colors cursor-pointer bg-transparent border-0 outline-none p-0 text-left group"
                   >
                     {isActive && (
@@ -121,7 +136,7 @@ export default function RogoPlatformV2Page() {
             </div>
 
             {/* Diagram 0.jpg White Card Container (Aspect 3720/1440) */}
-            <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+            <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
               <Image
                 src="/images/rogo_project/Diagram 0.jpg"
                 alt="3-Layer Architecture Diagram (Platform, Framework, Instance)"
@@ -135,7 +150,7 @@ export default function RogoPlatformV2Page() {
 
             {/* Contextual navigation link when Framework or Instance layer is selected */}
             {activeLayer === 1 && (
-              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-xl transition-all">
+              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-[8px] lg:rounded-xl transition-all">
                 <span className="text-b3 sm:text-b2 text-white/90 font-mono">
                   {lang === "vi"
                     ? "Tầng Khung ứng dụng Whitelabel: RaIO Smart"
@@ -151,7 +166,7 @@ export default function RogoPlatformV2Page() {
             )}
 
             {activeLayer === 2 && (
-              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-xl transition-all">
+              <div className="flex items-center justify-between p-4 bg-[#00DC6C]/10 border border-[#00DC6C]/30 rounded-[8px] lg:rounded-xl transition-all">
                 <span className="text-b3 sm:text-b2 text-white/90 font-mono">
                   {lang === "vi"
                     ? "Tầng Phiên bản ứng dụng thực tế: Austfly, Kangaroo RaIO"
@@ -167,47 +182,10 @@ export default function RogoPlatformV2Page() {
             )}
           </div>
 
-          {/* SECTION 2: 2-COLUMN INFO GRID (The Problem & Architecture vs Clients, Service, Tools) with 2px continuous borders */}
-          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 border-t-2 border-b-2 border-white/10">
-            {/* Left Column: The Problem & One system, many layers */}
-            <div className="lg:col-span-7 py-10 sm:py-12 lg:py-16 space-y-10">
-              {/* The problem */}
-              <div className="space-y-3">
-                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi" ? "Vấn đề" : "The problem"}
-                </span>
-                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
-                  {lang === "vi"
-                    ? "Hệ thống quản lý trước đây được xây dựng như thể chỉ phục vụ một khách hàng duy nhất. Giao diện dùng chung, không tách biệt thương hiệu, không phân quyền chi tiết. Mỗi khi có đối tác mới tham gia, đội ngũ Rogo phải can thiệp thủ công — các đối tác không thể tự quản trị hệ thống của mình."
-                    : "But the existing management system was built as if there were only one customer. A shared interface, no brand separation, no granular access control. Every time a new partner came on board, the Rogo team had to step in manually — there was no way for partners to manage themselves."}
-                </p>
-                <p className="text-b2 md:text-b1 text-[#00DC6C] font-semibold leading-relaxed">
-                  {lang === "vi"
-                    ? "Nút thắt đó kìm hãm khả năng mở rộng của Rogo. Và đó chính là điểm khởi đầu của dự án này."
-                    : "That bottleneck was holding Rogo back from scaling. And that's where this project started."}
-                </p>
-              </div>
-
-              {/* One system, many layer */}
-              <div className="space-y-3">
-                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
-                  {lang === "vi" ? "Một hệ thống, nhiều tầng kiến trúc" : "One system, many layer"}
-                </span>
-                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
-                  {lang === "vi"
-                    ? "Một người dùng có thể thuộc nhiều tổ chức và nhiều dự án với các vai trò khác nhau ở từng nơi. Người quản lý một dự án có thể không được phép xem dự án khác trong cùng tổ chức. Quyền truy cập toàn diện tại Đối tác A không có nghĩa là có quyền tại Đối tác B."
-                    : "A single user can belong to multiple organizations and multiple projects, with different roles in each. Someone who manages one project may not be allowed to see another project in the same organization. Full access at Partner A means nothing at Partner B."}
-                </p>
-                <p className="text-b2 md:text-b1 text-[#00DC6C] font-semibold leading-relaxed">
-                  {lang === "vi"
-                    ? "Bảng điều khiển cần phản ánh chính xác cấu trúc đó — không đơn giản hóa quá mức cần thiết, nhưng cũng không phức tạp hơn mức cần có."
-                    : "The dashboard needed to reflect that structure accurately — no simpler than necessary, but no more complex than it needs to be."}
-                </p>
-              </div>
-            </div>
-
-            {/* Right Column: Clients, Service, Tools (Full-height 2px vertical border line) */}
-            <div className="lg:col-span-5 border-t-2 lg:border-t-0 lg:border-l-2 border-white/10 pt-8 pb-10 sm:pb-12 lg:pt-16 lg:pb-16 lg:pl-12 space-y-8 flex flex-col justify-start">
+          {/* SECTION 2: 2-COLUMN INFO GRID (Summary on top on mobile/tablet, right column on desktop) with 2px continuous borders */}
+          <div className="w-full flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-16 border-t-2 border-b-2 border-white/10">
+            {/* Summary Column: Clients, Service, Tools (Top on mobile/tablet, Right on desktop) */}
+            <div className="order-1 lg:order-2 lg:col-span-5 border-b-2 lg:border-b-0 lg:border-l-2 border-white/10 pt-8 pb-8 lg:pt-16 lg:pb-16 lg:pl-12 space-y-8 flex flex-col justify-start">
               {/* Clients */}
               <div className="space-y-3">
                 <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
@@ -250,7 +228,7 @@ export default function RogoPlatformV2Page() {
                   {["UI/UX research", "BA development", "UI Design", "Frontend Develop", "Vercel"].map((item) => (
                     <span
                       key={item}
-                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
+                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-[8px] lg:rounded-full"
                     >
                       {item}
                     </span>
@@ -267,12 +245,49 @@ export default function RogoPlatformV2Page() {
                   {["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
                     <span
                       key={tool}
-                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
+                      className="text-[12px] font-mono text-white/80 bg-white/5 border border-white/10 px-3 py-1 rounded-[8px] lg:rounded-full"
                     >
                       {tool}
                     </span>
                   ))}
                 </div>
+              </div>
+            </div>
+
+            {/* Main Story Column: The Problem & One system, many layers (Below summary on mobile/tablet, Left on desktop) */}
+            <div className="order-2 lg:order-1 lg:col-span-7 py-8 lg:py-16 space-y-10">
+              {/* The problem */}
+              <div className="space-y-3">
+                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
+                  {lang === "vi" ? "Vấn đề" : "The problem"}
+                </span>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi"
+                    ? "Hệ thống quản lý trước đây được xây dựng như thể chỉ phục vụ một khách hàng duy nhất. Giao diện dùng chung, không tách biệt thương hiệu, không phân quyền chi tiết. Mỗi khi có đối tác mới tham gia, đội ngũ Rogo phải can thiệp thủ công — các đối tác không thể tự quản trị hệ thống của mình."
+                    : "But the existing management system was built as if there were only one customer. A shared interface, no brand separation, no granular access control. Every time a new partner came on board, the Rogo team had to step in manually — there was no way for partners to manage themselves."}
+                </p>
+                <p className="text-b2 md:text-b1 text-[#00DC6C] font-semibold leading-relaxed">
+                  {lang === "vi"
+                    ? "Nút thắt đó kìm hãm khả năng mở rộng của Rogo. Và đó chính là điểm khởi đầu của dự án này."
+                    : "That bottleneck was holding Rogo back from scaling. And that's where this project started."}
+                </p>
+              </div>
+
+              {/* One system, many layer */}
+              <div className="space-y-3">
+                <span className="text-b3 font-mono text-white/40 uppercase tracking-wider block">
+                  {lang === "vi" ? "Một hệ thống, nhiều tầng kiến trúc" : "One system, many layer"}
+                </span>
+                <p className="text-b2 md:text-b1 text-white/80 leading-relaxed font-normal">
+                  {lang === "vi"
+                    ? "Một người dùng có thể thuộc nhiều tổ chức và nhiều dự án với các vai trò khác nhau ở từng nơi. Người quản lý một dự án có thể không được phép xem dự án khác trong cùng tổ chức. Quyền truy cập toàn diện tại Đối tác A không có nghĩa là có quyền tại Đối tác B."
+                    : "A single user can belong to multiple organizations and multiple projects, with different roles in each. Someone who manages one project may not be allowed to see another project in the same organization. Full access at Partner A means nothing at Partner B."}
+                </p>
+                <p className="text-b2 md:text-b1 text-[#00DC6C] font-semibold leading-relaxed">
+                  {lang === "vi"
+                    ? "Bảng điều khiển cần phản ánh chính xác cấu trúc đó — không đơn giản hóa quá mức cần thiết, nhưng cũng không phức tạp hơn mức cần có."
+                    : "The dashboard needed to reflect that structure accurately — no simpler than necessary, but no more complex than it needs to be."}
+                </p>
               </div>
             </div>
           </div>
@@ -297,7 +312,7 @@ export default function RogoPlatformV2Page() {
 
             <div className="space-y-[20px]">
               {/* Diagram 2: Platform layers */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/rogo_project/Diagram 2.jpg"
                   alt="Platform layers data structure"
@@ -309,7 +324,7 @@ export default function RogoPlatformV2Page() {
               </div>
 
               {/* Diagram 3: 01 — Authentication */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/rogo_project/Diagram 3.jpg"
                   alt="01 — Authentication flow"
@@ -321,7 +336,7 @@ export default function RogoPlatformV2Page() {
               </div>
 
               {/* Diagram 4: 02 — Organizations */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/rogo_project/Diagram 4.jpg"
                   alt="02 — Organizations management"
@@ -333,7 +348,7 @@ export default function RogoPlatformV2Page() {
               </div>
 
               {/* Diagram 5: 03 — Permissions (ABAC) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/rogo_project/Diagram 5.jpg"
                   alt="03 — Permissions (ABAC) matrix"
@@ -354,7 +369,7 @@ export default function RogoPlatformV2Page() {
 
             <div className="space-y-[20px]">
               {/* Full-width Top Card: Diagram 6.jpg (Aspect 3720/1440) */}
-              <div className="relative w-full aspect-[3720/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+              <div className="relative w-full aspect-[3720/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                 <Image
                   src="/images/rogo_project/Diagram 6.jpg"
                   alt="Design system follow brand guideline"
@@ -368,7 +383,7 @@ export default function RogoPlatformV2Page() {
               {/* Middle 2-Column Grid (gap-20px): Diagram 7.jpg & Diagram 8.jpg (Aspect 1800/1440 each) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
                 {/* Left Card: Diagram 7.jpg (Access Tree) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/rogo_project/Diagram 7.jpg"
                     alt="Access Tree & Sidenav Navigation"
@@ -380,7 +395,7 @@ export default function RogoPlatformV2Page() {
                 </div>
 
                 {/* Right Card: Diagram 8.jpg (Logo Assets) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/rogo_project/Diagram 8.jpg"
                     alt="Logo Assets Configuration"
@@ -395,7 +410,7 @@ export default function RogoPlatformV2Page() {
               {/* Bottom 2-Column Grid (gap-20px): Diagram 9.jpg & Diagram 17.jpg (Aspect 1800/1440 each) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
                 {/* Left Card: Diagram 9.jpg (Grant Partner Permission) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/rogo_project/Diagram 9.jpg"
                     alt="Grant Partner Permission Modal"
@@ -407,7 +422,7 @@ export default function RogoPlatformV2Page() {
                 </div>
 
                 {/* Right Card: Diagram 17.jpg (Grant Project Permission) */}
-                <div className="relative w-full aspect-[1800/1440] rounded-[12px] sm:rounded-[16px] overflow-hidden">
+                <div className="relative w-full aspect-[1800/1440] rounded-[8px] lg:rounded-[16px] overflow-hidden">
                   <Image
                     src="/images/rogo_project/Diagram 17.jpg"
                     alt="Grant Project Permission Modal"
@@ -441,7 +456,7 @@ export default function RogoPlatformV2Page() {
               >
                 <div className="space-y-4">
                   {/* Mockup Thumbnail (Aspect 4:3) */}
-                  <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                  <div className="relative w-full aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden bg-[#181818]">
                     <Image
                       src="/images/RaIO_smart_thumb.png"
                       alt="RaIO Smart"
@@ -487,7 +502,7 @@ export default function RogoPlatformV2Page() {
               >
                 <div className="space-y-4">
                   {/* Mockup Thumbnail (Aspect 4:3) */}
-                  <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                  <div className="relative w-full aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden bg-[#181818]">
                     <Image
                       src="/images/Thing Partner.png"
                       alt="Thing Partner"
@@ -524,7 +539,7 @@ export default function RogoPlatformV2Page() {
               >
                 <div className="space-y-4">
                   {/* Mockup Thumbnail (Aspect 4:3) */}
-                  <div className="relative w-full aspect-[4/3] rounded-[12px] overflow-hidden bg-[#181818] border border-white/10 shadow-md">
+                  <div className="relative w-full aspect-[4/3] rounded-[8px] lg:rounded-[12px] overflow-hidden bg-[#181818]">
                     <Image
                       src="/images/austfly.png"
                       alt="Austfly"
@@ -581,6 +596,14 @@ export default function RogoPlatformV2Page() {
       <ContactModal
         isOpen={contactModalOpen}
         onClose={() => setContactModalOpen(false)}
+        lang={lang}
+      />
+
+      {/* Switch Project Modal for System Thinking Layers */}
+      <SwitchProjectModal
+        isOpen={switchModalOpen}
+        onClose={() => setSwitchModalOpen(false)}
+        targetProject={targetProject}
         lang={lang}
       />
     </div>
