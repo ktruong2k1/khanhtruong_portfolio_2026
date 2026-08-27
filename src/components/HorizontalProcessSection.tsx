@@ -93,19 +93,33 @@ export default function HorizontalProcessSection({
     offset: ["start start", "end end"],
   });
 
-  // Calculate pixel-perfect 2-card lock positions:
-  // Step 1: 0px (Cards 1 & 2 locked)
-  // Step 2: -1 * (CardWidth + Gap) = -(containerWidth + 32) / 2 (Cards 2 & 3 locked)
-  // Step 3: -2 * (CardWidth + Gap) = -(containerWidth + 32) (Cards 3 & 4 locked)
-  const step1Shift = 0;
-  const step2Shift = -((containerWidth + 32) / 2);
-  const step3Shift = -(containerWidth + 32);
+  // Dynamic card widths and shift offsets:
+  const isMobile = containerWidth < 640;
+  const isTablet = containerWidth >= 640 && containerWidth < 1024;
+  
+  const gap = isMobile ? 16 : isTablet ? 24 : 32;
+  const singleCardWidth = isMobile
+    ? Math.max(260, containerWidth - 40)
+    : isTablet
+    ? (containerWidth - 24) / 2
+    : containerWidth > 0
+    ? (containerWidth - 32) / 2
+    : 420;
 
-  // Magnetic Snap scroll timeline: 3 distinct locked stops with light, sensitive activation
+  // Distinct magnetic snap stops: 4 stops on mobile (1 card visible), 3 stops on desktop (2 cards visible)
+  const step1Shift = 0;
+  const step2Shift = -(singleCardWidth + gap);
+  const step3Shift = -2 * (singleCardWidth + gap);
+  const step4Shift = -3 * (singleCardWidth + gap);
+
   const rawX = useTransform(
     scrollYProgress,
-    [0, 0.08, 0.35, 0.55, 0.82, 1.0],
-    [step1Shift, step1Shift, step2Shift, step2Shift, step3Shift, step3Shift]
+    isMobile
+      ? [0, 0.05, 0.28, 0.42, 0.62, 0.76, 0.95, 1.0]
+      : [0, 0.08, 0.35, 0.55, 0.82, 1.0],
+    isMobile
+      ? [step1Shift, step1Shift, step2Shift, step2Shift, step3Shift, step3Shift, step4Shift, step4Shift]
+      : [step1Shift, step1Shift, step2Shift, step2Shift, step3Shift, step3Shift]
   );
   
   // Highly responsive, snappy spring physics for lightweight scroll interactions
@@ -123,168 +137,95 @@ export default function HorizontalProcessSection({
 
   const ctaText = currentLang === "vi" ? "Khám phá dự án" : "Explore my work";
 
-  const singleCardWidth = containerWidth > 0 ? (containerWidth - 32) / 2 : 420;
-
   return (
-    <>
-      {/* MOBILE & TABLET LAYOUT (< lg): Natural vertical flow with scroll-snap cards */}
-      <section
-        id="process-section-mobile"
-        className="block lg:hidden w-full bg-[#121212] text-white py-12 sm:py-16 px-5 sm:px-6 md:px-12 border-b border-white/5 scroll-mt-0"
-      >
-        <div className="max-w-[1440px] mx-auto w-full space-y-10 sm:space-y-12">
-          {/* Header Info - Full Width, No narrow column */}
-          <div className="w-full space-y-4 snap-start snap-always min-h-[45vh] flex flex-col justify-center">
-            <h2 className="text-[28px] sm:text-3xl md:text-h2 font-bold text-white tracking-tight leading-tight whitespace-normal break-words">
-              {headingText}
-            </h2>
-            <p className="text-[14px] sm:text-base text-white/80 leading-relaxed w-full whitespace-normal break-words">
-              {subtitleText}
-            </p>
-            <div className="pt-2">
-              <InteractiveCTA text={ctaText} href="/works" />
-            </div>
-          </div>
+    <section
+      id="process-section"
+      ref={targetRef}
+      className="relative h-[250vh] bg-[#121212] text-white snap-start scroll-mt-0"
+    >
+      {/* Sticky full screen viewport wrapper */}
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center px-4 sm:px-6 md:px-12 lg:px-[10vh]">
+        <div className="max-w-[1440px] mx-auto w-full flex flex-col lg:grid lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-12 items-center justify-center my-auto">
+          
+          {/* Top / Left Header Info */}
+          <div className="lg:col-span-4 flex flex-col justify-center z-10 pr-0 lg:pr-4 min-w-0 shrink-0 w-full">
+            <div className="w-full">
+              <h2 className="text-[28px] sm:text-[36px] lg:text-[48px] lg:leading-[56px] font-bold text-white tracking-tight leading-tight whitespace-normal font-heading">
+                {headingText}
+              </h2>
 
-          {/* Vertical 4 Process Cards with Scroll-Snap */}
-          <div className="space-y-8 sm:space-y-12 w-full">
-            {processSteps.map((step) => {
-              const title = currentLang === "vi" ? step.titleVi : step.titleEn;
-              const description = currentLang === "vi" ? step.descriptionVi : step.descriptionEn;
-              return (
-                <div
-                  key={step.number}
-                  className={`w-full max-w-[640px] mx-auto min-h-[calc(100vh-100px)] snap-start snap-always rounded-[16px] p-6 sm:p-8 shadow-2xl flex flex-col justify-center space-y-4 ${
-                    step.isWhite
-                      ? "bg-white text-black"
-                      : "bg-[#1A1A1A] text-white border border-white/10"
-                  }`}
-                >
-                  {/* Top Header & Title */}
-                  <div className="space-y-2 w-full flex flex-col justify-start">
-                    <div className="text-[32px] sm:text-h2 font-bold tracking-tight">
-                      {step.number}
-                    </div>
-                    <h3 className="text-[20px] sm:text-h4 font-bold leading-tight whitespace-normal">
-                      {title}
-                    </h3>
-                  </div>
+              <p className="text-[14px] sm:text-b2 md:text-b1 text-white/70 leading-relaxed w-full block whitespace-normal mt-2 sm:mt-3 lg:mt-5 font-mono">
+                {subtitleText}
+              </p>
 
-                  {/* Step Image Photo */}
-                  <div className="relative w-full aspect-[3/2] rounded-[10px] overflow-hidden shrink-0">
-                    <Image
-                      src={step.image}
-                      alt={title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-
-                  {/* Description Paragraph */}
-                  <p
-                    className={`text-[13px] sm:text-[14px] leading-relaxed whitespace-normal break-words ${
-                      step.isWhite ? "text-neutral-900" : "text-neutral-300"
-                    }`}
-                  >
-                    {description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* DESKTOP LAYOUT (>= lg): 250vh Sticky Horizontal Snap Scroll */}
-      <section
-        id="process-section"
-        ref={targetRef}
-        className="hidden lg:block relative h-[250vh] bg-[#121212] text-white snap-start scroll-mt-0"
-      >
-        {/* Sticky full screen viewport wrapper: Left aligned with navbar logo */}
-        <div className="sticky top-0 h-screen overflow-hidden flex items-center px-6 md:px-12 lg:px-[10vh]">
-          <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch h-full pt-24 pb-16">
-            
-            {/* Fixed Left Sidebar Info */}
-            <div className="lg:col-span-4 flex flex-col justify-center h-full z-10 pr-4 min-w-0 pt-2 pb-2">
-              <div className="w-full">
-                <h2 className="text-h2 font-bold text-white tracking-tight leading-tight whitespace-normal">
-                  {headingText}
-                </h2>
-
-                <p className="text-b2 md:text-b1 text-white/70 leading-relaxed w-full block whitespace-normal mt-6">
-                  {subtitleText}
-                </p>
-
-                <div className="mt-[48px] flex-shrink-0">
-                  <InteractiveCTA
-                    text={ctaText}
-                    href="/works"
-                  />
-                </div>
+              <div className="hidden lg:block mt-8 lg:mt-10 flex-shrink-0">
+                <InteractiveCTA
+                  text={ctaText}
+                  href="/works"
+                />
               </div>
             </div>
+          </div>
 
-            {/* Sliding Horizontal Cards Track: Exact 2-card lock viewport */}
-            <div
-              ref={trackContainerRef}
-              className="lg:col-span-8 overflow-hidden h-full flex items-stretch min-w-0 pt-2 pb-2"
+          {/* Sliding Horizontal Cards Track (Equal card heights, step number 48px, card title 24px, description 14px) */}
+          <div
+            ref={trackContainerRef}
+            className="lg:col-span-8 overflow-hidden w-full flex items-center min-w-0 py-2"
+          >
+            <motion.div
+              style={{ x }}
+              className="flex gap-4 sm:gap-6 lg:gap-8 items-stretch py-2 w-max"
             >
-              <motion.div
-                style={{ x }}
-                className="flex gap-8 items-stretch py-2 w-max h-full"
-              >
-                {processSteps.map((step) => {
-                  const title = currentLang === "vi" ? step.titleVi : step.titleEn;
-                  const description = currentLang === "vi" ? step.descriptionVi : step.descriptionEn;
-                  return (
-                    <div
-                      key={step.number}
-                      style={{
-                        width: `${singleCardWidth}px`,
-                      }}
-                      className={`flex-shrink-0 rounded-[12px] p-6 md:p-8 xl:p-10 shadow-2xl flex flex-col justify-start space-y-6 transition-all ${
-                        step.isWhite
-                          ? "bg-white text-black"
-                          : "bg-[#1A1A1A] text-white border border-white/10"
+              {processSteps.map((step) => {
+                const title = currentLang === "vi" ? step.titleVi : step.titleEn;
+                const description = currentLang === "vi" ? step.descriptionVi : step.descriptionEn;
+                return (
+                  <div
+                    key={step.number}
+                    style={{
+                      width: `${singleCardWidth}px`,
+                    }}
+                    className={`flex-shrink-0 rounded-[12px] p-4 sm:p-5 lg:p-6 shadow-2xl flex flex-col justify-between space-y-3 sm:space-y-4 transition-all self-stretch ${
+                      step.isWhite
+                        ? "bg-white text-black"
+                        : "bg-[#1A1A1A] text-white border border-white/10"
+                    }`}
+                  >
+                    {/* Top Header & Title */}
+                    <div className="space-y-1 sm:space-y-2 w-full flex flex-col justify-start">
+                      <div className="text-xl sm:text-2xl lg:text-[48px] lg:leading-[56px] font-bold tracking-tight font-heading">
+                        {step.number}
+                      </div>
+                      <h3 className="text-base sm:text-lg lg:text-[24px] lg:leading-[32px] font-bold leading-snug whitespace-normal font-heading">
+                        {title}
+                      </h3>
+                    </div>
+
+                    {/* Step Image Photo */}
+                    <div className="relative w-full aspect-[16/10] rounded-[8px] sm:rounded-[10px] overflow-hidden shrink-0">
+                      <Image
+                        src={step.image}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+
+                    {/* Description Paragraph */}
+                    <p
+                      className={`text-[13px] sm:text-[14px] lg:text-[14px] whitespace-normal leading-relaxed font-mono ${
+                        step.isWhite ? "text-neutral-900" : "text-white/70"
                       }`}
                     >
-                      {/* Top Header & Title (Locked min-h so all images align top perfectly) */}
-                      <div className="space-y-3 xl:space-y-4 w-full min-h-[140px] xl:min-h-[160px] flex flex-col justify-start">
-                        <div className="text-h3 md:text-h2 font-bold tracking-tight">
-                          {step.number}
-                        </div>
-                        <h3 className="text-h5 md:text-h4 font-bold leading-tight whitespace-normal">
-                          {title}
-                        </h3>
-                      </div>
-
-                      {/* Step Image Photo (Exact same aspect ratio & top aligned) */}
-                      <div className="relative w-full aspect-[3/2] rounded-[12px] overflow-hidden shrink-0">
-                        <Image
-                          src={step.image}
-                          alt={title}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-
-                      {/* Description Paragraph (Top aligned with uniform gap below image) */}
-                      <p
-                        className={`text-[14px] whitespace-normal leading-relaxed ${
-                          step.isWhite ? "text-neutral-1000" : "text-neutral-300"
-                        }`}
-                      >
-                        {description}
-                      </p>
-                    </div>
-                  );
-                })}
-              </motion.div>
-            </div>
+                      {description}
+                    </p>
+                  </div>
+                );
+              })}
+            </motion.div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

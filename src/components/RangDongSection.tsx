@@ -191,12 +191,18 @@ export default function RangDongSection({
                   
                   {/* Badges + Big Project Title */}
                   <div>
-                    <div className="flex items-center gap-2.5 mb-2.5">
+                    <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap mb-2.5">
                       <span className="text-[12px] font-mono font-bold text-[#00DC6C] bg-[#00DC6C]/15 border border-[#00DC6C]/40 px-3.5 py-1 rounded-full uppercase tracking-wider">
                         FEATURED
                       </span>
                       <span className="text-[12px] font-mono font-bold text-white/90 bg-white/10 border border-white/20 px-3.5 py-1 rounded-full uppercase tracking-wider">
                         PAAS • B2B
+                      </span>
+                      <span className="text-[12px] font-mono font-bold text-white/90 bg-white/10 border border-white/20 px-3.5 py-1 rounded-full uppercase tracking-wider">
+                        WHITELABEL
+                      </span>
+                      <span className="text-[12px] font-mono font-bold text-white/90 bg-white/10 border border-white/20 px-3.5 py-1 rounded-full uppercase tracking-wider">
+                        DESKTOP
                       </span>
                     </div>
 

@@ -49,7 +49,7 @@ function CountingStatNumber({ value }: { value: string }) {
   }, [isInView, value]);
 
   return (
-    <div ref={ref} className="text-3xl sm:text-h1 lg:text-h0 font-bold text-[#E8C468] tracking-tight mb-2 sm:mb-4">
+    <div ref={ref} className="text-3xl sm:text-h1 lg:text-[96px] lg:leading-[100px] font-bold font-heading text-[#E8C468] tracking-tight mb-2 sm:mb-4">
       {displayVal}
     </div>
   );
@@ -81,7 +81,7 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
             transition={{ duration: 0.5 }}
             className="md:col-span-1 min-w-0"
           >
-            <h2 className="text-2xl sm:text-h4 font-bold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-[32px] lg:text-[36px] lg:leading-[44px] font-bold font-heading text-white tracking-tight">
               {currentLang === "vi" ? "Vì sao chọn tôi" : "Why me"}
             </h2>
           </motion.div>
@@ -94,7 +94,7 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
             transition={{ duration: 0.6, delay: 0.1 }}
             className="md:col-span-2 space-y-4 sm:space-y-8 w-full min-w-0"
           >
-            <p className="text-[14px] sm:text-b0 font-normal text-white/90 leading-relaxed w-full block whitespace-normal">
+            <p className="text-[14px] sm:text-b0 lg:text-[20px] lg:leading-[28px] font-normal font-mono text-white/90 leading-relaxed w-full block whitespace-normal">
               {currentLang === "vi"
                 ? "UX/UI designer với 3.5 năm kinh nghiệm phát triển các sản phẩm B2B phức tạp — hệ sinh thái IoT, SaaS dashboard và các nền tảng whitelabel có khả năng mở rộng cho nhiều đối tác. Tôi sử dụng các công cụ AI để rút ngắn khoảng cách giữa thiết kế và lập trình. Hiện đang sẵn sàng cho các cơ hội làm việc từ xa."
                 : "UX/UI designer with 3.5 years shipping complex B2B products — IoT ecosystems, SaaS dashboards, and whitelabel platforms built to scale across partners. I use AI tools to close the gap between design and production. Currently open to remote roles."}
@@ -121,7 +121,7 @@ export default function WhyMeSection({ lang, onOpenContact }: WhyMeSectionProps)
               className="border-t border-white/20 pt-4 sm:pt-8 flex flex-col justify-between min-w-0"
             >
               <CountingStatNumber value={stat.number} />
-              <div className="text-[11px] sm:text-h7 md:text-h6 font-medium text-white/90 whitespace-normal leading-tight">
+              <div className="text-[11px] sm:text-h7 lg:text-[20px] lg:leading-[28px] font-medium font-mono text-white/90 whitespace-normal leading-tight">
                 {stat.label}
               </div>
             </motion.div>

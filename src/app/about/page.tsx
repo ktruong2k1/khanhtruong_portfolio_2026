@@ -171,8 +171,8 @@ export default function AboutPage() {
                 )}
               </h2>
 
-              {/* Download CV Buttons */}
-              <div className="space-y-3 pt-2">
+              {/* Download CV Buttons (Desktop only) */}
+              <div className="hidden lg:flex flex-col space-y-3 pt-2">
                 <a
                   href="/CV_NguyenKhanhTruong_2026.pdf"
                   target="_blank"
@@ -268,6 +268,29 @@ export default function AboutPage() {
                     ? "Tập đoàn công nghệ phần mềm hàng đầu Việt Nam, cung cấp dịch vụ CNTT & chuyển đổi số cho các doanh nghiệp trên 30+ quốc gia."
                     : "Vietnam's largest software company, delivering IT & digital transformation services to enterprises across 30+ countries."}
                 </p>
+              </div>
+
+              {/* Download CV Buttons (Mobile only - Placed at bottom of content) */}
+              <div className="flex lg:hidden flex-col gap-3 pt-4 w-full">
+                <a
+                  href="/CV_NguyenKhanhTruong_2026.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-3 bg-white text-black text-h7 font-bold px-6 py-3.5 rounded-[12px] hover:bg-neutral-200 transition-colors shadow-lg active:scale-95"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download CV – Tiếng Việt</span>
+                </a>
+
+                <a
+                  href="/CV_NguyenKhanhTruong_EN_2026.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-3 bg-[#181818] border border-white/20 text-white text-h7 font-bold px-6 py-3.5 rounded-[12px] hover:bg-white/10 transition-colors active:scale-95"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download CV – English</span>
+                </a>
               </div>
 
             </div>
@@ -373,13 +396,15 @@ export default function AboutPage() {
         <section className="w-full min-h-screen lg:h-screen snap-start snap-always flex flex-col justify-center items-center px-6 md:px-12 lg:px-[10vh] pt-[80px] pb-8 border-b-2 border-white/5 bg-[#121212] relative overflow-hidden">
           <div className="max-w-[1440px] mx-auto w-full my-auto flex flex-col justify-center gap-[48px]">
             
-            {/* Header: Left Title + Right Interactive CTA */}
-            <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            {/* Header: Left Title + Right Interactive CTA (Desktop) */}
+            <div className="w-full flex items-center justify-between gap-4">
               <h2 className="text-h4 font-bold text-white tracking-tight">
                 {lang === "vi" ? "Dự án tiêu biểu" : "Featured project"}
               </h2>
 
-              <InteractiveCTA text={lang === "vi" ? "Xem thêm" : "Explore more"} href="/works" />
+              <div className="hidden lg:block">
+                <InteractiveCTA text={lang === "vi" ? "Xem thêm" : "Explore more"} href="/works" />
+              </div>
             </div>
 
             {/* 3 Featured Projects Cards Grid (Clean borderless layout) */}
@@ -402,9 +427,18 @@ export default function AboutPage() {
                   </div>
 
                   {/* Tag */}
-                  <div>
-                    <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
-                      WHITELABEL APP
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="inline-block text-[11px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2 py-0.5 rounded-full uppercase">
+                      FEATURED
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      WHITELABEL
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      MOBILE
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      IOT
                     </span>
                   </div>
 
@@ -439,9 +473,9 @@ export default function AboutPage() {
                   </div>
 
                   {/* Tag */}
-                  <div>
-                    <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
-                      IOT PLATFORM
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      PAAS • B2B
                     </span>
                   </div>
 
@@ -476,9 +510,12 @@ export default function AboutPage() {
                   </div>
 
                   {/* Tag */}
-                  <div>
-                    <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
-                      AI PLATFORM
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      COMMUNITY
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      OPEN SOURCE • WEB
                     </span>
                   </div>
 
@@ -496,6 +533,11 @@ export default function AboutPage() {
                 </div>
               </Link>
 
+            </div>
+
+            {/* Mobile Explore more Button */}
+            <div className="flex lg:hidden justify-center w-full pt-1">
+              <InteractiveCTA text={lang === "vi" ? "Xem thêm" : "Explore more"} href="/works" />
             </div>
 
             {/* Bottom Trusted By Marquee Carousel (Screenshot IBhWzM) */}

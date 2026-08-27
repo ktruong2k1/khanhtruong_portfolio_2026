@@ -101,12 +101,18 @@ export default function PendingPage() {
                 </div>
 
                 {/* Tags */}
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-0.5 rounded-full uppercase">
                     FEATURED
                   </span>
                   <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-0.5 rounded-full uppercase">
-                    IOT PLATFORM • B2B
+                    PAAS • B2B
+                  </span>
+                  <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-0.5 rounded-full uppercase">
+                    WHITELABEL
+                  </span>
+                  <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-0.5 rounded-full uppercase">
+                    DESKTOP
                   </span>
                 </div>
 
@@ -143,12 +149,18 @@ export default function PendingPage() {
                 </div>
 
                 {/* Tags */}
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-3 py-0.5 rounded-full uppercase">
                     FEATURED
                   </span>
                   <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-0.5 rounded-full uppercase">
-                    WHITELABEL APP
+                    WHITELABEL
+                  </span>
+                  <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-0.5 rounded-full uppercase">
+                    MOBILE
+                  </span>
+                  <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-3 py-0.5 rounded-full uppercase">
+                    IOT
                   </span>
                 </div>
 

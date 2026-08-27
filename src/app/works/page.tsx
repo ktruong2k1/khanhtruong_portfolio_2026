@@ -420,12 +420,18 @@ export default function WorksPage() {
 
                     {/* Right / Bottom Content Details */}
                     <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
-                      <div className="flex items-center gap-2.5 sm:gap-3">
+                      <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
                         <span className="text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                           FEATURED
                         </span>
                         <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                           PAAS • B2B
+                        </span>
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
+                          WHITELABEL
+                        </span>
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
+                          DESKTOP
                         </span>
                       </div>
 
@@ -473,22 +479,9 @@ export default function WorksPage() {
                         </div>
                         <p className="font-mono text-[12px] sm:text-[13px] lg:text-[14px] text-white/80 leading-relaxed">
                           {lang === "vi"
-                            ? "Rogo Solutions xây dựng và vận hành lõi nền tảng – hỗ trợ mô hình whitelabel linh hoạt. Mỗi thương hiệu đối tác sở hữu một instance độc lập: chung kiến trúc, chung lớp điều khiển, nhưng mang trọn vẹn nhận diện thương hiệu riêng."
-                            : "Rogo Solutions builds and operates the core — and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity. The whitelabel logic doesn't start at the app layer — it starts here."}
+                            ? "Nền tảng quản trị IoT whitelabel đa tầng – kiểm soát toàn diện thiết bị và phân quyền đa tổ chức."
+                            : "Enterprise whitelabel IoT platform core – unified device fleet management and multi-tenant control plane."}
                         </p>
-                      </div>
-
-                      <div className="space-y-1.5 sm:space-y-2">
-                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
-                          {lang === "vi" ? "Công cụ" : "Tools"}
-                        </div>
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                          {["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
-                            <span key={tool} className="text-[10px] sm:text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full">
-                              {tool}
-                            </span>
-                          ))}
-                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -528,12 +521,18 @@ export default function WorksPage() {
 
                     {/* Right / Bottom Content Details */}
                     <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
-                      <div className="flex items-center gap-2.5 sm:gap-3">
+                      <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
                         <span className="text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
-                          WHITELABEL APP
+                          FEATURED
                         </span>
                         <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
-                          IOT • MOBILE
+                          WHITELABEL
+                        </span>
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
+                          MOBILE
+                        </span>
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
+                          IOT
                         </span>
                       </div>
 
@@ -559,22 +558,9 @@ export default function WorksPage() {
                         </div>
                         <p className="font-mono text-[12px] sm:text-[13px] lg:text-[14px] text-white/70 leading-relaxed">
                           {lang === "vi"
-                            ? "Framework ứng dụng di động IoT đa thương hiệu (whitelabel). Cho phép tùy biến nhanh chóng giao diện, luồng onboarding thiết bị và trải nghiệm người dùng theo từng đối tác."
-                            : "Multi-brand IoT mobile app framework (whitelabel). Enables rapid customization of UI themes, device onboarding workflows, and experiences per partner."}
+                            ? "Framework ứng dụng di động IoT đa thương hiệu tùy biến giao diện linh hoạt và luồng kết nối chuyên sâu."
+                            : "Multi-brand IoT mobile app framework enabling rapid UI customization and complex onboarding workflows."}
                         </p>
-                      </div>
-
-                      <div className="space-y-1.5 sm:space-y-2">
-                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
-                          {lang === "vi" ? "Công cụ" : "Tools"}
-                        </div>
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                          {["Flutter", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
-                            <span key={tool} className="text-[10px] sm:text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full">
-                              {tool}
-                            </span>
-                          ))}
-                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -601,7 +587,7 @@ export default function WorksPage() {
                   >
                     {/* Thumbnail Card on Top for Mobile/Tablet (< lg), Left for Desktop (>= lg) */}
                     <Link
-                      href="/pending"
+                      href="/works/austfly"
                       className="w-full max-w-full lg:w-[640px] lg:min-w-[640px] aspect-[4/3] rounded-[12px] overflow-hidden shadow-2xl border border-white/10 bg-[#181818] relative shrink-0 block group/thumb cursor-pointer"
                     >
                       <Image
@@ -615,16 +601,25 @@ export default function WorksPage() {
 
                     {/* Right / Bottom Content Details */}
                     <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
-                      <div className="flex items-center gap-2.5 sm:gap-3">
+                      <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
                         <span className="text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
+                          FEATURED
+                        </span>
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                           INSTANCE
                         </span>
                         <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
-                          SMART LIVING • B2B2C
+                          MOBILE
+                        </span>
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
+                          IOT
+                        </span>
+                        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
+                          WHITELABEL
                         </span>
                       </div>
 
-                      <Link href="/pending" className="block group/title">
+                      <Link href="/works/austfly" className="block group/title">
                         <h3 className="font-heading text-2xl sm:text-3xl md:text-[36px] lg:text-[40px] lg:leading-[48px] font-bold text-white group-hover/title:text-[#00DC6C] transition-colors leading-tight flex items-center gap-2">
                           <span>Austfly</span>
                           <span className="text-b2 opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-[#00DC6C]">↗</span>
@@ -636,18 +631,18 @@ export default function WorksPage() {
                           {lang === "vi" ? "Khách hàng" : "Clients"}
                         </div>
                         <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
-                          <div className="relative w-[80px] sm:w-[90px] h-[20px] sm:h-[26px] group cursor-pointer">
+                          <div className="relative w-[70px] sm:w-[85px] h-[20px] sm:h-[26px] group cursor-pointer">
                             <Image
-                              src="/images/Austdoor_color.svg"
-                              alt="Austdoor"
+                              src="/images/Rogo_color.svg"
+                              alt="ROGO Solutions"
                               fill
                               className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                             />
                           </div>
-                          <div className="relative w-[90px] sm:w-[110px] h-[20px] sm:h-[26px] group cursor-pointer">
+                          <div className="relative w-[95px] sm:w-[115px] h-[20px] sm:h-[26px] group cursor-pointer">
                             <Image
-                              src="/images/Kangaroo_color.svg"
-                              alt="Kangaroo"
+                              src="/images/Austdoor.svg"
+                              alt="Austdoor"
                               fill
                               className="object-contain object-left filter brightness-0 invert hover:filter-none transition-all duration-300"
                             />
@@ -661,22 +656,9 @@ export default function WorksPage() {
                         </div>
                         <p className="font-mono text-[12px] sm:text-[13px] lg:text-[14px] text-white/70 leading-relaxed">
                           {lang === "vi"
-                            ? "Ứng dụng điều khiển cửa cuốn và hệ sinh thái nhà thông minh Austfly — instance tùy biến hoàn chỉnh vận hành trên nền tảng RaIO Smart whitelabel app."
-                            : "Smart roller shutter & IoT control app Austfly — a fully customized instance powered by the RaIO Smart whitelabel app."}
+                            ? "Ứng dụng điều khiển cửa cuốn thông minh Austfly — instance tùy biến hoàn chỉnh trên nền tảng RaIO Smart."
+                            : "Smart roller shutter & IoT control app Austfly — a customized instance powered by RaIO Smart framework."}
                         </p>
-                      </div>
-
-                      <div className="space-y-1.5 sm:space-y-2">
-                        <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
-                          {lang === "vi" ? "Công cụ" : "Tools"}
-                        </div>
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                          {["RaIO Framework", "Rogo IoT Platform", "Figma", "React Native"].map((tool) => (
-                            <span key={tool} className="text-[10px] sm:text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full">
-                              {tool}
-                            </span>
-                          ))}
-                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -783,9 +765,6 @@ export default function WorksPage() {
                 {/* Right Project Details (Align top, no inner scrollbar) */}
                 <div className="flex-1 space-y-2 sm:space-y-3 lg:space-y-4 pt-0 w-full">
                   <div className="flex items-center gap-2.5 sm:gap-3">
-                    <span className="text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
-                      FEATURED
-                    </span>
                     <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                       PAAS • B2B
                     </span>
@@ -836,22 +815,9 @@ export default function WorksPage() {
                     </div>
                     <p className="font-mono text-[12px] sm:text-[13px] lg:text-[14px] text-white/80 leading-relaxed">
                       {lang === "vi"
-                        ? "Dành cho đội ngũ trực tiếp sản xuất và quản lý thiết bị. Được nghiên cứu thực địa trực tiếp, bao quát từ firmware đến bảo hành qua 6 giai đoạn vòng đời."
-                        : "Rogo Solutions builds and operates the core — and the platform itself is whitelabelable. Each partner brand gets their own instance: same architecture, same control plane, their own identity."}
+                        ? "Cổng thông tin quản lý vòng đời thiết bị IoT dành cho đội ngũ sản xuất từ firmware đến bảo hành."
+                        : "Purpose-built portal for hardware manufacturers to manage end-to-end device lifecycles."}
                     </p>
-                  </div>
-
-                  <div className="space-y-1.5 sm:space-y-2">
-                    <div className="text-[11px] sm:text-b3 font-mono text-white/40 uppercase tracking-wider">
-                      {lang === "vi" ? "Công cụ" : "Tools"}
-                    </div>
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                      {["Stitch AI", "Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
-                        <span key={tool} className="text-[10px] sm:text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full">
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -893,9 +859,6 @@ export default function WorksPage() {
                 {/* Right Project Details (Align top, no inner scrollbar) */}
                 <div className="flex-1 space-y-1.5 sm:space-y-2.5 lg:space-y-4 pt-0 w-full">
                   <div className="flex items-center gap-2 sm:gap-3">
-                    <span className="text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
-                      FEATURED
-                    </span>
                     <span className="text-[11px] sm:text-[12px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase">
                       IOT AUTOMATION • B2B
                     </span>
@@ -938,22 +901,9 @@ export default function WorksPage() {
                     </div>
                     <p className="font-mono text-[14px] text-white/80 leading-relaxed">
                       {lang === "vi"
-                        ? "Nền tảng tự động hóa luồng điều khiển và kịch bản thông minh cho hệ sinh thái IoT đa thiết bị. Tối ưu hóa vận hành và xử lý sự kiện tức thời."
-                        : "Visual automation flow and smart rule orchestration engine for complex multi-device IoT ecosystems. Streamlines operations with real-time event triggers."}
+                        ? "Nền tảng tự động hóa luồng điều khiển và kịch bản thông minh cho hệ sinh thái IoT đa thiết bị."
+                        : "Visual automation and smart rule orchestration engine for complex IoT ecosystems."}
                     </p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">
-                      {lang === "vi" ? "Công cụ" : "Tools"}
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {["Figma", "Claude AI", "Gemini CLI", "Vercel"].map((tool) => (
-                        <span key={tool} className="text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -1072,20 +1022,9 @@ export default function WorksPage() {
                     <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Description</div>
                     <p className="font-mono text-[14px] text-white/70 leading-relaxed">
                       {lang === "vi"
-                        ? "Startup IoT mã nguồn mở kết nối cộng đồng nhà sáng chế (makers) và khách hàng doanh nghiệp. Được xây dựng từ con số không."
-                        : "Open-source IoT startup bridging community makers and enterprise clients. Built from zero."}
+                        ? "Nền tảng cộng đồng chia sẻ câu lệnh AI và tự động hóa quy trình cho chuyên gia công nghệ."
+                        : "Open-source AI prompt sharing and workflow automation platform for tech makers."}
                     </p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="text-b3 font-mono text-white/40 uppercase tracking-wider">Tools</div>
-                    <div className="flex flex-wrap gap-2">
-                      {["Next.js", "Figma", "Tailwind CSS", "Vercel", "TypeScript"].map((tool) => (
-                        <span key={tool} className="text-[12px] font-mono text-white/70 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </motion.div>

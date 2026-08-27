@@ -169,7 +169,7 @@ export default function HeroSection({ lang, onOpenContact }: HeroSectionProps) {
             className="lg:col-span-5 flex items-center pt-2 sm:pt-0"
           >
             <InteractiveCTA
-              text={currentLang === "vi" ? "Về tôi" : "About me"}
+              text={currentLang === "vi" ? "Khám phá ngay" : "Explore now"}
               href="/about"
             />
           </motion.div>

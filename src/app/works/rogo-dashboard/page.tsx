@@ -451,9 +451,18 @@ export default function RogoDashboardPage() {
                   </div>
 
                   {/* Tag */}
-                  <div>
-                    <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
-                      WHITELABEL FRAMEWORK
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="inline-block text-[11px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2 py-0.5 rounded-full uppercase">
+                      FEATURED
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      WHITELABEL
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      MOBILE
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      IOT
                     </span>
                   </div>
 
@@ -488,8 +497,8 @@ export default function RogoDashboardPage() {
                   </div>
 
                   {/* Tag */}
-                  <div>
-                    <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
                       PAAS • B2B
                     </span>
                   </div>
@@ -510,7 +519,7 @@ export default function RogoDashboardPage() {
 
               {/* Card 3: Austfly */}
               <Link
-                href="/works"
+                href="/works/austfly"
                 className="group block flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="space-y-4">
@@ -525,9 +534,21 @@ export default function RogoDashboardPage() {
                   </div>
 
                   {/* Tag */}
-                  <div>
-                    <span className="inline-block text-[11px] sm:text-[12px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2.5 py-0.5 rounded-full uppercase">
-                      LIVE APP INSTANCE
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="inline-block text-[11px] font-mono font-bold text-[#00DC6C] border border-[#00DC6C]/40 bg-[#00DC6C]/10 px-2 py-0.5 rounded-full uppercase">
+                      FEATURED
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      INSTANCE
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      MOBILE
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      IOT
+                    </span>
+                    <span className="inline-block text-[11px] font-mono font-bold text-white/70 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full uppercase">
+                      WHITELABEL
                     </span>
                   </div>
 
