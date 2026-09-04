@@ -24,10 +24,60 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://khanhtruong-portfolio-2026.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Nguyễn Khánh Trường — UX/UI Product Designer",
-  description: "Portfolio của Nguyễn Khánh Trường, UX/UI Product Designer với 3.5 năm kinh nghiệm làm việc end-to-end cho IoT, B2B SaaS và Management Dashboards.",
+  description:
+    "Portfolio của Nguyễn Khánh Trường, UX/UI Product Designer với 3.5 năm kinh nghiệm làm việc end-to-end cho IoT, B2B SaaS và Management Dashboards.",
+  keywords: [
+    "Nguyễn Khánh Trường",
+    "Khanhtruong Nguyen",
+    "Product Designer",
+    "UX/UI Designer",
+    "Portfolio",
+    "IoT Platform",
+    "B2B SaaS",
+  ],
+  authors: [{ name: "Nguyễn Khánh Trường" }],
+  creator: "Nguyễn Khánh Trường",
+  openGraph: {
+    type: "website",
+    locale: "vi_VN",
+    url: siteUrl,
+    title: "Nguyễn Khánh Trường — UX/UI Product Designer",
+    description:
+      "Portfolio của Nguyễn Khánh Trường, UX/UI Product Designer với 3.5 năm kinh nghiệm làm việc end-to-end cho IoT, B2B SaaS và Management Dashboards.",
+    siteName: "Nguyễn Khánh Trường Portfolio",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Nguyễn Khánh Trường — UX/UI Product Designer",
+      },
+      {
+        url: "/images/og-image-square.png",
+        width: 600,
+        height: 600,
+        alt: "Nguyễn Khánh Trường — UX/UI Product Designer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nguyễn Khánh Trường — UX/UI Product Designer",
+    description:
+      "Portfolio của Nguyễn Khánh Trường, UX/UI Product Designer với 3.5 năm kinh nghiệm làm việc end-to-end cho IoT, B2B SaaS và Management Dashboards.",
+    images: ["/images/og-image.png"],
+  },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
+
 
 export default function RootLayout({
   children,
