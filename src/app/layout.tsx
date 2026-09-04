@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
+import { Analytics } from '@vercel/analytics/next';
 import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
 
@@ -92,6 +93,7 @@ export default function RootLayout({
     >
       <body className="min-h-full transition-colors duration-300 bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black">
         <LanguageProvider>{children}</LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
