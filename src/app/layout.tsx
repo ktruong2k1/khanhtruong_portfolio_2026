@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const beVietnam = Be_Vietnam_Pro({
@@ -92,6 +93,7 @@ export default function RootLayout({
     >
       <body className="min-h-full transition-colors duration-300 bg-[#121212] text-white selection:bg-[#00DC6C] selection:text-black">
         <LanguageProvider>{children}</LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
